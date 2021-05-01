@@ -1,0 +1,26 @@
+{
+    "name": "@dommandy/mealy",
+    "version": "1.0.0",
+    "description": "state machines made in typescript",
+    "license": "MIT",
+    "repository": "domrally/mealy",
+    "main": "index.js",
+    "keywords": [
+        "mealy",
+        "typescript",
+        "finite",
+        "state",
+        "machines",
+        "pattern",
+        "transducer",
+        "proxy",
+        "observer",
+        "Dom",
+        "Dominic",
+        "Mandy",
+        "dommandy",
+        "domrally",
+        "npm",
+        "package"
+    ]
+}
