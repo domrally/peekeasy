@@ -12,7 +12,7 @@ by the gang of four
 > This pattern is close to
 > the concept of finite-state machines
 
-#### [Proxy Pattern](ttps://en.wikipedia.org/wiki/Proxy_pattern)
+#### [Proxy Pattern](https://en.wikipedia.org/wiki/Proxy_pattern)
 > In short, a proxy is a wrapper or agent object 
 > that is being called by the client 
 > to access the real serving object behind the scenes.
