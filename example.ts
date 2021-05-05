@@ -46,7 +46,7 @@ class Lol implements Messager {
     }
     get untilUpdate() {
         return new Promise<Messager | any>(resolve => {
-            const resolver = () => resolve(null)
+            const resolver = () => resolve(false)
             window.requestAnimationFrame(resolver)
         })
     }

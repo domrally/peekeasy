@@ -8,8 +8,7 @@ export class Moore<T extends State<T>> implements Machine<T> {
     private readonly updateLoop = async () => {
         this.current.onEnter()
         while (true) {
-            let next = null
-            next = await this.current.untilUpdate
+            const next = await this.current.untilUpdate
             this.current.onExit()
             this.current = next
             this.current?.onEnter()

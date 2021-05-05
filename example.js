@@ -45,7 +45,7 @@ class Lol {
     }
     get untilUpdate() {
         return new Promise(resolve => {
-            const resolver = () => resolve(null);
+            const resolver = () => resolve(false);
             window.requestAnimationFrame(resolver);
         });
     }
