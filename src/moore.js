@@ -5,7 +5,8 @@ export class Moore {
         this.updateLoop = async () => {
             this.current.onEnter();
             while (true) {
-                const next = await this.current.untilUpdate;
+                let next = null;
+                next = await this.current.untilUpdate;
                 this.current.onExit();
                 this.current = next;
                 this.current?.onEnter();
