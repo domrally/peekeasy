@@ -7,8 +7,10 @@ export class Moore {
             while (true) {
                 const next = await this.current.untilUpdate;
                 this.current.onExit();
-                this.current = next;
-                this.current?.onEnter();
+                if (next) {
+                    this.current = next;
+                    this.current.onEnter();
+                }
             }
         };
         this.current = initial;

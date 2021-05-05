@@ -10,8 +10,10 @@ export class Moore<T extends State<T>> implements Machine<T> {
         while (true) {
             const next = await this.current.untilUpdate
             this.current.onExit()
-            this.current = next
-            this.current?.onEnter()
+            if (next) {
+                this.current = next
+                this.current.onEnter()
+            }
         }
     }
     constructor(initial: T) {
