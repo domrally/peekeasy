@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>mealy</title>
+    <meta charset="utf-8">
+
+    <script type="module"
+            src="index.js"></script>
+</head>
+
+<body>
+    <script>
+        const initial = {
+            message: 'Hello, World!',
+            onEnter: () => {
+                console.log('enter')
+            },
+            onExit: () => {
+                console.log('exit')
+            },
+            untilUpdate: new Promise(resolve => {})
+        }
+        const state = CreateMealy(initial)
+        console.log(state.message)
+    </script>
+</body>
+
+</html>
