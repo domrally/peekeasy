@@ -28,11 +28,29 @@ class Alt {
     }
     get untilUpdate() {
         return new Promise(resolve => {
+            const resolver = () => resolve(lol);
+            window.requestAnimationFrame(resolver);
+        });
+    }
+}
+class Lol {
+    constructor() {
+        this.message = 'asdf, cloud!';
+        this.onEnter = () => {
+            // console.log('hi')
+        };
+        this.onExit = () => {
+            // console.log('bye')
+        };
+    }
+    get untilUpdate() {
+        return new Promise(resolve => {
             const resolver = () => resolve(null);
             window.requestAnimationFrame(resolver);
         });
     }
 }
+const lol = new Lol();
 const alt = new Alt();
 const initial = new Initial();
 const test = async () => {

@@ -29,12 +29,29 @@ class Alt implements Messager {
         // console.log('bye')
     }
     get untilUpdate() {
+        return new Promise<Messager>(resolve => {
+            const resolver = () => resolve(lol)
+            window.requestAnimationFrame(resolver)
+        })
+    }
+}
+
+class Lol implements Messager {
+    message = 'asdf, cloud!'
+    onEnter = () => {
+        // console.log('hi')
+    }
+    onExit = () => {
+        // console.log('bye')
+    }
+    get untilUpdate() {
         return new Promise<Messager | any>(resolve => {
             const resolver = () => resolve(null)
             window.requestAnimationFrame(resolver)
         })
     }
 }
+const lol = new Lol()
 const alt = new Alt()
 const initial = new Initial()
 const test = async () => {
