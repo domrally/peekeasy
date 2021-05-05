@@ -45,7 +45,7 @@ const test = async () => {
             console.log(state.message);
         }
         count++;
-        count %= 20;
+        count %= 21;
     }
 };
 test();
