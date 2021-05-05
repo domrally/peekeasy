@@ -8,7 +8,9 @@ class Initial {
         this.onExit = () => {
             // console.log('exit')
         };
-        this.untilUpdate = new Promise(resolve => {
+    }
+    get untilUpdate() {
+        return new Promise(resolve => {
             const resolver = () => resolve(alt);
             window.requestAnimationFrame(resolver);
         });
@@ -23,7 +25,9 @@ class Alt {
         this.onExit = () => {
             // console.log('bye')
         };
-        this.untilUpdate = new Promise(resolve => {
+    }
+    get untilUpdate() {
+        return new Promise(resolve => {
             const resolver = () => resolve(initial);
             window.requestAnimationFrame(resolver);
         });
@@ -33,14 +37,15 @@ const alt = new Alt();
 const initial = new Initial();
 const test = async () => {
     const state = CreateMealy(initial);
-    let counter = 0;
+    let count = 0;
     while (true) {
-        await state.untilUpdate;
-        counter++;
-        counter = counter % 20;
-        if (counter === 0) {
+        const s = await state.untilUpdate;
+        if (!count) {
+            console.log(s.message);
             console.log(state.message);
         }
+        count++;
+        count %= 20;
     }
 };
 test();
