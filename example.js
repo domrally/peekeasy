@@ -9,7 +9,6 @@ class Initial {
             console.log('exit');
         };
         this.untilUpdate = new Promise(resolve => {
-            const alt = new Alt();
             const resolver = () => resolve(alt);
             window.requestAnimationFrame(resolver);
         });
@@ -25,16 +24,18 @@ class Alt {
             console.log('bye');
         };
         this.untilUpdate = new Promise(resolve => {
-            const initial = new Initial();
             const resolver = () => resolve(initial);
             window.requestAnimationFrame(resolver);
         });
     }
 }
-(async () => {
-    const state = CreateMealy(new Initial());
+const alt = new Alt();
+const initial = new Initial();
+const test = async () => {
+    const state = CreateMealy(initial);
     while (true) {
         console.log(state.message);
         await state.untilUpdate;
     }
-})();
+};
+test();
