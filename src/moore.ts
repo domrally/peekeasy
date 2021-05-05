@@ -1,5 +1,6 @@
 import { Machine } from './interfaces/machine.js'
 import { State } from './interfaces/state.js'
+// 
 export class Moore<T extends State<T>> implements Machine<T> {
     // 
     get untilUpdate(): Promise<T> {
