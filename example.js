@@ -1,4 +1,4 @@
-import { CreateMealy } from './index.js';
+import { CreatePushdown } from './index.js';
 class Initial {
     constructor() {
         this.message = 'Hello, World!';
@@ -36,7 +36,7 @@ class Alt {
 const alt = new Alt();
 const initial = new Initial();
 const test = async () => {
-    const state = CreateMealy(initial);
+    const state = CreatePushdown(initial);
     let count = 0;
     while (true) {
         const s = await state.untilUpdate;

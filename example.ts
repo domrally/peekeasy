@@ -1,4 +1,4 @@
-import { CreateMealy } from './index.js'
+import { CreateMealy, CreatePushdown } from './index.js'
 import { State } from './src/interfaces/state.js'
 
 interface Messager extends State<Messager> {
@@ -38,7 +38,7 @@ class Alt implements Messager {
 const alt = new Alt()
 const initial = new Initial()
 const test = async () => {
-    const state = CreateMealy<Messager>(initial)
+    const state = CreatePushdown<Messager>(initial)
     let count = 0
     while (true) {
         const s = await state.untilUpdate
