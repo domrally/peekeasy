@@ -1,6 +1,6 @@
-import { Moore } from './src/moore';
-import { Mealy } from './src/mealy';
-import { Stack } from './src/stack';
+import { Moore } from './src/moore.js';
+import { Mealy } from './src/mealy.js';
+import { Stack } from './src/stack.js';
 // this machine recognizes regular languages
 export const CreateMealy = (initial) => {
     const moore = new Moore(initial);

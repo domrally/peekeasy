@@ -1,4 +1,4 @@
-import { Updater } from './updater'
+import { Updater } from './updater.js'
 //
 export interface State<T> extends Updater<T> {
     readonly onEnter: () => void

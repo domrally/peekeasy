@@ -1,5 +1,5 @@
-import { State } from './interfaces/state'
-import { Machine } from './interfaces/machine'
+import { State } from './interfaces/state.js'
+import { Machine } from './interfaces/machine.js'
 //
 export class Stack<T extends State<T>> implements Machine<T> {
     // 

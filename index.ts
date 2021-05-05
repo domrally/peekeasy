@@ -1,7 +1,7 @@
-import { State } from './src/interfaces/state'
-import { Moore } from './src/moore'
-import { Mealy } from './src/mealy'
-import { Stack } from './src/stack'
+import { State } from './src/interfaces/state.js'
+import { Moore } from './src/moore.js'
+import { Mealy } from './src/mealy.js'
+import { Stack } from './src/stack.js'
 // this machine recognizes regular languages
 export const CreateMealy = <T extends State<T>>(initial: T) => {
     const moore = new Moore(initial)
