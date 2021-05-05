@@ -29,8 +29,8 @@ class Alt implements Messager {
         // console.log('bye')
     }
     get untilUpdate() {
-        return new Promise<Messager>(resolve => {
-            const resolver = () => resolve(initial)
+        return new Promise<Messager | any>(resolve => {
+            const resolver = () => resolve(null)
             window.requestAnimationFrame(resolver)
         })
     }

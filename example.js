@@ -28,7 +28,7 @@ class Alt {
     }
     get untilUpdate() {
         return new Promise(resolve => {
-            const resolver = () => resolve(initial);
+            const resolver = () => resolve(null);
             window.requestAnimationFrame(resolver);
         });
     }
