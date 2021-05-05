@@ -40,7 +40,7 @@ const test = async () => {
         await state.untilUpdate
         counter++
         counter = counter%20
-        if (!counter) {
+        if (counter === 0) {
             console.log(state.message)
         }
     }
