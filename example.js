@@ -37,7 +37,7 @@ const test = async () => {
     while (true) {
         await state.untilUpdate;
         counter++;
-        counter %= 200;
+        counter = counter % 20;
         if (!counter) {
             console.log(state.message);
         }
