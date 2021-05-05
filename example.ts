@@ -7,10 +7,10 @@ interface Messager extends State<Messager> {
 class Initial implements Messager {
     message = 'Hello, World!'
     onEnter = () => {
-        console.log('enter')
+        // console.log('enter')
     }
     onExit = () => {
-        console.log('exit')
+        // console.log('exit')
     }
     untilUpdate = new Promise<Messager>(resolve => {
         const resolver = () => resolve(alt)
@@ -21,10 +21,10 @@ class Initial implements Messager {
 class Alt implements Messager {
     message = 'hEllO, wOrLd!'
     onEnter = () => {
-        console.log('hi')
+        // console.log('hi')
     }
     onExit = () => {
-        console.log('bye')
+        // console.log('bye')
     }
     untilUpdate = new Promise<Messager>(resolve => {
         const resolver = () => resolve(initial)
@@ -35,9 +35,14 @@ const alt = new Alt()
 const initial = new Initial()
 const test = async () => {
     const state = CreateMealy<Messager>(initial)
+    let counter = 0
     while (true) {
-        console.log(state.message)
         await state.untilUpdate
+        counter++
+        counter %= 20
+        if (counter) {
+            console.log(state.message)
+        }
     }
 }
 test()
