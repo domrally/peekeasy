@@ -4,6 +4,7 @@ import { Stack } from './src/stack.js';
 // this machine recognizes regular languages
 export const CreateMealy = (initial) => {
     const moore = new Moore(initial);
+    moore.updateLoop();
     const mealy = new Mealy(moore);
     return mealy.current;
 };
