@@ -12,9 +12,6 @@ export class Moore {
             }
         };
         this.current = initial;
-    }
-    // 
-    get untilUpdate() {
-        return this.current.untilUpdate;
+        this.updateLoop();
     }
 }

@@ -1,5 +1,3 @@
-import { Updater } from './updater.js'
-
-export interface Machine<T> extends Updater<T> {
+export interface Machine<T> {
     current: T
 }

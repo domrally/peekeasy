@@ -5,7 +5,6 @@ import { Stack } from './src/stack.js'
 // this machine recognizes regular languages
 export const CreateMealy = <T extends State<T>>(initial: T) => {
     const moore = new Moore(initial)
-    moore.updateLoop()
     const mealy = new Mealy(moore)
     return mealy.current
 }
