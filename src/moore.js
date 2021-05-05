@@ -3,6 +3,7 @@ export class Moore {
     constructor(initial) {
         //
         this.updateLoop = async () => {
+            this.current.onEnter();
             while (true) {
                 const next = await this.current.untilUpdate;
                 this.current.onExit();
@@ -11,7 +12,6 @@ export class Moore {
             }
         };
         this.current = initial;
-        initial.onEnter();
         this.updateLoop();
     }
     // 

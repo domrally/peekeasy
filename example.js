@@ -8,8 +8,33 @@ class Initial {
         this.onExit = () => {
             console.log('exit');
         };
-        this.untilUpdate = new Promise(_resolve => { });
+        this.untilUpdate = new Promise(resolve => {
+            const alt = new Alt();
+            const resolver = () => resolve(alt);
+            window.requestAnimationFrame(resolver);
+        });
     }
 }
-const state = CreateMealy(new Initial());
-console.log(state.message);
+class Alt {
+    constructor() {
+        this.message = 'hEllO, wOrLd!';
+        this.onEnter = () => {
+            console.log('hi');
+        };
+        this.onExit = () => {
+            console.log('bye');
+        };
+        this.untilUpdate = new Promise(resolve => {
+            const initial = new Initial();
+            const resolver = () => resolve(initial);
+            window.requestAnimationFrame(resolver);
+        });
+    }
+}
+(async () => {
+    const state = CreateMealy(new Initial());
+    while (true) {
+        console.log(state.message);
+        await state.untilUpdate;
+    }
+})();

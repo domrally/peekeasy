@@ -10,6 +10,7 @@ export class Moore<T extends State<T>> implements Machine<T> {
     current: T
     //
     private readonly updateLoop = async () => {
+        this.current.onEnter()
         while (true) {
             const next = await this.current.untilUpdate
             this.current.onExit()
@@ -19,7 +20,6 @@ export class Moore<T extends State<T>> implements Machine<T> {
     }
     constructor(initial: T) {
         this.current = initial
-        initial.onEnter()
         this.updateLoop()
     }
 }
