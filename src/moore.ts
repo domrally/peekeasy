@@ -19,6 +19,7 @@ export class Moore<T extends State<T>> implements Machine<T> {
     }
     constructor(initial: T) {
         this.current = initial
+        initial.onEnter()
         this.updateLoop()
     }
 }

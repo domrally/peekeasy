@@ -11,6 +11,7 @@ export class Moore {
             }
         };
         this.current = initial;
+        initial.onEnter();
         this.updateLoop();
     }
     // 
