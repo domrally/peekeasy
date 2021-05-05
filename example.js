@@ -18,7 +18,7 @@ class Initial {
 }
 class Alt {
     constructor() {
-        this.message = 'hEllO, wOrLd!';
+        this.message = 'oh, my!';
         this.onEnter = () => {
             // console.log('hi')
         };

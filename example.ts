@@ -21,7 +21,7 @@ class Initial implements Messager {
 }
 
 class Alt implements Messager {
-    message = 'hEllO, wOrLd!'
+    message = 'oh, my!'
     onEnter = () => {
         // console.log('hi')
     }
