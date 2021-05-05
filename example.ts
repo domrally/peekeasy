@@ -5,7 +5,7 @@ interface Messager extends State<Messager> {
     message: string
 }
 class Initial implements Messager {
-    message = 'Hello, World!'
+    message = '1!'
     onEnter = () => {
         // console.log('enter')
     }
@@ -21,7 +21,7 @@ class Initial implements Messager {
 }
 
 class Alt implements Messager {
-    message = 'oh, my!'
+    message = '2!'
     onEnter = () => {
         // console.log('hi')
     }
@@ -37,7 +37,7 @@ class Alt implements Messager {
 }
 
 class Lol implements Messager {
-    message = 'asdf, cloud!'
+    message = '3!'
     onEnter = () => {
         // console.log('hi')
     }

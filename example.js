@@ -1,7 +1,7 @@
 import { CreatePushdown } from './index.js';
 class Initial {
     constructor() {
-        this.message = 'Hello, World!';
+        this.message = '1!';
         this.onEnter = () => {
             // console.log('enter')
         };
@@ -18,7 +18,7 @@ class Initial {
 }
 class Alt {
     constructor() {
-        this.message = 'oh, my!';
+        this.message = '2!';
         this.onEnter = () => {
             // console.log('hi')
         };
@@ -35,7 +35,7 @@ class Alt {
 }
 class Lol {
     constructor() {
-        this.message = 'asdf, cloud!';
+        this.message = '3!';
         this.onEnter = () => {
             // console.log('hi')
         };
