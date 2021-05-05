@@ -1,11 +1,10 @@
-import { CreateMealy } from "."
-import { State } from "./src/interfaces/state"
+import { CreateMealy } from './index.js'
 
 interface Messager {
     message: string
 }
 class Initial implements Messager {
-    message: 'Hello, World!'
+    message = 'Hello, World!'
     onEnter = () => {
         console.log('enter')
     }
