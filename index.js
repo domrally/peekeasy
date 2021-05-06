@@ -3,23 +3,24 @@ import { Mealy } from './src/mealy.js';
 import { Stack } from './src/stack.js';
 import { Unstack } from './src/unstack.js';
 // 
-const getMealyState = (machine) => {
-    const mealy = new Mealy(machine);
+const createMealyGetState = (context) => {
+    const mealy = new Mealy(context);
     return mealy.state;
 };
-// this machine recognizes regular languages
+// this Mealy equivalent machine recognizes regular languages
 export const CreateMealy = (initial) => {
     const moore = new Moore(initial);
-    return getMealyState(moore);
+    return createMealyGetState(moore);
 };
-// this machine recognizes context-free languages
+// this pushdown equivalent automaton recognizes context-free languages
 export const CreatePushdown = (initial) => {
     const stack = new Stack(initial);
-    return getMealyState(stack);
+    return createMealyGetState(stack);
 };
-// this machine recognizes context-free languages
+// this turing equivalent machine recognizes context-free languages
+// so really one turing equivalent machine simulating another 
 export const CreateTuring = (initial) => {
     const stack = new Stack(initial);
     const unstack = new Unstack(stack);
-    return getMealyState(unstack);
+    return createMealyGetState(unstack);
 };
