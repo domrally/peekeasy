@@ -1,5 +1,5 @@
-import { State } from "../src/interfaces/state"
 import { Moore } from "../src/moore"
+import { State } from "../src/interfaces/state"
 
 interface Letter extends State<Letter> {
     rune: string

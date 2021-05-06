@@ -1,5 +1,5 @@
-import { CreateMealy } from ".."
-import { State } from "../src/interfaces/state"
+import { CreateMealy } from '..'
+import { State } from '../src/interfaces/state'
 
 abstract class Myzz implements State<Myzz> {
     promiseOutput = new Promise<any>(()=>{})

@@ -1,5 +1,6 @@
 import { CreateTuring } from '..'
 import { State } from '../src/interfaces/state'
+
 abstract class Stateable implements State<Stateable> {
     get promiseNext() {
         return new Promise<Readonly<Stateable>>(resolve => this._setNext = resolve)
@@ -17,6 +18,7 @@ abstract class Stateable implements State<Stateable> {
     abstract onEnter(): void
     abstract onExit(): void
 }
+
 class Left  extends Stateable {
     private is1st = true
     onExit() {
@@ -33,6 +35,7 @@ class Left  extends Stateable {
         })
     }
 }
+
 class Right extends Stateable {
     onExit() {
         console.log('exit right')
@@ -41,6 +44,7 @@ class Right extends Stateable {
         window.requestAnimationFrame(() => this.back())
     }
 }
+
 const update = async() => {
     const state = CreateTuring(new Left())
     while (true) {
