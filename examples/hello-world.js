@@ -1,4 +1,4 @@
-import { Moore } from "../src/moore";
+import { Moore } from '../src/moore.js';
 class Runer {
     get promiseOutput() {
         return new Promise(resolve => resolve(this.rune));
