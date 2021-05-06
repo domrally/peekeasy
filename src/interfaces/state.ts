@@ -1,6 +1,6 @@
-import { Updater } from './updater.js'
 //
-export interface State<T> extends Updater<T> {
-    readonly onEnter: () => void
-    readonly onExit: () => void
+export interface State<S extends State<Readonly<S>>> {
+    readonly promiseOutput: Promise<Readonly<any>>
+    readonly promiseNext: Promise<Readonly<S>>
+    transition(next: S): Promise<void>
 }

@@ -1,3 +1,3 @@
-export interface Updater<T> {
-    readonly untilUpdate: Promise<T>
+export interface Nexter<T> {
+    readonly promiseNext: Promise<T>
 }

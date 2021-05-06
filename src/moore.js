@@ -1,22 +1,16 @@
 // 
 export class Moore {
-    constructor(machine) {
-        //
-        this.updateLoop = async () => {
-            this.machine.onEnter();
-            let old = this.machine.current;
+    // 
+    constructor(_state) {
+        this._state = _state;
+        (async () => {
             while (true) {
-                const next = await this.machine.untilUpdate;
-                old?.onExit();
-                next?.onEnter();
-                old = next;
+                this._state = await this._state.promiseNext;
             }
-        };
-        this.machine = machine;
-        this.updateLoop();
+        })();
     }
-    // concrete implementation and state wrapper
-    get current() {
-        return this.machine.current;
+    // 
+    get state() {
+        return this._state;
     }
 }

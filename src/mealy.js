@@ -1,13 +1,16 @@
 //
 export class Mealy {
     //
-    constructor(machine) {
-        this.machine = machine;
+    constructor(_machine) {
+        this._machine = _machine;
         // 
         this.handler = {
-            get: (_target, prop) => this.machine.current[prop],
-            set: (_target, prop, value) => this.machine.current[prop] = value
+            get: (_, prop) => this._state[prop],
+            set: (_, prop, value) => this._state[prop] = value
         };
-        this.current = new Proxy(machine.current, this.handler);
+        this.state = new Proxy(_machine.state, this.handler);
+    }
+    get _state() {
+        return this._machine.state;
     }
 }

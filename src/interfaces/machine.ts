@@ -1,3 +1,3 @@
 export interface Machine<T> {
-    current: T
+    readonly state: Readonly<T>
 }

@@ -64,6 +64,6 @@
     },
     "files": [
         "index.ts",
-        "example.ts"
+        "./examples/hello-world.ts"
     ]
 }
