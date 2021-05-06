@@ -1,7 +1,7 @@
-import { Machine } from './interfaces/machine.js'
+import { Context } from './interfaces/context.js'
 import { State } from './interfaces/state.js'
 //
-export class Unstack<S extends State<S>> implements Machine<S> {
+export class Unstack<S extends State<S>> implements Context<S> {
     // 
     private readonly _stack: S[] = []
     //
@@ -23,7 +23,7 @@ export class Unstack<S extends State<S>> implements Machine<S> {
             await Promise.race([this._updateNext(), this._updateOutput()])
         }
     }
-    constructor(private _machine: Machine<S>) {
+    constructor(private _machine: Context<S>) {
         this._raceWhile()
     }
     get state(): Readonly<S> {

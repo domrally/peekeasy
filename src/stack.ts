@@ -1,7 +1,7 @@
-import { Machine } from './interfaces/machine.js'
+import { Context } from './interfaces/context.js'
 import { State } from './interfaces/state.js'
 //
-export class Stack<S extends State<S>> implements Machine<S> {
+export class Stack<S extends State<S>> implements Context<S> {
     // 
     private readonly _stack: S[]
     //

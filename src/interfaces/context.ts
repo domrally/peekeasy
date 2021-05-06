@@ -1,3 +1,3 @@
-export interface Machine<T> {
+export interface Context<T> {
     readonly state: Readonly<T>
 }

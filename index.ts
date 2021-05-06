@@ -3,25 +3,26 @@ import { Moore } from './src/moore.js'
 import { Mealy } from './src/mealy.js'
 import { Stack } from './src/stack.js'
 import { Unstack } from './src/unstack.js'
-import { Machine } from './src/interfaces/machine.js'
+import { Context } from './src/interfaces/context.js'
 // 
-const getMealyState = <S extends State<S>>(machine: Machine<S>) => {
-    const mealy = new Mealy(machine)
+const createMealyGetState = <S extends State<S>>(context: Context<S>) => {
+    const mealy = new Mealy(context)
     return mealy.state
 }
-// this machine recognizes regular languages
+// this Mealy equivalent machine recognizes regular languages
 export const CreateMealy = <S extends State<S>>(initial: S): S => {
     const moore = new Moore(initial)
-    return getMealyState(moore)
+    return createMealyGetState(moore)
 }
-// this machine recognizes context-free languages
+// this pushdown equivalent automaton recognizes context-free languages
 export const CreatePushdown = <S extends State<S>>(initial: S): S => {
     const stack = new Stack(initial)
-    return getMealyState(stack)
+    return createMealyGetState(stack)
 }
-// this machine recognizes context-free languages
+// this turing equivalent machine recognizes context-free languages
+// so really one turing equivalent machine simulating another 
 export const CreateTuring = <S extends State<S>>(initial: S): S => {
     const stack = new Stack(initial)
     const unstack = new Unstack(stack)
-    return getMealyState(unstack)
+    return createMealyGetState(unstack)
 }

@@ -1,7 +1,7 @@
-import { Machine } from './interfaces/machine.js'
+import { Context } from './interfaces/context.js'
 import { State } from './interfaces/state.js'
 //
-export class Mealy<S extends State<S>> implements Machine<S> {
+export class Mealy<S extends State<S>> implements Context<S> {
     readonly state: Readonly<S>
     private get _state() {
         return this._machine.state as any
@@ -12,7 +12,7 @@ export class Mealy<S extends State<S>> implements Machine<S> {
         set: (_: S, prop: any, value: any) => this._state[prop] = value
     }
     //
-    constructor(private _machine: Machine<S>) {
+    constructor(private _machine: Context<S>) {
         this.state = new Proxy<S>(_machine.state, this.handler)
     }
 }

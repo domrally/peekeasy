@@ -1,7 +1,7 @@
-import { Machine } from './interfaces/machine.js'
+import { Context } from './interfaces/context.js'
 import { State } from './interfaces/state.js'
 // 
-export class Moore<S extends State<S>> implements Machine<S> {
+export class Moore<S extends State<S>> implements Context<S> {
     // 
     constructor(private _state: S) {
         (async () => {
