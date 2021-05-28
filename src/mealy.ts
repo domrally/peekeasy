@@ -1,19 +1,25 @@
+import { Moore } from './moore'
 //
-export class Mealy<S extends object> implements AsyncIterable<S>, ProxyHandler<S> {
-    // just here for the lolz
-    readonly [Symbol.asyncIterator] = () => this.stateMachine[Symbol.asyncIterator]()
-    // 
-    constructor(public proxy: S, private stateMachine: AsyncIterable<S>) {
-        let currentState = proxy
-        // 
-        ;(async () => {
-            for await (currentState of stateMachine) { }
-        })()
-        // 
-        const handler: ProxyHandler<S> = {
-            get: (_: S, property: any): any => (currentState as any)[property],
-            set: (_: S, property: any, value: any) => (currentState as any)[property] = value
-        }
-        proxy = new Proxy(currentState, handler)
-    }
+export class Mealy<S extends object & { promise: Readonly<PromiseLike<S>> }> {
+	readonly target: AsyncIterable<S> & S
+	readonly handler = {
+		get: (_: AsyncIterable<S> & S, property: any) => {
+			const proxy = property === Symbol.asyncIterator
+				? this.moore[Symbol.asyncIterator]
+				: (this.currentState as any)[property]
+			return proxy
+		},
+		set: (_: AsyncIterable<S> & S, property: any, value: any) => (this.currentState as any)[property] = value
+	}
+	private moore: Moore<S>
+	// 
+	constructor(private currentState: S, ...states: S[]) {
+		this.moore = new Moore(currentState, ...states)
+		this.target = Object.assign<AsyncIterable<S>, S>(this.moore, currentState)
+		const loop = async () => {
+			// 
+			for await (currentState of this.moore) { }
+		}
+		loop()
+	}
 }

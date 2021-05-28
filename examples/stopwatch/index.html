@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <title>mealy</title>
+   <meta charset="utf-8">
+	<link rel="shortcut icon" href="#">
+</head>
+
+<body>
+	<script type="module">
+		import { html, render } from 'https://unpkg.com/lit-html?module'
+		import { asyncReplace } from 'https://unpkg.com/lit-html/directives/async-replace?module'
+		import { stopwatch } from './stopwatch.js'
+		// Define a template
+		const template = html`
+		<span>${asyncReplace(stopwatch)}</span>
+		<button @click="${stopwatch.top()}">top</button>
+		<button @click="${stopwatch.split()}">split</button>`
+		// Render the template to the document
+		render(template, document.body)
+	</script>
+</body>
+
+</html>
