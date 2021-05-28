@@ -15,7 +15,7 @@ class Chronograph {
             ms -= ss * 1000;
             return `${mn}:${ss}:${ms}`;
         };
-        this.promise = Promise.reject();
+        this.promise = Promise.resolve(this);
     }
     // 
     resolve(_nextState) { }

@@ -21,7 +21,7 @@ abstract class Chronograph {
 	}
 	// 
 	resolve(_nextState: Chronograph) { }
-	promise = Promise.reject()
+	promise = Promise.resolve(this)
 }
 // 
 const Restarted = createState(
