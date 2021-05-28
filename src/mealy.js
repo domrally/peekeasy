@@ -1,4 +1,4 @@
-import { Moore } from './moore';
+import { Moore } from './moore.js';
 //
 export class Mealy {
     // 
