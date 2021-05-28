@@ -1,4 +1,4 @@
-import { Moore } from './moore'
+import { Moore } from './moore.js'
 //
 export class Mealy<S extends object & { promise: Readonly<PromiseLike<S>> }> {
 	readonly target: AsyncIterable<S> & S
