@@ -1,52 +1,68 @@
-import { CreateMealy } from '..'
-import { State } from '../src/interfaces/state'
-
-abstract class Myzz implements State<Myzz> {
-    promiseOutput = new Promise<any>(()=>{})
-    abstract promiseNext: Promise<Readonly<Myzz>>
-    transition(_next: Myzz): Promise<void> {
-        throw new Error("Method not implemented.")
-    }
-    abstract consoleLog(count: number): void
+interface Counter {
+    count: () => void
 }
-
-class Fizz extends Myzz {
-    private _resolve: (value: Readonly<Myzz> | PromiseLike<Readonly<Myzz>>) => void
-    get promiseNext(): Promise<Readonly<Myzz>> {
-        return new Promise(resolve => {this._resolve = resolve})
-    }
-    private isHot = true
-    consoleLog(count: number): void {
-        if (!(count%3)) return
-        console.log('fizz')
-        // buzz.consoleLog(count)recursion
-        // TODO wait 2 then pass it back
-        this.isHot = !this.isHot
-        if (this.isHot)
-        this._resolve(buzz)
+//
+class IntegerFizz implements Counter, PromiseLike<Counter> {
+    count: () => void
+    // 1, 2, .., 7, 8, .., 11
+    then() {
+        const zz = ++this.count % 4
+            ? fint
+            : fizz
+        return Promise.resolve(zz)
     }
 }
-class Buzz extends Myzz {
-    private _resolve: (value: Readonly<Myzz> | PromiseLike<Readonly<Myzz>>) => void
-    get promiseNext(): Promise<Readonly<Myzz>> {
-        return new Promise(resolve => {this._resolve = resolve})
+class IntegerCycle implements Counter, PromiseLike<Counter> {
+    count = 1
+    then() {
+        const zz = [bunt, buzz, fizz, fizzbuzz][++this.count % 4]
+        return Promise.resolve(zz)
     }
-    consoleLog(count: number): void {
-        if (!(count%5)) return
-        console.log('buzz')
-        fizz.consoleLog(count)
-        this._resolve(fizz)
-    }
+    toString = () => this.count
 }
+class Fizz implements Counter, PromiseLike<Counter> {
+    count = 1
+    then() {
+        const zz = ++this.count % 4
+            ? bunt
+            : buzz
+        return Promise.resolve(zz)
+    }
+    toString = () => 'Fizz'
+}
+class Buzz implements Counter, PromiseLike<Counter> {
+    count: () => void
+    private toggle = false
+    then() {
+        this.toggle = !this.toggle
+        const zz = this.toggle
+            ? fizz
+            : fint
+        return Promise.resolve(zz)
+    }
+    toString = () => 'Buzz'
+}
+class FizzBuzz implements Counter, PromiseLike<Counter> {
+    count: () => void
+    then = () => Promise.resolve(fint as PromiseLike<any>)
+    toString = () => 'Fizz Buzz'
+}
+(async () => {
+    for await (const word of automata) {
+        console.log(word) // Integer, Fizz, Buzz, Fizz Buzz
+    }
+})();
+(async () => {
+    while (true) {
+        for (const player of players) {
+            await new Promise(resolve => window.requestAnimationFrame(resolve))            
+            player.play()
+        }
+    }
+})();
 const fizz = new Fizz()
 const buzz = new Buzz()
-
-const state = CreateMealy<Myzz>(new Fizz())
-const myzzing = async () => {
-    let count = 0
-    while (true) {
-        await new Promise(resolve => window.requestAnimationFrame(resolve))
-        state.consoleLog(count++)
-    }
-}
-myzzing()
+const fizzbuzz = new FizzBuzz()
+const fint = new IntegerFizz()
+const bunt = new IntegerCycle()
+const automata = new Mealy(fint)

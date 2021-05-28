@@ -1,18 +1,19 @@
-import { Context } from './interfaces/context.js'
-import { State } from './interfaces/state.js'
 //
-export class Mealy<S extends State<S>> implements Context<S> {
-    readonly state: Readonly<S>
-    private get _state() {
-        return this._machine.state as any
-    }
+export class Mealy<S extends object> implements AsyncIterable<S>, ProxyHandler<S> {
+    // just here for the lolz
+    readonly [Symbol.asyncIterator] = () => this.stateMachine[Symbol.asyncIterator]()
     // 
-    private readonly handler = {
-        get: (_: S, prop: any) => this._state[prop],
-        set: (_: S, prop: any, value: any) => this._state[prop] = value
-    }
-    //
-    constructor(private _machine: Context<S>) {
-        this.state = new Proxy<S>(_machine.state, this.handler)
+    constructor(public proxy: S, private stateMachine: AsyncIterable<S>) {
+        let currentState = proxy
+        // 
+        ;(async () => {
+            for await (currentState of stateMachine) { }
+        })()
+        // 
+        const handler: ProxyHandler<S> = {
+            get: (_: S, property: any): any => (currentState as any)[property],
+            set: (_: S, property: any, value: any) => (currentState as any)[property] = value
+        }
+        proxy = new Proxy(currentState, handler)
     }
 }

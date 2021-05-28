@@ -10,14 +10,16 @@ const createMealyGetState = <S extends State<S>>(context: Context<S>) => {
     return mealy.state
 }
 // this Mealy equivalent machine recognizes regular languages
-export const CreateMealy = <S extends State<S>>(initial: S): S => {
-    const moore = new Moore(initial)
-    return createMealyGetState(moore)
+export const CreateMealy = <S extends object>(initial: S, ...states: PromiseLike<S>[]): S => {
+    const moore = new Moore<S>(...states)
+    return new Mealy(initial, moore) as S
 }
 // this pushdown equivalent automaton recognizes context-free languages
-export const CreatePushdown = <S extends State<S>>(initial: S): S => {
-    const stack = new Stack(initial)
-    return createMealyGetState(stack)
+export const CreatePushdown = <S extends object>(initial: S): S => {
+    const moore = new Moore<S>(...states)
+    const stack = new Stack(moore)
+    const mealy = new Mealy(initial, moore)
+    return mealy.proxy
 }
 // this turing equivalent machine recognizes context-free languages
 // so really one turing equivalent machine simulating another 

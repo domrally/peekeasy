@@ -1,17 +1,22 @@
-import { Context } from './interfaces/context.js'
-import { State } from './interfaces/state.js'
 // 
-export class Moore<S extends State<S>> implements Context<S> {
+export class Moore<S> implements AsyncIterable<S> {
+    private promise: Promise<IteratorResult<S>> = Promise.reject()
     // 
-    constructor(private _state: S) {
+    constructor(...states: PromiseLike<S>[]) {
         (async () => {
             while (true) {
-                this._state = await this._state.promiseNext
+                let resolve: (result: IteratorResult<S>) => void = () => {}
+                this.promise = new Promise(r => resolve = r)
+                const value = await Promise.race(states)
+                resolve?.({ value, done: false })
             }
         })()
     }
-    // 
-    get state(): Readonly<S> {
-        return this._state
+    [Symbol.asyncIterator](): AsyncIterator<S, any, undefined> {
+        return {
+            next: async () => {
+                return this.promise
+            }
+        }
     }
 }

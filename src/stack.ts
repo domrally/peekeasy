@@ -1,7 +1,7 @@
 import { Context } from './interfaces/context.js'
 import { State } from './interfaces/state.js'
 //
-export class Stack<S extends State<S>> implements Context<S> {
+export class Stack<S> implements AsyncIterable<S> {
     // 
     private readonly _stack: S[]
     //
@@ -24,6 +24,9 @@ export class Stack<S extends State<S>> implements Context<S> {
     constructor(_state: S) {
         this._stack = [_state]
         this._raceWhile()
+    }
+    [Symbol.asyncIterator](): AsyncIterator<S, any, undefined> {
+        throw new Error('Method not implemented.')
     }
     get state(): Readonly<S> {
         return this._stack[0]
