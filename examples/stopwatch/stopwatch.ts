@@ -1,13 +1,17 @@
 import { Mealy } from '../../src/mealy.js'
 // 
 class Pinky<T> extends Promise<T> {
-	constructor(
-		public resolve: (value: T) => void = () => { },
-		public reject: (reason?: any) => void = () => { }) {
+	resolve: (value: T) => void
+	reject: (reason?: any) => void
+	constructor() {
+		let res: (value: T) => void = () => { }
+		let rej: (reason?: any) => void = () => { }
 		super((resolve, reject) => {
-			this.resolve = resolve
-			this.reject = reject
+			res = resolve
+			rej = reject
 		})
+		this.resolve = res
+		this.reject = rej
 	}
 }
 
