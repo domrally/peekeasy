@@ -1,25 +1,25 @@
 //
 export class Moore<S extends { promise: PromiseLike<S> }> implements AsyncIterable<Readonly<S>> {
 	[Symbol.asyncIterator]: () => AsyncIterator<S>
-	// 
-	constructor(...states: S[]) {
-		let setResult: (result: IteratorResult<S>) => void
+	private setResult: (result: IteratorResult<S>) => void
+	loop = async () => {
 		const getNextValue = () => {
-			const promise = new Promise<IteratorResult<S>>(resolve => setResult = resolve)
+			const promise = new Promise<IteratorResult<S>>(resolve => this.setResult = resolve)
 			const getPromise = () => promise
 			const asyncIterator = { next: getPromise }
 			const getAsyncIterator = () => asyncIterator
 			this[Symbol.asyncIterator] = getAsyncIterator
 
-			const asyncIterable = states.map(s => s.promise)
+			const asyncIterable = this.states.map(s => s.promise)
 			return Promise.race(asyncIterable)
 		}
-		const loop = async () => {
-			while (true) {
-				const value = await getNextValue()
-				setResult?.({ value, done: false })
-			}
+		while (true) {
+			const value = await getNextValue()
+			this.setResult?.({ value, done: false })
 		}
-		loop()
+	}
+	// 
+	constructor(private states: S[]) {
+		this.setResult = (_result: IteratorResult<S>) => { }
 	}
 }

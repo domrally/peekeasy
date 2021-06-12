@@ -14,7 +14,7 @@ export class Mealy<S extends object & { promise: PromiseLike<S> }> {
 	private moore: Moore<S>
 	// 
 	constructor(private currentState: S, ...states: S[]) {
-		this.moore = new Moore(currentState, ...states)
+		this.moore = new Moore([currentState, ...states])
 		this.target = Object.assign<AsyncIterable<S>, S>(this.moore, currentState)
 		const loop = async () => {
 			// 

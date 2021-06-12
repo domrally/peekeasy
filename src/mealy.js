@@ -13,7 +13,7 @@ export class Mealy {
             },
             set: (_, property, value) => this.currentState[property] = value
         };
-        this.moore = new Moore(currentState, ...states);
+        this.moore = new Moore([currentState, ...states]);
         this.target = Object.assign(this.moore, currentState);
         const loop = async () => {
             // 
