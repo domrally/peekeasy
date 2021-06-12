@@ -71,7 +71,7 @@ class Watching extends Chronograph {
 	}
 	private loop = async (time: number) => {
 		this.milliseconds += Date.now() - time
-		this.resolve(this)
+		this.resolve(watching)
 		const getRequest = (r: any) => window.requestAnimationFrame(() => r())
 		await new Promise(resolve => getRequest(resolve))
 		return Date.now()
