@@ -1,8 +1,8 @@
 import { Mealy } from '../../src/mealy.js';
 // 
-class Pinky extends Promise {
+class Pinky {
     constructor(res = () => { }, rej = () => { }) {
-        super((resolve, reject) => {
+        this.promise = new Promise((resolve, reject) => {
             res = resolve;
             rej = reject;
         });
@@ -32,7 +32,6 @@ class Restarted extends Chronograph {
     constructor() {
         super(...arguments);
         this.top = () => {
-            const watching = new Watching();
             watching.milliseconds = 0;
             watching.watch();
             this.resolve(watching);
@@ -44,8 +43,8 @@ class Restarted extends Chronograph {
 class Lapped extends Chronograph {
     constructor() {
         super(...arguments);
-        this.top = () => this.resolve(new Stopped());
-        this.split = () => this.resolve(new Watching());
+        this.top = () => this.resolve(stopped);
+        this.split = () => this.resolve(watching);
     }
 }
 // 
@@ -53,7 +52,6 @@ class Stopped extends Chronograph {
     constructor() {
         super(...arguments);
         this.top = () => {
-            const watching = new Watching();
             watching.watch();
             this.resolve(watching);
         };
@@ -77,18 +75,16 @@ class Watching extends Chronograph {
         };
         this.loop = async (time) => {
             this.milliseconds += Date.now() - time;
-            const newWatching = new Watching(this.resolve, this.reject);
-            this.resolve(newWatching);
+            this.resolve(this);
             const getRequest = (r) => window.requestAnimationFrame(() => r());
             await new Promise(resolve => getRequest(resolve));
             return Date.now();
         };
         this.top = () => {
             this.updating = Promise.resolve();
-            this.resolve(new Stopped());
+            this.resolve(stopped);
         };
         this.split = () => {
-            const lapped = new Lapped();
             lapped.milliseconds = this.milliseconds;
             return this.resolve(lapped);
         };
@@ -96,6 +92,9 @@ class Watching extends Chronograph {
 }
 // 
 const restarted = new Restarted();
+const watching = new Watching();
+const stopped = new Stopped();
+const lapped = new Lapped();
 // 
-const { target, handler } = new Mealy(restarted);
+const { target, handler } = new Mealy(restarted, watching, stopped, lapped);
 export const stopwatch = new Proxy(target, handler);

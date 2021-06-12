@@ -1,13 +1,17 @@
 import { Mealy } from '../../src/mealy.js'
 // 
-class Pinky<T> extends Promise<T> {
-	resolve: (value: T) => void
-	reject: (reason?: any) => void
+abstract class Pinky<T> {
+
+	readonly promise: PromiseLike<T>
+	readonly resolve: (value: T) => void
+	readonly reject: (reason?: any) => void
+
 	constructor(
 		res: (value: T) => void = () => { },
 		rej: (reason?: any) => void = () => { }
 	) {
-		super((resolve, reject) => {
+
+		this.promise = new Promise((resolve, reject) => {
 			res = resolve
 			rej = reject
 		})
@@ -38,7 +42,6 @@ abstract class Chronograph extends Pinky<Chronograph> {
 // 
 class Restarted extends Chronograph {
 	readonly top = () => {
-		const watching = new Watching()
 		watching.milliseconds = 0
 		watching.watch()
 		this.resolve(watching)
@@ -47,13 +50,12 @@ class Restarted extends Chronograph {
 }
 // 
 class Lapped extends Chronograph {
-	readonly top = () => this.resolve(new Stopped())
-	readonly split = () => this.resolve(new Watching())
+	readonly top = () => this.resolve(stopped)
+	readonly split = () => this.resolve(watching)
 }
 // 
 class Stopped extends Chronograph {
 	readonly top = () => {
-		const watching = new Watching()
 		watching.watch()
 		this.resolve(watching)
 	}
@@ -74,24 +76,25 @@ class Watching extends Chronograph {
 	}
 	private loop = async (time: number) => {
 		this.milliseconds += Date.now() - time
-		const newWatching = new Watching(this.resolve, this.reject)
-		this.resolve(newWatching)
+		this.resolve(this)
 		const getRequest = (r: any) => window.requestAnimationFrame(() => r())
 		await new Promise(resolve => getRequest(resolve))
 		return Date.now()
 	}
 	readonly top = () => {
 		this.updating = Promise.resolve()
-		this.resolve(new Stopped())
+		this.resolve(stopped)
 	}
 	readonly split = () => {
-		const lapped = new Lapped()
 		lapped.milliseconds = this.milliseconds
 		return this.resolve(lapped)
 	}
 }
 // 
 const restarted = new Restarted()
+const watching = new Watching()
+const stopped = new Stopped()
+const lapped = new Lapped()
 // 
-const { target, handler } = new Mealy<Chronograph>(restarted)
+const { target, handler } = new Mealy<Chronograph>(restarted, watching, stopped, lapped)
 export const stopwatch = new Proxy(target, handler)
