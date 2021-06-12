@@ -2,15 +2,13 @@ import { Mealy } from '../../src/mealy.js'
 // 
 abstract class Pinky<T> {
 
-	readonly promise: PromiseLike<T>
-	readonly resolve: (value: T) => void
-	readonly reject: (reason?: any) => void
+	promise: PromiseLike<T> = Promise.reject()
+	resolve: (value: T) => void = () => { }
+	reject: (reason?: any) => void = () => { }
 
-	constructor(
-		res: (value: T) => void = () => { },
-		rej: (reason?: any) => void = () => { }
-	) {
-
+	init = async () => {
+		let res: (value: T) => void = () => { }
+		let rej: (reason?: any) => void = () => { }
 		this.promise = new Promise((resolve, reject) => {
 			res = resolve
 			rej = reject

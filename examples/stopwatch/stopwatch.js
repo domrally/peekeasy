@@ -1,13 +1,20 @@
 import { Mealy } from '../../src/mealy.js';
 // 
 class Pinky {
-    constructor(res = () => { }, rej = () => { }) {
-        this.promise = new Promise((resolve, reject) => {
-            res = resolve;
-            rej = reject;
-        });
-        this.resolve = res;
-        this.reject = rej;
+    constructor() {
+        this.promise = Promise.reject();
+        this.resolve = () => { };
+        this.reject = () => { };
+        this.init = async () => {
+            let res = () => { };
+            let rej = () => { };
+            this.promise = new Promise((resolve, reject) => {
+                res = resolve;
+                rej = reject;
+            });
+            this.resolve = res;
+            this.reject = rej;
+        };
     }
 }
 class Chronograph extends Pinky {
