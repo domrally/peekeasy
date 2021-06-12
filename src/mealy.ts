@@ -18,6 +18,7 @@ export class Mealy<S extends object & { promise: PromiseLike<S> }> {
 		this.target = Object.assign<AsyncIterable<S>, S>(this.moore, currentState)
 		const loop = async () => {
 			// 
+			this.moore.loop()
 			for await (currentState of this.moore) { }
 		}
 		loop()

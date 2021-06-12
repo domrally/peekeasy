@@ -17,6 +17,7 @@ export class Mealy {
         this.target = Object.assign(this.moore, currentState);
         const loop = async () => {
             // 
+            this.moore.loop();
             for await (currentState of this.moore) { }
         };
         loop();
