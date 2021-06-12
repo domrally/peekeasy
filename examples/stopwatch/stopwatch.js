@@ -1,13 +1,10 @@
 import { Mealy } from '../../src/mealy.js';
 // 
-const empty = () => { };
 class Pinky extends Promise {
-    constructor(res = empty, rej = empty) {
+    constructor(res = () => { }, rej = () => { }) {
         super((resolve, reject) => {
-            if (res === empty)
-                res = resolve;
-            if (rej === empty)
-                rej = reject;
+            res = resolve;
+            rej = reject;
         });
         this.resolve = res;
         this.reject = rej;
@@ -35,6 +32,7 @@ class Restarted extends Chronograph {
     constructor() {
         super(...arguments);
         this.top = () => {
+            const watching = new Watching();
             watching.milliseconds = 0;
             watching.watch();
             this.resolve(watching);
@@ -46,8 +44,8 @@ class Restarted extends Chronograph {
 class Lapped extends Chronograph {
     constructor() {
         super(...arguments);
-        this.top = () => this.resolve(stopped);
-        this.split = () => this.resolve(watching);
+        this.top = () => this.resolve(new Stopped());
+        this.split = () => this.resolve(new Watching());
     }
 }
 // 
@@ -55,6 +53,7 @@ class Stopped extends Chronograph {
     constructor() {
         super(...arguments);
         this.top = () => {
+            const watching = new Watching();
             watching.watch();
             this.resolve(watching);
         };
@@ -86,9 +85,10 @@ class Watching extends Chronograph {
         };
         this.top = () => {
             this.updating = Promise.resolve();
-            this.resolve(stopped);
+            this.resolve(new Stopped());
         };
         this.split = () => {
+            const lapped = new Lapped();
             lapped.milliseconds = this.milliseconds;
             return this.resolve(lapped);
         };
@@ -96,9 +96,6 @@ class Watching extends Chronograph {
 }
 // 
 const restarted = new Restarted();
-const lapped = new Lapped();
-const stopped = new Stopped();
-const watching = new Watching();
 // 
-const { target, handler } = new Mealy(restarted, lapped, stopped, watching);
+const { target, handler } = new Mealy(restarted);
 export const stopwatch = new Proxy(target, handler);

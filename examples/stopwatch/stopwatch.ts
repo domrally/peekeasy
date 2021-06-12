@@ -1,16 +1,15 @@
 import { Mealy } from '../../src/mealy.js'
 // 
-const empty = () => { }
 class Pinky<T> extends Promise<T> {
 	resolve: (value: T) => void
 	reject: (reason?: any) => void
 	constructor(
-		res: (value: T) => void = empty,
-		rej: (reason?: any) => void = empty
+		res: (value: T) => void = () => { },
+		rej: (reason?: any) => void = () => { }
 	) {
 		super((resolve, reject) => {
-			if (res === empty) res = resolve
-			if (rej === empty) rej = reject
+			res = resolve
+			rej = reject
 		})
 		this.resolve = res
 		this.reject = rej
@@ -39,6 +38,7 @@ abstract class Chronograph extends Pinky<Chronograph> {
 // 
 class Restarted extends Chronograph {
 	readonly top = () => {
+		const watching = new Watching()
 		watching.milliseconds = 0
 		watching.watch()
 		this.resolve(watching)
@@ -47,12 +47,13 @@ class Restarted extends Chronograph {
 }
 // 
 class Lapped extends Chronograph {
-	readonly top = () => this.resolve(stopped)
-	readonly split = () => this.resolve(watching)
+	readonly top = () => this.resolve(new Stopped())
+	readonly split = () => this.resolve(new Watching())
 }
 // 
 class Stopped extends Chronograph {
 	readonly top = () => {
+		const watching = new Watching()
 		watching.watch()
 		this.resolve(watching)
 	}
@@ -81,18 +82,16 @@ class Watching extends Chronograph {
 	}
 	readonly top = () => {
 		this.updating = Promise.resolve()
-		this.resolve(stopped)
+		this.resolve(new Stopped())
 	}
 	readonly split = () => {
+		const lapped = new Lapped()
 		lapped.milliseconds = this.milliseconds
 		return this.resolve(lapped)
 	}
 }
 // 
 const restarted = new Restarted()
-const lapped = new Lapped()
-const stopped = new Stopped()
-const watching = new Watching()
 // 
-const { target, handler } = new Mealy<Chronograph>(restarted, lapped, stopped, watching)
+const { target, handler } = new Mealy<Chronograph>(restarted)
 export const stopwatch = new Proxy(target, handler)
