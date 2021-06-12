@@ -9,8 +9,7 @@ export class Moore {
             const asyncIterator = { next: getPromise };
             const getAsyncIterator = () => asyncIterator;
             this[Symbol.asyncIterator] = getAsyncIterator;
-            const asyncIterable = states.map(s => s.promise);
-            return Promise.race(asyncIterable);
+            return Promise.race(states);
         };
         const loop = async () => {
             while (true) {

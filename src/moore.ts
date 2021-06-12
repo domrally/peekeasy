@@ -1,8 +1,8 @@
 //
-export class Moore<S extends { promise: PromiseLike<S> }> implements AsyncIterable<Readonly<S>> {
+export class Moore<S> implements AsyncIterable<S> {
 	[Symbol.asyncIterator]: () => AsyncIterator<S>
 	// 
-	constructor(...states: S[]) {
+	constructor(...states: PromiseLike<S>[]) {
 		let setResult: (result: IteratorResult<S>) => void
 		const getNextValue = () => {
 			const promise = new Promise<IteratorResult<S>>(resolve => setResult = resolve)
@@ -11,8 +11,7 @@ export class Moore<S extends { promise: PromiseLike<S> }> implements AsyncIterab
 			const getAsyncIterator = () => asyncIterator
 			this[Symbol.asyncIterator] = getAsyncIterator
 
-			const asyncIterable = states.map(s => s.promise)
-			return Promise.race(asyncIterable)
+			return Promise.race(states)
 		}
 		const loop = async () => {
 			while (true) {

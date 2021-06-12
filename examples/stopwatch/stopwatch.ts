@@ -1,7 +1,17 @@
 import { Mealy } from '../../src/mealy.js'
-import { createState } from '../../src/state.js'
 // 
-abstract class Chronograph {
+class Pinky<T> extends Promise<T> {
+	constructor(
+		public resolve: (value: T) => void = () => { },
+		public reject: (reason?: any) => void = () => { }) {
+		super((resolve, reject) => {
+			this.resolve = resolve
+			this.reject = reject
+		})
+	}
+}
+
+abstract class Chronograph extends Pinky<Chronograph> {
 	// 
 	abstract top(): void
 	abstract split(): void
@@ -19,73 +29,58 @@ abstract class Chronograph {
 
 		return `${mn}:${ss}:${ms}`
 	}
-	// 
-	resolve(_nextState: Chronograph) { }
-	promise = Promise.resolve(this)
 }
 // 
-const Restarted = createState(
-	class _Restarted extends Chronograph {
-		constructor() {
-			super()
-			this.milliseconds = 0
-		}
-		readonly top = () => {
-			watching.milliseconds = 0
-			watching.watch()
-			this.resolve(watching)
-		}
-		readonly split = () => { }
+class Restarted extends Chronograph {
+	readonly top = () => {
+		watching.milliseconds = 0
+		watching.watch()
+		this.resolve(watching)
 	}
-)
+	readonly split = () => { }
+}
 // 
-const Lapped = createState(
-	class _Lapped extends Chronograph {
-		readonly top = () => this.resolve(stopped)
-		readonly split = () => this.resolve(watching)
-	}
-)
+class Lapped extends Chronograph {
+	readonly top = () => this.resolve(stopped)
+	readonly split = () => this.resolve(watching)
+}
 // 
-const Stopped = createState(
-	class _Stopped extends Chronograph {
-		readonly top = () => {
-			watching.watch()
-			this.resolve(watching)
-		}
-		readonly split = () => this.resolve(restarted)
+class Stopped extends Chronograph {
+	readonly top = () => {
+		watching.watch()
+		this.resolve(watching)
 	}
-)
+	readonly split = () => this.resolve(restarted)
+}
 // 
-const Watching = createState(
-	class _Watching extends Chronograph {
-		private updating: Promise<void> = Promise.resolve()
-		update = async () => {
-			const u = this.updating
-			let time = Date.now()
-			while (u === this.updating) {
-				time = await this.loop(time)
-			}
-		}
-		watch = () => {
-			this.updating = this.update()
-		}
-		private loop = async (time: number) => {
-			this.milliseconds += Date.now() - time
-			this.resolve(this)
-			const getRequest = (r: any) => window.requestAnimationFrame(() => r())
-			await new Promise(resolve => getRequest(resolve))
-			return Date.now()
-		}
-		readonly top = () => {
-			this.updating = Promise.resolve()
-			this.resolve(stopped)
-		}
-		readonly split = () => {
-			lapped.milliseconds = this.milliseconds
-			return this.resolve(lapped)
+class Watching extends Chronograph {
+	private updating: Promise<void> = Promise.resolve()
+	update = async () => {
+		const u = this.updating
+		let time = Date.now()
+		while (u === this.updating) {
+			time = await this.loop(time)
 		}
 	}
-)
+	watch = () => {
+		this.updating = this.update()
+	}
+	private loop = async (time: number) => {
+		this.milliseconds += Date.now() - time
+		this.resolve(this)
+		const getRequest = (r: any) => window.requestAnimationFrame(() => r())
+		await new Promise(resolve => getRequest(resolve))
+		return Date.now()
+	}
+	readonly top = () => {
+		this.updating = Promise.resolve()
+		this.resolve(stopped)
+	}
+	readonly split = () => {
+		lapped.milliseconds = this.milliseconds
+		return this.resolve(lapped)
+	}
+}
 // 
 const restarted = new Restarted()
 const lapped = new Lapped()

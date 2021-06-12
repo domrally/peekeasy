@@ -1,8 +1,18 @@
 import { Mealy } from '../../src/mealy.js';
-import { createState } from '../../src/state.js';
 // 
-class Chronograph {
+class Pinky extends Promise {
+    constructor(resolve = () => { }, reject = () => { }) {
+        super((resolve, reject) => {
+            this.resolve = resolve;
+            this.reject = reject;
+        });
+        this.resolve = resolve;
+        this.reject = reject;
+    }
+}
+class Chronograph extends Pinky {
     constructor() {
+        super(...arguments);
         // 
         this.milliseconds = 0;
         this.toString = () => {
@@ -15,34 +25,30 @@ class Chronograph {
             ms -= ss * 1000;
             return `${mn}:${ss}:${ms}`;
         };
-        this.promise = Promise.resolve(this);
     }
-    // 
-    resolve(_nextState) { }
 }
 // 
-const Restarted = createState(class _Restarted extends Chronograph {
+class Restarted extends Chronograph {
     constructor() {
-        super();
+        super(...arguments);
         this.top = () => {
             watching.milliseconds = 0;
             watching.watch();
             this.resolve(watching);
         };
         this.split = () => { };
-        this.milliseconds = 0;
     }
-});
+}
 // 
-const Lapped = createState(class _Lapped extends Chronograph {
+class Lapped extends Chronograph {
     constructor() {
         super(...arguments);
         this.top = () => this.resolve(stopped);
         this.split = () => this.resolve(watching);
     }
-});
+}
 // 
-const Stopped = createState(class _Stopped extends Chronograph {
+class Stopped extends Chronograph {
     constructor() {
         super(...arguments);
         this.top = () => {
@@ -51,9 +57,9 @@ const Stopped = createState(class _Stopped extends Chronograph {
         };
         this.split = () => this.resolve(restarted);
     }
-});
+}
 // 
-const Watching = createState(class _Watching extends Chronograph {
+class Watching extends Chronograph {
     constructor() {
         super(...arguments);
         this.updating = Promise.resolve();
@@ -83,7 +89,7 @@ const Watching = createState(class _Watching extends Chronograph {
             return this.resolve(lapped);
         };
     }
-});
+}
 // 
 const restarted = new Restarted();
 const lapped = new Lapped();
