@@ -1,14 +1,16 @@
 import { Mealy } from '../../src/mealy.js'
 // 
+const empty = () => { }
 class Pinky<T> extends Promise<T> {
 	resolve: (value: T) => void
 	reject: (reason?: any) => void
-	constructor() {
-		let res: (value: T) => void = () => { }
-		let rej: (reason?: any) => void = () => { }
+	constructor(
+		res: (value: T) => void = empty,
+		rej: (reason?: any) => void = empty
+	) {
 		super((resolve, reject) => {
-			res = resolve
-			rej = reject
+			if (res === empty) res = resolve
+			if (rej === empty) rej = reject
 		})
 		this.resolve = res
 		this.reject = rej
@@ -71,7 +73,8 @@ class Watching extends Chronograph {
 	}
 	private loop = async (time: number) => {
 		this.milliseconds += Date.now() - time
-		this.resolve(watching)
+		const newWatching = new Watching(this.resolve, this.reject)
+		this.resolve(newWatching)
 		const getRequest = (r: any) => window.requestAnimationFrame(() => r())
 		await new Promise(resolve => getRequest(resolve))
 		return Date.now()
