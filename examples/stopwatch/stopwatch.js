@@ -1,12 +1,13 @@
 import { Mealy } from '../../src/mealy.js';
 // 
+const empty = () => { };
 class Pinky extends Promise {
-    constructor() {
-        let res = () => { };
-        let rej = () => { };
+    constructor(res = empty, rej = empty) {
         super((resolve, reject) => {
-            res = resolve;
-            rej = reject;
+            if (res === empty)
+                res = resolve;
+            if (rej === empty)
+                rej = reject;
         });
         this.resolve = res;
         this.reject = rej;
@@ -77,7 +78,8 @@ class Watching extends Chronograph {
         };
         this.loop = async (time) => {
             this.milliseconds += Date.now() - time;
-            this.resolve(watching);
+            const newWatching = new Watching(this.resolve, this.reject);
+            this.resolve(newWatching);
             const getRequest = (r) => window.requestAnimationFrame(() => r());
             await new Promise(resolve => getRequest(resolve));
             return Date.now();
