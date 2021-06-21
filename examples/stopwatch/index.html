@@ -8,37 +8,37 @@
 </head>
 
 <body>
-	<script type="module">
-		import { html, render } from 'https://unpkg.com/lit-html?module'
-		import { asyncReplace } from 'https://unpkg.com/lit-html/directives/async-replace?module'
-		import { stopwatch } from './stopwatch.js'
-		// styles
-		const css = html`
-		<style>
-			:host, body { 
-				width: 100%;
-				height: 100%;
-				display: flex;
-				flex-direction: column;
-				justify-content: space-evenly;
-			} 
-			button {
-				flex-grow: 1;
-				width: 100%;
-				height: 100%;
-				font-size: 24px;
-			}
-		</style>
-		`
-		// Define a template
-		const template = html`
-		${css}
-		<button @click="${stopwatch.top}">
-			${asyncReplace(stopwatch)}
-		</button>
-		<button @click="${stopwatch.split}"></button>`
-		// Render the template to the document
-		render(template, document.body)
+	<script type="module" src="./stopwatch.js">
+		// import { html, render } from 'https://unpkg.com/lit-html?module'
+		// import { asyncReplace } from 'https://unpkg.com/lit-html/directives/async-replace?module'
+		// import { stopwatch } from './stopwatch.js'
+		// // styles
+		// const css = html`
+		// <style>c    nfj8gbnsv
+		// 	:host, body { 
+		// 		width: 50%;
+		// 		height: 50%;
+		// 		display: flex;
+		// 		flex-direction: column;
+		// 		justify-content: space-evenly;
+		// 	} 
+		// 	button {
+		// 		flex-grow: 1;
+		// 		width: 100%;
+		// 		height: 100%;
+		// 		font-size: 24px;
+		// 	}
+		// </style>
+		// `
+		// // Define a template
+		// const template = html`
+		// ${css}
+		// <button @click="${stopwatch.top}">
+		// 	${asyncReplace(stopwatch)}
+		// </button>
+		// <button @click="${stopwatch.split}"></button>`
+		// // Render the template to the document
+		// render(template, document.body)
 	</script>
 </body>
 
