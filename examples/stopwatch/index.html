@@ -33,10 +33,10 @@
 		// Define a template
 		const template = html`
 		${css}
-		<button @click="${stopwatch.top()}">
+		<button @click="${stopwatch.top}">
 			${asyncReplace(stopwatch)}
 		</button>
-		<button @click="${stopwatch.split()}"></button>`
+		<button @click="${stopwatch.split}"></button>`
 		// Render the template to the document
 		render(template, document.body)
 	</script>
