@@ -33,7 +33,7 @@ class Restarted extends Chronograph {
         super(...arguments);
         this.top = () => {
             watching.milliseconds = 0;
-            watching.watch();
+            // watching.watch()
             this.resolve(watching);
         };
         this.split = () => { };
@@ -52,7 +52,7 @@ class Stopped extends Chronograph {
     constructor() {
         super(...arguments);
         this.top = () => {
-            watching.watch();
+            // watching.watch()
             this.resolve(watching);
         };
         this.split = () => this.resolve(restarted);
@@ -81,7 +81,7 @@ class Watching extends Chronograph {
             return Date.now();
         };
         this.top = () => {
-            this.updating = Promise.resolve();
+            // this.updating = Promise.resolve()
             this.resolve(stopped);
         };
         this.split = () => {

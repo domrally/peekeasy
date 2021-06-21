@@ -24,6 +24,8 @@ export class Mealy<S extends object & { promise: PromiseLike<S> }> {
 	#lazyInit: any = async () => {
 		this.#lazyInit = null
 		// 
-		for await (this.currentState of this.moore) { }
+		for await (this.currentState of this.moore) {
+			console.log(this.currentState)
+		}
 	}
 }

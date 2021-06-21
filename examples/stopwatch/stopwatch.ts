@@ -43,7 +43,7 @@ abstract class Chronograph extends Pinky<Chronograph> {
 class Restarted extends Chronograph {
 	readonly top = () => {
 		watching.milliseconds = 0
-		watching.watch()
+		// watching.watch()
 		this.resolve(watching)
 	}
 	readonly split = () => { }
@@ -56,7 +56,7 @@ class Lapped extends Chronograph {
 // 
 class Stopped extends Chronograph {
 	readonly top = () => {
-		watching.watch()
+		// watching.watch()
 		this.resolve(watching)
 	}
 	readonly split = () => this.resolve(restarted)
@@ -82,7 +82,7 @@ class Watching extends Chronograph {
 		return Date.now()
 	}
 	readonly top = () => {
-		this.updating = Promise.resolve()
+		// this.updating = Promise.resolve()
 		this.resolve(stopped)
 	}
 	readonly split = () => {

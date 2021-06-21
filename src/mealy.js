@@ -34,7 +34,9 @@ export class Mealy {
             // 
             );
             // 
-            for await (this.currentState of this.moore) { }
+            for await (this.currentState of this.moore) {
+                console.log(this.currentState);
+            }
         });
         this.moore = new Moore([currentState, ...states]);
         __classPrivateFieldSet(this, _target, Object.assign(this.moore, currentState));
