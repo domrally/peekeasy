@@ -8,13 +8,14 @@
 </head>
 
 <body>
-	<script type="module" src="./stopwatch.js">
+	<script type="module">
 		// import { html, render } from 'https://unpkg.com/lit-html?module'
 		// import { asyncReplace } from 'https://unpkg.com/lit-html/directives/async-replace?module'
-		// import { stopwatch } from './stopwatch.js'
+		import { stopwatch } from './stopwatch.js'
+		window.stopwatch = stopwatch
 		// // styles
 		// const css = html`
-		// <style>c    nfj8gbnsv
+		// <style>
 		// 	:host, body { 
 		// 		width: 50%;
 		// 		height: 50%;
