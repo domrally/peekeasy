@@ -11,38 +11,37 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     }
     return privateMap.get(receiver);
 };
-var _target, _lazyInit;
+var _asyncIterable, _lazyInit;
 import { Moore } from './moore.js';
 //
 export class Mealy {
     // 
     constructor(currentState, ...states) {
         this.currentState = currentState;
-        _target.set(this, void 0);
         this.handler = {
             get: (_, property) => {
                 __classPrivateFieldGet(this, _lazyInit)?.call(this);
-                const proxy = property === Symbol.asyncIterator
-                    ? this.moore[Symbol.asyncIterator]
+                const proxied = property === Symbol.asyncIterator
+                    ? __classPrivateFieldGet(this, _asyncIterable)[Symbol.asyncIterator]
                     : this.currentState[property];
-                return proxy;
+                return proxied;
             },
             set: (_, property, value) => this.currentState[property] = value
         };
+        _asyncIterable.set(this, void 0);
         _lazyInit.set(this, async () => {
             __classPrivateFieldSet(this, _lazyInit, null
             // 
             );
             // 
-            for await (this.currentState of this.moore) {
+            for await (this.currentState of __classPrivateFieldGet(this, _asyncIterable)) {
                 console.log(this.currentState);
             }
         });
-        this.moore = new Moore([currentState, ...states]);
-        __classPrivateFieldSet(this, _target, Object.assign(this.moore, currentState));
+        __classPrivateFieldSet(this, _asyncIterable, new Moore([currentState, ...states]));
     }
     get target() {
-        return __classPrivateFieldGet(this, _target);
+        return this.currentState;
     }
 }
-_target = new WeakMap(), _lazyInit = new WeakMap();
+_asyncIterable = new WeakMap(), _lazyInit = new WeakMap();

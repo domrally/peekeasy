@@ -1,7 +1,23 @@
+var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (receiver, privateMap) {
+    if (!privateMap.has(receiver)) {
+        throw new TypeError("attempted to get private field on non-instance");
+    }
+    return privateMap.get(receiver);
+};
+var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (receiver, privateMap, value) {
+    if (!privateMap.has(receiver)) {
+        throw new TypeError("attempted to set private field on non-instance");
+    }
+    privateMap.set(receiver, value);
+    return value;
+};
+var _setResult, _getAsyncIterator, _asyncIterator;
 import { Mealy } from '../../src/mealy.js';
 // 
 class Pinky {
-    constructor(res = () => { }, rej = () => { }) {
+    constructor() {
+        let res = () => { };
+        let rej = () => { };
         this.promise = new Promise((resolve, reject) => {
             res = resolve;
             rej = reject;
@@ -10,9 +26,23 @@ class Pinky {
         this.reject = rej;
     }
 }
-class Chronograph extends Pinky {
+class Chronograph {
     constructor() {
-        super(...arguments);
+        this.setState = (value, done = false) => {
+            __classPrivateFieldGet(this, _setResult)?.call(this, { value, done });
+        };
+        // 
+        _setResult.set(this, () => { });
+        _getAsyncIterator.set(this, () => {
+            const promise = new Promise(resolve => __classPrivateFieldSet(this, _setResult, resolve));
+            const getPromise = () => promise;
+            const asyncIterator = { next: getPromise };
+            const getAsyncIterator = () => asyncIterator;
+            return getAsyncIterator;
+        });
+        _asyncIterator.set(this, __classPrivateFieldGet(this, _getAsyncIterator).call(this)
+        // 
+        );
         // 
         this.milliseconds = 0;
         this.toString = () => {
@@ -26,6 +56,10 @@ class Chronograph extends Pinky {
             return `${mn}:${ss}:${ms}`;
         };
     }
+    // 
+    get [(_setResult = new WeakMap(), _getAsyncIterator = new WeakMap(), _asyncIterator = new WeakMap(), Symbol.asyncIterator)]() {
+        return __classPrivateFieldGet(this, _asyncIterator);
+    }
 }
 // 
 class Restarted extends Chronograph {
@@ -34,7 +68,7 @@ class Restarted extends Chronograph {
         this.top = () => {
             watching.milliseconds = 0;
             // watching.watch()
-            this.resolve(watching);
+            this.setState(watching);
         };
         this.split = () => { };
     }
@@ -43,8 +77,8 @@ class Restarted extends Chronograph {
 class Lapped extends Chronograph {
     constructor() {
         super(...arguments);
-        this.top = () => this.resolve(stopped);
-        this.split = () => this.resolve(watching);
+        this.top = () => this.setState(stopped);
+        this.split = () => this.setState(watching);
     }
 }
 // 
@@ -53,9 +87,9 @@ class Stopped extends Chronograph {
         super(...arguments);
         this.top = () => {
             // watching.watch()
-            this.resolve(watching);
+            this.setState(watching);
         };
-        this.split = () => this.resolve(restarted);
+        this.split = () => this.setState(restarted);
     }
 }
 // 
@@ -75,18 +109,18 @@ class Watching extends Chronograph {
         };
         this.loop = async (time) => {
             this.milliseconds += Date.now() - time;
-            this.resolve(this);
+            this.setState(this);
             const getRequest = (r) => window.requestAnimationFrame(() => r());
             await new Promise(resolve => getRequest(resolve));
             return Date.now();
         };
         this.top = () => {
             // this.updating = Promise.resolve()
-            this.resolve(stopped);
+            this.setState(stopped);
         };
         this.split = () => {
             lapped.milliseconds = this.milliseconds;
-            return this.resolve(lapped);
+            return this.setState(lapped);
         };
     }
 }

@@ -6,10 +6,9 @@ abstract class Pinky<T> {
 	readonly resolve: (value: T) => void
 	readonly reject: (reason?: any) => void
 
-	constructor(
-		res: (value: T) => void = () => { },
-		rej: (reason?: any) => void = () => { }
-	) {
+	constructor() {
+		let res: (value: T) => void = () => { }
+		let rej: (reason?: any) => void = () => { }
 
 		this.promise = new Promise((resolve, reject) => {
 			res = resolve
@@ -20,7 +19,24 @@ abstract class Pinky<T> {
 	}
 }
 
-abstract class Chronograph extends Pinky<Chronograph> {
+abstract class Chronograph implements AsyncIterable<Chronograph> {
+	// 
+	get [Symbol.asyncIterator]() {
+		return this.#asyncIterator
+	}
+	protected readonly setState = (value: Chronograph, done = false) => {
+		this.#setResult?.({ value, done })
+	}
+	// 
+	#setResult: (result: IteratorResult<Chronograph>) => void = () => { }
+	readonly #getAsyncIterator = () => {
+		const promise = new Promise<IteratorResult<Chronograph>>(resolve => this.#setResult = resolve)
+		const getPromise = () => promise
+		const asyncIterator = { next: getPromise }
+		const getAsyncIterator = () => asyncIterator
+		return getAsyncIterator
+	}
+	#asyncIterator: () => AsyncIterator<Chronograph> = this.#getAsyncIterator()
 	// 
 	abstract top(): void
 	abstract split(): void
@@ -44,22 +60,22 @@ class Restarted extends Chronograph {
 	readonly top = () => {
 		watching.milliseconds = 0
 		// watching.watch()
-		this.resolve(watching)
+		this.setState(watching)
 	}
 	readonly split = () => { }
 }
 // 
 class Lapped extends Chronograph {
-	readonly top = () => this.resolve(stopped)
-	readonly split = () => this.resolve(watching)
+	readonly top = () => this.setState(stopped)
+	readonly split = () => this.setState(watching)
 }
 // 
 class Stopped extends Chronograph {
 	readonly top = () => {
 		// watching.watch()
-		this.resolve(watching)
+		this.setState(watching)
 	}
-	readonly split = () => this.resolve(restarted)
+	readonly split = () => this.setState(restarted)
 }
 // 
 class Watching extends Chronograph {
@@ -76,18 +92,18 @@ class Watching extends Chronograph {
 	}
 	private loop = async (time: number) => {
 		this.milliseconds += Date.now() - time
-		this.resolve(this)
+		this.setState(this)
 		const getRequest = (r: any) => window.requestAnimationFrame(() => r())
 		await new Promise(resolve => getRequest(resolve))
 		return Date.now()
 	}
 	readonly top = () => {
 		// this.updating = Promise.resolve()
-		this.resolve(stopped)
+		this.setState(stopped)
 	}
 	readonly split = () => {
 		lapped.milliseconds = this.milliseconds
-		return this.resolve(lapped)
+		return this.setState(lapped)
 	}
 }
 // 

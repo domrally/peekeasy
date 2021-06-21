@@ -1,9 +1,3 @@
-var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (receiver, privateMap) {
-    if (!privateMap.has(receiver)) {
-        throw new TypeError("attempted to get private field on non-instance");
-    }
-    return privateMap.get(receiver);
-};
 var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (receiver, privateMap, value) {
     if (!privateMap.has(receiver)) {
         throw new TypeError("attempted to set private field on non-instance");
@@ -11,13 +5,18 @@ var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (
     privateMap.set(receiver, value);
     return value;
 };
-var _asyncIterator, _setResult, _getAsyncIterator, _lazyInit;
+var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (receiver, privateMap) {
+    if (!privateMap.has(receiver)) {
+        throw new TypeError("attempted to get private field on non-instance");
+    }
+    return privateMap.get(receiver);
+};
+var _setResult, _getAsyncIterator, _asyncIterator, _lazyInit;
 //
 export class Moore {
     // 
     constructor(states) {
         this.states = states;
-        _asyncIterator.set(this, void 0);
         _setResult.set(this, () => { });
         _getAsyncIterator.set(this, () => {
             const promise = new Promise(resolve => __classPrivateFieldSet(this, _setResult, resolve));
@@ -26,21 +25,20 @@ export class Moore {
             const getAsyncIterator = () => asyncIterator;
             return getAsyncIterator;
         });
+        _asyncIterator.set(this, __classPrivateFieldGet(this, _getAsyncIterator).call(this));
         _lazyInit.set(this, async () => {
             __classPrivateFieldSet(this, _lazyInit, null);
-            const getNextValue = () => {
+            const getNextValue = async () => {
                 __classPrivateFieldSet(this, _asyncIterator, __classPrivateFieldGet(this, _getAsyncIterator).call(this));
-                const asyncIterable = this.states.map(s => s.promise);
-                return Promise.race(asyncIterable);
+                return Promise.race(this.states);
             };
             while (true) {
                 const value = await getNextValue();
                 __classPrivateFieldGet(this, _setResult)?.call(this, { value, done: false });
             }
         });
-        __classPrivateFieldSet(this, _asyncIterator, __classPrivateFieldGet(this, _getAsyncIterator).call(this));
     }
-    get [(_asyncIterator = new WeakMap(), _setResult = new WeakMap(), _getAsyncIterator = new WeakMap(), _lazyInit = new WeakMap(), Symbol.asyncIterator)]() {
+    get [(_setResult = new WeakMap(), _getAsyncIterator = new WeakMap(), _asyncIterator = new WeakMap(), _lazyInit = new WeakMap(), Symbol.asyncIterator)]() {
         __classPrivateFieldGet(this, _lazyInit)?.call(this);
         return __classPrivateFieldGet(this, _asyncIterator);
     }
