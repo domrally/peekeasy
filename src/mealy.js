@@ -21,6 +21,7 @@ export class Mealy {
         _target.set(this, void 0);
         this.handler = {
             get: (_, property) => {
+                __classPrivateFieldGet(this, _lazyInit)?.call(this);
                 const proxy = property === Symbol.asyncIterator
                     ? this.moore[Symbol.asyncIterator]
                     : this.currentState[property];
@@ -39,7 +40,6 @@ export class Mealy {
         __classPrivateFieldSet(this, _target, Object.assign(this.moore, currentState));
     }
     get target() {
-        __classPrivateFieldGet(this, _lazyInit)?.call(this);
         return __classPrivateFieldGet(this, _target);
     }
 }
