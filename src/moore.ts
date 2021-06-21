@@ -1,25 +1,32 @@
 //
 export class Moore<S extends { promise: PromiseLike<S> }> implements AsyncIterable<Readonly<S>> {
-	[Symbol.asyncIterator]: () => AsyncIterator<S>
+	#asyncIterator: () => AsyncIterator<S>
+	get [Symbol.asyncIterator]() {
+		this.#lazyInit?.()
+		return this.#asyncIterator
+	}
 	// 
-	constructor(...states: S[]) {
-		let setResult: (result: IteratorResult<S>) => void
+	constructor(private states: S[]) {
+		this.#asyncIterator = this.#getAsyncIterator()
+	}
+	#setResult: (result: IteratorResult<S>) => void = () => { }
+	readonly #getAsyncIterator = () => {
+		const promise = new Promise<IteratorResult<S>>(resolve => this.#setResult = resolve)
+		const getPromise = () => promise
+		const asyncIterator = { next: getPromise }
+		const getAsyncIterator = () => asyncIterator
+		return getAsyncIterator
+	}
+	#lazyInit: any = async () => {
+		this.#lazyInit = null
 		const getNextValue = () => {
-			const promise = new Promise<IteratorResult<S>>(resolve => setResult = resolve)
-			const getPromise = () => promise
-			const asyncIterator = { next: getPromise }
-			const getAsyncIterator = () => asyncIterator
-			this[Symbol.asyncIterator] = getAsyncIterator
-
-			const asyncIterable = states.map(s => s.promise)
+			this.#asyncIterator = this.#getAsyncIterator()
+			const asyncIterable = this.states.map(s => s.promise)
 			return Promise.race(asyncIterable)
 		}
-		const loop = async () => {
-			while (true) {
-				const value = await getNextValue()
-				setResult?.({ value, done: false })
-			}
+		while (true) {
+			const value = await getNextValue()
+			this.#setResult?.({ value, done: false })
 		}
-		loop()
 	}
 }

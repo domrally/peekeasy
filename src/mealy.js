@@ -1,9 +1,24 @@
+var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (receiver, privateMap, value) {
+    if (!privateMap.has(receiver)) {
+        throw new TypeError("attempted to set private field on non-instance");
+    }
+    privateMap.set(receiver, value);
+    return value;
+};
+var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (receiver, privateMap) {
+    if (!privateMap.has(receiver)) {
+        throw new TypeError("attempted to get private field on non-instance");
+    }
+    return privateMap.get(receiver);
+};
+var _target, _lazyInit;
 import { Moore } from './moore.js';
 //
 export class Mealy {
     // 
     constructor(currentState, ...states) {
         this.currentState = currentState;
+        _target.set(this, void 0);
         this.handler = {
             get: (_, property) => {
                 const proxy = property === Symbol.asyncIterator
@@ -13,12 +28,19 @@ export class Mealy {
             },
             set: (_, property, value) => this.currentState[property] = value
         };
-        this.moore = new Moore(currentState, ...states);
-        this.target = Object.assign(this.moore, currentState);
-        const loop = async () => {
+        _lazyInit.set(this, async () => {
+            __classPrivateFieldSet(this, _lazyInit, null
             // 
-            for await (currentState of this.moore) { }
-        };
-        loop();
+            );
+            // 
+            for await (this.currentState of this.moore) { }
+        });
+        this.moore = new Moore([currentState, ...states]);
+        __classPrivateFieldSet(this, _target, Object.assign(this.moore, currentState));
+    }
+    get target() {
+        __classPrivateFieldGet(this, _lazyInit)?.call(this);
+        return __classPrivateFieldGet(this, _target);
     }
 }
+_target = new WeakMap(), _lazyInit = new WeakMap();

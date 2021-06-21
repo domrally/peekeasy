@@ -1,7 +1,11 @@
 import { Moore } from './moore.js'
 //
 export class Mealy<S extends object & { promise: PromiseLike<S> }> {
-	readonly target: AsyncIterable<S> & S
+	#target: AsyncIterable<S> & S
+	get target() {
+		this.#lazyInit?.()
+		return this.#target
+	}
 	readonly handler = {
 		get: (_: AsyncIterable<S> & S, property: any) => {
 			const proxy = property === Symbol.asyncIterator
@@ -14,12 +18,12 @@ export class Mealy<S extends object & { promise: PromiseLike<S> }> {
 	private moore: Moore<S>
 	// 
 	constructor(private currentState: S, ...states: S[]) {
-		this.moore = new Moore(currentState, ...states)
-		this.target = Object.assign<AsyncIterable<S>, S>(this.moore, currentState)
-		const loop = async () => {
-			// 
-			for await (currentState of this.moore) { }
-		}
-		loop()
+		this.moore = new Moore([currentState, ...states])
+		this.#target = Object.assign<AsyncIterable<S>, S>(this.moore, currentState)
+	}
+	#lazyInit: any = async () => {
+		this.#lazyInit = null
+		// 
+		for await (this.currentState of this.moore) { }
 	}
 }
