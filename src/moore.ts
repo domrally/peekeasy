@@ -18,13 +18,11 @@ export class Moore<S extends AsyncIterable<S>> implements AsyncIterable<S> {
 	#asyncIterator: () => AsyncIterator<S> = this.#getAsyncIterator()
 	#lazyInit: any = async () => {
 		this.#lazyInit = null
-		const getNextValue = async () => {
-			this.#asyncIterator = this.#getAsyncIterator()
-			return Promise.race(this.states)
-		}
 		while (true) {
-			const value = await getNextValue() as S
-			this.#setResult?.({ value, done: false })
+			const value = await Promise.race(this.states) as S
+			const setResult = this.#setResult
+			this.#asyncIterator = this.#getAsyncIterator()
+			setResult({ value, done: false })
 		}
 	}
 }

@@ -28,13 +28,11 @@ export class Moore {
         _asyncIterator.set(this, __classPrivateFieldGet(this, _getAsyncIterator).call(this));
         _lazyInit.set(this, async () => {
             __classPrivateFieldSet(this, _lazyInit, null);
-            const getNextValue = async () => {
-                __classPrivateFieldSet(this, _asyncIterator, __classPrivateFieldGet(this, _getAsyncIterator).call(this));
-                return Promise.race(this.states);
-            };
             while (true) {
-                const value = await getNextValue();
-                __classPrivateFieldGet(this, _setResult)?.call(this, { value, done: false });
+                const value = await Promise.race(this.states);
+                const setResult = __classPrivateFieldGet(this, _setResult);
+                __classPrivateFieldSet(this, _asyncIterator, __classPrivateFieldGet(this, _getAsyncIterator).call(this));
+                setResult({ value, done: false });
             }
         });
     }
