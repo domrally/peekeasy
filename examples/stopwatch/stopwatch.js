@@ -14,19 +14,14 @@ var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (
 var _setResult, _getAsyncIterator, _asyncIterator;
 import { Mealy } from '../../src/mealy.js';
 // 
-class Pinky {
-    constructor() {
-        let res = () => { };
-        let rej = () => { };
-        this.promise = new Promise((resolve, reject) => {
-            res = resolve;
-            rej = reject;
-        });
-        this.resolve = res;
-        this.reject = rej;
+class Pinky extends Promise {
+    constructor(executor) {
+        super(executor);
+        this.resolve = executor.arguments[0];
+        this.reject = executor.arguments[1];
     }
 }
-class Chronograph {
+class Context {
     constructor() {
         this.setState = (value, done = false) => {
             __classPrivateFieldGet(this, _setResult)?.call(this, { value, done });
@@ -40,9 +35,16 @@ class Chronograph {
             const getAsyncIterator = () => asyncIterator;
             return getAsyncIterator;
         });
-        _asyncIterator.set(this, __classPrivateFieldGet(this, _getAsyncIterator).call(this)
-        // 
-        );
+        _asyncIterator.set(this, __classPrivateFieldGet(this, _getAsyncIterator).call(this));
+    }
+    // 
+    get [(_setResult = new WeakMap(), _getAsyncIterator = new WeakMap(), _asyncIterator = new WeakMap(), Symbol.asyncIterator)]() {
+        return __classPrivateFieldGet(this, _asyncIterator);
+    }
+}
+class Chronograph extends Context {
+    constructor() {
+        super(...arguments);
         // 
         this.milliseconds = 0;
         this.toString = () => {
@@ -55,10 +57,6 @@ class Chronograph {
             ms -= ss * 1000;
             return `${mn}:${ss}:${ms}`;
         };
-    }
-    // 
-    get [(_setResult = new WeakMap(), _getAsyncIterator = new WeakMap(), _asyncIterator = new WeakMap(), Symbol.asyncIterator)]() {
-        return __classPrivateFieldGet(this, _asyncIterator);
     }
 }
 // 

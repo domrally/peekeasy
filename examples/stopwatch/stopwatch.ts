@@ -1,42 +1,37 @@
 import { Mealy } from '../../src/mealy.js'
 // 
-abstract class Pinky<T> {
-
-	readonly promise: PromiseLike<T>
+abstract class Pinky<T> extends Promise<T> {
 	readonly resolve: (value: T) => void
 	readonly reject: (reason?: any) => void
 
-	constructor() {
-		let res: (value: T) => void = () => { }
-		let rej: (reason?: any) => void = () => { }
-
-		this.promise = new Promise((resolve, reject) => {
-			res = resolve
-			rej = reject
-		})
-		this.resolve = res
-		this.reject = rej
+	constructor(executor: (resolve: (value: T | PromiseLike<T>) => void, reject: (reason?: any) => void) => void) {
+		super(executor)
+		this.resolve = executor.arguments[0]
+		this.reject = executor.arguments[1]
 	}
 }
 
-abstract class Chronograph implements AsyncIterable<Chronograph> {
+abstract class Context<S> {
 	// 
 	get [Symbol.asyncIterator]() {
 		return this.#asyncIterator
 	}
-	protected readonly setState = (value: Chronograph, done = false) => {
+	protected readonly setState = (value: S, done = false) => {
 		this.#setResult?.({ value, done })
 	}
 	// 
-	#setResult: (result: IteratorResult<Chronograph>) => void = () => { }
+	#setResult: (result: IteratorResult<S>) => void = () => { }
 	readonly #getAsyncIterator = () => {
-		const promise = new Promise<IteratorResult<Chronograph>>(resolve => this.#setResult = resolve)
+		const promise = new Promise<IteratorResult<S>>(resolve => this.#setResult = resolve)
 		const getPromise = () => promise
 		const asyncIterator = { next: getPromise }
 		const getAsyncIterator = () => asyncIterator
 		return getAsyncIterator
 	}
-	#asyncIterator: () => AsyncIterator<Chronograph> = this.#getAsyncIterator()
+	#asyncIterator: () => AsyncIterator<S> = this.#getAsyncIterator()
+}
+
+abstract class Chronograph extends Context<Chronograph> implements AsyncIterable<Chronograph> {
 	// 
 	abstract top(): void
 	abstract split(): void
