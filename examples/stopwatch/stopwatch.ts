@@ -98,6 +98,3 @@ const lapped = new Lapped()
 // 
 const { target, handler } = new Mealy<Chronograph>(restarted, watching, stopped, lapped)
 export const stopwatch = new Proxy(target, handler)
-
-restarted.top()
-
