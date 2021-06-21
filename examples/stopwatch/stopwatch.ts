@@ -17,7 +17,9 @@ abstract class Context<S> {
 		return this.#asyncIterator
 	}
 	protected readonly setState = (value: S, done = false) => {
-		this.#setResult?.({ value, done })
+		const setResult = this.#setResult
+		this.#asyncIterator = this.#getAsyncIterator()
+		setResult({ value, done })
 	}
 	// 
 	#setResult: (result: IteratorResult<S>) => void = () => { }

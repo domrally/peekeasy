@@ -24,7 +24,9 @@ class Pinky extends Promise {
 class Context {
     constructor() {
         this.setState = (value, done = false) => {
-            __classPrivateFieldGet(this, _setResult)?.call(this, { value, done });
+            const setResult = __classPrivateFieldGet(this, _setResult);
+            __classPrivateFieldSet(this, _asyncIterator, __classPrivateFieldGet(this, _getAsyncIterator).call(this));
+            setResult({ value, done });
         };
         // 
         _setResult.set(this, () => { });
