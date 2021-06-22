@@ -13,22 +13,22 @@ abstract class Pinky<T> extends Promise<T> {
 
 abstract class Context<S> {
 	//      
-	#setResult: (result: IteratorResult<S>) => void = () => { }
-	#nextPromise: Promise<IteratorResult<S>> = new Promise(resolve => this.#setResult = resolve)
+	_setResult: (result: IteratorResult<S>) => void = () => { }
+	_nextPromise: Promise<IteratorResult<S>> = new Promise(resolve => this._setResult = resolve)
 	// 
 	readonly [Symbol.asyncIterator] = () => {
 		return {
 			next: () => {
-				console.log(this.#nextPromise)
-				return this.#nextPromise
+				console.log(this._nextPromise)
+				return this._nextPromise
 			}
 		}
 	}
 	protected readonly setState = (value: S, done = false) => {
-		const setResult = this.#setResult
-		this.#nextPromise = new Promise(resolve => this.#setResult = resolve)
-		console.log(setResult == this.#setResult)
-		console.log(setResult === this.#setResult)
+		const setResult = this._setResult
+		this._nextPromise = new Promise(resolve => this._setResult = resolve)
+		console.log(setResult == this._setResult)
+		console.log(setResult === this._setResult)
 		setResult({ value, done })
 	}
 }

@@ -2,13 +2,13 @@ import { Moore } from './moore.js'
 //
 export class Mealy<S extends object & AsyncIterable<S>> {
 	get target() {
-		this.#lazyInit?.()
+		this._lazyInit?.()
 		return this.currentState
 	}
 	readonly handler = {
 		get: (_: S, property: any) => {
 			const proxied = property === Symbol.asyncIterator
-				? this.#asyncIterable[Symbol.asyncIterator]
+				? this._asyncIterable[Symbol.asyncIterator]
 				: (this.currentState as any)[property]
 			return proxied
 		},
@@ -16,12 +16,12 @@ export class Mealy<S extends object & AsyncIterable<S>> {
 	} as const
 	// 
 	constructor(private currentState: S, ...states: S[]) {
-		this.#asyncIterable = new Moore([currentState, ...states])
+		this._asyncIterable = new Moore([currentState, ...states])
 	}
-	#asyncIterable: AsyncIterable<S>
-	#lazyInit: any = async () => {
-		this.#lazyInit = null
+	_asyncIterable: AsyncIterable<S>
+	_lazyInit: any = async () => {
+		this._lazyInit = null
 		// 
-		for await (this.currentState of this.#asyncIterable) { }
+		for await (this.currentState of this._asyncIterable) { }
 	}
 }

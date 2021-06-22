@@ -1,17 +1,3 @@
-var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (receiver, privateMap, value) {
-    if (!privateMap.has(receiver)) {
-        throw new TypeError("attempted to set private field on non-instance");
-    }
-    privateMap.set(receiver, value);
-    return value;
-};
-var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (receiver, privateMap) {
-    if (!privateMap.has(receiver)) {
-        throw new TypeError("attempted to get private field on non-instance");
-    }
-    return privateMap.get(receiver);
-};
-var _setResult, _nextPromise;
 import { Mealy } from '../../src/mealy.js';
 // 
 class Pinky extends Promise {
@@ -24,29 +10,26 @@ class Pinky extends Promise {
 class Context {
     constructor() {
         //      
-        _setResult.set(this, () => { });
-        _nextPromise.set(this, new Promise(resolve => __classPrivateFieldSet(this, _setResult, resolve))
-        // 
-        );
+        this._setResult = () => { };
+        this._nextPromise = new Promise(resolve => this._setResult = resolve);
         // 
         this[Symbol.asyncIterator] = () => {
             return {
                 next: () => {
-                    console.log(__classPrivateFieldGet(this, _nextPromise));
-                    return __classPrivateFieldGet(this, _nextPromise);
+                    console.log(this._nextPromise);
+                    return this._nextPromise;
                 }
             };
         };
         this.setState = (value, done = false) => {
-            const setResult = __classPrivateFieldGet(this, _setResult);
-            __classPrivateFieldSet(this, _nextPromise, new Promise(resolve => __classPrivateFieldSet(this, _setResult, resolve)));
-            console.log(setResult == __classPrivateFieldGet(this, _setResult));
-            console.log(setResult === __classPrivateFieldGet(this, _setResult));
+            const setResult = this._setResult;
+            this._nextPromise = new Promise(resolve => this._setResult = resolve);
+            console.log(setResult == this._setResult);
+            console.log(setResult === this._setResult);
             setResult({ value, done });
         };
     }
 }
-_setResult = new WeakMap(), _nextPromise = new WeakMap();
 class Chronograph extends Context {
     constructor() {
         super(...arguments);
