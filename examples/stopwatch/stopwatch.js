@@ -1,9 +1,3 @@
-var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (receiver, privateMap) {
-    if (!privateMap.has(receiver)) {
-        throw new TypeError("attempted to get private field on non-instance");
-    }
-    return privateMap.get(receiver);
-};
 var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (receiver, privateMap, value) {
     if (!privateMap.has(receiver)) {
         throw new TypeError("attempted to set private field on non-instance");
@@ -11,7 +5,13 @@ var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (
     privateMap.set(receiver, value);
     return value;
 };
-var _setResult, _getAsyncIterator, _asyncIterator;
+var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (receiver, privateMap) {
+    if (!privateMap.has(receiver)) {
+        throw new TypeError("attempted to get private field on non-instance");
+    }
+    return privateMap.get(receiver);
+};
+var _setResult, _nextPromise;
 import { Mealy } from '../../src/mealy.js';
 // 
 class Pinky extends Promise {
@@ -23,27 +23,25 @@ class Pinky extends Promise {
 }
 class Context {
     constructor() {
+        //      
+        _setResult.set(this, () => { });
+        _nextPromise.set(this, new Promise(resolve => __classPrivateFieldSet(this, _setResult, resolve))
+        // 
+        );
+        // 
+        this[Symbol.asyncIterator] = () => {
+            return {
+                next: () => __classPrivateFieldGet(this, _nextPromise)
+            };
+        };
         this.setState = (value, done = false) => {
             const setResult = __classPrivateFieldGet(this, _setResult);
-            __classPrivateFieldSet(this, _asyncIterator, __classPrivateFieldGet(this, _getAsyncIterator).call(this));
+            __classPrivateFieldSet(this, _nextPromise, new Promise(resolve => __classPrivateFieldSet(this, _setResult, resolve)));
             setResult({ value, done });
         };
-        // 
-        _setResult.set(this, () => { });
-        _getAsyncIterator.set(this, () => {
-            const promise = new Promise(resolve => __classPrivateFieldSet(this, _setResult, resolve));
-            const getPromise = () => promise;
-            const asyncIterator = { next: getPromise };
-            const getAsyncIterator = () => asyncIterator;
-            return getAsyncIterator;
-        });
-        _asyncIterator.set(this, __classPrivateFieldGet(this, _getAsyncIterator).call(this));
-    }
-    // 
-    get [(_setResult = new WeakMap(), _getAsyncIterator = new WeakMap(), _asyncIterator = new WeakMap(), Symbol.asyncIterator)]() {
-        return __classPrivateFieldGet(this, _asyncIterator);
     }
 }
+_setResult = new WeakMap(), _nextPromise = new WeakMap();
 class Chronograph extends Context {
     constructor() {
         super(...arguments);

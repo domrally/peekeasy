@@ -12,25 +12,20 @@ abstract class Pinky<T> extends Promise<T> {
 }
 
 abstract class Context<S> {
+	//      
+	#setResult: (result: IteratorResult<S>) => void = () => { }
+	#nextPromise: Promise<IteratorResult<S>> = new Promise(resolve => this.#setResult = resolve)
 	// 
-	get [Symbol.asyncIterator]() {
-		return this.#asyncIterator
+	readonly [Symbol.asyncIterator] = () => {
+		return {
+			next: () => this.#nextPromise
+		}
 	}
 	protected readonly setState = (value: S, done = false) => {
 		const setResult = this.#setResult
-		this.#asyncIterator = this.#getAsyncIterator()
+		this.#nextPromise = new Promise(resolve => this.#setResult = resolve)
 		setResult({ value, done })
 	}
-	// 
-	#setResult: (result: IteratorResult<S>) => void = () => { }
-	readonly #getAsyncIterator = () => {
-		const promise = new Promise<IteratorResult<S>>(resolve => this.#setResult = resolve)
-		const getPromise = () => promise
-		const asyncIterator = { next: getPromise }
-		const getAsyncIterator = () => asyncIterator
-		return getAsyncIterator
-	}
-	#asyncIterator: () => AsyncIterator<S> = this.#getAsyncIterator()
 }
 
 abstract class Chronograph extends Context<Chronograph> implements AsyncIterable<Chronograph> {

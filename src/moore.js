@@ -11,32 +11,30 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     }
     return privateMap.get(receiver);
 };
-var _setResult, _getAsyncIterator, _asyncIterator, _lazyInit;
+var _setResult, _nextPromise, _asyncIterator, _lazyInit;
 //
 export class Moore {
     // 
     constructor(states) {
         this.states = states;
         _setResult.set(this, () => { });
-        _getAsyncIterator.set(this, () => {
-            const promise = new Promise(resolve => __classPrivateFieldSet(this, _setResult, resolve));
-            const getPromise = () => promise;
-            const asyncIterator = { next: getPromise };
-            const getAsyncIterator = () => asyncIterator;
-            return getAsyncIterator;
+        _nextPromise.set(this, new Promise(resolve => __classPrivateFieldSet(this, _setResult, resolve)));
+        _asyncIterator.set(this, () => {
+            return {
+                next: () => __classPrivateFieldGet(this, _nextPromise)
+            };
         });
-        _asyncIterator.set(this, __classPrivateFieldGet(this, _getAsyncIterator).call(this));
         _lazyInit.set(this, async () => {
             __classPrivateFieldSet(this, _lazyInit, null);
             while (true) {
                 const value = await Promise.race(this.states);
                 const setResult = __classPrivateFieldGet(this, _setResult);
-                __classPrivateFieldSet(this, _asyncIterator, __classPrivateFieldGet(this, _getAsyncIterator).call(this));
+                __classPrivateFieldSet(this, _nextPromise, new Promise(resolve => __classPrivateFieldSet(this, _setResult, resolve)));
                 setResult({ value, done: false });
             }
         });
     }
-    get [(_setResult = new WeakMap(), _getAsyncIterator = new WeakMap(), _asyncIterator = new WeakMap(), _lazyInit = new WeakMap(), Symbol.asyncIterator)]() {
+    get [(_setResult = new WeakMap(), _nextPromise = new WeakMap(), _asyncIterator = new WeakMap(), _lazyInit = new WeakMap(), Symbol.asyncIterator)]() {
         __classPrivateFieldGet(this, _lazyInit)?.call(this);
         return __classPrivateFieldGet(this, _asyncIterator);
     }
