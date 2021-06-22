@@ -22,8 +22,6 @@ export class Mealy<S extends object & AsyncIterable<S>> {
 	#lazyInit: any = async () => {
 		this.#lazyInit = null
 		// 
-		for await (this.currentState of this.#asyncIterable) {
-			console.log(this.currentState)
-		}
+		for await (this.currentState of this.#asyncIterable) { }
 	}
 }

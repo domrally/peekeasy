@@ -18,7 +18,10 @@ abstract class Context<S> {
 	// 
 	readonly [Symbol.asyncIterator] = () => {
 		return {
-			next: () => this.#nextPromise
+			next: () => {
+				console.log(this.#nextPromise)
+				return this.#nextPromise
+			}
 		}
 	}
 	protected readonly setState = (value: S, done = false) => {
@@ -71,24 +74,24 @@ class Stopped extends Chronograph {
 }
 // 
 class Watching extends Chronograph {
-	private updating: Promise<void> = Promise.resolve()
-	update = async () => {
-		const u = this.updating
-		let time = Date.now()
-		while (u === this.updating) {
-			time = await this.loop(time)
-		}
-	}
-	watch = () => {
-		this.updating = this.update()
-	}
-	private loop = async (time: number) => {
-		this.milliseconds += Date.now() - time
-		this.setState(this)
-		const getRequest = (r: any) => window.requestAnimationFrame(() => r())
-		await new Promise(resolve => getRequest(resolve))
-		return Date.now()
-	}
+	// private updating: Promise<void> = Promise.resolve()
+	// update = async () => {
+	// 	const u = this.updating
+	// 	let time = Date.now()
+	// 	while (u === this.updating) {
+	// 		time = await this.loop(time)
+	// 	}
+	// }
+	// watch = () => {
+	// 	this.updating = this.update()
+	// }
+	// private loop = async (time: number) => {
+	// 	this.milliseconds += Date.now() - time
+	// 	this.setState(this)
+	// 	const getRequest = (r: any) => window.requestAnimationFrame(() => r())
+	// 	await new Promise(resolve => getRequest(resolve))
+	// 	return Date.now()
+	// }
 	readonly top = () => {
 		// this.updating = Promise.resolve()
 		this.setState(stopped)

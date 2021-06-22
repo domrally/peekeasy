@@ -34,9 +34,7 @@ export class Mealy {
             // 
             );
             // 
-            for await (this.currentState of __classPrivateFieldGet(this, _asyncIterable)) {
-                console.log(this.currentState);
-            }
+            for await (this.currentState of __classPrivateFieldGet(this, _asyncIterable)) { }
         });
         __classPrivateFieldSet(this, _asyncIterable, new Moore([currentState, ...states]));
     }

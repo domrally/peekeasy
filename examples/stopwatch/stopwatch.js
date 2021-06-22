@@ -31,7 +31,10 @@ class Context {
         // 
         this[Symbol.asyncIterator] = () => {
             return {
-                next: () => __classPrivateFieldGet(this, _nextPromise)
+                next: () => {
+                    console.log(__classPrivateFieldGet(this, _nextPromise));
+                    return __classPrivateFieldGet(this, _nextPromise);
+                }
             };
         };
         this.setState = (value, done = false) => {
@@ -94,24 +97,24 @@ class Stopped extends Chronograph {
 class Watching extends Chronograph {
     constructor() {
         super(...arguments);
-        this.updating = Promise.resolve();
-        this.update = async () => {
-            const u = this.updating;
-            let time = Date.now();
-            while (u === this.updating) {
-                time = await this.loop(time);
-            }
-        };
-        this.watch = () => {
-            this.updating = this.update();
-        };
-        this.loop = async (time) => {
-            this.milliseconds += Date.now() - time;
-            this.setState(this);
-            const getRequest = (r) => window.requestAnimationFrame(() => r());
-            await new Promise(resolve => getRequest(resolve));
-            return Date.now();
-        };
+        // private updating: Promise<void> = Promise.resolve()
+        // update = async () => {
+        // 	const u = this.updating
+        // 	let time = Date.now()
+        // 	while (u === this.updating) {
+        // 		time = await this.loop(time)
+        // 	}
+        // }
+        // watch = () => {
+        // 	this.updating = this.update()
+        // }
+        // private loop = async (time: number) => {
+        // 	this.milliseconds += Date.now() - time
+        // 	this.setState(this)
+        // 	const getRequest = (r: any) => window.requestAnimationFrame(() => r())
+        // 	await new Promise(resolve => getRequest(resolve))
+        // 	return Date.now()
+        // }
         this.top = () => {
             // this.updating = Promise.resolve()
             this.setState(stopped);
