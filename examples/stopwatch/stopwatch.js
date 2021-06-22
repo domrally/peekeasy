@@ -40,6 +40,8 @@ class Context {
         this.setState = (value, done = false) => {
             const setResult = __classPrivateFieldGet(this, _setResult);
             __classPrivateFieldSet(this, _nextPromise, new Promise(resolve => __classPrivateFieldSet(this, _setResult, resolve)));
+            console.log(setResult == __classPrivateFieldGet(this, _setResult));
+            console.log(setResult === __classPrivateFieldGet(this, _setResult));
             setResult({ value, done });
         };
     }

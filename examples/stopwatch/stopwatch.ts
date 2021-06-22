@@ -27,6 +27,8 @@ abstract class Context<S> {
 	protected readonly setState = (value: S, done = false) => {
 		const setResult = this.#setResult
 		this.#nextPromise = new Promise(resolve => this.#setResult = resolve)
+		console.log(setResult == this.#setResult)
+		console.log(setResult === this.#setResult)
 		setResult({ value, done })
 	}
 }
