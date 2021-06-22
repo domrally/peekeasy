@@ -1,42 +1,6 @@
-var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (receiver, privateMap) {
-    if (!privateMap.has(receiver)) {
-        throw new TypeError("attempted to get private field on non-instance");
-    }
-    return privateMap.get(receiver);
-};
-var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (receiver, privateMap, value) {
-    if (!privateMap.has(receiver)) {
-        throw new TypeError("attempted to set private field on non-instance");
-    }
-    privateMap.set(receiver, value);
-    return value;
-};
-var _setState;
 import { Mealy } from '../../src/mealy.js';
-// 
-class Pinky extends Promise {
-    constructor(executor) {
-        super(executor);
-        this.resolve = executor.arguments[0];
-        this.reject = executor.arguments[1];
-    }
-}
-class Context {
-    constructor() {
-        //      
-        _setState.set(this, () => { });
-    }
-    get setState() {
-        return __classPrivateFieldGet(this, _setState);
-    }
-    // 
-    async *[(_setState = new WeakMap(), Symbol.asyncIterator)]() {
-        while (true) {
-            yield await new Promise(resolve => __classPrivateFieldSet(this, _setState, resolve));
-        }
-    }
-}
-class Chronograph extends Context {
+import { State } from '../../src/state.js';
+class Chronograph extends State {
     constructor() {
         super(...arguments);
         // 
@@ -122,5 +86,5 @@ const watching = new Watching();
 const stopped = new Stopped();
 const lapped = new Lapped();
 // 
-const { target, handler } = new Mealy(restarted, watching, stopped, lapped);
+const { target, handler } = new Mealy(restarted);
 export const stopwatch = new Proxy(target, handler);

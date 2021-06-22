@@ -1,4 +1,4 @@
 import { Moore } from './src/moore.js'
-import { Mealy } from './src/mealy.js'
+import { State } from './src/state.js'
 // 
-export { Moore, Mealy }
+export { Moore, State }

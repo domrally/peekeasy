@@ -11,35 +11,37 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     }
     return privateMap.get(receiver);
 };
-var _asyncIterable, _lazyInit;
-import { Moore } from './moore.js';
+var _lazyInit;
 //
 export class Mealy {
     // 
-    constructor(currentState, ...states) {
+    constructor(currentState) {
         this.currentState = currentState;
-        this.handler = {
-            get: (_, property) => {
-                const proxied = property === Symbol.asyncIterator
-                    ? __classPrivateFieldGet(this, _asyncIterable)[Symbol.asyncIterator]
-                    : this.currentState[property];
-                return proxied;
-            },
-            set: (_, property, value) => this.currentState[property] = value
-        };
-        _asyncIterable.set(this, void 0);
+        // 
         _lazyInit.set(this, async () => {
-            __classPrivateFieldSet(this, _lazyInit, null
-            // 
-            );
-            // 
-            for await (this.currentState of __classPrivateFieldGet(this, _asyncIterable)) { }
+            __classPrivateFieldSet(this, _lazyInit, null);
+            for await (this.currentState of this) { }
         });
-        __classPrivateFieldSet(this, _asyncIterable, new Moore([currentState, ...states]));
     }
+    // 
+    async *[(_lazyInit = new WeakMap(), Symbol.asyncIterator)]() {
+        while (true) {
+            const next = await this.currentState[Symbol.asyncIterator]().next();
+            this.currentState = next.value;
+            yield this.currentState;
+        }
+    }
+    // 
     get target() {
         __classPrivateFieldGet(this, _lazyInit)?.call(this);
-        return this.currentState;
+        const target = Object.assign({}, this.currentState, this);
+        return target;
+    }
+    // 
+    get handler() {
+        return {
+            get: (_, property) => this.currentState[property],
+            set: (_, property, value) => this.currentState[property] = value
+        };
     }
 }
-_asyncIterable = new WeakMap(), _lazyInit = new WeakMap();

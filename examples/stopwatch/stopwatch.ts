@@ -1,31 +1,7 @@
 import { Mealy } from '../../src/mealy.js'
-// 
-abstract class Pinky<T> extends Promise<T> {
-	readonly resolve: (value: T) => void
-	readonly reject: (reason?: any) => void
+import { State } from '../../src/state.js'
 
-	constructor(executor: (resolve: (value: T | PromiseLike<T>) => void, reject: (reason?: any) => void) => void) {
-		super(executor)
-		this.resolve = executor.arguments[0]
-		this.reject = executor.arguments[1]
-	}
-}
-
-abstract class Context<S> {
-	//      
-	#setState: (state: S) => void = () => { }
-	protected get setState(): (state: S) => void {
-		return this.#setState
-	}
-	// 
-	async *[Symbol.asyncIterator]() {
-		while (true) {
-			yield await new Promise<S>(resolve => this.#setState = resolve)
-		}
-	}
-}
-
-abstract class Chronograph extends Context<Chronograph> implements AsyncIterable<Chronograph> {
+abstract class Chronograph extends State<Chronograph> {
 	// 
 	abstract top(): void
 	abstract split(): void
@@ -101,5 +77,5 @@ const watching = new Watching()
 const stopped = new Stopped()
 const lapped = new Lapped()
 // 
-const { target, handler } = new Mealy<Chronograph>(restarted, watching, stopped, lapped)
+const { target, handler } = new Mealy<Chronograph>(restarted)
 export const stopwatch = new Proxy(target, handler)
