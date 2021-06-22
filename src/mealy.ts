@@ -2,11 +2,11 @@ import { Moore } from './moore.js'
 //
 export class Mealy<S extends object & AsyncIterable<S>> {
 	get target() {
+		this.#lazyInit?.()
 		return this.currentState
 	}
 	readonly handler = {
 		get: (_: S, property: any) => {
-			this.#lazyInit?.()
 			const proxied = property === Symbol.asyncIterator
 				? this.#asyncIterable[Symbol.asyncIterator]
 				: (this.currentState as any)[property]
