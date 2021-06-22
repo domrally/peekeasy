@@ -11,27 +11,25 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     }
     return privateMap.get(receiver);
 };
-var _promise, _setState;
+var _setState;
 // 
 export class State {
     // 
     constructor() {
-        // 
-        _promise.set(this, void 0);
         _setState.set(this, void 0);
         __classPrivateFieldSet(this, _setState, () => { });
-        __classPrivateFieldSet(this, _promise, new Promise(resolve => __classPrivateFieldSet(this, _setState, resolve)));
+        this.promise = new Promise(resolve => __classPrivateFieldSet(this, _setState, resolve));
     }
     // 
-    async *[(_promise = new WeakMap(), _setState = new WeakMap(), Symbol.asyncIterator)]() {
+    async *[(_setState = new WeakMap(), Symbol.asyncIterator)]() {
         while (true) {
-            yield await __classPrivateFieldGet(this, _promise);
+            yield await this.promise;
         }
     }
-    // 
+    //
     get setState() {
         const setState = __classPrivateFieldGet(this, _setState);
-        __classPrivateFieldSet(this, _promise, new Promise(resolve => __classPrivateFieldSet(this, _setState, resolve)));
+        this.promise = new Promise(resolve => __classPrivateFieldSet(this, _setState, resolve));
         return setState;
     }
 }
