@@ -63,29 +63,24 @@ const lapped = new Lapped()
 const { target, handler } = new Mealy<Chronograph>(restarted)
 export const stopwatch = new Proxy(target, handler)
 const toString = (ms: number) => {
-	let ds = ms / 100
-	let ss = ds / 10
+	let cs = ms / 10
+	let ss = cs / 100
 	let mn = ss / 60
 	mn = Math.floor(mn)
 
 	ss -= mn * 60
 	ss = Math.floor(ss)
 
-	ds -= mn * 60 * 10
-	ds -= ss * 10
-	ds = Math.round(ds)
-
-	ms -= mn * 60 * 10 * 100
-	ms -= ss * 10 * 100
-	ms -= ds * 100
-	ms = Math.round(ms)
+	cs -= mn * 60 * 100
+	cs -= ss * 100
+	cs = Math.round(cs)
 
 	const pad = (fullNumber: number, target = 2) => {
 		const last2Digits = fullNumber.toString().slice(-target)
 		return last2Digits.padStart(target, '0')
 	}
 
-	return `${pad(mn)}:${pad(ss)}:${pad(ds)}:${pad(ms)}`
+	return `${pad(mn)}:${pad(ss)}:${pad(cs)}`
 }
 export async function* time() {
 	yield toString(stopwatch.time)
