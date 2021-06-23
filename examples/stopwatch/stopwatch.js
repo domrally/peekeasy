@@ -48,13 +48,16 @@ class Watching extends Chronograph {
             this.isState = true;
             let time = Date.now();
             while (this.isState) {
-                this.time = Date.now() - time;
+                this.time += Date.now() - time;
+                time = Date.now();
                 this.setState(this);
                 const getRequest = (r) => window.requestAnimationFrame(() => r());
                 await new Promise(resolve => getRequest(resolve));
             }
         };
         this.top = () => {
+            stopped.time = this.time;
+            stopped.lap = this.lap;
             this.isState = false;
             this.setState(stopped);
         };
