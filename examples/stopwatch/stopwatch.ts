@@ -6,15 +6,15 @@ abstract class Chronograph extends State<Chronograph> {
 	abstract top(): void
 	abstract split(): void
 	// 
-	time: number = 0
-	lap: number = 0
+	time = 0
+	lap = 0
 }
 // 
 class Restarted extends Chronograph {
 	readonly top = () => {
+		this.setState(watching)
 		watching.time = 0
 		watching.watch()
-		this.setState(watching)
 	}
 	readonly split = () => { }
 }

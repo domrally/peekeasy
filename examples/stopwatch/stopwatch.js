@@ -13,9 +13,9 @@ class Restarted extends Chronograph {
     constructor() {
         super(...arguments);
         this.top = () => {
+            this.setState(watching);
             watching.time = 0;
             watching.watch();
-            this.setState(watching);
         };
         this.split = () => { };
     }

@@ -15,10 +15,10 @@
 		// styles
 		const css = html`
 		<style>
-			:host, body { 
-				font-family: monospace;
+			:host { 
+				margin: auto;
 				width: 50%;
-				height: 50%;
+				height: 50vh;
 				display: flex;
 				flex-direction: column;
 				justify-content: space-evenly;
@@ -27,8 +27,7 @@
 				font-family: monospace;
 				flex-grow: 1;
 				width: 100%;
-				height: 100%;
-				font-size: 24px;
+				font-size: 60px;
 			}
 		</style>
 		`
@@ -36,10 +35,10 @@
 		const template = html`
 		${css}
 		<button @click="${stopwatch.top}">
-			${asyncReplace(time())}
+			${asyncReplace(stopwatch).time}
 		</button>
 		<button @click="${stopwatch.split}">
-			${asyncReplace(lap())}
+			${asyncReplace(stopwatch).lap}
 		</button>`
 		// Render the template to the document
 		render(template, document.body)
