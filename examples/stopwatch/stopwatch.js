@@ -74,16 +74,20 @@ const lapped = new Lapped();
 const { target, handler } = new Mealy(restarted);
 export const stopwatch = new Proxy(target, handler);
 const toString = (ms) => {
-    let ds = ms / 10;
-    let ss = ds / 100;
+    let ds = ms / 100;
+    let ss = ds / 10;
     let mn = ss / 60;
     mn = Math.floor(mn);
     ss -= mn * 60;
     ss = Math.floor(ss);
     ds -= mn * 60 * 100;
     ds -= ss * 100;
-    ds = Math.floor(ds);
-    return `${mn}:${ss}:${ds}`;
+    ds = Math.round(ds);
+    const pad = (fullNumber, target = 2) => {
+        const last2Digits = fullNumber.toString().slice(-target);
+        return last2Digits.padStart(target, '0');
+    };
+    return `${pad(mn)}:${pad(ss)}:${pad(ds)}:${pad(ms)}`;
 };
 export async function* time() {
     yield toString(stopwatch.time);
