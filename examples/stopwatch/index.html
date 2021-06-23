@@ -9,7 +9,7 @@
 
 <body>
 	<script type="module">
-		import { stopwatch } from './stopwatch.js'
+		import { stopwatch, time, lap } from './stopwatch.js'
 		import { html, render } from 'https://unpkg.com/lit-html?module'
 		import { asyncReplace } from 'https://unpkg.com/lit-html/directives/async-replace?module'
 		// styles
@@ -34,9 +34,11 @@
 		const template = html`
 		${css}
 		<button @click="${stopwatch.top}">
-			${asyncReplace(stopwatch)}
+			${asyncReplace(time())}
 		</button>
-		<button @click="${stopwatch.split}"></button>`
+		<button @click="${stopwatch.split}">
+			${asyncReplace(lap())}
+		</button>`
 		// Render the template to the document
 		render(template, document.body)
 	</script>
