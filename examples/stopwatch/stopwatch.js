@@ -80,9 +80,13 @@ const toString = (ms) => {
     mn = Math.floor(mn);
     ss -= mn * 60;
     ss = Math.floor(ss);
-    ds -= mn * 60 * 100;
-    ds -= ss * 100;
+    ds -= mn * 60 * 10;
+    ds -= ss * 10;
     ds = Math.round(ds);
+    ms -= mn * 60 * 10 * 100;
+    ms -= ss * 10 * 100;
+    ms -= ds * 100;
+    ms = Math.round(ms);
     const pad = (fullNumber, target = 2) => {
         const last2Digits = fullNumber.toString().slice(-target);
         return last2Digits.padStart(target, '0');
