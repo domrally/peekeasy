@@ -43,26 +43,19 @@ class Stopped extends Chronograph {
 class Watching extends Chronograph {
     constructor() {
         super(...arguments);
-        this.updating = Promise.resolve();
-        this.update = async () => {
-            const u = this.updating;
+        this.isState = false;
+        this.watch = async () => {
+            this.isState = true;
             let time = Date.now();
-            while (u === this.updating) {
-                time = await this.loop(time);
+            while (this.isState) {
+                this.time += Date.now() - time;
+                this.setState(this);
+                const getRequest = (r) => window.requestAnimationFrame(() => r());
+                await new Promise(resolve => getRequest(resolve));
             }
         };
-        this.watch = () => {
-            this.updating = this.update();
-        };
-        this.loop = async (time) => {
-            this.time += Date.now() - time;
-            this.setState(this);
-            const getRequest = (r) => window.requestAnimationFrame(() => r());
-            await new Promise(resolve => getRequest(resolve));
-            return Date.now();
-        };
         this.top = () => {
-            this.updating = Promise.resolve();
+            this.isState = false;
             this.setState(stopped);
         };
         this.split = () => {
@@ -90,11 +83,13 @@ const toString = (ms) => {
     return `${mn}:${ss}:${ms}`;
 };
 export async function* time() {
+    yield stopwatch.time;
     for await (const update of stopwatch) {
         yield toString(update.time);
     }
 }
 export async function* lap() {
+    yield stopwatch.lap;
     for await (const update of stopwatch) {
         yield toString(update.lap);
     }

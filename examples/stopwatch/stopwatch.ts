@@ -33,26 +33,19 @@ class Stopped extends Chronograph {
 }
 // 
 class Watching extends Chronograph {
-	private updating: Promise<void> = Promise.resolve()
-	update = async () => {
-		const u = this.updating
+	isState = false
+	watch = async () => {
+		this.isState = true
 		let time = Date.now()
-		while (u === this.updating) {
-			time = await this.loop(time)
+		while (this.isState) {
+			this.time += Date.now() - time
+			this.setState(this)
+			const getRequest = (r: any) => window.requestAnimationFrame(() => r())
+			await new Promise(resolve => getRequest(resolve))
 		}
 	}
-	watch = () => {
-		this.updating = this.update()
-	}
-	private loop = async (time: number) => {
-		this.time += Date.now() - time
-		this.setState(this)
-		const getRequest = (r: any) => window.requestAnimationFrame(() => r())
-		await new Promise(resolve => getRequest(resolve))
-		return Date.now()
-	}
 	readonly top = () => {
-		this.updating = Promise.resolve()
+		this.isState = false
 		this.setState(stopped)
 	}
 	readonly split = () => {
@@ -81,11 +74,13 @@ const toString = (ms: number) => {
 	return `${mn}:${ss}:${ms}`
 }
 export async function* time() {
+	yield stopwatch.time
 	for await (const update of stopwatch) {
 		yield toString(update.time)
 	}
 }
 export async function* lap() {
+	yield stopwatch.lap
 	for await (const update of stopwatch) {
 		yield toString(update.lap)
 	}
