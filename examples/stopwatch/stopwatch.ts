@@ -45,7 +45,6 @@ class Watching extends Chronograph {
 		}
 	}
 	readonly top = () => {
-		console.log('!!!!!!!!!!!!!')
 		this.isState = false
 		this.setState(stopped)
 	}

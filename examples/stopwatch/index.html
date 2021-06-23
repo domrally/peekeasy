@@ -31,13 +31,15 @@
 			}
 		</style>
 		`
+		const getTop = () => stopwatch.top()
+		const getSplit = () => stopwatch.split()
 		// Define a template
 		const template = html`
 		${css}
-		<button @click="${stopwatch.top}">
+		<button @click="${getTop}">
 			${asyncReplace(time())}
 		</button>
-		<button @click="${stopwatch.split}">
+		<button @click="${getSplit}">
 			${asyncReplace(lap())}
 		</button>`
 		// Render the template to the document
