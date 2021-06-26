@@ -1,0 +1,13 @@
+body { 
+	margin: auto;
+	min-width: 50%;
+	min-height: 50vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+} 
+stop-watch {
+	font-family: monospace;
+	font-size: 60px;
+	padding: 1em;
+}

@@ -8,39 +8,17 @@
 </head>
 
 <body>
+	<stop-watch></stop-watch>
 	<script type="module">
-		import { stopwatch, time, lap } from './stopwatch.js'
+		import { Stopwatch } from './stopwatch.js'
 		import { html, render } from 'https://unpkg.com/lit-html?module'
 		import { asyncReplace } from 'https://unpkg.com/lit-html/directives/async-replace?module'
-		// styles
-		const css = html`
-		<style>
-			body { 
-				margin: auto;
-				min-width: 50%;
-				min-height: 50vh;
-				display: flex;
-				flex-direction: column;
-				justify-content: space-evenly;
-			} 
-			button {
-				font-family: monospace;
-				font-size: 60px;
-				padding: 1em;
-			}
-		</style>
-		`
-		const getTop = () => stopwatch.top()
-		const getSplit = () => stopwatch.split()
-		// Define a template
 		const template = html`
-		${css}
-		<button @click="${getTop}">
-			${asyncReplace(time())}
-		</button>
-		<button @click="${getSplit}">
-			${asyncReplace(lap())}
-		</button>`
+			<style>
+				${css}
+			</style>
+			${html}
+		`
 		// Render the template to the document
 		render(template, document.body)
 	</script>
