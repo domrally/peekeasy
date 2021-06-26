@@ -1,5 +1,5 @@
 //
-export class Mealy<S extends object & AsyncIterable<S>> implements AsyncIterable<S> {
+export class Context<S extends object & AsyncIterable<S>> implements AsyncIterable<S> {
 	// 
 	async *[Symbol.asyncIterator]() {
 		while (true) {
