@@ -1,9 +1,0 @@
-{
-   "editor.tabSize": 3,
-   "editor.detectIndentation": false,
-	"editor.insertSpaces": false,
-	"editor.tabCompletion": "on",
-	"editor.formatOnSave": true,
-	"editor.defaultFormatter": "vscode.typescript-language-features",
-	"editor.formatOnPaste": true
-}
