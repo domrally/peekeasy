@@ -11,7 +11,7 @@ const render = (window as any).render
 //
 const getText = async (url: string) => {
 	const response = await fetch(url)
-	return response.text
+	return await response.text()
 }
 // 
 const toString = (ms: number) => {

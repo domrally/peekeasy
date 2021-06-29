@@ -24,7 +24,7 @@ const render = window.render;
 //
 const getText = async (url) => {
     const response = await fetch(url);
-    return response.text;
+    return await response.text();
 };
 // 
 const toString = (ms) => {
