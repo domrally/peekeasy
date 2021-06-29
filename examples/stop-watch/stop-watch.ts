@@ -69,10 +69,10 @@ export class StopWatch extends HTMLElement {
 				${styles}
 			</style>
 			<button @click="${this.#top}">
-				${asyncReplace(this.time)}
+				${asyncReplace(this.time())}
 			</button>
 			<button @click="${this.#side}">
-				${asyncReplace(this.lap)}
+				${asyncReplace(this.lap())}
 			</button>
 		`
 		// 

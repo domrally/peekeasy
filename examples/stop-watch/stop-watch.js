@@ -59,10 +59,10 @@ export class StopWatch extends HTMLElement {
 				${styles}
 			</style>
 			<button @click="${__classPrivateFieldGet(this, _top)}">
-				${asyncReplace(this.time)}
+				${asyncReplace(this.time())}
 			</button>
 			<button @click="${__classPrivateFieldGet(this, _side)}">
-				${asyncReplace(this.lap)}
+				${asyncReplace(this.lap())}
 			</button>
 		`;
             // 
