@@ -5,7 +5,7 @@
     "license": "MIT",
     "repository": "domrally/mealy",
     "main": "./src/main.js",
-	 "types": "./src/main.d.ts",
+    "types": "./src/main.d.ts",
     "keywords": [
         "mealy",
         "finite",
@@ -31,5 +31,8 @@
         "node",
         "package",
         "manager"
-    ]
+    ],
+    "dependencies": {
+        "lit-html": "^1.4.1"
+    }
 }

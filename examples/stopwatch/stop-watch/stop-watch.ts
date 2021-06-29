@@ -4,6 +4,8 @@ import { Restarted } from './states/restarted.js'
 import { Watching } from './states/watching.js'
 import { Stopped } from './states/stopped.js'
 import { CreateStateProxy } from '../../../src/main.js'
+import { html, render } from '../../../node_modules/lit-html/lit-html.js'
+import { asyncReplace } from '../../../node_modules/lit-html/directives/async-replace.js'
 //
 const getText = async (url: string) => {
 	const response = await fetch(url)
@@ -63,7 +65,7 @@ export class StopWatch extends HTMLElement {
 			getText('stop-watch.html')
 		])
 		// 
-		const template = (window as any).html`
+		const template = html`
 			<style>
 				${styles}
 			</style>
@@ -75,7 +77,7 @@ export class StopWatch extends HTMLElement {
 		}
 		const container = document.getElementsByClassName('stop-watch')[0];
 		// 
-		(window as any).render(template, container)
+		render(template, container)
 	}
 	private async *time() {
 		yield toString(this.#stopwatch.total)

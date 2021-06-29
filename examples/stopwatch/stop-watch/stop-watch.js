@@ -17,6 +17,7 @@ import { Restarted } from './states/restarted.js';
 import { Watching } from './states/watching.js';
 import { Stopped } from './states/stopped.js';
 import { CreateStateProxy } from '../../../src/main.js';
+import { html, render } from '../../../node_modules/lit-html/lit-html.js';
 //
 const getText = async (url) => {
     const response = await fetch(url);
@@ -53,7 +54,7 @@ export class StopWatch extends HTMLElement {
                 getText('stop-watch.html')
             ]);
             // 
-            const template = window.html `
+            const template = html `
 			<style>
 				${styles}
 			</style>
@@ -65,7 +66,7 @@ export class StopWatch extends HTMLElement {
             }
             const container = document.getElementsByClassName('stop-watch')[0];
             // 
-            window.render(template, container);
+            render(template, container);
         });
         _top.set(this, () => __classPrivateFieldGet(this, _stopwatch).top());
         _side.set(this, () => __classPrivateFieldGet(this, _stopwatch).side());
