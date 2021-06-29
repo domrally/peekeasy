@@ -64,12 +64,7 @@ export class StopWatch extends HTMLElement {
 			${content}
 		`;
             // 
-            while (!document.getElementsByClassName('stop-watch').length) {
-                await new Promise(resolve => window.requestAnimationFrame(() => resolve()));
-            }
-            const container = document.getElementsByClassName('stop-watch')[0];
-            // 
-            render(template, container);
+            render(template, this);
         });
         _top.set(this, () => __classPrivateFieldGet(this, _stopwatch).top());
         _side.set(this, () => __classPrivateFieldGet(this, _stopwatch).side());

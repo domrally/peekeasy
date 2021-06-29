@@ -74,12 +74,7 @@ export class StopWatch extends HTMLElement {
 			${content}
 		`
 		// 
-		while (!document.getElementsByClassName('stop-watch').length) {
-			await new Promise<void>(resolve => window.requestAnimationFrame(() => resolve()))
-		}
-		const container = document.getElementsByClassName('stop-watch')[0];
-		// 
-		render(template, container)
+		render(template, this)
 	}
 	private async *time() {
 		yield toString(this.#stopwatch.total)
