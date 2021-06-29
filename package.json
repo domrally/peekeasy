@@ -31,8 +31,5 @@
         "node",
         "package",
         "manager"
-    ],
-    "dependencies": {
-        "lit-html": "^1.4.1"
-    }
+    ]
 }
