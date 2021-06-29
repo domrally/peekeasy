@@ -1,5 +1,3 @@
-import { html, render } from 'https://unpkg.com/lit-html?module'
-import { asyncReplace } from 'https://unpkg.com/lit-html/directives/async-replace?module'
 import { Chronograph } from './states/chronograph'
 import { Triggers } from './triggers'
 import { Restarted } from './states/restarted'
@@ -39,7 +37,7 @@ export class StopWatch extends HTMLElement {
 			getText('./stop-watch.html')
 		])
 		// 
-		const template = html`
+		const template = (window as any).html`
 			<style>
 				${styles}
 			</style>
@@ -49,17 +47,17 @@ export class StopWatch extends HTMLElement {
 		while (!document.getElementsByClassName('stop-watch').length) {
 			await new Promise<void>(resolve => window.requestAnimationFrame(() => resolve()))
 		}
-		const container = document.getElementsByClassName('stop-watch')[0]
+		const container = document.getElementsByClassName('stop-watch')[0];
 		// 
-		render(template, container)
+		(window as any).render(template, container)
 	}
-	async *#time() {
+	private async *time() {
 		yield toString(this.#stopwatch.total)
 		for await (const [update] of this.#stopwatch) {
 			yield toString(update.total)
 		}
 	}
-	async *#lap() {
+	private async *lap() {
 		yield toString(this.#stopwatch.lap)
 		for await (const [update] of this.#stopwatch) {
 			yield toString(update.lap)

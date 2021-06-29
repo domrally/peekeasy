@@ -12,7 +12,6 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     return privateMap.get(receiver);
 };
 var _stopwatch, _init, _top, _side;
-import { html, render } from 'https://unpkg.com/lit-html?module';
 import { Triggers } from './triggers';
 import { Restarted } from './states/restarted';
 import { Watching } from './states/watching';
@@ -32,7 +31,7 @@ export class StopWatch extends HTMLElement {
                 getText('./stop-watch.html')
             ]);
             // 
-            const template = html `
+            const template = window.html `
 			<style>
 				${styles}
 			</style>
@@ -44,7 +43,7 @@ export class StopWatch extends HTMLElement {
             }
             const container = document.getElementsByClassName('stop-watch')[0];
             // 
-            render(template, container);
+            window.render(template, container);
         });
         _top.set(this, () => __classPrivateFieldGet(this, _stopwatch).top());
         _side.set(this, () => __classPrivateFieldGet(this, _stopwatch).side());
@@ -69,13 +68,13 @@ export class StopWatch extends HTMLElement {
         // 
         __classPrivateFieldGet(this, _init).call(this);
     }
-    async *() {
+    async *time() {
         yield toString(__classPrivateFieldGet(this, _stopwatch).total);
         for await (const [update] of __classPrivateFieldGet(this, _stopwatch)) {
             yield toString(update.total);
         }
     }
-    async *() {
+    async *lap() {
         yield toString(__classPrivateFieldGet(this, _stopwatch).lap);
         for await (const [update] of __classPrivateFieldGet(this, _stopwatch)) {
             yield toString(update.lap);
