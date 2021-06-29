@@ -33,13 +33,12 @@ export class Context<S extends object & State<S, T>, T> implements AsyncIterable
 		this.init()
 	}
 	// 
-	async *init() {
+	async init() {
 		for await (const next of this.getNext()) {
 			this.currentState.onExit()
 			const state = this.transitions.get(next.value as [S, T]) as S
 			state.onEnter()
 			this.currentState = state
-			yield this.currentState
 		}
 	}
 }

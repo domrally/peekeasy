@@ -33,13 +33,12 @@ export class Context {
         };
     }
     // 
-    async *init() {
+    async init() {
         for await (const next of this.getNext()) {
             this.currentState.onExit();
             const state = this.transitions.get(next.value);
             state.onEnter();
             this.currentState = state;
-            yield this.currentState;
         }
     }
 }

@@ -10,5 +10,5 @@ export declare class Context<S extends object & State<S, T>, T> implements Async
         set: (_: S, property: any, value: any) => any;
     };
     constructor(currentState: S, transitions: Map<[S, T], S>);
-    init(): AsyncGenerator<S, void, unknown>;
+    init(): Promise<void>;
 }
