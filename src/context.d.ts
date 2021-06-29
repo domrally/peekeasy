@@ -1,4 +1,4 @@
-import { State } from "./state";
+import { State } from "./state.js";
 export declare class Context<S extends object & State<S, T>, T> implements AsyncIterable<S> {
     private currentState;
     private transitions;

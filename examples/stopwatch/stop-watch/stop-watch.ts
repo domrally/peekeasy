@@ -1,9 +1,9 @@
-import { Chronograph } from './states/chronograph'
-import { Triggers } from './triggers'
-import { Restarted } from './states/restarted'
-import { Watching } from './states/watching'
-import { Stopped } from './states/stopped'
-import { CreateStateProxy } from '../../../src/main'
+import { Chronograph } from './states/chronograph.js'
+import { Triggers } from './triggers.js'
+import { Restarted } from './states/restarted.js'
+import { Watching } from './states/watching.js'
+import { Stopped } from './states/stopped.js'
+import { CreateStateProxy } from '../../../src/main.js'
 // 
 export class StopWatch extends HTMLElement {
 	#stopwatch: Chronograph

@@ -1,5 +1,5 @@
-import { Triggers } from '../triggers'
-import { Chronograph } from './chronograph'
+import { Triggers } from '../triggers.js'
+import { Chronograph } from './chronograph.js'
 //
 export class Restarted extends Chronograph {
 	onEnter(): void {

@@ -1,4 +1,4 @@
-import { Chronograph } from './chronograph';
+import { Chronograph } from './chronograph.js';
 export declare class Stopped extends Chronograph {
     onEnter(): void;
     onExit(): void;

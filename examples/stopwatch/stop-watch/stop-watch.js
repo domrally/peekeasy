@@ -12,11 +12,11 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     return privateMap.get(receiver);
 };
 var _stopwatch, _init, _top, _side;
-import { Triggers } from './triggers';
-import { Restarted } from './states/restarted';
-import { Watching } from './states/watching';
-import { Stopped } from './states/stopped';
-import { CreateStateProxy } from '../../../src/main';
+import { Triggers } from './triggers.js';
+import { Restarted } from './states/restarted.js';
+import { Watching } from './states/watching.js';
+import { Stopped } from './states/stopped.js';
+import { CreateStateProxy } from '../../../src/main.js';
 // 
 export class StopWatch extends HTMLElement {
     // 
