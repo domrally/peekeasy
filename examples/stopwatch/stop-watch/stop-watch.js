@@ -17,7 +17,10 @@ import { Restarted } from './states/restarted.js';
 import { Watching } from './states/watching.js';
 import { Stopped } from './states/stopped.js';
 import { CreateStateProxy } from '../../../src/main.js';
-import { html, render } from '../../../node_modules/lit-html/lit-html.js';
+// 
+const asyncReplace = window.asyncReplace;
+const html = window.html;
+const render = window.render;
 //
 const getText = async (url) => {
     const response = await fetch(url);

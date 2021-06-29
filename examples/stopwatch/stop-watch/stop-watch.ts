@@ -4,8 +4,10 @@ import { Restarted } from './states/restarted.js'
 import { Watching } from './states/watching.js'
 import { Stopped } from './states/stopped.js'
 import { CreateStateProxy } from '../../../src/main.js'
-import { html, render } from '../../../node_modules/lit-html/lit-html.js'
-import { asyncReplace } from '../../../node_modules/lit-html/directives/async-replace.js'
+// 
+const asyncReplace = (window as any).asyncReplace
+const html = (window as any).html
+const render = (window as any).render
 //
 const getText = async (url: string) => {
 	const response = await fetch(url)
