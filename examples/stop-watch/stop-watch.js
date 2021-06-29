@@ -52,16 +52,18 @@ export class StopWatch extends HTMLElement {
         // 
         _init.set(this, async () => {
             // rendering
-            const [styles, content] = await Promise.all([
-                getText('stop-watch.css'),
-                getText('stop-watch.html')
-            ]);
+            const styles = await getText('stop-watch.css');
             // 
             const template = html `
 			<style>
 				${styles}
 			</style>
-			${content}
+			<button @click="${__classPrivateFieldGet(this, _top)}">
+				${asyncReplace(this.time)}
+			</button>
+			<button @click="${__classPrivateFieldGet(this, _side)}">
+				${asyncReplace(this.lap)}
+			</button>
 		`;
             // 
             render(template, this);
