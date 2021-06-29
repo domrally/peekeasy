@@ -1,6 +1,7 @@
-import { Transition } from "./transition"
 // 
-export abstract class State<S, T extends Transition> implements AsyncIterable<S> {
+export abstract class State<S, T> implements AsyncIterable<[S, T]> {
+	abstract onEnter(): void
+	abstract onExit(): void
 	// 
 	async *[Symbol.asyncIterator]() {
 		while (true) {
@@ -8,17 +9,20 @@ export abstract class State<S, T extends Transition> implements AsyncIterable<S>
 		}
 	}
 	// 
-	private promise: Promise<S>
-	#transition: (nextState: S) => void
+	private promise: Promise<[S, T]>
+	private get newPromise() {
+		return new Promise<[S, T]>(resolve => this.#transition = resolve)
+	}
+	#transition: (nextState: [S, T]) => void
 	// 
 	constructor() {
 		this.#transition = () => { }
-		this.promise = new Promise<S>(resolve => this.#transition = resolve)
+		this.promise = this.newPromise
 	}
-	//
+	// 
 	protected raise(trigger: T) {
 		const transition = this.#transition
-		this.promise = new Promise<S>(resolve => this.#transition = resolve)
-		transition(trigger[this])
+		this.promise = this.newPromise
+		transition([this as any, trigger])
 	}
 }

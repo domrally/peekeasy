@@ -1,1 +1,0 @@
-export class Transition<S> extends Map<S, S> { }

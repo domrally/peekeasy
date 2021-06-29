@@ -1,5 +1,4 @@
 export enum Triggers {
-	Start,
-	Stop,
-	Reset,
+	Top,
+	Side
 }

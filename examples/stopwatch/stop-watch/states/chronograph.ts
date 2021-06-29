@@ -1,11 +1,19 @@
-import { State } from '../../../../index.js'
+import { State } from '../../../../src/main.js'
 import { Triggers } from '../triggers.js'
 
 export abstract class Chronograph extends State<Chronograph, Triggers> {
 	// 
 	abstract top(): void
-	abstract split(): void
+	abstract side(): void
 	// 
-	time = 0
-	lap = 0
+	constructor(protected times: { total: number, lap: number }) {
+		super()
+	}
+	// 
+	get total() {
+		return this.times.total
+	}
+	get lap() {
+		return this.times.lap
+	}
 }

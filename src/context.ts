@@ -1,16 +1,24 @@
+import { State } from "./state"
+
 //
-export class Context<S extends object & AsyncIterable<S>> implements AsyncIterable<S> {
+export class Context<S extends object & State<S, T>, T> implements AsyncIterable<S> {
 	// 
 	async *[Symbol.asyncIterator]() {
-		while (true) {
-			const next = await this.currentState[Symbol.asyncIterator]().next()
-			this.currentState = next.value
+		for await (const next of this.getNext()) {
+			while (this.currentState != this.transitions.get(next.value as [S, T])) {
+				await new Promise<void>(r => requestAnimationFrame(() => r()))
+			}
 			yield this.currentState
+		}
+	}
+	private async *getNext() {
+		while (true) {
+			yield await this.currentState[Symbol.asyncIterator]().next()
 		}
 	}
 	// 
 	get target(): S & AsyncIterable<S> {
-		this.#lazyInit?.()
+		this.lazyOneOffInit?.()
 		const target = Object.assign({}, this.currentState, this)
 		return target
 	}
@@ -22,10 +30,16 @@ export class Context<S extends object & AsyncIterable<S>> implements AsyncIterab
 		}
 	}
 	// 
-	constructor(private currentState: S) { }
+	constructor(private currentState: S, private transitions: Map<[S, T], S>) { }
 	// 
-	#lazyInit: any = async () => {
-		this.#lazyInit = null
-		for await (this.currentState of this) { }
+	async *lazyOneOffInit?() {
+		delete this.lazyOneOffInit
+		for await (const next of this.getNext()) {
+			this.currentState.onExit()
+			const state = this.transitions.get(next.value as [S, T]) as S
+			state.onEnter()
+			this.currentState = state
+			yield this.currentState
+		}
 	}
 }

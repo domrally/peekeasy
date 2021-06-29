@@ -1,10 +1,13 @@
+import { Triggers } from '../triggers'
 import { Chronograph } from './chronograph'
 //
 export class Restarted extends Chronograph {
-	readonly top = () => {
-		this.raise(Triggers.Start)
-		watching.time = 0
-		watching.watch()
+	onEnter(): void {
+		this.times.lap = 0
+		this.times.total = 0
 	}
-	readonly split = () => { }
+	onExit(): void {
+	}
+	readonly top = () => this.raise(Triggers.Top)
+	side() { }
 }

@@ -1,38 +1,42 @@
 import { html, render } from 'https://unpkg.com/lit-html?module'
 import { asyncReplace } from 'https://unpkg.com/lit-html/directives/async-replace?module'
 import { Chronograph } from './states/chronograph'
-import { Mealy } from '../../..'
 import { Triggers } from './triggers'
 import { Restarted } from './states/restarted'
 import { Watching } from './states/watching'
 import { Stopped } from './states/stopped'
-import { Lapped } from './states/lapped'
+import { CreateStateProxy } from '../../../src/main'
 // 
 export class StopWatch extends HTMLElement {
 	#stopwatch: Chronograph
 	// 
 	constructor() {
 		super()
+		// states
+		const times = {
+			total: 0,
+			lap: 0
+		}
+		const restarted = new Restarted(times)
+		const stopped = new Stopped(times)
+		const watching = new Watching(times)
+		// transitions
+		const transitions = new Map<[Chronograph, Triggers], Chronograph>()
+		transitions.set([restarted, Triggers.Top], watching)
+		transitions.set([watching, Triggers.Top], stopped)
+		transitions.set([stopped, Triggers.Top], watching)
+		transitions.set([stopped, Triggers.Side], restarted)
+		// finite state pattern machine
+		this.#stopwatch = CreateStateProxy<Chronograph, Triggers>(restarted, transitions)
 		// 
-		const restarted = new Restarted()
-		const watching = new Watching()
-		const stopped = new Stopped()
-		const lapped = new Lapped()
-		// 
-		const triggers = new Map<[Triggers, Chronograph], Chronograph>()
-		triggers.set([Triggers.Start, restarted], watching)
-		triggers.set([Triggers.Start, stopped], watching)
-		triggers.set([Triggers.Stop, restarted], watching)
-		triggers.set([Triggers.Reset, stopped], restarted)
-
-		this.#stopwatch = Mealy<Chronograph, Triggers>(restarted, triggers)
 		this.#init()
 	}
 	// 
 	readonly #init = async () => {
+		// rendering
 		const [styles, content] = await Promise.all([
-			StopWatch.#getText('./stop-watch.css'),
-			StopWatch.#getText('./stop-watch.html')
+			getText('./stop-watch.css'),
+			getText('./stop-watch.html')
 		])
 		// 
 		const template = html`
@@ -49,58 +53,46 @@ export class StopWatch extends HTMLElement {
 		// 
 		render(template, container)
 	}
-
-	// 
-	static readonly #getText = async (url: string) => {
-		const response = await fetch(url)
-		return response.text
-	}
-	// 
-	readonly #toString = (ms: number) => {
-		let cs = ms / 10
-		let ss = cs / 100
-		let mn = ss / 60
-		mn = Math.floor(mn)
-
-		ss -= mn * 60
-		ss = Math.floor(ss)
-
-		cs -= mn * 60 * 100
-		cs -= ss * 100
-		cs = Math.round(cs)
-
-		const pad = (fullNumber: number, target = 2) => {
-			const last2Digits = fullNumber.toString().slice(-target)
-			return last2Digits.padStart(target, '0')
-		}
-
-		return `${pad(mn)}:${pad(ss)}:${pad(cs)}`
-	}
-	async *time() {
-		yield this.#toString(this.#stopwatch.time)
-		for await (const update of this.#stopwatch) {
-			yield this.#toString(update.time)
+	async *#time() {
+		yield toString(this.#stopwatch.total)
+		for await (const [update] of this.#stopwatch) {
+			yield toString(update.total)
 		}
 	}
-	async *lap() {
-		yield this.#toString(this.#stopwatch.lap)
-		for await (const update of this.#stopwatch) {
-			yield this.#toString(update.lap)
+	async *#lap() {
+		yield toString(this.#stopwatch.lap)
+		for await (const [update] of this.#stopwatch) {
+			yield toString(update.lap)
 		}
 	}
-	readonly top = () => this.#stopwatch.top()
-	readonly split = () => this.#stopwatch.split()
+	readonly #top = () => this.#stopwatch.top()
+	readonly #side = () => this.#stopwatch.side()
 }
 // Define the new element
 customElements.define('stop-watch', StopWatch)
+// 
+const getText = async (url: string) => {
+	const response = await fetch(url)
+	return response.text
+}
+// 
+const toString = (ms: number) => {
+	let cs = ms / 10
+	let ss = cs / 100
+	let mn = ss / 60
+	mn = Math.floor(mn)
 
-// 	start: {
-// 		restarted: watching,
-// 	},
-// 	stop: [
-// 		[watching, stopped],
-// 	],
-// 	reset: [
-// 		[stopped, restarted],
-// 	],
-// }
+	ss -= mn * 60
+	ss = Math.floor(ss)
+
+	cs -= mn * 60 * 100
+	cs -= ss * 100
+	cs = Math.round(cs)
+
+	const pad = (fullNumber: number, target = 2) => {
+		const last2Digits = fullNumber.toString().slice(-target)
+		return last2Digits.padStart(target, '0')
+	}
+
+	return `${pad(mn)}:${pad(ss)}:${pad(cs)}`
+}
