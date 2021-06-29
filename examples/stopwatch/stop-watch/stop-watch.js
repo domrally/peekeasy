@@ -49,8 +49,8 @@ export class StopWatch extends HTMLElement {
         _init.set(this, async () => {
             // rendering
             const [styles, content] = await Promise.all([
-                getText('./stop-watch.css'),
-                getText('./stop-watch.html')
+                getText('stop-watch.css'),
+                getText('stop-watch.html')
             ]);
             // 
             const template = window.html `
