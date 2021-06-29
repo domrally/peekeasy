@@ -4,6 +4,7 @@ export class Context {
     constructor(currentState, transitions) {
         this.currentState = currentState;
         this.transitions = transitions;
+        this.init();
     }
     // 
     async *[Symbol.asyncIterator]() {
@@ -21,7 +22,6 @@ export class Context {
     }
     // 
     get target() {
-        this.lazyOneOffInit?.();
         const target = Object.assign({}, this.currentState, this);
         return target;
     }
@@ -33,8 +33,7 @@ export class Context {
         };
     }
     // 
-    async *lazyOneOffInit() {
-        delete this.lazyOneOffInit;
+    async *init() {
         for await (const next of this.getNext()) {
             this.currentState.onExit();
             const state = this.transitions.get(next.value);

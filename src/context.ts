@@ -18,7 +18,6 @@ export class Context<S extends object & State<S, T>, T> implements AsyncIterable
 	}
 	// 
 	get target(): S & AsyncIterable<S> {
-		this.lazyOneOffInit?.()
 		const target = Object.assign({}, this.currentState, this)
 		return target
 	}
@@ -30,10 +29,11 @@ export class Context<S extends object & State<S, T>, T> implements AsyncIterable
 		}
 	}
 	// 
-	constructor(private currentState: S, private transitions: Map<[S, T], S>) { }
+	constructor(private currentState: S, private transitions: Map<[S, T], S>) {
+		this.init()
+	}
 	// 
-	async *lazyOneOffInit?() {
-		delete this.lazyOneOffInit
+	async *init() {
 		for await (const next of this.getNext()) {
 			this.currentState.onExit()
 			const state = this.transitions.get(next.value as [S, T]) as S
