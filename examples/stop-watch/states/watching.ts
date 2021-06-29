@@ -1,5 +1,5 @@
-import { Triggers } from '../triggers.js'
 import { Chronograph } from './chronograph.js'
+import { Triggers } from './triggers.js'
 //
 export class Watching extends Chronograph {
 	#isTiming = false

@@ -1,5 +1,5 @@
-import { State } from '../../../../src/main.js';
-import { Triggers } from '../triggers.js';
+import { State } from '../../../src/state.js';
+import { Triggers } from './triggers.js';
 export declare abstract class Chronograph extends State<Chronograph, Triggers> {
     protected times: {
         total: number;

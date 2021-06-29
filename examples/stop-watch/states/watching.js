@@ -12,8 +12,8 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     return privateMap.get(receiver);
 };
 var _isTiming;
-import { Triggers } from '../triggers.js';
 import { Chronograph } from './chronograph.js';
+import { Triggers } from './triggers.js';
 //
 export class Watching extends Chronograph {
     constructor() {

@@ -1,9 +1,9 @@
 import { Chronograph } from './states/chronograph.js'
-import { Triggers } from './triggers.js'
+import { Triggers } from './states/triggers.js'
 import { Restarted } from './states/restarted.js'
 import { Watching } from './states/watching.js'
 import { Stopped } from './states/stopped.js'
-import { CreateStateProxy } from '../../../src/main.js'
+import { CreateStateProxy } from '../../src/main.js'
 // 
 const asyncReplace = (window as any).asyncReplace
 const html = (window as any).html

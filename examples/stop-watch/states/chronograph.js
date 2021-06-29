@@ -1,4 +1,4 @@
-import { State } from '../../../../src/main.js';
+import { State } from '../../../src/state.js';
 export class Chronograph extends State {
     // 
     constructor(times) {
