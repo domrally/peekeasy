@@ -1,11 +1,18 @@
 :host {
 	font-family: monospace;
 	padding: 1em;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+:host * + * {
+	margin-top: 1em;
 }
 
 button {
 	outline: none;
-	border: none;
+	border: .1em solid black;
 	border-radius: 1em;
 	box-shadow: 1em 2em 0 0 #111;
 	background-color: blue;
