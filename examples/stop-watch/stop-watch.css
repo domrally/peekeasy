@@ -28,10 +28,11 @@ button:hover {
 }
 
 button:active {
-	color: #ff0;
+	color: #000;
+	background-color: #ff0;
 	box-shadow: 
 		.05em .1em .08em .03em #000f,
-		inset .05em .1em .08em .03em #ff7f;
+		-.05em -.1em .08em .03em #ff7f;
 }
 
 @keyframes scale-easeInElastic {
