@@ -11,7 +11,7 @@ import { Watching } from './states/watching.js';
 import { Stopped } from './states/stopped.js';
 import { CreateStateProxy } from '../../src/main.js';
 import { getContent, html, render } from './stop-watch.html.js';
-import { Timer } from './timer.js';
+import { Timer } from './states/timer.js';
 // 
 export class StopWatch extends HTMLElement {
     // 

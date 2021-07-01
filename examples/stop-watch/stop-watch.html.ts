@@ -1,5 +1,5 @@
 import { Chronograph } from './states/chronograph.js'
-import { Timer } from './timer.js'
+import { Timer } from './states/timer.js'
 // 
 export const asyncReplace = (window as any).asyncReplace
 export const html = (window as any).html
