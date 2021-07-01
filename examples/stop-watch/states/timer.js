@@ -50,19 +50,29 @@ export class Timer {
     get lap() {
         return __classPrivateFieldGet(this, _lap);
     }
-    async *totaller() {
-        yield 'Press Me';
-        while (true) {
-            const total = await new Promise(resolve => __classPrivateFieldSet(this, _resolveTotal, resolve));
-            yield toString(total);
-        }
+    get totaller() {
+        const target = this;
+        return {
+            async *[Symbol.asyncIterator]() {
+                yield 'Press Me';
+                while (true) {
+                    const total = await new Promise(resolve => __classPrivateFieldSet(target, _resolveTotal, resolve));
+                    yield toString(total);
+                }
+            }
+        };
     }
-    async *lapper() {
-        yield 'Split Me';
-        while (true) {
-            const lap = await new Promise(resolve => __classPrivateFieldSet(this, _resolveLap, resolve));
-            yield toString(lap);
-        }
+    get lapper() {
+        const target = this;
+        return {
+            async *[Symbol.asyncIterator]() {
+                yield 'Split Me';
+                while (true) {
+                    const lap = await new Promise(resolve => __classPrivateFieldSet(target, _resolveLap, resolve));
+                    yield toString(lap);
+                }
+            }
+        };
     }
 }
 _resolveTotal = new WeakMap(), _resolveLap = new WeakMap(), _total = new WeakMap(), _lap = new WeakMap();

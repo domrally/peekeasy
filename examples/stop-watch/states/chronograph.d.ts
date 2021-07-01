@@ -6,6 +6,6 @@ export declare abstract class Chronograph extends State<Chronograph, Triggers> {
     abstract top(): void;
     abstract side(): void;
     constructor(times: Timer);
-    totaller(): AsyncGenerator<never, AsyncIterator<string, any, undefined>, unknown>;
-    lapper(): AsyncGenerator<never, AsyncIterator<string, any, undefined>, unknown>;
+    totaller(): AsyncGenerator<string, void, undefined>;
+    lapper(): AsyncGenerator<string, void, undefined>;
 }

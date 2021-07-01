@@ -11,9 +11,9 @@ export abstract class Chronograph extends State<Chronograph, Triggers> {
 		super()
 	}
 	async *totaller() {
-		return this.times.totaller()
+		yield* this.times.totaller
 	}
 	async *lapper() {
-		return this.times.lapper()
+		yield* this.times.lapper
 	}
 }

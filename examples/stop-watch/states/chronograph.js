@@ -6,9 +6,9 @@ export class Chronograph extends State {
         this.times = times;
     }
     async *totaller() {
-        return this.times.totaller();
+        yield* this.times.totaller;
     }
     async *lapper() {
-        return this.times.lapper();
+        yield* this.times.lapper;
     }
 }

@@ -4,6 +4,10 @@ export declare class Timer {
     get total(): number;
     set lap(value: number);
     get lap(): number;
-    totaller(): AsyncIterator<string>;
-    lapper(): AsyncIterator<string>;
+    get totaller(): {
+        [Symbol.asyncIterator](): AsyncIterator<string>;
+    };
+    get lapper(): {
+        [Symbol.asyncIterator](): AsyncIterator<string>;
+    };
 }
