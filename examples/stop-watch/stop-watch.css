@@ -6,7 +6,7 @@ button {
 	border: none;
 	border-radius: 1em;
 	box-shadow: 
-		.05em .1em .01em .01em #003
+		.05em .1em .01em .01em #003,
 		inset .05em .1em .01em .01em #ffa8;
 	background-color: blue;
 	color: white;
@@ -21,14 +21,14 @@ button:first-of-type {
 
 button:hover {
 	box-shadow: 
-		.1em .2em .01em .01em #0038
+		.1em .2em .01em .01em #0038,
 		inset .1em .2em .01em .01em #ffa8;
 }
 
 button:active {
 	color: #ff0;
 	box-shadow: 
-		.1em .2em .01em .01em #003f
+		.1em .2em .01em .01em #003f,
 		inset .1em .2em .01em .01em #ff0f;
 }
 
