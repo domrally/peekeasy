@@ -6,8 +6,8 @@ button {
 	border: none;
 	border-radius: 1em;
 	box-shadow: 
-		.05em .1em .01em .01em #003,
-		inset .05em .1em .01em .01em #ffa8;
+		.05em .1em .02em .02em #003,
+		inset .1em .2em .01em .01em #ffa8;
 	background-color: blue;
 	color: white;
 	padding: .62em;
@@ -22,14 +22,14 @@ button:first-of-type {
 button:hover {
 	box-shadow: 
 		.1em .2em .01em .01em #0038,
-		inset .1em .2em .01em .01em #ffa8;
+		inset .05em .1em .02em .02em #ffa8;
 }
 
 button:active {
 	color: #ff0;
 	box-shadow: 
-		.1em .2em .01em .01em #003f,
-		inset .1em .2em .01em .01em #ff0f;
+		.05em .1em .04em .04em #003f,
+		inset .05em .1em .04em .04em #ff0f;
 }
 
 @keyframes scale-easeInElastic {
