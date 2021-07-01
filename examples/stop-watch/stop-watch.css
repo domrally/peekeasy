@@ -9,7 +9,7 @@ button {
 		.05em .1em .02em .02em #004a,
 		inset .02em .02em .05em .01em #ff7f,
 		inset .075em .15em .01em .01em #ff7a;
-	background-color: blue;
+	background-color: #33d;
 	color: white;
 	padding: .62em;
 	animation: scale-easeInElastic .8s linear .5s reverse both;
