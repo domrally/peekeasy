@@ -47,12 +47,22 @@ export class StopWatch extends HTMLElement {
 		let resolveTotal: (value: number) => void
 		let resolveLap: (value: number) => void
 
+		let _total = 0,
+			_lap = 0
 		const times = {
 			set total(value: number) {
+				_total = value
 				resolveTotal(value)
 			},
+			get total() {
+				return _total
+			},
 			set lap(value: number) {
+				_lap = value
 				resolveLap(value)
+			},
+			get lap() {
+				return _lap
 			},
 			async *totaller(): AsyncIterator<string> {
 				yield toString(0)
