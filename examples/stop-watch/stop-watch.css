@@ -10,7 +10,7 @@ button {
 	color: white;
 	padding: .62em;
 	transform: scale(0);
-	animation: scale-easeInElastic 2s linear .5s reverse forwards;
+	animation: scale-easeInElastic 1.2s linear .3s reverse forwards;
 }
 
 button:first-of-type {
