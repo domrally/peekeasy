@@ -10,32 +10,8 @@ import { Restarted } from './states/restarted.js';
 import { Watching } from './states/watching.js';
 import { Stopped } from './states/stopped.js';
 import { CreateStateProxy } from '../../src/main.js';
-// 
-const asyncReplace = window.asyncReplace;
-const html = window.html;
-const render = window.render;
-//
-const getText = async (url) => {
-    const response = await fetch(url);
-    return await response.text();
-};
-// 
-const toString = (ms) => {
-    let cs = ms / 10;
-    let ss = cs / 100;
-    let mn = ss / 60;
-    mn = Math.floor(mn);
-    ss -= mn * 60;
-    ss = Math.floor(ss);
-    cs -= mn * 60 * 100;
-    cs -= ss * 100;
-    cs = Math.round(cs);
-    const pad = (fullNumber, target = 2) => {
-        const last2Digits = fullNumber.toString().slice(-target);
-        return last2Digits.padStart(target, '0');
-    };
-    return `${pad(mn)}:${pad(ss)}:${pad(cs)}`;
-};
+import { getContent, html, render } from './stop-watch.html.js';
+import { Timer } from './timer.js';
 // 
 export class StopWatch extends HTMLElement {
     // 
@@ -43,43 +19,11 @@ export class StopWatch extends HTMLElement {
         super();
         // 
         _init.set(this, async () => {
-            let resolveTotal;
-            let resolveLap;
-            let _total = 0, _lap = 0;
-            const times = {
-                set total(value) {
-                    _total = value;
-                    resolveTotal(value);
-                },
-                get total() {
-                    return _total;
-                },
-                set lap(value) {
-                    _lap = value;
-                    resolveLap(value);
-                },
-                get lap() {
-                    return _lap;
-                },
-                async *totaller() {
-                    yield 'Press Me';
-                    while (true) {
-                        const total = await new Promise(resolve => resolveTotal = resolve);
-                        yield toString(total);
-                    }
-                },
-                async *lapper() {
-                    yield 'Split Me';
-                    while (true) {
-                        const lap = await new Promise(resolve => resolveLap = resolve);
-                        yield toString(lap);
-                    }
-                }
-            };
+            const timer = new Timer();
             // states
-            const restarted = new Restarted(times);
-            const stopped = new Stopped(times);
-            const watching = new Watching(times);
+            const restarted = new Restarted(timer);
+            const stopped = new Stopped(timer);
+            const watching = new Watching(timer);
             // finite state pattern machine
             const stopwatch = CreateStateProxy(restarted, {
                 [Triggers.Top]: [
@@ -92,20 +36,16 @@ export class StopWatch extends HTMLElement {
                 ]
             });
             // rendering
-            const styles = await getText('stop-watch.css');
-            // 
+            const response = await fetch('stop-watch.css');
+            const styles = await response.text();
+            const content = getContent(stopwatch, timer);
+            // merge style and content
             const template = html `
 			<style>
 				${styles}
 			</style>
-			<button @click="${() => stopwatch.top()}">
-				${asyncReplace(times.totaller())}
-			</button>
-			<button @click="${() => stopwatch.side()}">
-				${asyncReplace(times.lapper())}
-			</button>
+			${content}
 		`;
-            // 
             render(template, this);
         });
         // 
