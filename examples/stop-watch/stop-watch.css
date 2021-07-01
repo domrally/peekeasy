@@ -9,7 +9,7 @@ button {
 	background-color: blue;
 	color: white;
 	padding: .62em;
-	animation: scale-easeInElastic .8s linear .2s reverse forwards;
+	animation: scale-easeInElastic 2s linear .5s reverse forwards;
 }
 
 button:first-of-type {
