@@ -1,4 +1,5 @@
 import { State } from '../../../src/state.js'
+import { Timer } from './timer.js'
 import { Triggers } from './triggers.js'
 
 export abstract class Chronograph extends State<Chronograph, Triggers> {
@@ -6,7 +7,13 @@ export abstract class Chronograph extends State<Chronograph, Triggers> {
 	abstract top(): void
 	abstract side(): void
 	// 
-	constructor(protected times: { total: number, lap: number }) {
+	constructor(protected times: Timer) {
 		super()
+	}
+	async *totaller() {
+		return this.times.totaller()
+	}
+	async *lapper() {
+		return this.times.lapper()
 	}
 }

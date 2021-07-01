@@ -10,7 +10,8 @@ import { Restarted } from './states/restarted.js';
 import { Watching } from './states/watching.js';
 import { Stopped } from './states/stopped.js';
 import { CreateStateProxy } from '../../src/main.js';
-import { getContent, html, render } from './stop-watch.html.js';
+import { getContent } from './stop-watch.html.js';
+import { html, render } from './lit-html.js';
 import { Timer } from './states/timer.js';
 // 
 export class StopWatch extends HTMLElement {
@@ -38,7 +39,7 @@ export class StopWatch extends HTMLElement {
             // rendering
             const response = await fetch('stop-watch.css');
             const styles = await response.text();
-            const content = getContent(stopwatch, timer);
+            const content = getContent(stopwatch);
             // merge style and content
             const template = html `
 			<style>

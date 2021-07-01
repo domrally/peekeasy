@@ -1,15 +1,11 @@
 import { Chronograph } from './states/chronograph.js'
-import { Timer } from './states/timer.js'
-// 
-export const asyncReplace = (window as any).asyncReplace
-export const html = (window as any).html
-export const render = (window as any).render
+import { asyncReplace, html } from './lit-html.js'
 //
-export const getContent = (stopwatch: Chronograph, timer: Timer) => html`
+export const getContent = (stopwatch: Chronograph) => html`
 	<button @click="${() => stopwatch.top()}">
-		${asyncReplace(timer.totaller())}
+		${asyncReplace(stopwatch.totaller())}
 	</button>
 	<button @click="${() => stopwatch.side()}">
-		${asyncReplace(timer.lapper())}
+		${asyncReplace(stopwatch.lapper())}
 	</button>
 `

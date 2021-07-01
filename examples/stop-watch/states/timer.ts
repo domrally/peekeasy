@@ -38,14 +38,14 @@ export class Timer {
 	get lap() {
 		return this.#lap
 	}
-	async * totaller(): AsyncIterator<string> {
+	async *totaller(): AsyncIterator<string> {
 		yield 'Press Me'
 		while (true) {
 			const total = await new Promise<number>(resolve => this.#resolveTotal = resolve)
 			yield toString(total)
 		}
 	}
-	async * lapper(): AsyncIterator<string> {
+	async *lapper(): AsyncIterator<string> {
 		yield 'Split Me'
 		while (true) {
 			const lap = await new Promise<number>(resolve => this.#resolveLap = resolve)
