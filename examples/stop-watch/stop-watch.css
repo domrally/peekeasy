@@ -11,12 +11,12 @@ button {
 	background-color: blue;
 	color: white;
 	padding: .62em;
-	animation: scale-easeInElastic 1.2s linear .3s reverse both;
+	animation: scale-easeInElastic .8s linear .5s reverse both;
 	transition: box-shadow .2s ease-out;
 }
 
 button:first-of-type {
-	animation-delay: 0s;
+	animation-delay: .3s;
 }
 
 button:hover {
