@@ -9,6 +9,7 @@ button {
 	background-color: blue;
 	color: white;
 	padding: .62em;
+	transform: scale(0);
 	animation: scale-easeInElastic 2s linear .5s reverse forwards;
 }
 
