@@ -36,20 +36,45 @@ const toString = (ms: number) => {
 }
 // 
 export class StopWatch extends HTMLElement {
-	#stopwatch: Chronograph
 	// 
 	constructor() {
 		super()
-		// states
+		// 
+		this.#init()
+	}
+	// 
+	readonly #init = async () => {
+		let resolveTotal: (value: number) => void
+		let resolveLap: (value: number) => void
+
 		const times = {
-			total: 0,
-			lap: 0
+			set total(value: number) {
+				resolveTotal(value)
+			},
+			set lap(value: number) {
+				resolveLap(value)
+			},
+			async *totaller(): AsyncIterator<string> {
+				yield toString(0)
+				while (true) {
+					const total = await new Promise<number>(resolve => resolveTotal = resolve)
+					yield toString(total)
+				}
+			},
+			async *lapper(): AsyncIterator<string> {
+				yield toString(0)
+				while (true) {
+					const lap = await new Promise<number>(resolve => resolveLap = resolve)
+					yield toString(lap)
+				}
+			}
 		}
+		// states
 		const restarted = new Restarted(times)
 		const stopped = new Stopped(times)
 		const watching = new Watching(times)
 		// finite state pattern machine
-		this.#stopwatch = CreateStateProxy<Chronograph, Triggers>(restarted, {
+		const stopwatch = CreateStateProxy<Chronograph, Triggers>(restarted, {
 			[Triggers.Top]: [
 				[restarted, watching],
 				[watching, stopped],
@@ -59,11 +84,6 @@ export class StopWatch extends HTMLElement {
 				[stopped, restarted]
 			]
 		})
-		// 
-		this.#init()
-	}
-	// 
-	readonly #init = async () => {
 		// rendering
 		const styles = await getText('stop-watch.css')
 		// 
@@ -71,30 +91,16 @@ export class StopWatch extends HTMLElement {
 			<style>
 				${styles}
 			</style>
-			<button @click="${this.#top}">
-				${asyncReplace(this.time())}
+			<button @click="${() => stopwatch.top()}">
+				${asyncReplace(times.totaller())}
 			</button>
-			<button @click="${this.#side}">
-				${asyncReplace(this.lap())}
+			<button @click="${() => stopwatch.side()}">
+				${asyncReplace(times.lapper())}
 			</button>
 		`
 		// 
 		render(template, this)
 	}
-	private async * time() {
-		yield toString(this.#stopwatch.total)
-		for await (const [update] of this.#stopwatch) {
-			yield toString(update.total)
-		}
-	}
-	private async * lap() {
-		yield toString(this.#stopwatch.lap)
-		for await (const [update] of this.#stopwatch) {
-			yield toString(update.lap)
-		}
-	}
-	readonly #top = () => this.#stopwatch.top()
-	readonly #side = () => this.#stopwatch.side()
 }
 // Define the new element
 customElements.define('stop-watch', StopWatch)

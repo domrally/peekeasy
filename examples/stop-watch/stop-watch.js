@@ -1,17 +1,10 @@
-var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (receiver, privateMap, value) {
-    if (!privateMap.has(receiver)) {
-        throw new TypeError("attempted to set private field on non-instance");
-    }
-    privateMap.set(receiver, value);
-    return value;
-};
 var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (receiver, privateMap) {
     if (!privateMap.has(receiver)) {
         throw new TypeError("attempted to get private field on non-instance");
     }
     return privateMap.get(receiver);
 };
-var _stopwatch, _init, _top, _side;
+var _init;
 import { Triggers } from './states/triggers.js';
 import { Restarted } from './states/restarted.js';
 import { Watching } from './states/watching.js';
@@ -48,9 +41,47 @@ export class StopWatch extends HTMLElement {
     // 
     constructor() {
         super();
-        _stopwatch.set(this, void 0);
         // 
         _init.set(this, async () => {
+            let resolveTotal;
+            let resolveLap;
+            const times = {
+                set total(value) {
+                    resolveTotal(value);
+                },
+                set lap(value) {
+                    resolveLap(value);
+                },
+                async *totaller() {
+                    yield toString(0);
+                    while (true) {
+                        const total = await new Promise(resolve => resolveTotal = resolve);
+                        yield toString(total);
+                    }
+                },
+                async *lapper() {
+                    yield toString(0);
+                    while (true) {
+                        const lap = await new Promise(resolve => resolveLap = resolve);
+                        yield toString(lap);
+                    }
+                }
+            };
+            // states
+            const restarted = new Restarted(times);
+            const stopped = new Stopped(times);
+            const watching = new Watching(times);
+            // finite state pattern machine
+            const stopwatch = CreateStateProxy(restarted, {
+                [Triggers.Top]: [
+                    [restarted, watching],
+                    [watching, stopped],
+                    [stopped, watching]
+                ],
+                [Triggers.Side]: [
+                    [stopped, restarted]
+                ]
+            });
             // rendering
             const styles = await getText('stop-watch.css');
             // 
@@ -58,55 +89,20 @@ export class StopWatch extends HTMLElement {
 			<style>
 				${styles}
 			</style>
-			<button @click="${__classPrivateFieldGet(this, _top)}">
-				${asyncReplace(this.time())}
+			<button @click="${() => stopwatch.top()}">
+				${asyncReplace(times.totaller())}
 			</button>
-			<button @click="${__classPrivateFieldGet(this, _side)}">
-				${asyncReplace(this.lap())}
+			<button @click="${() => stopwatch.side()}">
+				${asyncReplace(times.lapper())}
 			</button>
 		`;
             // 
             render(template, this);
         });
-        _top.set(this, () => __classPrivateFieldGet(this, _stopwatch).top());
-        _side.set(this, () => __classPrivateFieldGet(this, _stopwatch).side());
-        // states
-        const times = {
-            total: 0,
-            lap: 0
-        };
-        const restarted = new Restarted(times);
-        const stopped = new Stopped(times);
-        const watching = new Watching(times);
-        // finite state pattern machine
-        __classPrivateFieldSet(this, _stopwatch, CreateStateProxy(restarted, {
-            [Triggers.Top]: [
-                [restarted, watching],
-                [watching, stopped],
-                [stopped, watching]
-            ],
-            [Triggers.Side]: [
-                [stopped, restarted]
-            ]
-        })
-        // 
-        );
         // 
         __classPrivateFieldGet(this, _init).call(this);
     }
-    async *time() {
-        yield toString(__classPrivateFieldGet(this, _stopwatch).total);
-        for await (const [update] of __classPrivateFieldGet(this, _stopwatch)) {
-            yield toString(update.total);
-        }
-    }
-    async *lap() {
-        yield toString(__classPrivateFieldGet(this, _stopwatch).lap);
-        for await (const [update] of __classPrivateFieldGet(this, _stopwatch)) {
-            yield toString(update.lap);
-        }
-    }
 }
-_stopwatch = new WeakMap(), _init = new WeakMap(), _top = new WeakMap(), _side = new WeakMap();
+_init = new WeakMap();
 // Define the new element
 customElements.define('stop-watch', StopWatch);

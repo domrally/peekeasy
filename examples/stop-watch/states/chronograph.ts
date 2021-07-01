@@ -9,11 +9,4 @@ export abstract class Chronograph extends State<Chronograph, Triggers> {
 	constructor(protected times: { total: number, lap: number }) {
 		super()
 	}
-	// 
-	get total() {
-		return this.times.total
-	}
-	get lap() {
-		return this.times.lap
-	}
 }

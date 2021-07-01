@@ -11,6 +11,4 @@ export declare abstract class Chronograph extends State<Chronograph, Triggers> {
         total: number;
         lap: number;
     });
-    get total(): number;
-    get lap(): number;
 }

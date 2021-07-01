@@ -5,11 +5,4 @@ export class Chronograph extends State {
         super();
         this.times = times;
     }
-    // 
-    get total() {
-        return this.times.total;
-    }
-    get lap() {
-        return this.times.lap;
-    }
 }
