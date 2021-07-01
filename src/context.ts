@@ -7,7 +7,7 @@ export class Context<S extends object & State<S, T>, T extends number | string> 
 	async *[Symbol.asyncIterator]() {
 		for await (const next of this.getNext()) {
 			const value = next.value as [S, T]
-			while (this.currentState != this.transitions.get(value[1])?.get(value[0]) as S) {
+			while (this.currentState != this.transitions.get(value[1].toString())?.get(value[0]) as S) {
 				await new Promise<void>(r => requestAnimationFrame(() => r()))
 			}
 			yield this.currentState
@@ -39,7 +39,7 @@ export class Context<S extends object & State<S, T>, T extends number | string> 
 		for await (const next of this.getNext()) {
 			this.currentState.onExit()
 			const value = next.value as [S, T]
-			const state = this.transitions.get(value[1])?.get(value[0]) as S
+			const state = this.transitions.get(value[1].toString())?.get(value[0]) as S
 			state.onEnter()
 			this.currentState = state
 		}
