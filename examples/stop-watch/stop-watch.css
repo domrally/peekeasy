@@ -9,7 +9,7 @@ button {
 	border-radius: 1em;
 	box-shadow: 
 		.05em .1em .02em .02em #004a,
-		inset .1em .2em .01em .01em #ff7a;
+		inset .075em .15em .01em .01em #ff7a;
 	background-color: blue;
 	color: white;
 	padding: .62em;
