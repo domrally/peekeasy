@@ -36,7 +36,6 @@ export class Context<S extends object & State<S, T>, T extends number | string> 
 	}
 	// 
 	async init() {
-		this.currentState.onEnter()
 		for await (const next of this.getNext()) {
 			this.currentState.onExit()
 			const value = next.value as [S, T]

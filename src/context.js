@@ -35,7 +35,6 @@ export class Context {
     }
     // 
     async init() {
-        this.currentState.onEnter();
         for await (const next of this.getNext()) {
             this.currentState.onExit();
             const value = next.value;
