@@ -1,14 +1,3 @@
-:host {
-	font-family: monospace;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-}
-:host * + * {
-	margin-top: 1em;
-}
-
 button {
 	outline: none;
 	border: .1em solid black;
