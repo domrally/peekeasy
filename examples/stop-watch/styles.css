@@ -1,13 +1,8 @@
 body { 
-	margin: auto;
-	min-width: 50%;
-	min-height: 50vh;
+	font-size: 2em;
+	width: 100%;
+	height: 100%;
 	display: flex;
-	flex-direction: column;
-	justify-content: space-evenly;
+	justify-content: center;
+	align-items: center;
 } 
-stop-watch {
-	font-family: monospace;
-	font-size: 60px;
-	padding: 1em;
-}
