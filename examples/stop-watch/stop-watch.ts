@@ -65,14 +65,14 @@ export class StopWatch extends HTMLElement {
 				return _lap
 			},
 			async *totaller(): AsyncIterator<string> {
-				yield toString(0)
+				yield 'Press Me'
 				while (true) {
 					const total = await new Promise<number>(resolve => resolveTotal = resolve)
 					yield toString(total)
 				}
 			},
 			async *lapper(): AsyncIterator<string> {
-				yield toString(0)
+				yield 'Split Me'
 				while (true) {
 					const lap = await new Promise<number>(resolve => resolveLap = resolve)
 					yield toString(lap)
