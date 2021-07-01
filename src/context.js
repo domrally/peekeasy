@@ -9,7 +9,8 @@ export class Context {
     // 
     async *[Symbol.asyncIterator]() {
         for await (const next of this.getNext()) {
-            while (this.currentState != this.transitions.get(next.value)) {
+            const value = next.value;
+            while (this.currentState != this.transitions.get(value[1])?.get(value[0])) {
                 await new Promise(r => requestAnimationFrame(() => r()));
             }
             yield this.currentState;
@@ -36,7 +37,8 @@ export class Context {
     async init() {
         for await (const next of this.getNext()) {
             this.currentState.onExit();
-            const state = this.transitions.get(next.value);
+            const value = next.value;
+            const state = this.transitions.get(value[1])?.get(value[0]);
             state.onEnter();
             this.currentState = state;
         }

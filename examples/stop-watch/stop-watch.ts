@@ -48,14 +48,17 @@ export class StopWatch extends HTMLElement {
 		const restarted = new Restarted(times)
 		const stopped = new Stopped(times)
 		const watching = new Watching(times)
-		// transitions
-		const transitions = new Map<[Chronograph, Triggers], Chronograph>()
-		transitions.set([restarted, Triggers.Top], watching)
-		transitions.set([watching, Triggers.Top], stopped)
-		transitions.set([stopped, Triggers.Top], watching)
-		transitions.set([stopped, Triggers.Side], restarted)
 		// finite state pattern machine
-		this.#stopwatch = CreateStateProxy<Chronograph, Triggers>(restarted, transitions)
+		this.#stopwatch = CreateStateProxy<Chronograph, Triggers>(restarted, {
+			[Triggers.Top]: [
+				[restarted, watching],
+				[watching, stopped],
+				[stopped, watching]
+			],
+			[Triggers.Side]: [
+				[stopped, restarted]
+			]
+		})
 		// 
 		this.#init()
 	}
@@ -78,13 +81,13 @@ export class StopWatch extends HTMLElement {
 		// 
 		render(template, this)
 	}
-	private async *time() {
+	private async * time() {
 		yield toString(this.#stopwatch.total)
 		for await (const [update] of this.#stopwatch) {
 			yield toString(update.total)
 		}
 	}
-	private async *lap() {
+	private async * lap() {
 		yield toString(this.#stopwatch.lap)
 		for await (const [update] of this.#stopwatch) {
 			yield toString(update.lap)

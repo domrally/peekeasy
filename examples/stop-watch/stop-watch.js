@@ -78,14 +78,17 @@ export class StopWatch extends HTMLElement {
         const restarted = new Restarted(times);
         const stopped = new Stopped(times);
         const watching = new Watching(times);
-        // transitions
-        const transitions = new Map();
-        transitions.set([restarted, Triggers.Top], watching);
-        transitions.set([watching, Triggers.Top], stopped);
-        transitions.set([stopped, Triggers.Top], watching);
-        transitions.set([stopped, Triggers.Side], restarted);
         // finite state pattern machine
-        __classPrivateFieldSet(this, _stopwatch, CreateStateProxy(restarted, transitions)
+        __classPrivateFieldSet(this, _stopwatch, CreateStateProxy(restarted, {
+            [Triggers.Top]: [
+                [restarted, watching],
+                [watching, stopped],
+                [stopped, watching]
+            ],
+            [Triggers.Side]: [
+                [stopped, restarted]
+            ]
+        })
         // 
         );
         // 
