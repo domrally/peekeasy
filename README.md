@@ -1,6 +1,7 @@
 # mealy
 a loose simulation of a Mealy machine in Typescript using async generators and proxies
 
+
 ## use
     const stopwatch = CreateStateProxy<AbstractState, TriggerEnum>(initialState, {
         [TriggerEnum.OnEventA]: [
@@ -13,10 +14,22 @@ a loose simulation of a Mealy machine in Typescript using async generators and p
         ]
     })
 
+
 ## design
+
+### abstract machines
+The [state pattern](https://en.wikipedia.org/wiki/State_pattern) is a simulation of a finite state machine. With the addition of the [proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) on the current state it becomes a simulation of a more powerful form of state machine:
+
+#### [Mealy machines](https://en.wikipedia.org/wiki/Mealy_machine)
+> In the theory of computation, 
+> a Mealy machine is a finite-state machine 
+> whose output values are determined both by 
+> its current state and the current inputs
+
 
 ### javascript & typescript
 Javascript has built in support for the **proxy** pattern through its Proxy class. With the addition of typescript this allows for hiding a state pattern behind the proxy handler
+
 
 ### patterns
 The **state** and **proxy** patterns 
