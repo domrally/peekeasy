@@ -37,7 +37,7 @@ The [state pattern](https://en.wikipedia.org/wiki/State_pattern) is a simulation
 
 
 ### javascript & typescript
-Javascript has built in support for the [proxy pattern](https://en.wikipedia.org/wiki/Proxy_pattern) through its [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) class. The addition of [typescript](https://www.typescriptlang.org/) allows for us to implement a classic [state pattern](https://en.wikipedia.org/wiki/State_pattern) to hide behind the proxy
+Javascript has built in support for the [proxy pattern](https://en.wikipedia.org/wiki/Proxy_pattern) through its [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) class. The addition of [typescript](https://www.typescriptlang.org/) allows us to implement a classic [state pattern](https://en.wikipedia.org/wiki/State_pattern) to hide behind the proxy
 
 
 ### patterns
