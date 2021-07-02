@@ -1,6 +1,7 @@
 # mealy
 a loose simulation of a Mealy machine in Typescript using async generators and proxies
 
+## installation
 
 ## use
 ```typescript
