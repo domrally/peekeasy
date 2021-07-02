@@ -3,16 +3,24 @@ a loose simulation of a Mealy machine in Typescript using async generators and p
 
 
 ## use
-    const currentStateProxy = CreateStateProxy<AbstractState, TriggerEnum>(initialState, {
-        [TriggerEnum.OnEventA]: [
-            [stateA, stateB],
-            [stateB, stateA],
-            [stateD, stateC]
-        ],
-        [TriggerEnum.OnEventB]: [
-            [stateA, stateC]
-        ]
-    })
+```typescript
+abstract class Example extends State<Example> { }
+let stateA, stateB, stateC, stateD: Example
+enum Triggers {
+    Event0,
+    Event1
+}
+const currentStateProxy = CreateStateProxy<Example, Triggers>(initialState, {
+    [Triggers.Event0]: [
+        [stateA, stateB],
+        [stateB, stateA],
+        [stateD, stateC]
+    ],
+    [Triggers.Event1]: [
+        [stateA, stateC]
+    ]
+})
+```
 
 
 ## design
