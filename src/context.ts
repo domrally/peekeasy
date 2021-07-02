@@ -1,13 +1,12 @@
-import { State } from "./state.js"
-import { Transitions } from "./transitions.js"
-
+import { State } from './state.js'
+import { TransitionMap } from './transitions.js'
 //
-export class Context<S extends object & State<S, T>, T extends number | string> implements AsyncIterable<S> {
+export class Context<S extends object & State<S, T>, T extends number> implements AsyncIterable<S> {
 	// 
 	async *[Symbol.asyncIterator]() {
 		for await (const next of this.getNext()) {
 			const value = next.value as [S, T]
-			while (this.currentState != this.transitions.get(value[1].toString())?.get(value[0]) as S) {
+			while (this.currentState != this.transitions.get(value[1])?.get(value[0]) as S) {
 				await new Promise<void>(r => requestAnimationFrame(() => r()))
 			}
 			yield this.currentState
@@ -31,7 +30,7 @@ export class Context<S extends object & State<S, T>, T extends number | string> 
 		}
 	}
 	// 
-	constructor(private currentState: S, private transitions: Transitions<S, T>) {
+	constructor(private currentState: S, private transitions: TransitionMap<S, T>) {
 		this.init()
 	}
 	// 
@@ -39,7 +38,7 @@ export class Context<S extends object & State<S, T>, T extends number | string> 
 		for await (const next of this.getNext()) {
 			this.currentState.onExit()
 			const value = next.value as [S, T]
-			const state = this.transitions.get(value[1].toString())?.get(value[0]) as S
+			const state = this.transitions.get(value[1])?.get(value[0]) as S
 			state.onEnter()
 			this.currentState = state
 		}

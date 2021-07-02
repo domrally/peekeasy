@@ -36,6 +36,7 @@ export class StopWatch extends HTMLElement {
 		// rendering
 		const response = await fetch('stop-watch.css')
 		const styles = await response.text()
+
 		const content = getContent(stopwatch)
 		// merge style and content
 		const template = html`

@@ -1,5 +1,6 @@
-export declare class Transitions<S, T extends number | string> extends Map<string, Map<S, S>> {
-    constructor(triggers: {
-        [index: number]: [S, S][];
-    });
+export declare type Transitions<S> = {
+    [key: number]: [S, S][];
+};
+export declare class TransitionMap<S, T extends number> extends Map<T, Map<S, S>> {
+    constructor(triggers: Transitions<S>);
 }

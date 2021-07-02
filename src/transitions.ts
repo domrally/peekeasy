@@ -1,14 +1,11 @@
-export class Transitions<S, T extends number | string> extends Map<string, Map<S, S>> {
-	constructor(triggers: { [index: number]: [S, S][] }) {
+export type Transitions<S> = { [key: number]: [S, S][] }
+export class TransitionMap<S, T extends number> extends Map<T, Map<S, S>> {
+	constructor(triggers: Transitions<S>) {
 		super()
-		for (const trigger in triggers) {
-			if (Object.prototype.hasOwnProperty.call(triggers, trigger)) {
-				const transitions: [S, S][] = triggers[trigger]
-				const map = new Map<S, S>()
-				this.set(trigger.toString(), map)
-				transitions.forEach(transition => {
-					map.set(...transition)
-				})
+		for (const key in triggers) {
+			const map = new Map<S, S>()
+			for (const tuple of triggers[key]) {
+				this.set(Number.parseInt(key) as T, map.set(...tuple))
 			}
 		}
 	}
