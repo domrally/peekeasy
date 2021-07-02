@@ -3,7 +3,7 @@ a loose simulation of a Mealy machine in Typescript using async generators and p
 
 
 ## use
-    const stopwatch = CreateStateProxy<AbstractState, TriggerEnum>(initialState, {
+    const currentStateProxy = CreateStateProxy<AbstractState, TriggerEnum>(initialState, {
         [TriggerEnum.OnEventA]: [
             [stateA, stateB],
             [stateB, stateA],
