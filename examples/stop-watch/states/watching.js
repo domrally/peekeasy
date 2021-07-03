@@ -19,7 +19,7 @@ export class Watching extends Chronograph {
     constructor() {
         super(...arguments);
         _isTiming.set(this, false);
-        this.top = () => this.raise(Triggers.Top);
+        this.top = () => this.trigger(Triggers.Top);
         this.side = async () => {
             this.times.lap = this.times.total - this.times.lap;
         };

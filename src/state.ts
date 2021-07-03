@@ -20,7 +20,7 @@ export abstract class State<S, T> implements AsyncIterable<[S, T]> {
 		this.promise = this.newPromise
 	}
 	// 
-	protected raise(trigger: T) {
+	protected trigger(trigger: T) {
 		const transition = this.#transition
 		this.promise = this.newPromise
 		transition([this as any, trigger])

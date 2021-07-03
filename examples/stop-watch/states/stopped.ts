@@ -6,6 +6,6 @@ export class Stopped extends Chronograph {
 	}
 	onExit() {
 	}
-	readonly top = () => this.raise(Triggers.Top)
-	readonly side = () => this.raise(Triggers.Side)
+	readonly top = () => this.trigger(Triggers.Top)
+	readonly side = () => this.trigger(Triggers.Side)
 }

@@ -1,6 +1,6 @@
 import { State } from './state.js'
 import { TransitionMap } from './transitions.js'
-//
+// a context manages the state and transitions of a state machine
 export class Context<S extends object & State<S, T>, T extends number> implements AsyncIterable<S> {
 	// 
 	async *[Symbol.asyncIterator]() {
@@ -12,6 +12,7 @@ export class Context<S extends object & State<S, T>, T extends number> implement
 			yield this.currentState
 		}
 	}
+	// 
 	private async *getNext() {
 		while (true) {
 			yield await this.currentState[Symbol.asyncIterator]().next()
@@ -22,7 +23,7 @@ export class Context<S extends object & State<S, T>, T extends number> implement
 		const target = Object.assign({}, this.currentState, this)
 		return target
 	}
-	// 
+	//
 	get handler() {
 		return {
 			get: (_: S, property: any) => (this.currentState as any)[property],

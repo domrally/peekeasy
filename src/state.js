@@ -30,7 +30,7 @@ export class State {
         return new Promise(resolve => __classPrivateFieldSet(this, _transition, resolve));
     }
     // 
-    raise(trigger) {
+    trigger(trigger) {
         const transition = __classPrivateFieldGet(this, _transition);
         this.promise = this.newPromise;
         transition([this, trigger]);

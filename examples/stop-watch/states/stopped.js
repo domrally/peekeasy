@@ -4,8 +4,8 @@ import { Triggers } from './triggers.js';
 export class Stopped extends Chronograph {
     constructor() {
         super(...arguments);
-        this.top = () => this.raise(Triggers.Top);
-        this.side = () => this.raise(Triggers.Side);
+        this.top = () => this.trigger(Triggers.Top);
+        this.side = () => this.trigger(Triggers.Side);
     }
     onEnter() {
     }

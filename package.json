@@ -1,4 +1,5 @@
 {
+	"type": "module",
 	"name": "mealtime",
 	"version": "0.0.6",
 	"description": "proxied state pattern in typescript",
@@ -6,6 +7,9 @@
 	"repository": "domrally/mealtime",
 	"main": "main.js",
 	"types": "main.d.ts",
+	"scripts": {
+		"test": "node test.js"
+	},
 	"files": [
 		"src/context.js",
 		"src/context.d.ts",

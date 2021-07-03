@@ -8,6 +8,6 @@ export class Restarted extends Chronograph {
 	}
 	onExit(): void {
 	}
-	readonly top = () => this.raise(Triggers.Top)
+	readonly top = () => this.trigger(Triggers.Top)
 	side() { }
 }

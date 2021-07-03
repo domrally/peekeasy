@@ -1,4 +1,4 @@
-//
+// a context manages the state and transitions of a state machine
 export class Context {
     // 
     constructor(currentState, transitions) {
@@ -16,6 +16,7 @@ export class Context {
             yield this.currentState;
         }
     }
+    // 
     async *getNext() {
         while (true) {
             yield await this.currentState[Symbol.asyncIterator]().next();
@@ -26,7 +27,7 @@ export class Context {
         const target = Object.assign({}, this.currentState, this);
         return target;
     }
-    // 
+    //
     get handler() {
         return {
             get: (_, property) => this.currentState[property],

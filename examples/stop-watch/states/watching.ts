@@ -27,7 +27,7 @@ export class Watching extends Chronograph {
 	async *timer?() {
 		yield* this._timer()
 	}
-	readonly top = () => this.raise(Triggers.Top)
+	readonly top = () => this.trigger(Triggers.Top)
 	readonly side = async () => {
 		this.times.lap = this.times.total - this.times.lap
 	}

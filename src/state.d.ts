@@ -6,5 +6,5 @@ export declare abstract class State<S, T> implements AsyncIterable<[S, T]> {
     private promise;
     private get newPromise();
     constructor();
-    protected raise(trigger: T): void;
+    protected trigger(trigger: T): void;
 }

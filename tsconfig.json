@@ -63,6 +63,7 @@
 	},
 	"files": [
 		"main.ts",
-		"examples/stop-watch/stop-watch.ts"
+		"examples/stop-watch/stop-watch.ts",
+		"test.ts"
 	]
 }
