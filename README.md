@@ -1,31 +1,31 @@
-# mealy
-[![](https://img.shields.io/github/license/domrally/mealy)](#) [![](https://img.shields.io/snyk/vulnerabilities/github/domrally/mealy)](#)
+# mealtime
+[![](https://img.shields.io/github/license/domrally/mealtime)](#) [![](https://img.shields.io/snyk/vulnerabilities/github/domrally/mealtime)](#)
 
 a (loose) simulation of a Mealy machine in typescript using async generators and proxies
 
 ## installation
 ```bash
-> npm i @domrally/mealy
+> npm i mealtime
 ```
 or 
 ```bash
-> yarn add @domrally/mealy
+> yarn add mealtime
 ```
 or 
 ```html
-<script type="module" src="https://domrally.github.io/mealy/src/main.js"></script>
+<script type="module" src="https://domrally.github.io/mealtime/src/main.js"></script>
 ```
 or
 ```html
 <script type="module">
-    import { State, CreateStateProxy } from 'https://domrally.github.io/mealy/src/main.js'	
-    // then use in line
+    import { State, CreateStateProxy } from 'https://domrally.github.io/mealtime/src/main.js'	
+    // then use inline
 </script>
 ```
 
 ## use
 ```typescript
-import { State, CreateStateProxy } from '@domrally/mealy'
+import { State, CreateStateProxy } from 'mealtime'
 
 abstract class Example extends State<Example> { }
 let stateA, stateB, stateC, stateD: Example
