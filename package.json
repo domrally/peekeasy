@@ -1,9 +1,9 @@
 {
-	"name": "@domrally/mealtime",
-	"version": "0.0.4",
+	"name": "mealtime",
+	"version": "0.0.5",
 	"description": "proxied state pattern in typescript",
 	"license": "MIT",
-	"repository": "git://github.com/domrally/mealtime.git",
+	"repository": "domrally/mealtime",
 	"main": "main.js",
 	"types": "main.d.ts",
 	"files": [
