@@ -1,6 +1,6 @@
-import { Context } from './context.js';
-import { State } from './state.js';
-import { TransitionMap } from './transitions.js';
+import { Context } from './src/context.js';
+import { State } from './src/state.js';
+import { TransitionMap } from './src/transitions.js';
 // 
 export { State };
 // 

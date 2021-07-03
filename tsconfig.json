@@ -62,7 +62,7 @@
 		"forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file. */
 	},
 	"files": [
-		"./src/main.ts",
-		"./examples/stop-watch/stop-watch.ts"
+		"main.ts",
+		"examples/stop-watch/stop-watch.ts"
 	]
 }
