@@ -51,7 +51,7 @@ class Stopped extends State<S, Triggers> implements S {
 }
 
 const started = new Started(),
-    stopped = new Stopped()
+      stopped = new Stopped()
     
 const currentStateProxy = CreateStateProxy<S, Triggers>(started, {
     [Triggers.Hello]: [
