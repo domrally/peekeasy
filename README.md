@@ -18,7 +18,7 @@ or
 or
 ```html
 <script type="module">
-    import { State, CreateStateProxy } from 'https://domrally.github.io/mealtime/src/main.js'	
+    import { IState, State, CreateStateProxy } from 'https://domrally.github.io/mealtime/src/main.js'	
     // then use inline
 </script>
 ```
