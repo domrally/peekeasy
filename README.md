@@ -3,23 +3,23 @@ a (loose) simulation of a Mealy machine in typescript using async generators and
 
 ## installation
 ```bash
-> npm i @dommandy/mealy
+> npm i @domrally/mealy
 ```
 or 
 ```html
-<script type="module" src="https://www.dommandy.com/mealy/src/main.js"></script>
+<script type="module" src="https://domrally.github.io/mealy/src/main.js"></script>
 ```
 or
 ```html
 <script type="module">
-    import { State, CreateStateProxy } from 'https://www.dommandy.com/mealy/src/main.js'	
+    import { State, CreateStateProxy } from 'https://domrally.github.io/mealy/src/main.js'	
     // then use in line
 </script>
 ```
 
 ## use
 ```typescript
-import { State, CreateStateProxy } from '@dommandy/mealy'
+import { State, CreateStateProxy } from '@domrally/mealy'
 
 abstract class Example extends State<Example> { }
 let stateA, stateB, stateC, stateD: Example
