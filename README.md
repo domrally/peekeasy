@@ -3,7 +3,18 @@ a (loose) simulation of a Mealy machine in typescript using async generators and
 
 ## installation
 ```bash
-> npm i domrally/mealy
+> npm i @dommandy/mealy
+```
+or 
+```html
+<script type="module" src="https://www.dommandy.com/mealy/src/main.js"></script>
+```
+or
+```html
+<script type="module">
+    import { State, CreateStateProxy } from 'https://www.dommandy.com/mealy/src/main.js'	
+    // then use in line
+</script>
 ```
 
 ## use
@@ -27,7 +38,6 @@ const currentStateProxy = CreateStateProxy<Example, Triggers>(initialState, {
     ]
 })
 ```
-
 
 ## design
 
