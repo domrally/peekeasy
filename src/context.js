@@ -37,10 +37,10 @@ export class Context {
     // 
     async init() {
         for await (const next of this.getNext()) {
-            this.currentState.onExit();
+            this.currentState.onExit?.();
             const value = next.value;
             const state = this.transitions.get(value[1])?.get(value[0]);
-            state.onEnter();
+            state.onEnter?.();
             this.currentState = state;
         }
     }

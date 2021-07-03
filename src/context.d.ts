@@ -1,6 +1,6 @@
-import { State } from './state.js';
+import { IState } from './state.js';
 import { TransitionMap } from './transitions.js';
-export declare class Context<S extends object & State<S, T>, T extends number> implements AsyncIterable<S> {
+export declare class Context<S extends IState<S, T>, T extends number> implements AsyncIterable<S> {
     private currentState;
     private transitions;
     [Symbol.asyncIterator](): AsyncGenerator<S, void, unknown>;

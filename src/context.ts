@@ -1,7 +1,7 @@
-import { State } from './state.js'
+import { IState } from './state.js'
 import { TransitionMap } from './transitions.js'
 // a context manages the state and transitions of a state machine
-export class Context<S extends object & State<S, T>, T extends number> implements AsyncIterable<S> {
+export class Context<S extends IState<S, T>, T extends number> implements AsyncIterable<S> {
 	// 
 	async *[Symbol.asyncIterator]() {
 		for await (const next of this.getNext()) {
@@ -37,10 +37,10 @@ export class Context<S extends object & State<S, T>, T extends number> implement
 	// 
 	async init() {
 		for await (const next of this.getNext()) {
-			this.currentState.onExit()
+			this.currentState.onExit?.()
 			const value = next.value as [S, T]
 			const state = this.transitions.get(value[1])?.get(value[0]) as S
-			state.onEnter()
+			state.onEnter?.()
 			this.currentState = state
 		}
 	}
