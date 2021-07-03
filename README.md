@@ -25,27 +25,30 @@ or
 
 ## exports
 ```typescript
+export interface IState<S, T> {
+    [Symbol.asyncIterator](): AsyncGenerator<[S, T], void, unknown>
+    onEnter?(): void
+    onExit?(): void
+}
+
 export declare abstract class State<S, T> implements AsyncIterable<[S, T]> {
-    // you may implement
-    abstract onEnter?(): void
-    abstract onExit?(): void
-    // we implemented
     [Symbol.asyncIterator](): AsyncGenerator<[S, T], void, unknown>
     protected trigger(trigger: T): void
 }
+
 export declare const CreateStateProxy: <S extends object & State<S, T>, T extends number>(initialState: S, transitions: Transitions<S>) => S & AsyncIterable<S>
 ```
 
 ## use
 ```typescript
-import { State, CreateStateProxy } from 'mealtime'
+import { IState, State, CreateStateProxy } from 'mealtime'
 
 enum Triggers {
     Hello,
     World
 }
 
-interface S extends State<S, Triggers> { }
+interface S extends IState<S, Triggers> { }
 
 class Started extends State<S, Triggers> implements S {
     onEnter() {
@@ -64,7 +67,7 @@ class Stopped extends State<S, Triggers> implements S {
 
 const started = new Started(),
       stopped = new Stopped()
-    
+      
 const currentStateProxy = CreateStateProxy<S, Triggers>(started, {
     [Triggers.Hello]: [
         [started, stopped]
