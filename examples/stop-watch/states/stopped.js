@@ -7,8 +7,4 @@ export class Stopped extends Chronograph {
         this.top = () => this.trigger(Triggers.Top);
         this.side = () => this.trigger(Triggers.Side);
     }
-    onEnter() {
-    }
-    onExit() {
-    }
 }
