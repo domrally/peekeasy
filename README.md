@@ -23,6 +23,19 @@ or
 </script>
 ```
 
+## exports
+```typescript
+export declare abstract class State<S, T> implements AsyncIterable<[S, T]> {
+    // you implement
+    abstract onEnter(): void
+    abstract onExit(): void
+    // we implemented
+    [Symbol.asyncIterator](): AsyncGenerator<[S, T], void, unknown>
+    protected trigger(trigger: T): void
+}
+export declare const CreateStateProxy: <S extends object & State<S, T>, T extends number>(initialState: S, transitions: Transitions<S>) => S & AsyncIterable<S>
+```
+
 ## use
 ```typescript
 import { State, CreateStateProxy } from 'mealtime'
