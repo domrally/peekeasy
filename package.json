@@ -1,6 +1,6 @@
 {
 	"name": "mealtime",
-	"version": "0.0.5",
+	"version": "0.0.6",
 	"description": "proxied state pattern in typescript",
 	"license": "MIT",
 	"repository": "domrally/mealtime",
