@@ -1,11 +1,14 @@
 # mealy
-a (loose) simulation of a Mealy machine in Typescript using async generators and proxies
+a (loose) simulation of a Mealy machine in typescript using async generators and proxies
 
 ## installation
+```bash
+> npm i domrally/mealy
+```
 
 ## use
 ```typescript
-import { State, CreateStateProxy } from 'mealy'
+import { State, CreateStateProxy } from '@dommandy/mealy'
 
 abstract class Example extends State<Example> { }
 let stateA, stateB, stateC, stateD: Example
