@@ -8,6 +8,10 @@ a (loose) simulation of a Mealy machine in typescript using async generators and
 > npm i @domrally/mealy
 ```
 or 
+```bash
+> yarn add @domrally/mealy
+```
+or 
 ```html
 <script type="module" src="https://domrally.github.io/mealy/src/main.js"></script>
 ```
