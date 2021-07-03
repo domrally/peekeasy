@@ -12,7 +12,6 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     return privateMap.get(receiver);
 };
 var _transition;
-// 
 export class State {
     // 
     constructor() {

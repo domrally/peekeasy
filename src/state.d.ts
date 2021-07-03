@@ -1,7 +1,10 @@
-export declare abstract class State<S, T> implements AsyncIterable<[S, T]> {
+export interface IState<S, T> {
+    [Symbol.asyncIterator](): AsyncGenerator<[S, T], void, unknown>;
+    onEnter?(): void;
+    onExit?(): void;
+}
+export declare abstract class State<S, T> implements IState<S, T>, AsyncIterable<[S, T]> {
     #private;
-    abstract onEnter(): void;
-    abstract onExit(): void;
     [Symbol.asyncIterator](): AsyncGenerator<[S, T], void, unknown>;
     private promise;
     private get newPromise();

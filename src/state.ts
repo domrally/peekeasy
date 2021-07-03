@@ -1,7 +1,10 @@
-// 
-export abstract class State<S, T> implements AsyncIterable<[S, T]> {
-	abstract onEnter(): void
-	abstract onExit(): void
+//
+export interface IState<S, T> {
+	[Symbol.asyncIterator](): AsyncGenerator<[S, T], void, unknown>
+	onEnter?(): void
+	onExit?(): void
+}
+export abstract class State<S, T> implements IState<S, T>, AsyncIterable<[S, T]> {
 	// 
 	async *[Symbol.asyncIterator]() {
 		while (true) {
