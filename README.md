@@ -23,26 +23,61 @@ or
 </script>
 ```
 
+## exports
+```typescript
+export interface IState<S, T> {
+    [Symbol.asyncIterator](): AsyncGenerator<[S, T], void, unknown>
+    onEnter?(): void
+    onExit?(): void
+}
+
+export declare abstract class State<S, T> implements AsyncIterable<[S, T]> {
+    [Symbol.asyncIterator](): AsyncGenerator<[S, T], void, unknown>
+    protected trigger(trigger: T): void
+}
+
+export declare const CreateStateProxy: <S extends object & State<S, T>, T extends number>(initialState: S, transitions: Transitions<S>) => S & AsyncIterable<S>
+```
+
 ## use
 ```typescript
-import { State, CreateStateProxy } from 'mealtime'
+import { IState, State, CreateStateProxy } from 'mealtime'
 
-abstract class Example extends State<Example> { }
-let stateA, stateB, stateC, stateD: Example
 enum Triggers {
-    Event0,
-    Event1
+    Hello,
+    World
 }
-const currentStateProxy = CreateStateProxy<Example, Triggers>(initialState, {
-    [Triggers.Event0]: [
-        [stateA, stateB],
-        [stateB, stateA],
-        [stateD, stateC]
+
+interface S extends IState<S, Triggers> { }
+
+class Started extends State<S, Triggers> implements S {
+    onEnter() {
+        this.trigger(Triggers.Hello)
+    }
+    onExit() {
+        console.log('Hello, ')
+    }
+}
+
+class Stopped extends State<S, Triggers> implements S {
+    onEnter() {
+        console.log('World!')
+    }
+}
+
+const started = new Started(),
+      stopped = new Stopped()
+      
+const currentStateProxy = CreateStateProxy<S, Triggers>(started, {
+    [Triggers.Hello]: [
+        [started, stopped]
     ],
-    [Triggers.Event1]: [
-        [stateA, stateC]
+    [Triggers.World]: [
+        [stopped, started]
     ]
 })
+
+currentStateProxy.onEnter?.()
 ```
 
 ## design
