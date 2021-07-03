@@ -26,9 +26,9 @@ or
 ## exports
 ```typescript
 export declare abstract class State<S, T> implements AsyncIterable<[S, T]> {
-    // you implement
-    abstract onEnter(): void
-    abstract onExit(): void
+    // you may implement
+    abstract onEnter?(): void
+    abstract onExit?(): void
     // we implemented
     [Symbol.asyncIterator](): AsyncGenerator<[S, T], void, unknown>
     protected trigger(trigger: T): void
@@ -60,7 +60,6 @@ class Stopped extends State<S, Triggers> implements S {
     onEnter() {
         console.log('World!')
     }
-    onExit() { }
 }
 
 const started = new Started(),
@@ -75,7 +74,7 @@ const currentStateProxy = CreateStateProxy<S, Triggers>(started, {
     ]
 })
 
-currentStateProxy.onEnter()
+currentStateProxy.onEnter?.()
 ```
 
 ## design
