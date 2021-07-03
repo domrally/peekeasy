@@ -1,5 +1,5 @@
 # mealy
-[![](https://img.shields.io/github/license/domrally/mealy)]() [![](https://img.shields.io/snyk/vulnerabilities/github/domrally/mealy)]()
+[![](https://img.shields.io/github/license/domrally/mealy)](#) [![](https://img.shields.io/snyk/vulnerabilities/github/domrally/mealy)](#)
 
 a (loose) simulation of a Mealy machine in typescript using async generators and proxies
 
