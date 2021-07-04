@@ -1,5 +1,5 @@
 # mealtime
-[![](https://img.shields.io/github/license/domrally/mealtime)](#) [![](https://img.shields.io/snyk/vulnerabilities/github/domrally/mealtime)](#) [![](https://img.shields.io/github/package-json/v/domrally/mealtime)](#) [![Node.js Package](https://github.com/domrally/mealtime/actions/workflows/npm-publish.yml/badge.svg)](https://github.com/domrally/mealtime/actions/workflows/npm-publish.yml) [![](https://badgen.net/packagephobia/install/mealtime)](#)
+[![](https://badgen.net/packagephobia/install/mealtime)](#) [![](https://badgen.net/github/license/domrally/mealtime)](#) [![Node.js Package](https://github.com/domrally/mealtime/actions/workflows/npm-publish.yml/badge.svg)](https://github.com/domrally/mealtime/actions/workflows/npm-publish.yml) [![](https://badgen.net/github/tag/domrally/mealtime)](#) [![](https://badgen.net/snyk/domrally/mealtime)](#)
 
 a (loose) simulation of a Mealy machine in typescript using async generators and proxies
 
