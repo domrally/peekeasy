@@ -13,12 +13,12 @@ or
 ```
 or 
 ```html
-<script type="module" src="https://domrally.github.io/mealtime/src/main.js"></script>
+<script type="module" src="unpkg.com/mealtime"></script>
 ```
 or
 ```html
 <script type="module">
-    import { IState, State, CreateStateProxy } from 'https://domrally.github.io/mealtime/src/main.js'	
+    import { IState, State, CreateStateProxy } from 'unpkg.com/mealtime'	
     // then use inline
 </script>
 ```
