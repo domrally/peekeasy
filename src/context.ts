@@ -1,47 +1,36 @@
-import { IState } from './state.js'
-import { TransitionMap } from './transitions.js'
+import { Machineable } from './state.js'
 // a context manages the state and transitions of a state machine
-export class Context<S extends IState<S, T>, T extends number> implements AsyncIterable<S> {
+type M<S> = Machineable & S
+export class Context<S extends AsyncIterable<T>, T extends symbol> implements AsyncIterable<T> {
 	// 
 	async *[Symbol.asyncIterator]() {
-		for await (const next of this.getNext()) {
-			const value = next.value as [S, T]
-			while (this.currentState != this.transitions.get(value[1])?.get(value[0]) as S) {
-				await new Promise<void>(r => requestAnimationFrame(() => r()))
-			}
-			yield this.currentState
-		}
-	}
-	// 
-	private async *getNext() {
 		while (true) {
-			yield await this.currentState[Symbol.asyncIterator]().next()
+			const next = await this.currentState[Symbol.asyncIterator]().next()
+			const trigger = next.value as T
+			const nextState = this.transitions[trigger].get(this.currentState) as M<S>
+			this.currentState.onExit?.()
+			nextState.onEnter?.()
+			this.currentState = nextState
+			yield trigger
 		}
 	}
 	// 
-	get target(): S & AsyncIterable<S> {
-		const target = Object.assign({}, this.currentState, this)
-		return target
+	get target(): S {
+		return this.currentState
 	}
 	//
 	get handler() {
 		return {
-			get: (_: S, property: any) => (this.currentState as any)[property],
-			set: (_: S, property: any, value: any) => (this.currentState as any)[property] = value
+			get: (_: S, key: any) => key === Symbol.asyncIterator || key === Symbol.iterator
+				? (this as any)[key]
+				: (this.currentState as any)[key],
+			set: (_: S, key: any, value: any) => (this.currentState as any)[key] = value
 		}
 	}
 	// 
-	constructor(private currentState: S, private transitions: TransitionMap<S, T>) {
-		this.init()
-	}
-	// 
-	async init() {
-		for await (const next of this.getNext()) {
-			this.currentState.onExit?.()
-			const value = next.value as [S, T]
-			const state = this.transitions.get(value[1])?.get(value[0]) as S
-			state.onEnter?.()
-			this.currentState = state
-		}
+	constructor(private currentState: M<S>, private transitions: Record<T, WeakMap<M<S>, M<S>>>) {
+		(async () => {
+			for await (const _ of this) { }
+		})()
 	}
 }
