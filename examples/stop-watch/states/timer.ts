@@ -1,3 +1,6 @@
+import { State } from '../mealtime.js'
+import { Buttons } from './buttons.js'
+
 // 
 const toString = (ms: number) => {
 	let cs = ms / 10
@@ -19,7 +22,7 @@ const toString = (ms: number) => {
 
 	return `${pad(mn)}:${pad(ss)}:${pad(cs)}`
 }
-export class Timer {
+export class Timer extends State<Buttons> {
 	#resolveTotal = (_value: number) => { }
 	#resolveLap = (_value: number) => { }
 	#total = 0

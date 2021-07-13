@@ -1,4 +1,6 @@
-export declare class Timer {
+import { State } from '../mealtime.js';
+import { Buttons } from './buttons.js';
+export declare class Timer extends State<Buttons> {
     #private;
     set total(value: number);
     get total(): number;

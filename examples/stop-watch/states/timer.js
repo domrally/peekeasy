@@ -1,17 +1,16 @@
-var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (receiver, privateMap, value) {
-    if (!privateMap.has(receiver)) {
-        throw new TypeError("attempted to set private field on non-instance");
-    }
-    privateMap.set(receiver, value);
-    return value;
+var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (receiver, state, value, kind, f) {
+    if (kind === "m") throw new TypeError("Private method is not writable");
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
+    return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
 };
-var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (receiver, privateMap) {
-    if (!privateMap.has(receiver)) {
-        throw new TypeError("attempted to get private field on non-instance");
-    }
-    return privateMap.get(receiver);
+var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (receiver, state, kind, f) {
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
+    return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
-var _resolveTotal, _resolveLap, _total, _lap;
+var _Timer_resolveTotal, _Timer_resolveLap, _Timer_total, _Timer_lap;
+import { State } from '../mealtime.js';
 // 
 const toString = (ms) => {
     let cs = ms / 10;
@@ -29,26 +28,27 @@ const toString = (ms) => {
     };
     return `${pad(mn)}:${pad(ss)}:${pad(cs)}`;
 };
-export class Timer {
+export class Timer extends State {
     constructor() {
-        _resolveTotal.set(this, (_value) => { });
-        _resolveLap.set(this, (_value) => { });
-        _total.set(this, 0);
-        _lap.set(this, 0);
+        super(...arguments);
+        _Timer_resolveTotal.set(this, (_value) => { });
+        _Timer_resolveLap.set(this, (_value) => { });
+        _Timer_total.set(this, 0);
+        _Timer_lap.set(this, 0);
     }
     set total(value) {
-        __classPrivateFieldSet(this, _total, value);
-        __classPrivateFieldGet(this, _resolveTotal).call(this, value);
+        __classPrivateFieldSet(this, _Timer_total, value, "f");
+        __classPrivateFieldGet(this, _Timer_resolveTotal, "f").call(this, value);
     }
     get total() {
-        return __classPrivateFieldGet(this, _total);
+        return __classPrivateFieldGet(this, _Timer_total, "f");
     }
     set lap(value) {
-        __classPrivateFieldSet(this, _lap, value);
-        __classPrivateFieldGet(this, _resolveLap).call(this, value);
+        __classPrivateFieldSet(this, _Timer_lap, value, "f");
+        __classPrivateFieldGet(this, _Timer_resolveLap, "f").call(this, value);
     }
     get lap() {
-        return __classPrivateFieldGet(this, _lap);
+        return __classPrivateFieldGet(this, _Timer_lap, "f");
     }
     get totaller() {
         const target = this;
@@ -56,7 +56,7 @@ export class Timer {
             async *[Symbol.asyncIterator]() {
                 yield 'Press Me';
                 while (true) {
-                    const total = await new Promise(resolve => __classPrivateFieldSet(target, _resolveTotal, resolve));
+                    const total = await new Promise(resolve => __classPrivateFieldSet(target, _Timer_resolveTotal, resolve, "f"));
                     yield toString(total);
                 }
             }
@@ -68,11 +68,11 @@ export class Timer {
             async *[Symbol.asyncIterator]() {
                 yield 'Split Me';
                 while (true) {
-                    const lap = await new Promise(resolve => __classPrivateFieldSet(target, _resolveLap, resolve));
+                    const lap = await new Promise(resolve => __classPrivateFieldSet(target, _Timer_resolveLap, resolve, "f"));
                     yield toString(lap);
                 }
             }
         };
     }
 }
-_resolveTotal = new WeakMap(), _resolveLap = new WeakMap(), _total = new WeakMap(), _lap = new WeakMap();
+_Timer_resolveTotal = new WeakMap(), _Timer_resolveLap = new WeakMap(), _Timer_total = new WeakMap(), _Timer_lap = new WeakMap();
