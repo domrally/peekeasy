@@ -1,14 +1,1 @@
-import { State } from '../../../src/state.js';
-export class Chronograph extends State {
-    // 
-    constructor(times) {
-        super();
-        this.times = times;
-    }
-    async *totaller() {
-        yield* this.times.totaller;
-    }
-    async *lapper() {
-        yield* this.times.lapper;
-    }
-}
+export {};

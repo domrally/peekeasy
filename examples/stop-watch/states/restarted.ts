@@ -1,13 +1,16 @@
+import { composeState } from '../mealtime.js'
+import { Buttons } from './buttons.js'
 import { Chronograph } from './chronograph.js'
-import { Triggers } from './triggers.js'
+import { Timer } from './timer.js'
 //
-export class Restarted extends Chronograph {
-	onEnter(): void {
-		this.times.lap = 0
-		this.times.total = 0
+export const Restarted = composeState<Chronograph, Buttons>(
+	class _ {
+		constructor(public state: Timer) { }
+		onEnter(): void {
+			this.state.lap = 0
+			this.state.total = 0
+		}
+		readonly top = () => this.state.trigger(Buttons.Top)
+		side() { }
 	}
-	onExit(): void {
-	}
-	readonly top = () => this.trigger(Triggers.Top)
-	side() { }
-}
+)

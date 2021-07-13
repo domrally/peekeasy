@@ -1,7 +1,3 @@
+import { Buttons } from './buttons.js';
 import { Chronograph } from './chronograph.js';
-export declare class Restarted extends Chronograph {
-    onEnter(): void;
-    onExit(): void;
-    readonly top: () => void;
-    side(): void;
-}
+export declare const Restarted: new (...args: any[]) => Chronograph & AsyncIterable<Buttons>;

@@ -1,16 +1,14 @@
-import { Chronograph } from './chronograph.js';
-import { Triggers } from './triggers.js';
+import { composeState } from '../mealtime.js';
+import { Buttons } from './buttons.js';
 //
-export class Restarted extends Chronograph {
-    constructor() {
-        super(...arguments);
-        this.top = () => this.trigger(Triggers.Top);
+export const Restarted = composeState(class _ {
+    constructor(state) {
+        this.state = state;
+        this.top = () => this.state.trigger(Buttons.Top);
     }
     onEnter() {
-        this.times.lap = 0;
-        this.times.total = 0;
-    }
-    onExit() {
+        this.state.lap = 0;
+        this.state.total = 0;
     }
     side() { }
-}
+});
