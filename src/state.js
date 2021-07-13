@@ -1,37 +1,44 @@
-var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (receiver, privateMap, value) {
-    if (!privateMap.has(receiver)) {
-        throw new TypeError("attempted to set private field on non-instance");
-    }
-    privateMap.set(receiver, value);
-    return value;
+var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (receiver, state, kind, f) {
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
+    return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
-var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (receiver, privateMap) {
-    if (!privateMap.has(receiver)) {
-        throw new TypeError("attempted to get private field on non-instance");
-    }
-    return privateMap.get(receiver);
+var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (receiver, state, value, kind, f) {
+    if (kind === "m") throw new TypeError("Private method is not writable");
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
+    return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
 };
-var _transition;
+var _State_instances, _State_trigger, _State_promise, _State_newPromise_get;
+export function composeState(Base) {
+    return class _ extends Base {
+        async *[Symbol.asyncIterator]() {
+            yield* this.state;
+        }
+    };
+}
+// [Symbol.asyncIterator](): AsyncGenerator<T, void, unknown>
+// trigger: (trigger: T) => void
 export class State {
-    // 
     constructor() {
-        _transition.set(this, void 0);
-        __classPrivateFieldSet(this, _transition, () => { });
-        this.promise = this.newPromise;
+        _State_instances.add(this);
+        _State_trigger.set(this, (_trigger) => { });
+        // 
+        _State_promise.set(this, __classPrivateFieldGet(this, _State_instances, "a", _State_newPromise_get)
+        // 
+        );
     }
+    get trigger() { return __classPrivateFieldGet(this, _State_trigger, "f"); }
     // 
-    async *[(_transition = new WeakMap(), Symbol.asyncIterator)]() {
+    async *[(_State_trigger = new WeakMap(), _State_promise = new WeakMap(), _State_instances = new WeakSet(), Symbol.asyncIterator)]() {
         while (true) {
-            yield await this.promise;
+            yield await __classPrivateFieldGet(this, _State_promise, "f");
         }
     }
-    get newPromise() {
-        return new Promise(resolve => __classPrivateFieldSet(this, _transition, resolve));
-    }
-    // 
-    trigger(trigger) {
-        const transition = __classPrivateFieldGet(this, _transition);
-        this.promise = this.newPromise;
-        transition([this, trigger]);
-    }
 }
+_State_newPromise_get = function _State_newPromise_get() {
+    return new Promise(resolve => __classPrivateFieldSet(this, _State_trigger, (trigger) => {
+        __classPrivateFieldSet(this, _State_promise, __classPrivateFieldGet(this, _State_instances, "a", _State_newPromise_get), "f");
+        resolve(trigger);
+    }, "f"));
+};

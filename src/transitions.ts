@@ -1,12 +1,18 @@
-export type Transitions<S> = { [key: number]: [S, S][] }
-export class TransitionMap<S, T extends number> extends Map<T, Map<S, S>> {
-	constructor(triggers: Transitions<S>) {
-		super()
-		for (const key in triggers) {
-			const map = new Map<S, S>()
-			for (const tuple of triggers[key]) {
-				this.set(Number.parseInt(key) as T, map.set(...tuple))
-			}
-		}
+import { Machineable } from "./state"
+
+export const createTransitions = <S extends Machineable & AsyncIterable<T>, T extends symbol>(record2transitions: Record<T, readonly [S, S][]>) => {
+	//
+	const keys = Object.getOwnPropertySymbols(record2transitions)
+
+	const record2map = {} as Record<T, WeakMap<S, S>>
+	const triggerer = (trigger: symbol) => {
+		const map = new WeakMap<S, S>()
+		record2map[trigger as T] = map
+
+		const mapper = (transition: [S, S]) => map.set(...transition)
+		record2transitions[trigger as T].forEach(mapper)
 	}
+	keys.forEach(triggerer)
+
+	return record2map
 }

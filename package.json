@@ -23,7 +23,7 @@
 		"mealtime",
 		"mealy",
 		"finite",
-		"state", 
+		"state",
 		"machine",
 		"pattern",
 		"transducer",
@@ -38,5 +38,8 @@
 		"ts",
 		"javascript",
 		"typescript"
-	]
+	],
+	"dependencies": {
+		"typescript": "^4.4.0-beta"
+	}
 }

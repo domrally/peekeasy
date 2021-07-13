@@ -1,30 +1,33 @@
-import { State } from '../src/state.js';
-import { TransitionMap } from '../src/transitions.js';
-var Triggers;
-(function (Triggers) {
-    Triggers[Triggers["A"] = 0] = "A";
-    Triggers[Triggers["B"] = 1] = "B";
-})(Triggers || (Triggers = {}));
-class MyState extends State {
-    onEnter() { }
-    onExit() { }
-}
-class A extends MyState {
-}
-class B extends MyState {
-}
-const a = new A(), b = new B(), transitions = {
-    [Triggers.A]: [
-        [a, b],
-    ],
-    [Triggers.B]: [
-        [b, a],
-    ],
-};
-const transitionMap = new TransitionMap(transitions);
+import { createState, createTransitions, State } from '../main.js';
+// 
 export const assertTransitions = () => {
+    const A = Symbol('A');
+    const B = Symbol('B');
+    const Letters = Object.freeze({
+        A,
+        B,
+    });
+    const One = createState(class _ {
+        constructor(state) {
+            this.state = state;
+        }
+    });
+    const Two = createState(class _ {
+        constructor(state) {
+            this.state = state;
+        }
+    });
+    const state = new State(), one = new One(state), two = new Two(state);
+    const transitionMap = createTransitions({
+        [Letters.A]: [
+            [one, two],
+        ],
+        [Letters.B]: [
+            [two, one],
+        ],
+    });
     try {
-        if (transitionMap.get(Triggers.A)?.get(a) !== b) {
+        if (transitionMap[Letters.A].get(one) !== two) {
             throw new Error('should not be here');
         }
     }
@@ -32,25 +35,25 @@ export const assertTransitions = () => {
         throw new Error('TransitionMap throws error when getting non-existent transition');
     }
     try {
-        if (transitionMap.get(Triggers.B)?.get(b) !== a) {
+        if (transitionMap[Letters.B].get(two) !== one) {
             throw new Error('should not be here');
         }
     }
     catch (e) {
         throw new Error('TransitionMap throws error when getting non-existent transition');
     }
-    let BA = null;
+    let twoOne = null;
     try {
-        BA = transitionMap.get(Triggers.B)?.get(a);
+        twoOne = transitionMap[Letters.B].get(one);
     }
     finally {
-        if (BA) {
+        if (twoOne) {
             throw new Error('TransitionMap throws error when getting non-existent transition');
         }
     }
     let AB = null;
     try {
-        AB = transitionMap.get(Triggers.A)?.get(b);
+        AB = transitionMap[Letters.A].get(two);
     }
     finally {
         if (AB) {

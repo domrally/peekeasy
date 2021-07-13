@@ -1,6 +1,2 @@
-export declare type Transitions<S> = {
-    [key: number]: [S, S][];
-};
-export declare class TransitionMap<S, T extends number> extends Map<T, Map<S, S>> {
-    constructor(triggers: Transitions<S>);
-}
+import { Machineable } from "./state";
+export declare const createTransitions: <S extends Machineable & AsyncIterable<T>, T extends symbol>(record2transitions: Record<T, readonly [S, S][]>) => Record<T, WeakMap<S, S>>;

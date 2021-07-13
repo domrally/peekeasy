@@ -1,15 +1,7 @@
-import { IState } from './state.js';
-import { TransitionMap } from './transitions.js';
-export declare class Context<S extends IState<S, T>, T extends number> implements AsyncIterable<S> {
-    private currentState;
-    private transitions;
-    [Symbol.asyncIterator](): AsyncGenerator<S, void, unknown>;
-    private getNext;
-    get target(): S & AsyncIterable<S>;
-    get handler(): {
-        get: (_: S, property: any) => any;
-        set: (_: S, property: any, value: any) => any;
-    };
-    constructor(currentState: S, transitions: TransitionMap<S, T>);
-    init(): Promise<void>;
-}
+import { Machineable } from './state.js';
+declare type M<S> = Machineable & S;
+export declare const createContext: <S extends AsyncIterable<T>, T extends symbol>(currentState: M<S>, transitions: Record<T, WeakMap<M<S>, M<S>>>) => {
+    get: (_: S, key: any) => any;
+    set: (_: S, key: any, value: any) => any;
+};
+export {};

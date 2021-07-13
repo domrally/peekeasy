@@ -1,47 +1,27 @@
-// a context manages the state and transitions of a state machine
-export class Context {
+export const createContext = (currentState, transitions) => {
     // 
-    constructor(currentState, transitions) {
-        this.currentState = currentState;
-        this.transitions = transitions;
-        this.init();
-    }
-    // 
-    async *[Symbol.asyncIterator]() {
-        for await (const next of this.getNext()) {
-            const value = next.value;
-            while (this.currentState != this.transitions.get(value[1])?.get(value[0])) {
-                await new Promise(r => requestAnimationFrame(() => r()));
+    const asyncIterable = {
+        async *[Symbol.asyncIterator]() {
+            while (true) {
+                const state = currentState;
+                const next = await currentState[Symbol.asyncIterator]().next();
+                const trigger = next.value;
+                if (state === currentState) {
+                    const nextState = transitions[trigger].get(state);
+                    currentState.onExit?.();
+                    nextState.onEnter?.();
+                    currentState = nextState;
+                }
+                yield trigger;
             }
-            yield this.currentState;
         }
-    }
-    // 
-    async *getNext() {
-        while (true) {
-            yield await this.currentState[Symbol.asyncIterator]().next();
-        }
-    }
-    // 
-    get target() {
-        const target = Object.assign({}, this.currentState, this);
-        return target;
-    }
+    };
+    (async () => { for await (const _ of asyncIterable) { } })();
     //
-    get handler() {
-        return {
-            get: (_, property) => this.currentState[property],
-            set: (_, property, value) => this.currentState[property] = value
-        };
-    }
-    // 
-    async init() {
-        for await (const next of this.getNext()) {
-            this.currentState.onExit?.();
-            const value = next.value;
-            const state = this.transitions.get(value[1])?.get(value[0]);
-            state.onEnter?.();
-            this.currentState = state;
-        }
-    }
-}
+    return {
+        get: (_, key) => key === Symbol.iterator || key === Symbol.asyncIterator
+            ? asyncIterable[key]
+            : currentState[key],
+        set: (_, key, value) => currentState[key] = value
+    };
+};
