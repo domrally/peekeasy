@@ -98,9 +98,24 @@ const currentState = createProxy<Example, Triggers>(start, {
     ]
 })
 
-console.log(currentState.name)
-currentState.changeState()
-console.log(currentState.name)
+
+// start the machine
+const logLoop = async () => {
+    console.log(currentState.name)
+    for await (const t of currentState) {
+        console.log(currentState.name)
+    }
+}
+const eventLoop = async () => {
+    while (true) {
+    await new Promise<void>(resolve => setTimeout(() => {
+            currentState.changeState()
+            resolve()
+        }, 1000))
+    }
+}
+logLoop()
+eventLoop()
 ```
 
 ## design
