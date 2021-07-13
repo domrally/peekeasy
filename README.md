@@ -18,12 +18,13 @@ or
 
 ## exports
 ```typescript
-function createState<S, T extends symbol>(YourClass: new (...args: any[]):
-    S & { 
+function createState<S, T extends symbol>(
+    YourClass: new (...args: any[]): S & { 
         state: State<T>, 
         onEnter?(): void, 
         onExit?(): void 
-    }): new (...args: any[]) => S & AsyncIterable<T>
+    }
+): new (...args: any[]) => S & AsyncIterable<T>
     
 class State<S, T> {
     [Symbol.asyncIterator](): AsyncGenerator<[S, T], void, unknown>
@@ -31,8 +32,8 @@ class State<S, T> {
 }
 
 function createProxy<S, T extends symbol>(
-    initialState: S & Machineable & AsyncIterable<T>, 
-    transitions:  Record<T, [S & Machineable & AsyncIterable<T>, S & Machineable & AsyncIterable<T>][]>
+    initialState: S & AsyncIterable<T>, 
+    transitions:  Record<T, [S & AsyncIterable<T>, S & AsyncIterable<T>][]>
 ): S & AsyncIterable<S>
 ```
 
