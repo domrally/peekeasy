@@ -1,7 +1,7 @@
 {
 	"type": "module",
 	"name": "mealtime",
-	"version": "0.0.8",
+	"version": "0.0.9",
 	"description": "proxied state pattern in typescript",
 	"license": "MIT",
 	"repository": "domrally/mealtime",
@@ -11,6 +11,8 @@
 		"test": "node test.js"
 	},
 	"files": [
+		"src/triggers.js",
+		"src/triggers.d.ts",
 		"src/context.js",
 		"src/context.d.ts",
 		"src/state.js",
