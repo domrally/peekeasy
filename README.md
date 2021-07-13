@@ -50,6 +50,11 @@ or
     // then use inline
 </script>
 ```
+or
+```typescript
+const path = 'https://unpkg.com/mealtime'
+const { createProxy, composeState, createState, createTriggers, State } = await import(path)
+```
 ### triggers
 ```typescript
 const Hello = Symbol('Hello')
