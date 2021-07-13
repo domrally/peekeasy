@@ -1,7 +1,7 @@
 {
 	"type": "module",
 	"name": "mealtime",
-	"version": "0.0.9",
+	"version": "0.0.10",
 	"description": "proxied state pattern in typescript",
 	"license": "MIT",
 	"repository": "domrally/mealtime",
