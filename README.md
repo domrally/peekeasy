@@ -15,68 +15,107 @@ or
 ```html
 <script type="module" src="unpkg.com/mealtime"></script>
 ```
-or
-```html
-<script type="module">
-    import { IState, State, CreateStateProxy } from 'unpkg.com/mealtime'	
-    // then use inline
-</script>
-```
 
 ## exports
 ```typescript
-export interface IState<S, T> extends AsyncIterable<[S, T]> {
+function createState<S, T extends symbol>(
+    YourClass: new (...args: any[]): S & { 
+        state: State<T>, 
+        onEnter?(): void, 
+        onExit?(): void 
+    }
+): new (...args: any[]) => S & AsyncIterable<T>
+    
+class State<S, T> {
     [Symbol.asyncIterator](): AsyncGenerator<[S, T], void, unknown>
-    onEnter?(): void
-    onExit?(): void
-}
-export declare abstract class State<S, T> implements IState<S, T> {
-    [Symbol.asyncIterator](): AsyncGenerator<[S, T], void, unknown>
-    protected trigger(trigger: T): void
+    trigger(trigger: T):      void
 }
 
-export declare const CreateStateProxy: <S extends object & State<S, T>, T extends number>(initialState: S, transitions: Transitions<S>) => S & AsyncIterable<S>
+function createProxy<S, T extends symbol>(
+    initialState: S & AsyncIterable<T>, 
+    transitions:  Record<T, [S & AsyncIterable<T>, S & AsyncIterable<T>][]>
+): S & AsyncIterable<S>
 ```
 
-## use
-```typescript
-import { IState, State, CreateStateProxy } from 'mealtime'
+## how to use
 
-enum Triggers {
+### importing
+```typescript
+import { createProxy, createState, createTriggers, State } from 'mealtime'
+```
+or
+```html
+<script type="module">
+    import { createProxy, createState, createTriggers, State } from 'unpkg.com/mealtime'	
+    // then use inline
+</script>
+```
+### triggers
+```typescript
+const Hello = Symbol('Hello')
+const World = Symbol('World')
+const Triggers = Object.freeze({
     Hello,
     World
+})
+type Triggers = createTriggers<typeof Triggers>
+```
+### states
+```typescript
+// States
+interface Example {
+    name: string
+    changeState(): void
 }
-
-interface S extends IState<S, Triggers> { }
-
-class Started extends State<S, Triggers> implements S {
-    onEnter() {
-        this.trigger(Triggers.Hello)
+const Start = createState<Example, Triggers>(
+    class _ {
+        constructor(public state: State<Triggers>) { }
+        readonly name = 'Start'
+        readonly changeState = () => this.state.trigger(Triggers.Hello)
     }
-    onExit() {
-        console.log('Hello, ')
+)
+const End = createState<Example, Triggers>(
+    class _ {
+        constructor(public state: State<Triggers>) { }
+        readonly name = 'End'
+        readonly changeState = () => this.state.trigger(Triggers.World)
     }
-}
-
-class Stopped extends State<S, Triggers> implements S {
-    onEnter() {
-        console.log('World!')
-    }
-}
-
-const started = new Started(),
-      stopped = new Stopped()
-      
-const currentStateProxy = CreateStateProxy<S, Triggers>(started, {
+)
+```
+### putting it all together
+```typescript
+// 
+const state = new State<Triggers>(),
+      start = new Start(state),
+      end = new End(state)
+// 
+const currentState = createProxy<Example, Triggers>(start, {
     [Triggers.Hello]: [
-        [started, stopped]
+        [start, end]
     ],
     [Triggers.World]: [
-        [stopped, started]
+        [end, start]
     ]
 })
 
-currentStateProxy.onEnter?.()
+
+// start the machine
+const logLoop = async () => {
+    console.log(currentState.name)
+    for await (const t of currentState) {
+        console.log(currentState.name)
+    }
+}
+const eventLoop = async () => {
+    while (true) {
+        await new Promise<void>(resolve => setTimeout(() => {
+            currentState.changeState()
+            resolve()
+        }, 1000))
+    }
+}
+logLoop()
+eventLoop()
 ```
 
 ## design
