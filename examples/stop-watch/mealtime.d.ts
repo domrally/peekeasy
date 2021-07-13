@@ -10,7 +10,9 @@ export declare const composeState: <S, T extends symbol>(Base: new (...args: any
     onExit?(): void;
 }) => new (...args: any[]) => S & AsyncIterable<T>;
 export declare const createProxy: <S, T extends symbol>(initialState: S & Machineable & AsyncIterable<T>, transitions: Record<T, [S & Machineable & AsyncIterable<T>, S & Machineable & AsyncIterable<T>][]>) => S & AsyncIterable<S>;
-declare const State_base: any;
-export declare class State<T> extends State_base<T> {
+export declare class State<T extends symbol> implements AsyncIterable<T> {
+    #private;
+    get trigger(): (_trigger: T) => void;
+    [Symbol.asyncIterator](): AsyncGenerator<T, void, unknown>;
 }
 export {};
