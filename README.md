@@ -108,7 +108,7 @@ const logLoop = async () => {
 }
 const eventLoop = async () => {
     while (true) {
-    await new Promise<void>(resolve => setTimeout(() => {
+        await new Promise<void>(resolve => setTimeout(() => {
             currentState.changeState()
             resolve()
         }, 1000))
