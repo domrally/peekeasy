@@ -40,8 +40,5 @@
 		"ts",
 		"javascript",
 		"typescript"
-	],
-	"dependencies": {
-		"typescript": "^4.4.0-beta"
-	}
+	]
 }
