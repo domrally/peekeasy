@@ -1,5 +1,9 @@
 # mealtime
-[![](https://badgen.net/packagephobia/install/mealtime?icon=packagephobia&label=size)](#) [![](https://badgen.net/badge/license/MIT/blue)](#) [![Node.js Package](https://github.com/domrally/mealtime/actions/workflows/npm-publish.yml/badge.svg)](https://github.com/domrally/mealtime/actions/workflows/npm-publish.yml) [![](https://badgen.net/github/tag/domrally/mealtime?icon=git&label)](#) [![](https://badgen.net/snyk/domrally/mealtime)](#) [![types](https://badgen.net/npm/types/tslib?icon=typescript)](#) [![](https://badgen.net/npm/dw/mealtime?icon=npm&label)](#)
+[![](https://badgen.net/badge/license/MIT/blue)](#) [![types](https://badgen.net/npm/types/tslib?icon=typescript)](#) [![](https://badgen.net/github/tag/domrally/mealtime?icon=git&label)](#)
+
+[![](https://badgen.net/packagephobia/install/mealtime?icon=packagephobia&label=size)](#)  [![Node.js Package](https://github.com/domrally/mealtime/actions/workflows/npm-publish.yml/badge.svg)](https://github.com/domrally/mealtime/actions/workflows/npm-publish.yml) [![](https://badgen.net/npm/dw/mealtime?icon=npm&label)](#)
+
+[![](https://badgen.net/codeclimate/tech-debt/domrally/mealtime?icon=codeclimate)](#)  [![](https://badgen.net/codeclimate/maintainability/domrally/mealtime?icon=codeclimate)](#) [![](https://badgen.net/snyk/domrally/mealtime)](#) 
 
 a (loose) simulation of a Mealy machine in typescript using async generators and proxies
 
