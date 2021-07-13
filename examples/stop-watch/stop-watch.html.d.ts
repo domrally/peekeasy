@@ -1,2 +1,3 @@
 import { Chronograph } from './states/chronograph.js';
-export declare const getContent: (stopwatch: Chronograph) => any;
+import { Timer } from './states/timer.js';
+export declare const getContent: (stopwatch: Chronograph, timer: Timer) => any;

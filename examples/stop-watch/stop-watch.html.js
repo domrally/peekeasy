@@ -1,10 +1,10 @@
 import { asyncReplace, html } from './lit-html.js';
 //
-export const getContent = (stopwatch) => html `
+export const getContent = (stopwatch, timer) => html `
 	<button @click="${() => stopwatch.top()}">
-		${asyncReplace(stopwatch.totaller())}
+		${asyncReplace(timer.totaller)}
 	</button>
 	<button @click="${() => stopwatch.side()}">
-		${asyncReplace(stopwatch.lapper())}
+		${asyncReplace(timer.lapper)}
 	</button>
 `;

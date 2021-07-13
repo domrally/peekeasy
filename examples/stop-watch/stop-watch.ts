@@ -1,12 +1,11 @@
-import { Chronograph } from './states/chronograph.js'
-import { Triggers } from './states/triggers.js'
-import { Restarted } from './states/restarted.js'
-import { Watching } from './states/watching.js'
-import { Stopped } from './states/stopped.js'
-import { CreateStateProxy } from '../../main.js'
-import { getContent } from './stop-watch.html.js'
 import { html, render } from './lit-html.js'
+import { createProxy } from './mealtime.js'
+import { Buttons } from './states/buttons.js'
+import { Restarted } from './states/restarted.js'
+import { Stopped } from './states/stopped.js'
 import { Timer } from './states/timer.js'
+import { Watching } from './states/watching.js'
+import { getContent } from './stop-watch.html.js'
 // 
 export class StopWatch extends HTMLElement {
 	// 
@@ -23,13 +22,13 @@ export class StopWatch extends HTMLElement {
 		const stopped = new Stopped(timer)
 		const watching = new Watching(timer)
 		// finite state pattern machine
-		const stopwatch = CreateStateProxy<Chronograph, Triggers>(restarted, {
-			[Triggers.Top]: [
+		const stopwatch = createProxy(restarted, {
+			[Buttons.Top]: [
 				[restarted, watching],
 				[watching, stopped],
 				[stopped, watching]
 			],
-			[Triggers.Side]: [
+			[Buttons.Side]: [
 				[stopped, restarted]
 			]
 		})
@@ -37,7 +36,7 @@ export class StopWatch extends HTMLElement {
 		const response = await fetch('stop-watch.css')
 		const styles = await response.text()
 
-		const content = getContent(stopwatch)
+		const content = getContent(stopwatch, timer)
 		// merge style and content
 		const template = html`
 			<style>
