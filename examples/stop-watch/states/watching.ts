@@ -1,34 +1,39 @@
+import { composeState } from '../mealtime.js'
+import { Buttons } from './buttons.js'
 import { Chronograph } from './chronograph.js'
-import { Triggers } from './triggers.js'
+import { Timer } from './timer.js'
 //
-export class Watching extends Chronograph {
-	#isTiming = false
-	async onEnter() {
-		this.#isTiming = true
-		this.timer = this._timer
-		for await (const delta of this.timer()) {
-			this.times.total += delta
+export const Watching = composeState<Chronograph, Buttons>(
+	class _ {
+		#isTiming = false
+		constructor(public state: Timer) { }
+		async onEnter() {
+			this.#isTiming = true
+			this.timer = this.#timer
+			for await (const delta of this.timer?.()) {
+				this.state.total += delta
+			}
+		}
+		onExit() {
+			this.#isTiming = false
+		}
+		async *#timer() {
+			delete this.timer
+			while (this.#isTiming) {
+				const old = Date.now()
+				await new Promise<void>(resolve => {
+					requestAnimationFrame(() => resolve())
+				})
+				const now = Date.now()
+				yield now - old
+			}
+		}
+		async *timer?() {
+			yield* this.#timer()
+		}
+		readonly top = () => this.state.trigger(Buttons.Top)
+		readonly side = async () => {
+			this.state.lap = this.state.total - this.state.lap
 		}
 	}
-	onExit() {
-		this.#isTiming = false
-	}
-	private async *_timer() {
-		delete this.timer
-		while (this.#isTiming) {
-			const old = Date.now()
-			await new Promise<void>(resolve => {
-				requestAnimationFrame(() => resolve())
-			})
-			const now = Date.now()
-			yield now - old
-		}
-	}
-	async *timer?() {
-		yield* this._timer()
-	}
-	readonly top = () => this.trigger(Triggers.Top)
-	readonly side = async () => {
-		this.times.lap = this.times.total - this.times.lap
-	}
-}
+)

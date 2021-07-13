@@ -1,42 +1,47 @@
-var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (receiver, privateMap, value) {
-    if (!privateMap.has(receiver)) {
-        throw new TypeError("attempted to set private field on non-instance");
-    }
-    privateMap.set(receiver, value);
-    return value;
+var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (receiver, state, value, kind, f) {
+    if (kind === "m") throw new TypeError("Private method is not writable");
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
+    return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
 };
-var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (receiver, privateMap) {
-    if (!privateMap.has(receiver)) {
-        throw new TypeError("attempted to get private field on non-instance");
-    }
-    return privateMap.get(receiver);
+var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (receiver, state, kind, f) {
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
+    return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
-var _isTiming;
-import { Chronograph } from './chronograph.js';
-import { Triggers } from './triggers.js';
+var ___instances, ___isTiming, ___timer, _a;
+import { composeState } from '../mealtime.js';
+import { Buttons } from './buttons.js';
 //
-export class Watching extends Chronograph {
-    constructor() {
-        super(...arguments);
-        _isTiming.set(this, false);
-        this.top = () => this.trigger(Triggers.Top);
-        this.side = async () => {
-            this.times.lap = this.times.total - this.times.lap;
-        };
-    }
-    async onEnter() {
-        __classPrivateFieldSet(this, _isTiming, true);
-        this.timer = this._timer;
-        for await (const delta of this.timer()) {
-            this.times.total += delta;
+export const Watching = composeState((_a = class _ {
+        constructor(state) {
+            this.state = state;
+            ___instances.add(this);
+            ___isTiming.set(this, false);
+            this.top = () => this.state.trigger(Buttons.Top);
+            this.side = async () => {
+                this.state.lap = this.state.total - this.state.lap;
+            };
         }
-    }
-    onExit() {
-        __classPrivateFieldSet(this, _isTiming, false);
-    }
-    async *_timer() {
+        async onEnter() {
+            __classPrivateFieldSet(this, ___isTiming, true, "f");
+            this.timer = __classPrivateFieldGet(this, ___instances, "m", ___timer);
+            for await (const delta of this.timer?.()) {
+                this.state.total += delta;
+            }
+        }
+        onExit() {
+            __classPrivateFieldSet(this, ___isTiming, false, "f");
+        }
+        async *timer() {
+            yield* __classPrivateFieldGet(this, ___instances, "m", ___timer).call(this);
+        }
+    },
+    ___isTiming = new WeakMap(),
+    ___instances = new WeakSet(),
+    ___timer = async function* ___timer() {
         delete this.timer;
-        while (__classPrivateFieldGet(this, _isTiming)) {
+        while (__classPrivateFieldGet(this, ___isTiming, "f")) {
             const old = Date.now();
             await new Promise(resolve => {
                 requestAnimationFrame(() => resolve());
@@ -44,9 +49,5 @@ export class Watching extends Chronograph {
             const now = Date.now();
             yield now - old;
         }
-    }
-    async *timer() {
-        yield* this._timer();
-    }
-}
-_isTiming = new WeakMap();
+    },
+    _a));
