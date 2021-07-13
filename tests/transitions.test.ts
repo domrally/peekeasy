@@ -1,4 +1,4 @@
-import { createState, createTransitions, createTriggers, State } from '../main.js'
+import { composeState, createTransitions, createTriggers, State } from '../main.js'
 // 
 export const assertTransitions = () => {
 	const A = Symbol('A')
@@ -10,12 +10,12 @@ export const assertTransitions = () => {
 	type Letters = createTriggers<typeof Letters>
 
 	interface Numbers { }
-	const One = createState<Numbers, Letters>(
+	const One = composeState<Numbers, Letters>(
 		class _ {
 			constructor(public state: State<Letters>) { }
 		}
 	)
-	const Two = createState<Numbers, Letters>(
+	const Two = composeState<Numbers, Letters>(
 		class _ {
 			constructor(public state: State<Letters>) { }
 		}

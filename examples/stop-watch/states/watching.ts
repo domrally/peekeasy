@@ -1,17 +1,17 @@
-import { composeState } from '../mealtime.js'
 import { Buttons } from './buttons.js'
-import { Chronograph } from './chronograph.js'
 import { Timer } from './timer.js'
+const path = 'https://unpkg.com/mealtime'
+const { composeState } = await import(path)
 //
-export const Watching = composeState<Chronograph, Buttons>(
+export const Watching = composeState(
 	class _ {
 		#isTiming = false
-		constructor(public state: Timer) { }
+		constructor(public times: Timer, public state: any) { }
 		async onEnter() {
 			this.#isTiming = true
 			this.timer = this.#timer
 			for await (const delta of this.timer?.()) {
-				this.state.total += delta
+				this.times.total += delta
 			}
 		}
 		onExit() {
@@ -33,7 +33,7 @@ export const Watching = composeState<Chronograph, Buttons>(
 		}
 		readonly top = () => this.state.trigger(Buttons.Top)
 		readonly side = async () => {
-			this.state.lap = this.state.total - this.state.lap
+			this.times.lap = this.times.total - this.times.lap
 		}
 	}
 )

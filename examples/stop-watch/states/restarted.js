@@ -1,14 +1,16 @@
-import { composeState } from '../mealtime.js';
 import { Buttons } from './buttons.js';
 //
+const path = 'https://unpkg.com/mealtime';
+const { composeState } = await import(path);
 export const Restarted = composeState(class _ {
-    constructor(state) {
+    constructor(times, state) {
+        this.times = times;
         this.state = state;
         this.top = () => this.state.trigger(Buttons.Top);
     }
     onEnter() {
-        this.state.lap = 0;
-        this.state.total = 0;
+        this.times.lap = 0;
+        this.times.total = 0;
     }
     side() { }
 });

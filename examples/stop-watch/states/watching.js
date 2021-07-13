@@ -10,24 +10,26 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
 var ___instances, ___isTiming, ___timer, _a;
-import { composeState } from '../mealtime.js';
 import { Buttons } from './buttons.js';
+const path = 'https://unpkg.com/mealtime';
+const { composeState } = await import(path);
 //
 export const Watching = composeState((_a = class _ {
-        constructor(state) {
+        constructor(times, state) {
+            this.times = times;
             this.state = state;
             ___instances.add(this);
             ___isTiming.set(this, false);
             this.top = () => this.state.trigger(Buttons.Top);
             this.side = async () => {
-                this.state.lap = this.state.total - this.state.lap;
+                this.times.lap = this.times.total - this.times.lap;
             };
         }
         async onEnter() {
             __classPrivateFieldSet(this, ___isTiming, true, "f");
             this.timer = __classPrivateFieldGet(this, ___instances, "m", ___timer);
             for await (const delta of this.timer?.()) {
-                this.state.total += delta;
+                this.times.total += delta;
             }
         }
         onExit() {

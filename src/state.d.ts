@@ -14,4 +14,5 @@ export declare class State<T extends symbol> implements AsyncIterable<T> {
     get trigger(): (_trigger: T) => void;
     [Symbol.asyncIterator](): AsyncGenerator<T, void, unknown>;
 }
+export declare const createState: <S extends symbol>() => State<S>;
 export {};

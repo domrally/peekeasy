@@ -35,3 +35,4 @@ export class State<T extends symbol> implements AsyncIterable<T> {
 		})
 	}
 }
+export const createState = <S extends symbol>() => new State<S>()

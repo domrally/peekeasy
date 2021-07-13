@@ -1,4 +1,4 @@
-import { createState, createTransitions, State } from '../main.js';
+import { composeState, createTransitions, State } from '../main.js';
 // 
 export const assertTransitions = () => {
     const A = Symbol('A');
@@ -7,12 +7,12 @@ export const assertTransitions = () => {
         A,
         B,
     });
-    const One = createState(class _ {
+    const One = composeState(class _ {
         constructor(state) {
             this.state = state;
         }
     });
-    const Two = createState(class _ {
+    const Two = composeState(class _ {
         constructor(state) {
             this.state = state;
         }

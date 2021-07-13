@@ -1,4 +1,4 @@
-import { createProxy, createState, createTriggers, State } from '../main.js'
+import { composeState, createProxy, createTriggers, State } from '../main.js'
 // 
 export const assertMain = async () => {
 	// Triggers
@@ -14,14 +14,14 @@ export const assertMain = async () => {
 		name: string
 		changeState(): void
 	}
-	const Start = createState<Example, Triggers>(
+	const Start = composeState<Example, Triggers>(
 		class _ {
 			constructor(public state: State<Triggers>) { }
 			readonly name = 'Start'
 			readonly changeState = () => this.state.trigger(Triggers.Hello)
 		}
 	)
-	const End = createState<Example, Triggers>(
+	const End = composeState<Example, Triggers>(
 		class _ {
 			constructor(public state: State<Triggers>) { }
 			readonly name = 'End'

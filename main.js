@@ -1,5 +1,5 @@
 import { createContext } from './src/context.js';
-import { composeState, State } from './src/state.js';
+import { composeState, createState, State } from './src/state.js';
 import { createTransitions } from './src/transitions.js';
 // 
 if (typeof window !== 'undefined') {
@@ -12,4 +12,4 @@ const createProxy = (initialState, transitions) => {
     return new Proxy(initialState, handler);
 };
 // 
-export { State, createProxy, composeState as createState, createTransitions };
+export { createState, createProxy, composeState, createTransitions, State };

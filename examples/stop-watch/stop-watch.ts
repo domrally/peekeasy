@@ -1,5 +1,3 @@
-import { html, render } from './lit-html.js'
-import { createProxy } from './mealtime.js'
 import { Buttons } from './states/buttons.js'
 import { Restarted } from './states/restarted.js'
 import { Stopped } from './states/stopped.js'
@@ -16,11 +14,14 @@ export class StopWatch extends HTMLElement {
 	}
 	// 
 	readonly #init = async () => {
-		const timer = new Timer()
+		const path = 'https://unpkg.com/mealtime'
+		const { createProxy, createState } = await import(path)
 		// states
-		const restarted = new Restarted(timer)
-		const stopped = new Stopped(timer)
-		const watching = new Watching(timer)
+		const timer = new Timer(),
+			state = createState(),
+			restarted = new Restarted(timer, state),
+			stopped = new Stopped(timer, state),
+			watching = new Watching(timer, state)
 		// finite state pattern machine
 		const stopwatch = createProxy(restarted, {
 			[Buttons.Top]: [
@@ -33,10 +34,13 @@ export class StopWatch extends HTMLElement {
 			]
 		})
 		// rendering
+		const content = await getContent(stopwatch, timer)
+
+		let url = 'https://unpkg.com/lit-html?module'
+		const { html, render } = await import(url)
+
 		const response = await fetch('stop-watch.css')
 		const styles = await response.text()
-
-		const content = getContent(stopwatch, timer)
 		// merge style and content
 		const template = html`
 			<style>

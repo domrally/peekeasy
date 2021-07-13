@@ -10,7 +10,6 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
 var _Timer_resolveTotal, _Timer_resolveLap, _Timer_total, _Timer_lap;
-import { State } from '../mealtime.js';
 // 
 const toString = (ms) => {
     let cs = ms / 10;
@@ -28,9 +27,8 @@ const toString = (ms) => {
     };
     return `${pad(mn)}:${pad(ss)}:${pad(cs)}`;
 };
-export class Timer extends State {
+export class Timer {
     constructor() {
-        super(...arguments);
         _Timer_resolveTotal.set(this, (_value) => { });
         _Timer_resolveLap.set(this, (_value) => { });
         _Timer_total.set(this, 0);

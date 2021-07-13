@@ -42,3 +42,4 @@ _State_newPromise_get = function _State_newPromise_get() {
         resolve(trigger);
     }, "f"));
 };
+export const createState = () => new State();
