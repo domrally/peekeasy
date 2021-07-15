@@ -1,29 +1,37 @@
-import { Machineable } from './state.js';
+import { Machineable } from './state.js'
 // a context manages the state and transitions of a state machine
 type M<S> = Machineable & S
-export const createContext = <S extends AsyncIterable<T>, T extends symbol>(currentState: M<S>, transitions: Record<T, WeakMap<M<S>, M<S>>>) => {
-	// 
-	const asyncIterable = {
-		async *[Symbol.asyncIterator]() {
-			while (true) {
-				const state = currentState
-				const next = await currentState[Symbol.asyncIterator]().next()
-				const trigger = next.value as T
-				if (state === currentState) {
-					const nextState = transitions[trigger].get(state) as M<S>
-					currentState.onExit?.()
-					nextState.onEnter?.()
-					currentState = nextState
-				}
-				yield trigger
-			}
+class Context<T> implements AsyncIterable<T> {
+	constructor(private getNextTrigger: () => Promise<T>) { }
+	async *[Symbol.asyncIterator]() {
+		while (true) {
+			yield await this.getNextTrigger()
 		}
-	};
-	(async () => { for await (const _ of asyncIterable) { } })()
-	//
+	}
+}
+export const createHandler = <S extends AsyncIterable<T>, T extends symbol>(currentState: M<S>, transitions: Record<T, WeakMap<S, S>>) => {
+
+	const context = new Context(async () => {
+
+		const state = currentState
+		const asyncIterator = state[Symbol.asyncIterator]()
+		const next = await asyncIterator.next()
+		const trigger = next.value as T
+
+		if (state === currentState) {
+			state.onExit?.()
+			const stateMap = transitions[trigger]
+			const nextState = stateMap.get(state) as M<S>
+			nextState.onEnter?.()
+			currentState = nextState
+		}
+
+		return trigger
+	})
+
 	return {
 		get: (_: S, key: any) => key === Symbol.iterator || key === Symbol.asyncIterator
-			? (asyncIterable as any)[key]
+			? (context as any)[key]
 			: (currentState as any)[key],
 		set: (_: S, key: any, value: any) => (currentState as any)[key] = value
 	}

@@ -1,4 +1,4 @@
-import { createContext } from './src/context.js'
+import { createHandler } from './src/context.js'
 import { composeState, createState, Machineable, State } from './src/state.js'
 import { createTransitions } from './src/transitions.js'
 import { createTriggers } from './src/triggers.js'
@@ -9,7 +9,7 @@ if (typeof window !== 'undefined') {
 // 
 const createProxy = <S, T extends symbol>(initialState: S & Machineable & AsyncIterable<T>, transitions: Record<T, [S & Machineable & AsyncIterable<T>, S & Machineable & AsyncIterable<T>][]>) => {
 	const transitionMap = createTransitions(transitions)
-	const handler = createContext(initialState, transitionMap)
+	const handler = createHandler(initialState, transitionMap)
 	return new Proxy(initialState as S & AsyncIterable<T>, handler)
 }
 // 
