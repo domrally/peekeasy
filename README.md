@@ -25,8 +25,7 @@ import { createProxy, createState, createTriggers, State } from 'mealtime'
 or
 ```html
 <script type="module">
-    import { createProxy, createState, createTriggers, State } from 'unpkg.com/mealtime'	
-    // then use inline
+    import { createProxy, createState, createTriggers, State } from 'https://unpkg.com/mealtime'	
 </script>
 ```
 or
@@ -36,43 +35,44 @@ const { createProxy, composeState, createState, createTriggers, State } = await 
 ```
 ### triggers
 ```typescript
-const Hello = Symbol('Hello')
-const World = Symbol('World')
-const Triggers = Object.freeze({
-    Hello,
-    World
-})
+const Hello    = Symbol('Hello'),
+      World    = Symbol('World'),
+      Triggers = Object.freeze({
+          Hello,
+          World
+      })
 type Triggers = createTriggers<typeof Triggers>
 ```
 ### states
 ```typescript
-// States
 interface Example {
-    name: string
+    name:          string
     changeState(): void
 }
+```
+```typescript
 const Start = createState<Example, Triggers>(
     class _ {
         constructor(public state: State<Triggers>) { }
-        readonly name = 'Start'
-        readonly changeState = () => this.state.trigger(Triggers.Hello)
+        name        = 'Start'
+        changeState = () => this.state.trigger(Triggers.Hello)
     }
 )
+```
+```typescript
 const End = createState<Example, Triggers>(
     class _ {
         constructor(public state: State<Triggers>) { }
-        readonly name = 'End'
-        readonly changeState = () => this.state.trigger(Triggers.World)
+        name        = 'End'
+        changeState = () => this.state.trigger(Triggers.World)
     }
 )
 ```
 ### putting it all together
 ```typescript
-// 
 const state = new State<Triggers>(),
       start = new Start(state),
-      end = new End(state)
-// 
+      end   = new End(state)
 const currentState = createProxy<Example, Triggers>(start, {
     [Triggers.Hello]: [
         [start, end]
@@ -81,9 +81,9 @@ const currentState = createProxy<Example, Triggers>(start, {
         [end, start]
     ]
 })
-
-
-// start the machine
+```
+### start the machine
+```typescript
 const logLoop = async () => {
     console.log(currentState.name)
     for await (const t of currentState) {
