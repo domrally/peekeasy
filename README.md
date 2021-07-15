@@ -46,7 +46,7 @@ type Triggers = createTriggers<typeof Triggers>
 ### states
 ```typescript
 interface Example {
-    name:          string
+    name         : string
     changeState(): void
 }
 ```
