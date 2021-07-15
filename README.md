@@ -1,5 +1,5 @@
 # mealtime
-[![](https://badgen.net/badge/license/MIT/blue)](#) [![types](https://badgen.net/npm/types/tslib?icon=typescript)](#) [![](https://badgen.net/github/tag/domrally/mealtime?icon=git&label)](#)
+[![](https://badgen.net/badge/license/MIT/blue)](#) [![](https://badgen.net/npm/types/tslib?icon=typescript&label=)](#) [![](https://badgen.net/github/tag/domrally/mealtime?icon=git&label)](#)
 
 [![](https://badgen.net/codeclimate/loc/domrally/mealtime?icon=codeclimate&label=lines&color=cyan)](#) [![](https://badgen.net/packagephobia/install/mealtime?icon=packagephobia&label=size&color=cyan)](#) [![](https://badgen.net/npm/dw/mealtime?icon=npm&label&color=cyan)](#)
 
