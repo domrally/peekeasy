@@ -20,27 +20,6 @@ or
 <script type="module" src="unpkg.com/mealtime"></script>
 ```
 
-## exports
-```typescript
-function createState<S, T extends symbol>(
-    YourClass: new (...args: any[]): S & { 
-        state: State<T>, 
-        onEnter?(): void, 
-        onExit?(): void 
-    }
-): new (...args: any[]) => S & AsyncIterable<T>
-    
-class State<S, T> {
-    [Symbol.asyncIterator](): AsyncGenerator<[S, T], void, unknown>
-    trigger(trigger: T):      void
-}
-
-function createProxy<S, T extends symbol>(
-    initialState: S & AsyncIterable<T>, 
-    transitions:  Record<T, [S & AsyncIterable<T>, S & AsyncIterable<T>][]>
-): S & AsyncIterable<S>
-```
-
 ## how to use
 
 ### importing
