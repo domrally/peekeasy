@@ -35,8 +35,8 @@ or
 ```
 ### triggers
 ```typescript
-const Hello = Symbol('Hello'),
-      World = Symbol('World'),
+const Hello    = Symbol('Hello'),
+      World    = Symbol('World'),
       Triggers = Object.freeze({
           Hello,
           World
@@ -46,50 +46,50 @@ type Triggers = typeof Triggers
 ### states
 ```typescript
 interface Example {
-    name         : string
-    changestate(): void
+    name    : string
+    toggle(): void
 }
 ```
 ```typescript
 const Start = compose(class _ {
     constructor(public state: state<Triggers>) { }
-    name        = 'Start'
-    changestate = () => this.state.trigger(Triggers.Hello)
+    name   = 'Start'
+    toggle = () => this.state.trigger(Triggers.Hello)
 })
 ```
 ```typescript
 const End = compose(class _ {
     constructor(public state: state<Triggers>) { }
-    name        = 'End'
-    changestate = () => this.state.trigger(Triggers.World)
+    name   = 'End'
+    toggle = () => this.state.trigger(Triggers.World)
 })
 ```
 ### creation
 ```typescript
-const s     = state(),
-      start = new Start(s),
-      end   = new End(s)
-const currentstate = proxy<Example, Triggers>(start, {
-    [Triggers.Hello]: [
-        [start, end]
-    ],
-    [Triggers.World]: [
-        [end, start]
-    ]
-})
+const s       = state(),
+      start   = new Start(s),
+      end     = new End(s),
+      machine = proxy<Example, Triggers>(start, {
+          [Triggers.Hello]: [
+              [start, end]
+          ],
+          [Triggers.World]: [
+              [end, start]
+          ]
+      })
 ```
 ### machine
 ```typescript
 const loop = async () => {
-    console.log(`input state: ${currentstate.name}`)
-    for await (const trigger of currentstate) {
+    console.log(`input state: ${machine.name}`)
+    for await (const trigger of machine) {
         console.log(`trigger: ${trigger.toString()}`)
-        console.log(`output state: ${currentstate.name}`)
+        console.log(`output state: ${machine.name}`)
         return
     }
 }
 loop()
-currentstate.changestate()
+machine.toggle()
 ```
 
 ## design
