@@ -1,4 +1,4 @@
-import { createTriggers } from '../main.js'
+import { createTriggers } from '../code/main.js'
 // 
 export const assertTriggers = () => {
 	const A = Symbol('A')

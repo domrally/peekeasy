@@ -1,4 +1,4 @@
-import { composeState, createProxy, State } from '../main.js';
+import { composeState, createProxy, State } from '../code/main.js';
 // 
 export const assertMain = async () => {
     // Triggers

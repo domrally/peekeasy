@@ -5,21 +5,21 @@
 	"description": "proxied state pattern in typescript",
 	"license": "MIT",
 	"repository": "domrally/mealtime",
-	"main": "main.js",
-	"types": "main.d.ts",
+	"main": "code/main.js",
+	"types": "code/main.d.ts",
 	"scripts": {
-		"test": "node test.js"
+		"test": "node tests/test.js"
 	},
 	"files": [
-		"src/triggers.js",
-		"src/triggers.d.ts",
-		"src/context.js",
-		"src/context.d.ts",
-		"src/state.js",
-		"src/state.d.ts",
-		"src/transitions.js",
-		"src/transitions.d.ts",
-		"main.d.ts"
+		"code/triggers.js",
+		"code/triggers.d.ts",
+		"code/context.js",
+		"code/context.d.ts",
+		"code/state.js",
+		"code/state.d.ts",
+		"code/transitions.js",
+		"code/transitions.d.ts",
+		"code/main.d.ts"
 	],
 	"keywords": [
 		"mealtime",

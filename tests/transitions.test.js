@@ -1,4 +1,4 @@
-import { composeState, createTransitions, State } from '../main.js';
+import { composeState, createTransitions, State } from '../code/main.js';
 // 
 export const assertTransitions = () => {
     const A = Symbol('A');

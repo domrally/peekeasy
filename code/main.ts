@@ -1,7 +1,7 @@
-import { createHandler } from './src/context.js'
-import { composeState, createState, Machineable, State } from './src/state.js'
-import { createTransitions } from './src/transitions.js'
-import { createTriggers } from './src/triggers.js'
+import { createHandler } from './context.js'
+import { composeState, createState, Machineable, State } from './state.js'
+import { createTransitions } from './transitions.js'
+import { createTriggers } from './triggers.js'
 // 
 if (typeof window !== 'undefined') {
 	((window as any)['mealtimeVersions'] || ((window as any)['mealtimeVersions'] = [])).push('0.0.9')

@@ -1,8 +1,8 @@
-import { assertContext } from './tests/context.test.js';
-import { assertMain } from './tests/main.test.js';
-import { assertState } from './tests/state.test.js';
-import { assertTransitions } from './tests/transitions.test.js';
-import { assertTriggers } from './tests/triggers.test.js';
+import { assertContext } from './context.test.js';
+import { assertMain } from './main.test.js';
+import { assertState } from './state.test.js';
+import { assertTransitions } from './transitions.test.js';
+import { assertTriggers } from './triggers.test.js';
 (async () => {
     console.log('🧪 testing mealtime...');
     const tests = [
