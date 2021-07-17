@@ -66,9 +66,9 @@ const End = compose(class _ {
 ```
 ### creation
 ```typescript
-const shared = state(),
-      start = new Start(shared),
-      end   = new End(shared)
+const s     = state(),
+      start = new Start(s),
+      end   = new End(s)
 const currentstate = proxy<Example, Triggers>(start, {
     [Triggers.Hello]: [
         [start, end]
