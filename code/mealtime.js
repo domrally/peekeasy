@@ -1,10 +1,9 @@
 import { compose } from './compose.js';
 import { handleContext } from './context.js';
-import { Events } from './events.js';
 import { State } from './state.js';
 import { mapTransitions } from './transitions.js';
 // 
-export { State, mealtime, compose, Events };
+export { compose, State, mealtime };
 // 
 const mealtime = (initialState, transitions) => {
     const transitionMap = mapTransitions(transitions);

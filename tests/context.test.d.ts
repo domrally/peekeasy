@@ -1,1 +1,1 @@
-export declare const assertContext: () => void;
+export declare const assertContext: () => Promise<void>;

@@ -1,18 +1,18 @@
-import { Events } from '../code/mealtime.js'
+import { Events } from '../code/events.js'
 // 
-export const assertTriggers = () => {
+export const assertTriggers = async () => {
 	const A = Symbol('A')
 	const B = Symbol('B')
-	type Triggers = Events<typeof Triggers>
+	type Triggers = typeof Triggers
 	const Triggers = Object.freeze({
 		A,
 		B,
-	})
+	} as const)
 
-	const shouldFail = (triggers: Triggers) => {
+	const shouldFail = (triggers: Events<Triggers>) => {
 		throw new Error('❌ Expected shouldFail to fail, but it threw success')
 	}
-	const shouldPass = (triggers: Triggers) => {
+	const shouldPass = (triggers: Events<Triggers>) => {
 	}
 	try {
 		shouldPass(Triggers.A)

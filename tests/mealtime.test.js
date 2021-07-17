@@ -1,10 +1,9 @@
-import { compose, Events, mealtime, State } from '../code/mealtime.js';
+import { compose, mealtime, State } from '../code/mealtime.js';
 // 
 export const assertMealtime = async () => {
-    // Triggers
     const Hello = Symbol('Hello');
     const World = Symbol('World');
-    const Triggers = Events({
+    const Triggers = Object.freeze({
         Hello,
         World
     });
@@ -35,7 +34,7 @@ export const assertMealtime = async () => {
     });
     // start the machine
     const logLoop = async () => {
-        for await (const t of currentState) {
+        for await (const _ of currentState) {
             return;
         }
     };

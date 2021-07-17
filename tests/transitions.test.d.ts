@@ -1,1 +1,1 @@
-export declare const assertTransitions: () => void;
+export declare const assertTransitions: () => Promise<void>;

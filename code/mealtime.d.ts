@@ -1,6 +1,6 @@
 import { compose } from './compose.js';
 import { Custom } from './custom.js';
-import { Events } from './events.js';
+import { Eventable, Events } from './events.js';
 import { State } from './state.js';
-export { State, mealtime, compose, Events };
-declare const mealtime: <S, T extends symbol>(initialState: S & Custom & AsyncIterable<T>, transitions: Record<T, [S & Custom & AsyncIterable<T>, S & Custom & AsyncIterable<T>][]>) => S & AsyncIterable<T>;
+export { compose, State, mealtime };
+declare const mealtime: <S, T extends Eventable>(initialState: S & Custom & AsyncIterable<Events<T>>, transitions: Record<Events<T>, [S & Custom & AsyncIterable<Events<T>>, S & Custom & AsyncIterable<Events<T>>][]>) => S & AsyncIterable<Events<T>>;

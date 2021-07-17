@@ -1,5 +1,5 @@
 // 
-export const assertTriggers = () => {
+export const assertTriggers = async () => {
     const A = Symbol('A');
     const B = Symbol('B');
     const Triggers = Object.freeze({

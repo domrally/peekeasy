@@ -1,28 +1,27 @@
-import { compose, Events, State } from '../code/mealtime.js'
+import { compose, State } from '../code/mealtime.js'
 import { mapTransitions } from '../code/transitions.js'
 // 
-export const assertTransitions = () => {
+export const assertTransitions = async () => {
 	const A = Symbol('A')
 	const B = Symbol('B')
 	const Letters = Object.freeze({
 		A,
 		B,
 	} as const)
-	type Letters = Events<typeof Letters>
 
 	interface Numbers { }
-	const One = compose<Numbers, Letters>(
+	const One = compose<Numbers, typeof Letters>(
 		class _ {
-			constructor(public state: State<Letters>) { }
+			constructor(public state: State<typeof Letters>) { }
 		}
 	)
-	const Two = compose<Numbers, Letters>(
+	const Two = compose<Numbers, typeof Letters>(
 		class _ {
-			constructor(public state: State<Letters>) { }
+			constructor(public state: State<typeof Letters>) { }
 		}
 	)
 
-	const state = State<Letters>(),
+	const state = State<typeof Letters>(),
 		one = new One(state),
 		two = new Two(state)
 

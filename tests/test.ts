@@ -6,16 +6,16 @@ import { assertTriggers } from './triggers.test.js'
 
 (async () => {
 	console.log('🧪 testing mealtime...')
-	const tests: [() => void, string][] = [
+	const tests: [() => Promise<void>, string][] = [
 		[assertTriggers, 'triggers'],
 		[assertTransitions, 'transitions'],
 		[assertState, 'state'],
 		[assertContext, 'context'],
-		[assertMealtime, 'main'],
+		[assertMealtime, 'mealtime'],
 	]
 	for await (const [assert, name] of tests) {
 		try {
-			assert()
+			await assert()
 			console.log(`✅ ${name}`)
 		} finally { }
 	}

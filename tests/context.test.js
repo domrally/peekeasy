@@ -1,3 +1,3 @@
 // 
-export const assertContext = () => {
+export const assertContext = async () => {
 };

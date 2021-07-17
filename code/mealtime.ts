@@ -1,16 +1,16 @@
 import { compose } from './compose.js'
 import { handleContext } from './context.js'
 import { Custom } from './custom.js'
-import { Events } from './events.js'
+import { Eventable, Events } from './events.js'
 import { State } from './state.js'
 import { mapTransitions } from './transitions.js'
 // 
-export { State, mealtime, compose, Events }
+export { compose, State, mealtime }
 // 
-const mealtime = <S, T extends symbol>(initialState: S & Custom & AsyncIterable<T>, transitions: Record<T, [S & Custom & AsyncIterable<T>, S & Custom & AsyncIterable<T>][]>) => {
+const mealtime = <S, T extends Eventable>(initialState: S & Custom & AsyncIterable<Events<T>>, transitions: Record<Events<T>, [S & Custom & AsyncIterable<Events<T>>, S & Custom & AsyncIterable<Events<T>>][]>) => {
 	const transitionMap = mapTransitions(transitions)
 	const handler = handleContext(initialState, transitionMap)
-	return new Proxy(initialState as S & AsyncIterable<T>, handler)
+	return new Proxy(initialState as S & AsyncIterable<Events<T>>, handler)
 }
 // 
 if (typeof window !== 'undefined') {

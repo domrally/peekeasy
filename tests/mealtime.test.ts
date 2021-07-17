@@ -1,15 +1,13 @@
-import { compose, Events, mealtime, State } from '../code/mealtime.js'
+import { compose, mealtime, State } from '../code/mealtime.js'
 // 
 export const assertMealtime = async () => {
-	// Triggers
 	const Hello = Symbol('Hello')
 	const World = Symbol('World')
-	type Triggers = Events<typeof Triggers>
-	const Triggers = Events({
+	type Triggers = typeof Triggers
+	const Triggers = Object.freeze({
 		Hello,
 		World
 	} as const)
-	// States
 	interface Example {
 		name: string
 		changeState(): void
@@ -38,11 +36,8 @@ export const assertMealtime = async () => {
 		]
 	})
 	// start the machine
-
 	const logLoop = async () => {
-		for await (const t of currentState) {
-			return
-		}
+		for await (const _ of currentState) { return }
 	}
 	const eventLoop = async () => {
 		while (true) {

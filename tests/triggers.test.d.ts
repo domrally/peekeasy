@@ -1,1 +1,1 @@
-export declare const assertTriggers: () => void;
+export declare const assertTriggers: () => Promise<void>;

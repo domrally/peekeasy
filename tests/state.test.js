@@ -1,3 +1,3 @@
 // 
-export const assertState = () => {
+export const assertState = async () => {
 };

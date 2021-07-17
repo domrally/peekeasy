@@ -10,9 +10,7 @@ var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (
     return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
 };
 var ___instances, ___trigger, ___promise, ___newPromise_get;
-export const State = () => {
-    return new _();
-};
+export const State = () => new _();
 class _ {
     constructor() {
         ___instances.add(this);

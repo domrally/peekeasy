@@ -24,10 +24,11 @@ export const handleContext = (currentState, transitions) => {
 class Context {
     constructor(getNextTrigger) {
         this.getNextTrigger = getNextTrigger;
+        (async () => { for await (const _ of this) { } })();
     }
     async *[Symbol.asyncIterator]() {
         while (true) {
-            yield await this.getNextTrigger();
+            yield await this.getNextTrigger?.();
         }
     }
 }

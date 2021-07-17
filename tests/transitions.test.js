@@ -1,7 +1,7 @@
 import { compose, State } from '../code/mealtime.js';
 import { mapTransitions } from '../code/transitions.js';
 // 
-export const assertTransitions = () => {
+export const assertTransitions = async () => {
     const A = Symbol('A');
     const B = Symbol('B');
     const Letters = Object.freeze({
