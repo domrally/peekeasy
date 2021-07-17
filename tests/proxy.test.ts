@@ -1,4 +1,4 @@
-import { compose, proxy, State } from '../code/main.js'
+import { compose, proxy, state } from '../code/main.js'
 // 
 export const assertMealtime = async () => {
 
@@ -16,19 +16,19 @@ export const assertMealtime = async () => {
 	}
 
 	const Start = compose(class _ {
-		constructor(public state: State<Triggers>) { }
+		constructor(public state: state<Triggers>) { }
 		readonly name = 'Start'
 		readonly changeState = () => this.state.trigger(Triggers.Hello)
 	})
 	const End = compose(class _ {
-		constructor(public state: State<Triggers>) { }
+		constructor(public state: state<Triggers>) { }
 		readonly name = 'End'
 		readonly changeState = () => this.state.trigger(Triggers.World)
 	})
 	// 
-	const state = State(),
-		start = new Start(state),
-		end = new End(state)
+	const shared = state(),
+		start = new Start(shared),
+		end = new End(shared)
 	// 
 	const currentState = proxy<Example, Triggers>(start, {
 		[Triggers.Hello]: [

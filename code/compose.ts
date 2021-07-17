@@ -1,5 +1,5 @@
 import { Eventable, Events } from './events.js'
-import { State } from './state.js'
+import { state } from './state.js'
 
 export function compose<S, T extends Eventable>(Base: Input<S, T>): Output<S, T>
 export function compose<S, T extends Eventable, TBase extends Constructable<T>>(Base: TBase) {
@@ -9,6 +9,6 @@ export function compose<S, T extends Eventable, TBase extends Constructable<T>>(
 		}
 	}
 }
-type Constructable<T extends Eventable> = new (...args: any[]) => { state: State<T> }
-type Input<S, T extends Eventable> = new (...args: any[]) => S & { state: State<T>, onEnter?(): void, onExit?(): void }
+type Constructable<T extends Eventable> = new (...args: any[]) => { state: state<T> }
+type Input<S, T extends Eventable> = new (...args: any[]) => S & { state: state<T>, onEnter?(): void, onExit?(): void }
 type Output<S, T extends Eventable> = new (...args: any[]) => S & AsyncIterable<Events<T>>

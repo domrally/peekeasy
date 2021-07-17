@@ -1,4 +1,4 @@
-import { compose, State } from '../code/main.js';
+import { compose, state } from '../code/main.js';
 import { mapTransitions } from '../code/transitions.js';
 // 
 export const assertTransitions = async () => {
@@ -18,7 +18,7 @@ export const assertTransitions = async () => {
             this.state = state;
         }
     });
-    const state = State(), one = new One(state), two = new Two(state);
+    const shared = state(), one = new One(shared), two = new Two(shared);
     const transitionMap = mapTransitions({
         [Letters.A]: [
             [one, two],

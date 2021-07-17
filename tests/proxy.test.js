@@ -1,4 +1,4 @@
-import { compose, proxy, State } from '../code/main.js';
+import { compose, proxy, state } from '../code/main.js';
 // 
 export const assertMealtime = async () => {
     const Hello = Symbol('Hello'), World = Symbol('World'), Triggers = Object.freeze({
@@ -20,7 +20,7 @@ export const assertMealtime = async () => {
         }
     });
     // 
-    const state = State(), start = new Start(state), end = new End(state);
+    const shared = state(), start = new Start(shared), end = new End(shared);
     // 
     const currentState = proxy(start, {
         [Triggers.Hello]: [

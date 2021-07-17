@@ -11,7 +11,7 @@ var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (
 };
 var ___instances, ___trigger, ___promise, ___newPromise_get;
 // factory pattern returning an instance of the State interface
-export const State = () => new _();
+export const state = () => new _();
 class _ {
     constructor() {
         ___instances.add(this);

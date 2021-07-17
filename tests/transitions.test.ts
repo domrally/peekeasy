@@ -1,4 +1,4 @@
-import { compose, State } from '../code/main.js'
+import { compose, state } from '../code/main.js'
 import { mapTransitions } from '../code/transitions.js'
 // 
 export const assertTransitions = async () => {
@@ -12,18 +12,18 @@ export const assertTransitions = async () => {
 	interface Numbers { }
 	const One = compose<Numbers, typeof Letters>(
 		class _ {
-			constructor(public state: State<typeof Letters>) { }
+			constructor(public state: state<typeof Letters>) { }
 		}
 	)
 	const Two = compose<Numbers, typeof Letters>(
 		class _ {
-			constructor(public state: State<typeof Letters>) { }
+			constructor(public state: state<typeof Letters>) { }
 		}
 	)
 
-	const state = State<typeof Letters>(),
-		one = new One(state),
-		two = new Two(state)
+	const shared = state<typeof Letters>(),
+		one = new One(shared),
+		two = new Two(shared)
 
 	const transitionMap = mapTransitions({
 		[Letters.A]: [

@@ -1,10 +1,10 @@
 import { Eventable, Events } from './events.js'
-export interface State<T extends Eventable> extends AsyncIterable<Events<T>> {
+export interface state<T extends Eventable> extends AsyncIterable<Events<T>> {
 	trigger: (event: Events<T>) => void
 }
 // factory pattern returning an instance of the State interface
-export const State = <T extends Eventable>() => new _<T>() as State<T>
-class _<T extends Eventable> implements State<T> {
+export const state = <T extends Eventable>() => new _<T>() as state<T>
+class _<T extends Eventable> implements state<T> {
 	#trigger = (_trigger: Events<T>) => { }
 	get trigger() { return this.#trigger }
 	// 

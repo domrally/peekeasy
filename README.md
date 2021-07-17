@@ -20,17 +20,17 @@ or
 
 ### importing
 ```typescript
-import { compose, proxy, State } from 'mealtime'
+import { compose, proxy, state } from 'mealtime'
 ```
 or
 ```typescript
 const path = 'https://unpkg.com/mealtime'
-const { compose, proxy, State } = await import(path)
+const { compose, proxy, state } = await import(path)
 ```
 or
 ```html
 <script type="module">
-    import { compose, proxy, State } from 'https://unpkg.com/mealtime'	
+    import { compose, proxy, state } from 'https://unpkg.com/mealtime'	
 </script>
 ```
 ### triggers
@@ -47,29 +47,29 @@ type Triggers = typeof Triggers
 ```typescript
 interface Example {
     name         : string
-    changeState(): void
+    changestate(): void
 }
 ```
 ```typescript
 const Start = compose(class _ {
-    constructor(public state: State<Triggers>) { }
+    constructor(public state: state<Triggers>) { }
     name        = 'Start'
-    changeState = () => this.state.trigger(Triggers.Hello)
+    changestate = () => this.state.trigger(Triggers.Hello)
 })
 ```
 ```typescript
 const End = compose(class _ {
-    constructor(public state: State<Triggers>) { }
+    constructor(public state: state<Triggers>) { }
     name        = 'End'
-    changeState = () => this.state.trigger(Triggers.World)
+    changestate = () => this.state.trigger(Triggers.World)
 })
 ```
 ### creation
 ```typescript
-const state = State(),
-      start = new Start(state),
-      end   = new End(state)
-const currentState = proxy<Example, Triggers>(start, {
+const shared = state(),
+      start = new Start(shared),
+      end   = new End(shared)
+const currentstate = proxy<Example, Triggers>(start, {
     [Triggers.Hello]: [
         [start, end]
     ],
@@ -81,21 +81,21 @@ const currentState = proxy<Example, Triggers>(start, {
 ### machine
 ```typescript
 const loop = async () => {
-    console.log(`input state: ${currentState.name}`)
-    for await (const trigger of currentState) {
+    console.log(`input state: ${currentstate.name}`)
+    for await (const trigger of currentstate) {
         console.log(`trigger: ${trigger.toString()}`)
-        console.log(`output state: ${currentState.name}`)
+        console.log(`output state: ${currentstate.name}`)
         return
     }
 }
 loop()
-currentState.changeState()
+currentstate.changestate()
 ```
 
 ## design
 
 ### abstract machines
-The [state pattern](https://en.wikipedia.org/wiki/State_pattern) is a simulation of a [finite state machine](https://en.wikipedia.org/wiki/Finite-state_machine#Transducers). With the addition of the [proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) on the current state it becomes a simulation of a more powerful form of state machine:
+The [state pattern](https://en.wikipedia.org/wiki/state_pattern) is a simulation of a [finite state machine](https://en.wikipedia.org/wiki/Finite-state_machine#Transducers). With the addition of the [proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) on the current state it becomes a simulation of a more powerful form of state machine:
 
 #### [Mealy machines](https://en.wikipedia.org/wiki/Mealy_machine)
 > In the theory of computation, 
@@ -105,7 +105,7 @@ The [state pattern](https://en.wikipedia.org/wiki/State_pattern) is a simulation
 
 
 ### javascript & typescript
-Javascript has built in support for the [proxy pattern](https://en.wikipedia.org/wiki/Proxy_pattern) through its [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) class. The addition of [typescript](https://www.typescriptlang.org/) allows us to implement a classic [state pattern](https://en.wikipedia.org/wiki/State_pattern) to hide behind the proxy
+Javascript has built in support for the [proxy pattern](https://en.wikipedia.org/wiki/Proxy_pattern) through its [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) class. The addition of [typescript](https://www.typescriptlang.org/) allows us to implement a classic [state pattern](https://en.wikipedia.org/wiki/state_pattern) to hide behind the proxy
 
 
 ### patterns
@@ -113,7 +113,7 @@ The **state** and **proxy** patterns
 are three of twenty-three design patterns documented 
 by the gang of four
 
-#### [state pattern](https://en.wikipedia.org/wiki/State_pattern)
+#### [state pattern](https://en.wikipedia.org/wiki/state_pattern)
 > allows an object to alter its behavior 
 > when its internal state changes.
 > This pattern is close to
