@@ -18,9 +18,9 @@ export class StopWatch extends HTMLElement {
         // 
         _StopWatch_init.set(this, async () => {
             const path = 'https://unpkg.com/mealtime';
-            const { proxy, State } = await import(path);
+            const { proxy, state } = await import(path);
             // states
-            const timer = new Timer(), state = State(), restarted = new Restarted(timer, state), stopped = new Stopped(timer, state), watching = new Watching(timer, state);
+            const timer = new Timer(), shared = state(), restarted = new Restarted(timer, shared), stopped = new Stopped(timer, shared), watching = new Watching(timer, shared);
             // finite state pattern machine
             const stopwatch = proxy(restarted, {
                 [Buttons.Top]: [

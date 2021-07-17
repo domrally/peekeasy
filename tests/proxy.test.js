@@ -20,9 +20,7 @@ export const assertMealtime = async () => {
         }
     });
     // 
-    const shared = state(), start = new Start(shared), end = new End(shared);
-    // 
-    const currentState = proxy(start, {
+    const shared = state(), start = new Start(shared), end = new End(shared), currentState = proxy(start, {
         [Triggers.Hello]: [
             [start, end]
         ],
