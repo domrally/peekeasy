@@ -21,7 +21,7 @@ export const handleContext = (currentState, transitions) => {
             }
         }
     };
-    (async () => { for await (const _ of asyncIterable) { } })();
+    loop(asyncIterable);
     return {
         get: (_, key) => key === Symbol.iterator || key === Symbol.asyncIterator
             ? asyncIterable[key]
@@ -29,3 +29,4 @@ export const handleContext = (currentState, transitions) => {
         set: (_, key, value) => currentState[key] = value
     };
 };
+const loop = async (asyncIterable) => { for await (const _ of asyncIterable) { } };
