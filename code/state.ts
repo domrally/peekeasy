@@ -1,23 +1,11 @@
 
-export interface Machineable {
-	onEnter?(): void
-	onExit?(): void
+export interface State<T extends symbol> extends AsyncIterable<T> {
+	trigger: (event: T) => void
 }
-type Constructable<T extends symbol> = new (...args: any[]) => { state: State<T> }
-type Input<S, T extends symbol> = new (...args: any[]) => S & { state: State<T>, onEnter?(): void, onExit?(): void }
-type Output<S, T extends symbol> = new (...args: any[]) => S & AsyncIterable<T>
-export function composeState<S, T extends symbol>(Base: Input<S, T>): Output<S, T>
-export function composeState<S, T extends symbol, TBase extends Constructable<T>>(Base: TBase) {
-	return class _ extends Base implements AsyncIterable<T> {
-		async *[Symbol.asyncIterator]() {
-			yield* this.state
-		}
-	}
+export const State = <S extends symbol>() => {
+	return new _<S>() as State<S>
 }
-
-// [Symbol.asyncIterator](): AsyncGenerator<T, void, unknown>
-// trigger: (trigger: T) => void
-export class State<T extends symbol> implements AsyncIterable<T> {
+class _<T extends symbol> implements State<T> {
 	#trigger = (_trigger: T) => { }
 	get trigger() { return this.#trigger }
 	// 
@@ -35,4 +23,3 @@ export class State<T extends symbol> implements AsyncIterable<T> {
 		})
 	}
 }
-export const createState = <S extends symbol>() => new State<S>()

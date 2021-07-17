@@ -1,6 +1,6 @@
-import { composeState, createProxy, State } from '../code/main.js';
+import { compose, mealtime, State } from '../code/mealtime.js';
 // 
-export const assertMain = async () => {
+export const assertMealtime = async () => {
     // Triggers
     const Hello = Symbol('Hello');
     const World = Symbol('World');
@@ -8,14 +8,14 @@ export const assertMain = async () => {
         Hello,
         World
     });
-    const Start = composeState(class _ {
+    const Start = compose(class _ {
         constructor(state) {
             this.state = state;
             this.name = 'Start';
             this.changeState = () => this.state.trigger(Triggers.Hello);
         }
     });
-    const End = composeState(class _ {
+    const End = compose(class _ {
         constructor(state) {
             this.state = state;
             this.name = 'End';
@@ -23,9 +23,9 @@ export const assertMain = async () => {
         }
     });
     // 
-    const state = new State(), start = new Start(state), end = new End(state);
+    const state = State(), start = new Start(state), end = new End(state);
     // 
-    const currentState = createProxy(start, {
+    const currentState = mealtime(start, {
         [Triggers.Hello]: [
             [start, end]
         ],

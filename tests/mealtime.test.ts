@@ -1,27 +1,27 @@
-import { composeState, createProxy, createTriggers, State } from '../code/main.js'
+import { compose, events, mealtime, State } from '../code/mealtime.js'
 // 
-export const assertMain = async () => {
+export const assertMealtime = async () => {
 	// Triggers
 	const Hello = Symbol('Hello')
 	const World = Symbol('World')
+	type Triggers = events<typeof Triggers>
 	const Triggers = Object.freeze({
 		Hello,
 		World
 	})
-	type Triggers = createTriggers<typeof Triggers>
 	// States
 	interface Example {
 		name: string
 		changeState(): void
 	}
-	const Start = composeState<Example, Triggers>(
+	const Start = compose<Example, Triggers>(
 		class _ {
 			constructor(public state: State<Triggers>) { }
 			readonly name = 'Start'
 			readonly changeState = () => this.state.trigger(Triggers.Hello)
 		}
 	)
-	const End = composeState<Example, Triggers>(
+	const End = compose<Example, Triggers>(
 		class _ {
 			constructor(public state: State<Triggers>) { }
 			readonly name = 'End'
@@ -29,11 +29,11 @@ export const assertMain = async () => {
 		}
 	)
 	// 
-	const state = new State<Triggers>(),
+	const state = State<Triggers>(),
 		start = new Start(state),
 		end = new End(state)
 	// 
-	const currentState = createProxy<Example, Triggers>(start, {
+	const currentState = mealtime<Example, Triggers>(start, {
 		[Triggers.Hello]: [
 			[start, end]
 		],

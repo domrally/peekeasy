@@ -1,5 +1,5 @@
 import { assertContext } from './context.test.js'
-import { assertMain } from './main.test.js'
+import { assertMealtime } from './mealtime.test.js'
 import { assertState } from './state.test.js'
 import { assertTransitions } from './transitions.test.js'
 import { assertTriggers } from './triggers.test.js'
@@ -11,7 +11,7 @@ import { assertTriggers } from './triggers.test.js'
 		[assertTransitions, 'transitions'],
 		[assertState, 'state'],
 		[assertContext, 'context'],
-		[assertMain, 'main'],
+		[assertMealtime, 'main'],
 	]
 	for await (const [assert, name] of tests) {
 		try {

@@ -1,6 +1,6 @@
-import { Machineable } from "./state"
-
-export const createTransitions = <S extends Machineable & AsyncIterable<T>, T extends symbol>(record2transitions: Record<T, readonly [S, S][]>) => {
+export const mapTransitions = <S extends object, T extends symbol>(
+	record2transitions: Record<T, readonly [S, S][]>
+) => {
 	//
 	const keys = Object.getOwnPropertySymbols(record2transitions)
 

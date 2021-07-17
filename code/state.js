@@ -9,37 +9,30 @@ var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (
     if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
     return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
 };
-var _State_instances, _State_trigger, _State_promise, _State_newPromise_get;
-export function composeState(Base) {
-    return class _ extends Base {
-        async *[Symbol.asyncIterator]() {
-            yield* this.state;
-        }
-    };
-}
-// [Symbol.asyncIterator](): AsyncGenerator<T, void, unknown>
-// trigger: (trigger: T) => void
-export class State {
+var ___instances, ___trigger, ___promise, ___newPromise_get;
+export const State = () => {
+    return new _();
+};
+class _ {
     constructor() {
-        _State_instances.add(this);
-        _State_trigger.set(this, (_trigger) => { });
+        ___instances.add(this);
+        ___trigger.set(this, (_trigger) => { });
         // 
-        _State_promise.set(this, __classPrivateFieldGet(this, _State_instances, "a", _State_newPromise_get)
+        ___promise.set(this, __classPrivateFieldGet(this, ___instances, "a", ___newPromise_get)
         // 
         );
     }
-    get trigger() { return __classPrivateFieldGet(this, _State_trigger, "f"); }
+    get trigger() { return __classPrivateFieldGet(this, ___trigger, "f"); }
     // 
-    async *[(_State_trigger = new WeakMap(), _State_promise = new WeakMap(), _State_instances = new WeakSet(), Symbol.asyncIterator)]() {
+    async *[(___trigger = new WeakMap(), ___promise = new WeakMap(), ___instances = new WeakSet(), Symbol.asyncIterator)]() {
         while (true) {
-            yield await __classPrivateFieldGet(this, _State_promise, "f");
+            yield await __classPrivateFieldGet(this, ___promise, "f");
         }
     }
 }
-_State_newPromise_get = function _State_newPromise_get() {
-    return new Promise(resolve => __classPrivateFieldSet(this, _State_trigger, (trigger) => {
-        __classPrivateFieldSet(this, _State_promise, __classPrivateFieldGet(this, _State_instances, "a", _State_newPromise_get), "f");
+___newPromise_get = function ___newPromise_get() {
+    return new Promise(resolve => __classPrivateFieldSet(this, ___trigger, (trigger) => {
+        __classPrivateFieldSet(this, ___promise, __classPrivateFieldGet(this, ___instances, "a", ___newPromise_get), "f");
         resolve(trigger);
     }, "f"));
 };
-export const createState = () => new State();

@@ -1,13 +1,13 @@
-import { createTriggers } from '../code/main.js'
+import { events } from '../code/mealtime.js'
 // 
 export const assertTriggers = () => {
 	const A = Symbol('A')
 	const B = Symbol('B')
+	type Triggers = events<typeof Triggers>
 	const Triggers = Object.freeze({
 		A,
 		B,
-	} as const)
-	type Triggers = createTriggers<typeof Triggers>
+	})
 
 	const shouldFail = (triggers: Triggers) => {
 		throw new Error('❌ Expected shouldFail to fail, but it threw success')

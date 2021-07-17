@@ -1,4 +1,4 @@
-export const createTransitions = (record2transitions) => {
+export const mapTransitions = (record2transitions) => {
     //
     const keys = Object.getOwnPropertySymbols(record2transitions);
     const record2map = {};

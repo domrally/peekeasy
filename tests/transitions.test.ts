@@ -1,4 +1,5 @@
-import { composeState, createTransitions, createTriggers, State } from '../code/main.js'
+import { compose, events, State } from '../code/mealtime.js'
+import { mapTransitions } from '../code/transitions.js'
 // 
 export const assertTransitions = () => {
 	const A = Symbol('A')
@@ -7,25 +8,25 @@ export const assertTransitions = () => {
 		A,
 		B,
 	} as const)
-	type Letters = createTriggers<typeof Letters>
+	type Letters = events<typeof Letters>
 
 	interface Numbers { }
-	const One = composeState<Numbers, Letters>(
+	const One = compose<Numbers, Letters>(
 		class _ {
 			constructor(public state: State<Letters>) { }
 		}
 	)
-	const Two = composeState<Numbers, Letters>(
+	const Two = compose<Numbers, Letters>(
 		class _ {
 			constructor(public state: State<Letters>) { }
 		}
 	)
 
-	const state = new State<Letters>(),
+	const state = State<Letters>(),
 		one = new One(state),
 		two = new Two(state)
 
-	const transitionMap = createTransitions({
+	const transitionMap = mapTransitions({
 		[Letters.A]: [
 			[one, two],
 		],

@@ -1,4 +1,5 @@
-import { composeState, createTransitions, State } from '../code/main.js';
+import { compose, State } from '../code/mealtime.js';
+import { mapTransitions } from '../code/transitions.js';
 // 
 export const assertTransitions = () => {
     const A = Symbol('A');
@@ -7,18 +8,18 @@ export const assertTransitions = () => {
         A,
         B,
     });
-    const One = composeState(class _ {
+    const One = compose(class _ {
         constructor(state) {
             this.state = state;
         }
     });
-    const Two = composeState(class _ {
+    const Two = compose(class _ {
         constructor(state) {
             this.state = state;
         }
     });
-    const state = new State(), one = new One(state), two = new Two(state);
-    const transitionMap = createTransitions({
+    const state = State(), one = new One(state), two = new Two(state);
+    const transitionMap = mapTransitions({
         [Letters.A]: [
             [one, two],
         ],

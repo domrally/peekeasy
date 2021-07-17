@@ -62,7 +62,7 @@
 		"forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file. */
 	},
 	"files": [
-		"code/main.ts",
+		"code/mealtime.ts",
 		"demos/stop-watch/stop-watch.ts",
 		"tests/test.ts"
 	]

@@ -1,14 +1,5 @@
-class Context {
-    constructor(getNextTrigger) {
-        this.getNextTrigger = getNextTrigger;
-    }
-    async *[Symbol.asyncIterator]() {
-        while (true) {
-            yield await this.getNextTrigger();
-        }
-    }
-}
-export const createHandler = (currentState, transitions) => {
+// a context manages the state and transitions of a state machine
+export const handleContext = (currentState, transitions) => {
     const context = new Context(async () => {
         const state = currentState;
         const asyncIterator = state[Symbol.asyncIterator]();
@@ -30,3 +21,13 @@ export const createHandler = (currentState, transitions) => {
         set: (_, key, value) => currentState[key] = value
     };
 };
+class Context {
+    constructor(getNextTrigger) {
+        this.getNextTrigger = getNextTrigger;
+    }
+    async *[Symbol.asyncIterator]() {
+        while (true) {
+            yield await this.getNextTrigger();
+        }
+    }
+}
