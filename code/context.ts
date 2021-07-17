@@ -6,22 +6,15 @@ export const handleContext = <S extends AsyncIterable<T>, T extends symbol>(curr
 		const asyncIterator = state[Symbol.asyncIterator]()
 		const next = await asyncIterator.next()
 		const trigger = next.value as T
-
 		if (state === currentState) {
-			state.onExit?.()
-			const stateMap = transitions[trigger]
-			const nextState = stateMap.get(state) as M<S>
-			nextState.onEnter?.()
-			currentState = nextState
+			currentState = customize(state, transitions[trigger])
 		}
 
 		return trigger
 	}
 	const asyncIterable = {
 		async *[Symbol.asyncIterator]() {
-			while (true) {
-				yield await update()
-			}
+			yield* generator(update)
 		}
 	}
 	loop(asyncIterable)
@@ -33,4 +26,16 @@ export const handleContext = <S extends AsyncIterable<T>, T extends symbol>(curr
 	}
 }
 type M<S> = Custom & S
-const loop = async (asyncIterable: AsyncIterable<any>) => { for await (const _ of asyncIterable) { } }
+const loop = async <T>(asyncIterable: AsyncIterable<T>) => { for await (const _ of asyncIterable) { } }
+const generator = async function* <T>(update: () => Promise<T>) {
+	while (true) {
+		yield await update()
+	}
+}
+const customize = <S extends object>(state: M<S>, stateMap: WeakMap<S, S>) => {
+	// customize the context with custom actions
+	state.onExit?.()
+	const nextState = stateMap.get(state) as M<S>
+	nextState.onEnter?.()
+	return nextState
+}
