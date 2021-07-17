@@ -20,28 +20,28 @@ or
 
 ### importing
 ```typescript
-import { createProxy, createState, createTriggers, State } from 'mealtime'
+import { compose, mealtime, State } from 'mealtime'
 ```
 or
 ```html
 <script type="module">
-    import { createProxy, createState, createTriggers, State } from 'https://unpkg.com/mealtime'	
+    import { compose, mealtime, State } from 'https://unpkg.com/mealtime'	
 </script>
 ```
 or
 ```typescript
 const path = 'https://unpkg.com/mealtime'
-const { createProxy, composeState, createState, createTriggers, State } = await import(path)
+const { compose, mealtime, State } = await import(path)
 ```
 ### triggers
 ```typescript
-const Hello    = Symbol('Hello'),
-      World    = Symbol('World'),
+const Hello = Symbol('Hello'),
+      World = Symbol('World'),
       Triggers = Object.freeze({
           Hello,
           World
-      })
-type Triggers = createTriggers<typeof Triggers>
+      } as const)
+type Triggers = typeof Triggers
 ```
 ### states
 ```typescript
@@ -51,7 +51,7 @@ interface Example {
 }
 ```
 ```typescript
-const Start = createState<Example, Triggers>(
+const Start = compose<Example, Triggers>(
     class _ {
         constructor(public state: State<Triggers>) { }
         name        = 'Start'
@@ -60,7 +60,7 @@ const Start = createState<Example, Triggers>(
 )
 ```
 ```typescript
-const End = createState<Example, Triggers>(
+const End = compose<Example, Triggers>(
     class _ {
         constructor(public state: State<Triggers>) { }
         name        = 'End'
@@ -70,10 +70,10 @@ const End = createState<Example, Triggers>(
 ```
 ### putting it all together
 ```typescript
-const state = new State<Triggers>(),
+const state = State<Triggers>(),
       start = new Start(state),
       end   = new End(state)
-const currentState = createProxy<Example, Triggers>(start, {
+const currentState = mealtime<Example, Triggers>(start, {
     [Triggers.Hello]: [
         [start, end]
     ],
