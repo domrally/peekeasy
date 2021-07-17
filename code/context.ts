@@ -1,4 +1,4 @@
-import { Custom } from './custom.js';
+import { Custom } from './custom.js'
 // a context manages the state and transitions of a state machine
 export const handleContext = <S extends AsyncIterable<T>, T extends symbol>(currentState: M<S>, transitions: Record<T, WeakMap<S, S>>) => {
 	const update = async () => {
@@ -23,9 +23,8 @@ export const handleContext = <S extends AsyncIterable<T>, T extends symbol>(curr
 				yield await update()
 			}
 		}
-	};
-	(async () => { for await (const _ of asyncIterable) { } })()
-
+	}
+	loop(asyncIterable)
 	return {
 		get: (_: S, key: any) => key === Symbol.iterator || key === Symbol.asyncIterator
 			? (asyncIterable as any)[key]
@@ -34,3 +33,4 @@ export const handleContext = <S extends AsyncIterable<T>, T extends symbol>(curr
 	}
 }
 type M<S> = Custom & S
+const loop = async (asyncIterable: AsyncIterable<any>) => { for await (const _ of asyncIterable) { } }
