@@ -20,28 +20,28 @@ or
 
 ### importing
 ```typescript
-import { createProxy, createState, createTriggers, State } from 'mealtime'
-```
-or
-```html
-<script type="module">
-    import { createProxy, createState, createTriggers, State } from 'https://unpkg.com/mealtime'	
-</script>
+import { compose, mealtime, State } from 'mealtime'
 ```
 or
 ```typescript
 const path = 'https://unpkg.com/mealtime'
-const { createProxy, composeState, createState, createTriggers, State } = await import(path)
+const { compose, mealtime, State } = await import(path)
+```
+or
+```html
+<script type="module">
+    import { compose, mealtime, State } from 'https://unpkg.com/mealtime'	
+</script>
 ```
 ### triggers
 ```typescript
-const Hello    = Symbol('Hello'),
-      World    = Symbol('World'),
+const Hello = Symbol('Hello'),
+      World = Symbol('World'),
       Triggers = Object.freeze({
           Hello,
           World
-      })
-type Triggers = createTriggers<typeof Triggers>
+      } as const)
+type Triggers = typeof Triggers
 ```
 ### states
 ```typescript
@@ -51,7 +51,7 @@ interface Example {
 }
 ```
 ```typescript
-const Start = createState<Example, Triggers>(
+const Start = compose<Example, Triggers>(
     class _ {
         constructor(public state: State<Triggers>) { }
         name        = 'Start'
@@ -60,7 +60,7 @@ const Start = createState<Example, Triggers>(
 )
 ```
 ```typescript
-const End = createState<Example, Triggers>(
+const End = compose<Example, Triggers>(
     class _ {
         constructor(public state: State<Triggers>) { }
         name        = 'End'
@@ -68,12 +68,12 @@ const End = createState<Example, Triggers>(
     }
 )
 ```
-### putting it all together
+### creation
 ```typescript
-const state = new State<Triggers>(),
+const state = State<Triggers>(),
       start = new Start(state),
       end   = new End(state)
-const currentState = createProxy<Example, Triggers>(start, {
+const currentState = mealtime<Example, Triggers>(start, {
     [Triggers.Hello]: [
         [start, end]
     ],
@@ -82,24 +82,17 @@ const currentState = createProxy<Example, Triggers>(start, {
     ]
 })
 ```
-### start the machine
+### machine
 ```typescript
-const logLoop = async () => {
-    console.log(currentState.name)
-    for await (const t of currentState) {
-        console.log(currentState.name)
+const loop = async () => {
+    console.log(`current state: ${currentState.name}`)
+    for await (const _ of currentState) {
+        console.log(`current state: ${currentState.name}`)
+        return
     }
 }
-const eventLoop = async () => {
-    while (true) {
-        await new Promise<void>(resolve => setTimeout(() => {
-            currentState.changeState()
-            resolve()
-        }, 1000))
-    }
-}
-logLoop()
-eventLoop()
+loop()
+currentState.changeState()
 ```
 
 ## design
