@@ -10,6 +10,7 @@ var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (
     return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
 };
 var ___instances, ___trigger, ___promise, ___newPromise_get;
+// factory pattern returning an instance of the State interface
 export const State = () => new _();
 class _ {
     constructor() {

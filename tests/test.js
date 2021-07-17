@@ -1,5 +1,5 @@
 import { assertContext } from './context.test.js';
-import { assertMealtime } from './mealtime.test.js';
+import { assertMealtime } from './proxy.test.js';
 import { assertState } from './state.test.js';
 import { assertTransitions } from './transitions.test.js';
 import { assertTriggers } from './triggers.test.js';

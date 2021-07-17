@@ -1,4 +1,4 @@
-import { compose, State } from '../code/mealtime.js';
+import { compose, State } from '../code/main.js';
 import { mapTransitions } from '../code/transitions.js';
 // 
 export const assertTransitions = async () => {

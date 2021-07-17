@@ -20,17 +20,17 @@ or
 
 ### importing
 ```typescript
-import { compose, mealtime, State } from 'mealtime'
+import { compose, proxy, State } from 'mealtime'
 ```
 or
 ```typescript
 const path = 'https://unpkg.com/mealtime'
-const { compose, mealtime, State } = await import(path)
+const { compose, proxy, State } = await import(path)
 ```
 or
 ```html
 <script type="module">
-    import { compose, mealtime, State } from 'https://unpkg.com/mealtime'	
+    import { compose, proxy, State } from 'https://unpkg.com/mealtime'	
 </script>
 ```
 ### triggers
@@ -69,7 +69,7 @@ const End = compose(class _ {
 const state = State(),
       start = new Start(state),
       end   = new End(state)
-const currentState = mealtime<Example, Triggers>(start, {
+const currentState = proxy<Example, Triggers>(start, {
     [Triggers.Hello]: [
         [start, end]
     ],

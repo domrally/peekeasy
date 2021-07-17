@@ -1,4 +1,4 @@
-import { compose, mealtime, State } from '../code/mealtime.js'
+import { compose, proxy, State } from '../code/main.js'
 // 
 export const assertMealtime = async () => {
 
@@ -30,7 +30,7 @@ export const assertMealtime = async () => {
 		start = new Start(state),
 		end = new End(state)
 	// 
-	const currentState = mealtime<Example, Triggers>(start, {
+	const currentState = proxy<Example, Triggers>(start, {
 		[Triggers.Hello]: [
 			[start, end]
 		],
