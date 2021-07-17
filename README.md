@@ -51,26 +51,22 @@ interface Example {
 }
 ```
 ```typescript
-const Start = compose<Example, Triggers>(
-    class _ {
-        constructor(public state: State<Triggers>) { }
-        name        = 'Start'
-        changeState = () => this.state.trigger(Triggers.Hello)
-    }
-)
+const Start = compose(class _ {
+    constructor(public state: State<Triggers>) { }
+    name        = 'Start'
+    changeState = () => this.state.trigger(Triggers.Hello)
+})
 ```
 ```typescript
-const End = compose<Example, Triggers>(
-    class _ {
-        constructor(public state: State<Triggers>) { }
-        name        = 'End'
-        changeState = () => this.state.trigger(Triggers.World)
-    }
-)
+const End = compose(class _ {
+    constructor(public state: State<Triggers>) { }
+    name        = 'End'
+    changeState = () => this.state.trigger(Triggers.World)
+})
 ```
 ### creation
 ```typescript
-const state = State<Triggers>(),
+const state = State(),
       start = new Start(state),
       end   = new End(state)
 const currentState = mealtime<Example, Triggers>(start, {
