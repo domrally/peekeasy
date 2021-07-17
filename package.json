@@ -11,7 +11,8 @@
 		"test": "node tests/test.js"
 	},
 	"files": [
-		"code/"
+		"code/*.js",
+		"code/*.d.ts"
 	],
 	"keywords": [
 		"mealtime",
