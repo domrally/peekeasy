@@ -34,8 +34,9 @@ export const assertMealtime = async () => {
     });
     // start the machine
     const logLoop = async () => {
+        console.log(currentState.name);
         for await (const _ of currentState) {
-            return;
+            console.log(currentState.name);
         }
     };
     const eventLoop = async () => {
@@ -43,8 +44,8 @@ export const assertMealtime = async () => {
             await new Promise(resolve => setTimeout(() => {
                 currentState.changeState();
                 resolve();
-            }, 1));
-            return;
+            }, 1000));
+            // return
         }
     };
     await Promise.all([logLoop(), eventLoop()]);
