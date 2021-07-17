@@ -64,7 +64,7 @@ const End = compose(class _ {
     toggle = () => this.state.trigger(Triggers.World)
 })
 ```
-### proxy
+### transitions & proxy
 ```typescript
 const s       = state(),
       start   = new Start(s),
