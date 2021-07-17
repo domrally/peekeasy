@@ -12,9 +12,9 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
 var ___instances, ___isTiming, ___timer, _a;
 import { Buttons } from './buttons.js';
 const path = 'https://unpkg.com/mealtime';
-const { composeState } = await import(path);
+const { compose } = await import(path);
 //
-export const Watching = composeState((_a = class _ {
+export const Watching = compose((_a = class _ {
         constructor(times, state) {
             this.times = times;
             this.state = state;

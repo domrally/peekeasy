@@ -15,15 +15,15 @@ export class StopWatch extends HTMLElement {
 	// 
 	readonly #init = async () => {
 		const path = 'https://unpkg.com/mealtime'
-		const { createProxy, createState } = await import(path)
+		const { mealtime, State } = await import(path)
 		// states
 		const timer = new Timer(),
-			state = createState(),
+			state = State(),
 			restarted = new Restarted(timer, state),
 			stopped = new Stopped(timer, state),
 			watching = new Watching(timer, state)
 		// finite state pattern machine
-		const stopwatch = createProxy(restarted, {
+		const stopwatch = mealtime(restarted, {
 			[Buttons.Top]: [
 				[restarted, watching],
 				[watching, stopped],

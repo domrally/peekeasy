@@ -1,8 +1,8 @@
 import { Buttons } from './buttons.js';
 //
 const path = 'https://unpkg.com/mealtime';
-const { composeState } = await import(path);
-export const Restarted = composeState(class _ {
+const { compose } = await import(path);
+export const Restarted = compose(class _ {
     constructor(times, state) {
         this.times = times;
         this.state = state;
