@@ -6,19 +6,13 @@ export const handleContext = (currentState, transitions) => {
         const next = await asyncIterator.next();
         const trigger = next.value;
         if (state === currentState) {
-            state.onExit?.();
-            const stateMap = transitions[trigger];
-            const nextState = stateMap.get(state);
-            nextState.onEnter?.();
-            currentState = nextState;
+            currentState = customize(state, transitions[trigger]);
         }
         return trigger;
     };
     const asyncIterable = {
         async *[Symbol.asyncIterator]() {
-            while (true) {
-                yield await update();
-            }
+            yield* generator(update);
         }
     };
     loop(asyncIterable);
@@ -30,3 +24,15 @@ export const handleContext = (currentState, transitions) => {
     };
 };
 const loop = async (asyncIterable) => { for await (const _ of asyncIterable) { } };
+const generator = async function* (update) {
+    while (true) {
+        yield await update();
+    }
+};
+const customize = (state, stateMap) => {
+    // customize the context with custom actions
+    state.onExit?.();
+    const nextState = stateMap.get(state);
+    nextState.onEnter?.();
+    return nextState;
+};

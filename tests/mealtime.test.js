@@ -32,7 +32,13 @@ export const assertMealtime = async () => {
     });
     // start the machine
     const loop = async () => {
+        if (currentState.name !== 'Start') {
+            throw new Error('currentState.name !== "Start"');
+        }
         for await (const _ of currentState) {
+            if (currentState.name === 'Start') {
+                throw new Error('currentState.name !== "End"');
+            }
             return;
         }
     };
