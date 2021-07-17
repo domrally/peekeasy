@@ -28,16 +28,15 @@ export const assertMealtime = async () => {
 	// 
 	const shared = state(),
 		start = new Start(shared),
-		end = new End(shared)
-	// 
-	const currentState = proxy<Example, Triggers>(start, {
-		[Triggers.Hello]: [
-			[start, end]
-		],
-		[Triggers.World]: [
-			[end, start]
-		]
-	})
+		end = new End(shared),
+		currentState = proxy<Example, Triggers>(start, {
+			[Triggers.Hello]: [
+				[start, end]
+			],
+			[Triggers.World]: [
+				[end, start]
+			]
+		})
 	// start the machine
 	const loop = async () => {
 		if (currentState.name !== 'Start') {
