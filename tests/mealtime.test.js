@@ -1,9 +1,7 @@
 import { compose, mealtime, State } from '../code/mealtime.js';
 // 
 export const assertMealtime = async () => {
-    const Hello = Symbol('Hello');
-    const World = Symbol('World');
-    const Triggers = Object.freeze({
+    const Hello = Symbol('Hello'), World = Symbol('World'), Triggers = Object.freeze({
         Hello,
         World
     });
@@ -33,19 +31,11 @@ export const assertMealtime = async () => {
         ]
     });
     // start the machine
-    const logLoop = async () => {
+    const loop = async () => {
         for await (const _ of currentState) {
             return;
         }
     };
-    const eventLoop = async () => {
-        while (true) {
-            await new Promise(resolve => setTimeout(() => {
-                currentState.changeState();
-                resolve();
-            }, 1));
-            return;
-        }
-    };
-    await Promise.all([logLoop(), eventLoop()]);
+    loop();
+    currentState.changeState();
 };

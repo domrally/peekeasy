@@ -1,17 +1,20 @@
 import { compose, mealtime, State } from '../code/mealtime.js'
 // 
 export const assertMealtime = async () => {
-	const Hello = Symbol('Hello')
-	const World = Symbol('World')
+
+	const Hello = Symbol('Hello'),
+		World = Symbol('World'),
+		Triggers = Object.freeze({
+			Hello,
+			World
+		} as const)
 	type Triggers = typeof Triggers
-	const Triggers = Object.freeze({
-		Hello,
-		World
-	} as const)
+
 	interface Example {
 		name: string
 		changeState(): void
 	}
+
 	const Start = compose(class _ {
 		constructor(public state: State<Triggers>) { }
 		readonly name = 'Start'
@@ -36,20 +39,11 @@ export const assertMealtime = async () => {
 		]
 	})
 	// start the machine
-	const logLoop = async () => {
+	const loop = async () => {
 		for await (const _ of currentState) {
 			return
 		}
 	}
-	const eventLoop = async () => {
-		while (true) {
-			await new Promise<void>(resolve => setTimeout(() => {
-				currentState.changeState()
-				resolve()
-			}, 1))
-			return
-		}
-	}
-
-	await Promise.all([logLoop(), eventLoop()])
+	loop()
+	currentState.changeState()
 }
