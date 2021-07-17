@@ -85,9 +85,10 @@ const currentState = mealtime<Example, Triggers>(start, {
 ### machine
 ```typescript
 const loop = async () => {
-    console.log(`current state: ${currentState.name}`)
-    for await (const _ of currentState) {
-        console.log(`current state: ${currentState.name}`)
+    console.log(`input state: ${currentState.name}`)
+    for await (const trigger of currentState) {
+        console.log(`trigger: ${trigger.toString()}`)
+        console.log(`output state: ${currentState.name}`)
         return
     }
 }
