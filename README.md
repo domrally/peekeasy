@@ -43,7 +43,7 @@ const Hello    = Symbol('Hello'),
       } as const)
 type Triggers = typeof Triggers
 ```
-### state
+### state composition
 ```typescript
 interface Example {
     name    : string
