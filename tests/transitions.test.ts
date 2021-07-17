@@ -1,4 +1,4 @@
-import { compose, events, State } from '../code/mealtime.js'
+import { compose, Events, State } from '../code/mealtime.js'
 import { mapTransitions } from '../code/transitions.js'
 // 
 export const assertTransitions = () => {
@@ -8,7 +8,7 @@ export const assertTransitions = () => {
 		A,
 		B,
 	} as const)
-	type Letters = events<typeof Letters>
+	type Letters = Events<typeof Letters>
 
 	interface Numbers { }
 	const One = compose<Numbers, Letters>(

@@ -1,11 +1,11 @@
 import { compose } from './compose.js'
 import { handleContext } from './context.js'
 import { Custom } from './custom.js'
-import { events } from './events.js'
+import { Events } from './events.js'
 import { State } from './state.js'
 import { mapTransitions } from './transitions.js'
 // 
-export { State, mealtime, compose, events }
+export { State, mealtime, compose, Events }
 // 
 const mealtime = <S, T extends symbol>(initialState: S & Custom & AsyncIterable<T>, transitions: Record<T, [S & Custom & AsyncIterable<T>, S & Custom & AsyncIterable<T>][]>) => {
 	const transitionMap = mapTransitions(transitions)

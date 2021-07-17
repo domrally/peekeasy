@@ -1,9 +1,9 @@
-import { events } from '../code/mealtime.js'
+import { Events } from '../code/mealtime.js'
 // 
 export const assertTriggers = () => {
 	const A = Symbol('A')
 	const B = Symbol('B')
-	type Triggers = events<typeof Triggers>
+	type Triggers = Events<typeof Triggers>
 	const Triggers = Object.freeze({
 		A,
 		B,

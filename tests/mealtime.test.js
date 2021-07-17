@@ -1,10 +1,10 @@
-import { compose, mealtime, State } from '../code/mealtime.js';
+import { compose, Events, mealtime, State } from '../code/mealtime.js';
 // 
 export const assertMealtime = async () => {
     // Triggers
     const Hello = Symbol('Hello');
     const World = Symbol('World');
-    const Triggers = Object.freeze({
+    const Triggers = Events({
         Hello,
         World
     });

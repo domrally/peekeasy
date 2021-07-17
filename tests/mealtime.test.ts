@@ -1,35 +1,31 @@
-import { compose, events, mealtime, State } from '../code/mealtime.js'
+import { compose, Events, mealtime, State } from '../code/mealtime.js'
 // 
 export const assertMealtime = async () => {
 	// Triggers
 	const Hello = Symbol('Hello')
 	const World = Symbol('World')
-	type Triggers = events<typeof Triggers>
-	const Triggers = Object.freeze({
+	type Triggers = Events<typeof Triggers>
+	const Triggers = Events({
 		Hello,
 		World
-	})
+	} as const)
 	// States
 	interface Example {
 		name: string
 		changeState(): void
 	}
-	const Start = compose<Example, Triggers>(
-		class _ {
-			constructor(public state: State<Triggers>) { }
-			readonly name = 'Start'
-			readonly changeState = () => this.state.trigger(Triggers.Hello)
-		}
-	)
-	const End = compose<Example, Triggers>(
-		class _ {
-			constructor(public state: State<Triggers>) { }
-			readonly name = 'End'
-			readonly changeState = () => this.state.trigger(Triggers.World)
-		}
-	)
+	const Start = compose(class _ {
+		constructor(public state: State<Triggers>) { }
+		readonly name = 'Start'
+		readonly changeState = () => this.state.trigger(Triggers.Hello)
+	})
+	const End = compose(class _ {
+		constructor(public state: State<Triggers>) { }
+		readonly name = 'End'
+		readonly changeState = () => this.state.trigger(Triggers.World)
+	})
 	// 
-	const state = State<Triggers>(),
+	const state = State(),
 		start = new Start(state),
 		end = new End(state)
 	// 
