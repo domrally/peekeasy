@@ -2,7 +2,7 @@
 	"type": "module",
 	"name": "mealtime",
 	"version": "0.0.14",
-	"description": "proxy state pattern in typescript",
+	"description": "proxy state pattern made in typescript",
 	"license": "MIT",
 	"repository": "domrally/mealtime",
 	"main": "code/main.js",
