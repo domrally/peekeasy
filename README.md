@@ -4,12 +4,12 @@
 proxy state pattern made in typescript
 
 ## installation
-```bash
-> npm i mealtime
+```sh
+npm i mealtime
 ```
 or 
-```bash
-> yarn add mealtime
+```sh
+yarn add mealtime
 ```
 or 
 ```html
