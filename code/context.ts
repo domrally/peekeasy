@@ -1,43 +1,31 @@
 type Key = string | number | symbol;
 type Property = [key: Key, value: any];
-export class StateContext<T> implements AsyncIterable<Property> {
-  constructor(initial: T) {
-    this.#state = initial;
-  }
-  #state: T;
-  set state(value: T) {
-    this.#state = value;
-  }
-  get #handler() {
-    const getState = (): any => this.#state;
-    const getPublish = () => this.#publish;
-    return {
-      get(_: T, key: Key) {
-        const state = getState();
-        return state[key];
-      },
-      set(_: T, key: Key, value: any) {
-        const state = getState();
-        state[key] = value;
-        const publish = getPublish();
-        publish?.([key, value]);
-        return true;
-      },
-    };
-  }
-  #proxy?: T;
+export class Context<T> {
   get proxy() {
-    return this.#proxy ??= new Proxy(this.#state as any, this.#handler);
+    return this.#proxy ??= new Proxy<any>(this.#target, this);
   }
-  #publish?: (property: Property) => void;
-  #next?: Promise<Property>;
-  #getNext() {
-    return new Promise<Property>((r) => this.#publish = r);
+  setTarget(target: T) {
+    this.#target = target;
   }
-  async *[Symbol.asyncIterator]() {
+  async *observe() {
     while (true) {
-      yield await (this.#next ??= this.#getNext());
+      yield await (this.#next ??= this.#subscribe());
       this.#next = undefined;
     }
+  }
+  get(_: T, key: Key) {
+    return (this.#target as any)[key];
+  }
+  set<V>(_: T, key: Key, value: V) {
+    (this.#target as any)[key] = value;
+    this.#publish?.([key, value]);
+    return true;
+  }
+  #proxy?: T;
+  #target?: T;
+  #next?: Promise<Property>;
+  #publish?: (property: Property) => void;
+  #subscribe() {
+    return new Promise<Property>((p) => this.#publish = p);
   }
 }
