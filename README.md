@@ -3,93 +3,38 @@
 
 proxy state pattern made in typescript
 
-## installation
-```sh
+## how to install & import
+### javascript or deno
+```js
+import { Context } from 'https://esm.sh/mealtime'
+```
+```js
+const path = 'https://esm.sh/mealtime'
+const { Context } = await import(path)
+```
+### node
+```
 npm i mealtime
 ```
-or 
-```sh
-yarn add mealtime
+```js
+import { Context } from 'mealtime'
 ```
-or 
+### html
 ```html
-<script type="module" src="unpkg.com/mealtime"></script>
+<script type="module" src="esm.sh/mealtime"></script>
 ```
-
-## how to use
-
-### importing
-```typescript
-import { compose, proxy, state } from 'mealtime'
-```
-or
-```typescript
-const path = 'https://unpkg.com/mealtime'
-const { compose, proxy, state } = await import(path)
-```
-or
 ```html
 <script type="module">
-    import { compose, proxy, state } from 'https://unpkg.com/mealtime'	
+    import { Context } from 'https://esm.sh/mealtime'	
 </script>
 ```
-### triggers
-```typescript
-const Hello    = Symbol('Hello'),
-      World    = Symbol('World'),
-      Triggers = Object.freeze({
-          Hello,
-          World
-      } as const)
-type Triggers = typeof Triggers
-```
-### state composition
-```typescript
-interface Example {
-    name    : string
-    toggle(): void
-}
-```
-```typescript
-const Start = compose(class _ {
-    constructor(public state: state<Triggers>) { }
-    name   = 'Start'
-    toggle = () => this.state.trigger(Triggers.Hello)
-})
-```
-```typescript
-const End = compose(class _ {
-    constructor(public state: state<Triggers>) { }
-    name   = 'End'
-    toggle = () => this.state.trigger(Triggers.World)
-})
-```
-### transitions & proxy
-```typescript
-const s       = state(),
-      start   = new Start(s),
-      end     = new End(s),
-      machine = proxy<Example, Triggers>(start, {
-          [Triggers.Hello]: [
-              [start, end]
-          ],
-          [Triggers.World]: [
-              [end, start]
-          ]
-      })
-```
-### interaction
+## how to use
 ```typescript
 const loop = async () => {
-    console.log(`input state: ${machine.name}`)
-    for await (const trigger of machine) {
-        console.log(`trigger: ${trigger.toString()}`)
-        console.log(`output state: ${machine.name}`)
-        return
+    const { proxy, observe, setTarget } = new Context()
+    for await (const [key, value] of observe()) {
     }
 }
-loop()
-machine.toggle()
 ```
 
 ## design
