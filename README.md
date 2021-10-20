@@ -3,6 +3,14 @@
 
 proxy state pattern made in typescript
 
+## how to use
+```typescript
+async function loop() {
+    const { proxy, observe, setTarget } = new Context()
+    for await (const [key, value] of observe()) {
+    }
+}
+```
 ## how to install & import
 ### javascript or deno
 ```js
@@ -27,14 +35,6 @@ import { Context } from 'mealtime'
 <script type="module">
     import { Context } from 'https://esm.sh/mealtime'	
 </script>
-```
-## how to use
-```typescript
-const loop = async () => {
-    const { proxy, observe, setTarget } = new Context()
-    for await (const [key, value] of observe()) {
-    }
-}
 ```
 
 ## design
