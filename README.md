@@ -4,11 +4,25 @@
 proxy state pattern made in typescript
 
 ## how to use
-```typescript
-async function loop() {
-    const { proxy, observe, setTarget } = new Context()
-    for await (const [key, value] of observe()) {
+```js
+async function eventLoop() {
+    const { observe } = new Context()
+    for await (const [key, value] of observe()) {}
+}
+```
+```js
+async function change() {
+    const a = {
+        word: 'hello'
     }
+    const b = {
+        word: 'hello'
+    }
+    const { proxy, setTarget } = new Context()
+    setTarget(a)
+    console.log(proxy.word) //> 'hello'
+    setTarget(b)
+    console.log(proxy.word) //> 'world'
 }
 ```
 ## how to install & import
