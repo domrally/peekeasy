@@ -1,7 +1,7 @@
 type Key = string | number | symbol;
 type Property = [key: Key, value: any];
 export class Context<T> {
-  get proxy() {
+  get proxy(): T {
     return this.#proxy ??= new Proxy<any>(this.#target, this);
   }
   setTarget(target: T) {
