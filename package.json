@@ -1,37 +1,37 @@
 {
-	"type": "module",
-	"name": "mealtime",
-	"version": "0.0.14",
-	"description": "proxy state pattern made in typescript",
-	"license": "MIT",
-	"repository": "domrally/mealtime",
-	"main": "code/main.js",
-	"types": "code/main.d.ts",
-	"scripts": {
-		"test": "node tests/test.js"
-	},
-	"files": [
-		"code/*.js",
-		"code/*.d.ts"
-	],
-	"keywords": [
-		"mealtime",
-		"mealy",
-		"finite",
-		"state",
-		"machine",
-		"pattern",
-		"transducer",
-		"proxy",
-		"async",
-		"await",
-		"generator",
-		"iterator",
-		"iterable",
-		"fsm",
-		"js",
-		"ts",
-		"javascript",
-		"typescript"
-	]
+  "type": "module",
+  "name": "mealtime",
+  "version": "0.0.14",
+  "description": "proxy state pattern made in typescript",
+  "license": "MIT",
+  "repository": "domrally/mealtime",
+  "main": "code/context.min.js",
+  "types": "code/context.d.ts",
+  "scripts": {
+    "test": "node tests/test.js"
+  },
+  "files": [
+    "code/*.min.js",
+    "code/*.d.ts"
+  ],
+  "keywords": [
+    "mealtime",
+    "mealy",
+    "finite",
+    "state",
+    "machine",
+    "pattern",
+    "transducer",
+    "proxy",
+    "async",
+    "await",
+    "generator",
+    "iterator",
+    "iterable",
+    "fsm",
+    "js",
+    "ts",
+    "javascript",
+    "typescript"
+  ]
 }
