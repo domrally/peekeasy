@@ -1,9 +1,9 @@
 {
   "type": "module",
   "name": "mealtime",
-  "version": "0.0.20",
+  "version": "0.0.21",
   "description": "proxy state pattern made in typescript",
-  "license": "MIT",
+  "license": "Fair",
   "repository": "domrally/mealtime",
   "main": "code/context.min.js",
   "types": "code/context.d.ts",
