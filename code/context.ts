@@ -1,32 +1,39 @@
-type Property = [key: string | number | symbol, value?: object];
+type Key = string | number | symbol;
+type Property = [key: Key, value: any];
 export class StateContext<T> implements AsyncIterable<Property> {
-  #state: T = null;
+  constructor(initial: T) {
+    this.#state = initial;
+  }
+  #state: T;
   set state(value: T) {
     this.#state = value;
   }
   get #handler() {
     const t = this;
     return {
-      get(_, key) {
-        return t.#state[key];
+      get(_: T, key: Key) {
+        return (t.#state as any)[key];
       },
-      set(_, key, value) {
-        t.#state[key] = value;
-        t.#set([key, value]);
+      set(_: T, key: Key, value: any) {
+        (t.#state as any)[key] = value;
+        t.#set?.([key, value]);
         return true;
       },
     };
   }
-  #proxy: T = new Proxy(this.#state, this.#handler);
+  #proxy?: T;
   get proxy() {
-    return this.#proxy;
+    return this.#proxy ??= new Proxy(this.#state as any, this.#handler);
   }
-  #set: (property: Property) => void;
-  #next: Promise<Property>;
+  #set?: (property: Property) => void;
+  #next?: Promise<Property>;
+  #getNext() {
+    return new Promise<Property>((r) => this.#set = r);
+  }
   async *[Symbol.asyncIterator]() {
     while (true) {
-      yield await (this.#next ??= new Promise<Property>((r) => this.#set = r));
-      this.#next = null;
+      yield await (this.#next ??= this.#getNext());
+      this.#next = undefined;
     }
   }
 }
