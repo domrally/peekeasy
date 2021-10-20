@@ -1,41 +1,32 @@
-import { Custom } from './custom.js'
-// a context manages the state and transitions of a state machine
-export const handleContext = <S extends AsyncIterable<T>, T extends symbol>(currentState: M<S>, transitions: Record<T, WeakMap<S, S>>) => {
-	const update = async () => {
-		const state = currentState
-		const asyncIterator = state[Symbol.asyncIterator]()
-		const next = await asyncIterator.next()
-		const trigger = next.value as T
-		if (state === currentState) {
-			currentState = customize(state, transitions[trigger])
-		}
-
-		return trigger
-	}
-	const asyncIterable = {
-		async *[Symbol.asyncIterator]() {
-			yield* generator(update)
-		}
-	}
-	loop(asyncIterable)
-	return {
-		get: (_: S, key: any) => key === Symbol.iterator || key === Symbol.asyncIterator
-			? (asyncIterable as any)[key]
-			: (currentState as any)[key],
-		set: (_: S, key: any, value: any) => (currentState as any)[key] = value
-	}
-}
-type M<S> = Custom & S
-const loop = async <T>(asyncIterable: AsyncIterable<T>) => { for await (const _ of asyncIterable) { } }
-const generator = async function* <T>(update: () => Promise<T>) {
-	while (true) {
-		yield await update()
-	}
-}
-const customize = <S extends object>(state: M<S>, stateMap: WeakMap<S, S>) => {
-	// customize the context with custom actions
-	state.onExit?.()
-	const nextState = stateMap.get(state) as M<S>
-	nextState.onEnter?.()
-	return nextState
+type Property = [key: string | number | symbol, value?: object];
+export class StateContext<T> implements AsyncIterable<Property> {
+  #state: T = null;
+  set state(value: T) {
+    this.#state = value;
+  }
+  get #handler() {
+    const t = this;
+    return {
+      get(_, key) {
+        return t.#state[key];
+      },
+      set(_, key, value) {
+        t.#state[key] = value;
+        t.#set([key, value]);
+        return true;
+      },
+    };
+  }
+  #proxy: T = new Proxy(this.#state, this.#handler);
+  get proxy() {
+    return this.#proxy;
+  }
+  #set: (property: Property) => void;
+  #next: Promise<Property>;
+  async *[Symbol.asyncIterator]() {
+    while (true) {
+      yield await (this.#next ??= new Promise<Property>((r) => this.#set = r));
+      this.#next = null;
+    }
+  }
 }

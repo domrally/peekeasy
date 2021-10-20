@@ -26,9 +26,8 @@ export const assertMealtime = async () => {
 		readonly changeState = () => this.state.trigger(Triggers.World)
 	})
 	// 
-	const shared = state(),
-		start = new Start(shared),
-		end = new End(shared),
+	const start = new Start(state()),
+		end = new End(state()),
 		currentState = proxy<Example, Triggers>(start, {
 			[Triggers.Hello]: [
 				[start, end]
