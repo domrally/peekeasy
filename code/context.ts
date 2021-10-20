@@ -9,14 +9,18 @@ export class StateContext<T> implements AsyncIterable<Property> {
     this.#state = value;
   }
   get #handler() {
-    const t = this;
+    const getState = (): any => this.#state;
+    const getPublish = () => this.#publish;
     return {
       get(_: T, key: Key) {
-        return (t.#state as any)[key];
+        const state = getState();
+        return state[key];
       },
       set(_: T, key: Key, value: any) {
-        (t.#state as any)[key] = value;
-        t.#set?.([key, value]);
+        const state = getState();
+        state[key] = value;
+        const publish = getPublish();
+        publish?.([key, value]);
         return true;
       },
     };
@@ -25,10 +29,10 @@ export class StateContext<T> implements AsyncIterable<Property> {
   get proxy() {
     return this.#proxy ??= new Proxy(this.#state as any, this.#handler);
   }
-  #set?: (property: Property) => void;
+  #publish?: (property: Property) => void;
   #next?: Promise<Property>;
   #getNext() {
-    return new Promise<Property>((r) => this.#set = r);
+    return new Promise<Property>((r) => this.#publish = r);
   }
   async *[Symbol.asyncIterator]() {
     while (true) {
