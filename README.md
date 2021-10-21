@@ -5,18 +5,12 @@ proxy state pattern made in typescript
 
 ## how to use
 ```js
-async function eventLoop() {
-    const { observe } = new Context()
-    for await (const [key, value] of observe()) {}
-}
-```
-```js
 async function change() {
     const a = {
         word: 'hello'
     }
     const b = {
-        word: 'hello'
+        word: 'world'
     }
     const { proxy, setTarget } = new Context()
     setTarget(a)
@@ -51,17 +45,13 @@ import { Context } from 'mealtime'
 </script>
 ```
 
-## design
-
-### abstract machines
-finite state machines are a common way to think about certain kinds of computation
-
-[mealy machines](https://en.wikipedia.org/wiki/Mealy_machine) are powerful versions of an fsm
-> in the theory of computation, a Mealy machine is a finite-state machine whose output values are determined both by its current state and the current inputs
-
-### javascript & typescript
-javascript has built in support for the [proxy pattern](https://en.wikipedia.org/wiki/Proxy_pattern) 
+## software design patterns
+the Proxy class in javascript—a uniquely exotic language feature—builds in an implemention of the [proxy pattern](https://en.wikipedia.org/wiki/Proxy_pattern)
 > a proxy is a wrapper or agent object that is being called by the client to access the real serving object behind the scenes. Use of the proxy can simply be forwarding to the real object or can provide additional logic.
 
-typescript allows us to implement a classic [state pattern](https://en.wikipedia.org/wiki/state_pattern)
+typescript keeps the Proxy class and adds the static typing we need to implement a classic [state pattern](https://en.wikipedia.org/wiki/state_pattern)
 > allows an object to alter its behavior when its internal state changes. This pattern is close to the concept of finite-state machines
+
+## mealtime?
+using mealtime resembles making a [mealy machine](https://en.wikipedia.org/wiki/Mealy_machine)
+> in the theory of computation, a Mealy machine is a finite-state machine whose output values are determined both by its current state and the current inputs
