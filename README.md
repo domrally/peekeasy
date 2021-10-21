@@ -5,19 +5,17 @@ proxy–state pattern made in typescript
 
 ## how to use
 ```js
-async function change() {
-    const a = {
-        word: 'hello'
-    }
-    const b = {
-        word: 'world'
-    }
-    const { proxy, setTarget } = new Context()
-    setTarget(a)
-    console.log(proxy.word) //> 'hello'
-    setTarget(b)
-    console.log(proxy.word) //> 'world'
+const a = {
+    word: 'hello'
 }
+const b = {
+    word: 'world'
+}
+const { proxy, setTarget } = new Context()
+setTarget(a)
+console.log(proxy.word) //> 'hello'
+setTarget(b)
+console.log(proxy.word) //> 'world'
 ```
 ## how to install & import
 ### javascript or deno
