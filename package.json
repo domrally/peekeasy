@@ -21,22 +21,7 @@
     "state",
     "machine",
     "pattern",
-    "transducer",
     "proxy",
-    "async",
-    "await",
-    "generator",
-    "iterator",
-    "iterable",
-    "handler",
-    "target",
-    "promise",
-    "publish",
-    "subscribe",
-    "fsm",
-    "js",
-    "ts",
-    "javascript",
-    "typescript"
+    "async"
   ]
 }
