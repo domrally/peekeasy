@@ -11,9 +11,12 @@ const a = {
 const b = {
     word: 'world'
 }
+
 const { proxy, setTarget } = new Context()
+
 setTarget(a)
 console.log(proxy.word) //> 'hello'
+
 setTarget(b)
 console.log(proxy.word) //> 'world'
 ```
