@@ -25,10 +25,6 @@ console.log(proxy.word) //> 'world'
 ```js
 import { Context } from 'https://esm.sh/mealtime'
 ```
-```js
-const path = 'https://esm.sh/mealtime'
-const { Context } = await import(path)
-```
 ### node
 ```
 npm i mealtime
@@ -37,9 +33,6 @@ npm i mealtime
 import { Context } from 'mealtime'
 ```
 ### html
-```html
-<script type="module" src="esm.sh/mealtime"></script>
-```
 ```html
 <script type="module">
     import { Context } from 'https://esm.sh/mealtime'	
