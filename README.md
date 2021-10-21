@@ -1,5 +1,5 @@
 # mealtime
-[![](https://badgen.net/badge/license/Fair)](#) [![](https://badgen.net/npm/types/tslib?icon=typescript&label=)](#) [![](https://badgen.net/github/tag/domrally/mealtime?icon=git&label)](#) [![](https://badgen.net/codeclimate/loc/domrally/mealtime?label=lines&color=green)](#) [![](https://badgen.net/packagephobia/install/mealtime?icon=npm&label&color=green)](#) [![](https://github.com/domrally/mealtime/actions/workflows/build.yml/badge.svg)](https://github.com/domrally/mealtime/actions/workflows/build.yml) 
+[![](https://badgen.net/badge/license/Fair)](https://github.com/domrally/mealtime/blob/main/LICENSE) [![](https://badgen.net/npm/types/tslib?icon=typescript&label=)](https://github.com/domrally/mealtime/blob/main/code/context.d.ts) [![](https://badgen.net/github/tag/domrally/mealtime?icon=git&label)](https://github.com/domrally/mealtime/releases) [![](https://badgen.net/codeclimate/loc/domrally/mealtime?label=lines&color=green)](https://github.com/domrally/mealtime/blob/main/code/context.ts) [![](https://badgen.net/packagephobia/install/mealtime?icon=npm&label&color=green)](https://www.npmjs.com/package/mealtime) [![](https://github.com/domrally/mealtime/actions/workflows/build.yml/badge.svg)](https://github.com/domrally/mealtime/actions) 
 
 proxy–state pattern made in typescript
 
