@@ -3,3 +3,4 @@
 .npmrc
 node_modules/
 *.tgz
+package/
