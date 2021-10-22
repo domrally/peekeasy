@@ -14,7 +14,7 @@ export class Context {
     constructor() {
         _Context_instances.add(this);
         _Context_proxy.set(this, void 0);
-        _Context_target.set(this, void 0);
+        _Context_target.set(this, {});
         _Context_next.set(this, void 0);
         _Context_publish.set(this, void 0);
     }

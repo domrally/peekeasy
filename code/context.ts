@@ -22,7 +22,7 @@ export class Context<T> {
     return true;
   }
   #proxy?: T;
-  #target?: T;
+  #target? = {} as T;
   #next?: Promise<Property>;
   #publish?: (property: Property) => void;
   #subscribe() {
