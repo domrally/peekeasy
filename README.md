@@ -12,14 +12,14 @@ const b = {
     word: 'world'
 }
 
-const context = new Context()
-const { proxy } = context
+const context = new Context<{word: string}>()
+const { target } = context
 
-context.setTarget(a)
-console.log(proxy.word) //> 'hello'
+context.target = a
+console.log(target.word) //> 'hello'
 
-context.setTarget(b)
-console.log(proxy.word) //> 'world'
+context.target = b
+console.log(target.word) //> 'world'
 ```
 ## how to install & import
 ### javascript or deno
