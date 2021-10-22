@@ -1,6 +1,6 @@
 type Key = string | number | symbol;
-type Property = [key: Key, value: any];
-export class Context<T> implements AsyncIterable<Property> {
+type Property = { key: Key; value: any };
+class Context<T> implements AsyncIterable<Property> {
   get target() {
     return this.#proxy;
   }
@@ -13,19 +13,19 @@ export class Context<T> implements AsyncIterable<Property> {
       this.#next = undefined;
     }
   }
-  #target?: any;
   #get(key: Key) {
     return this.#target[key];
   }
   #set<V>(key: Key, value: V) {
     this.#target[key] = value;
-    this.#publish([key, value]);
+    this.#publish({ key, value });
     return true;
   }
   #proxy: T = new Proxy<any>({}, {
     get: (_: T, key: Key) => this.#get(key),
     set: <V>(_: T, key: Key, value: V) => this.#set(key, value),
   });
+  #target?: any;
   #next?: Promise<Property>;
   #publish = (_property: Property) => {};
   #subscribe() {

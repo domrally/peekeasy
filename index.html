@@ -22,22 +22,20 @@
 		const { target } = context;
 
 		context.target = a;
-		console.log(target.word); //> 'hello'
+		console.log(target.word); //> hello
 
 		context.target = b;
-		console.log(target.word); //> 'world'
+		console.log(target.word); //> world
 
-		(async function () {
-			for await (const [key, value] of context) {
+		target.word = "meal";
+		console.log(target.word); //> meal
+
+		const observe = async function () {
+			for await (const { value } of context) {
 				console.log(value);
 			}
-		})();
-
-		(async function () {
-			target.word = "meal"; //> 'meal'
-			await new Promise((r) => requestAnimationFrame(r));
-			target.word = "time"; //> 'time'
-		})();
+		}();
+		target.word = "time"; //> time
 	</script>
 </body>
 
