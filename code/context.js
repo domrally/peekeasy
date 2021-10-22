@@ -13,16 +13,15 @@ var _Context_instances, _Context_proxy, _Context_target, _Context_next, _Context
 export class Context {
     constructor() {
         _Context_instances.add(this);
-        _Context_proxy.set(this, void 0);
-        _Context_target.set(this, {});
+        _Context_proxy.set(this, new Proxy({}, this));
+        _Context_target.set(this, void 0);
         _Context_next.set(this, void 0);
         _Context_publish.set(this, void 0);
     }
-    get proxy() {
-        var _a;
-        return __classPrivateFieldSet(this, _Context_proxy, (_a = __classPrivateFieldGet(this, _Context_proxy, "f")) !== null && _a !== void 0 ? _a : new Proxy({}, this), "f");
+    get target() {
+        return __classPrivateFieldGet(this, _Context_proxy, "f");
     }
-    setTarget(target) {
+    set target(target) {
         __classPrivateFieldSet(this, _Context_target, target, "f");
     }
     async *observe() {

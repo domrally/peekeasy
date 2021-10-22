@@ -1,10 +1,10 @@
 type Key = string | number | symbol;
 type Property = [key: Key, value: any];
 export class Context<T> {
-  get proxy(): T {
-    return this.#proxy ??= new Proxy<any>({}, this);
+  get target() {
+    return this.#proxy;
   }
-  setTarget(target: T) {
+  set target(target: T) {
     this.#target = target;
   }
   async *observe() {
@@ -14,15 +14,15 @@ export class Context<T> {
     }
   }
   get(_: T, key: Key) {
-    return (this.#target as any)[key];
+    return this.#target[key];
   }
   set<V>(_: T, key: Key, value: V) {
-    (this.#target as any)[key] = value;
+    this.#target[key] = value;
     this.#publish?.([key, value]);
     return true;
   }
-  #proxy?: T;
-  #target? = {} as T;
+  #proxy: T = new Proxy<any>({}, this);
+  #target?: any;
   #next?: Promise<Property>;
   #publish?: (property: Property) => void;
   #subscribe() {
