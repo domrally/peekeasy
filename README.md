@@ -12,12 +12,13 @@ const b = {
     word: 'world'
 }
 
-const { proxy, setTarget } = new Context()
+const context = new Context()
+const { proxy } = context
 
-setTarget(a)
+context.setTarget(a)
 console.log(proxy.word) //> 'hello'
 
-setTarget(b)
+context.setTarget(b)
 console.log(proxy.word) //> 'world'
 ```
 ## how to install & import
