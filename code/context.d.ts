@@ -1,9 +1,9 @@
-declare type Key = string | number | symbol;
-declare type Property = {
+export declare type Key = string | number | symbol;
+export declare type Property = {
     key: Key;
     value: any;
 };
-declare class Context<T> implements AsyncIterable<Property> {
+export declare class Context<T> implements AsyncIterable<Property> {
     #private;
     get target(): T;
     set target(target: T);

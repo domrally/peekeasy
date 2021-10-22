@@ -10,7 +10,7 @@ var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (
     return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
 };
 var _Context_instances, _Context_get, _Context_set, _Context_proxy, _Context_target, _Context_next, _Context_publish, _Context_subscribe;
-class Context {
+export class Context {
     constructor() {
         _Context_instances.add(this);
         _Context_proxy.set(this, new Proxy({}, {

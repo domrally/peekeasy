@@ -1,6 +1,6 @@
-type Key = string | number | symbol;
-type Property = { key: Key; value: any };
-class Context<T> implements AsyncIterable<Property> {
+export type Key = string | number | symbol;
+export type Property = { key: Key; value: any };
+export class Context<T> implements AsyncIterable<Property> {
   get target() {
     return this.#proxy;
   }

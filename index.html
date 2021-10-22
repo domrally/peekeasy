@@ -12,30 +12,31 @@
     import { Context } from 'https://esm.sh/mealtime'
 
 		const a = {
-			word: "hello",
-		};
+			word: 'hello'
+		}
 		const b = {
-			word: "world",
-		};
+			word: 'world'
+		}
 
-		const context = new Context();
-		const { target } = context;
+		const context = new Context()
+		const { target } = context
 
-		context.target = a;
-		console.log(target.word); //> hello
+		context.target = a
+		console.log(target.word) //> hello
 
-		context.target = b;
-		console.log(target.word); //> world
+		context.target = b
+		console.log(target.word) //> world
 
-		target.word = "meal";
-		console.log(target.word); //> meal
+		target.word = 'meal'
+		console.log(target.word) //> meal
 
 		const observe = async function () {
 			for await (const { value } of context) {
-				console.log(value);
+				console.log(value)
 			}
-		}();
-		target.word = "time"; //> time
+		}()
+		target.word = 'time' //> time
+
 	</script>
 </body>
 
