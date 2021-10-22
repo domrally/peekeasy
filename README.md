@@ -16,10 +16,10 @@ const context = new Context()
 const { target } = context
 
 context.target = a
-console.log(target.word) //> 'hello'
+console.log(target.word) //> hello
 
 context.target = b
-console.log(target.word) //> 'world'
+console.log(target.word) //> world
 ```
 ## how to install & import
 ### javascript or deno
