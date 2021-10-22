@@ -5,12 +5,27 @@
     <title>mealy</title>
     <meta charset="utf-8">
     <link rel="shortcut icon" href="#">
-
-    <script type="module"
-            src="demos/hello-world/hello-world.js"></script>
 </head>
 
 <body>
+	<script type="module">
+    import { Context } from 'https://esm.sh/mealtime'
+
+		const a = {
+				word: 'hello'
+		}
+		const b = {
+				word: 'world'
+		}
+
+		const { proxy, setTarget } = new Context()
+
+		setTarget(a)
+		console.log(proxy.word) //> 'hello'
+
+		setTarget(b)
+		console.log(proxy.word) //> 'world'
+	</script>
 </body>
 
 </html>
