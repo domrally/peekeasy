@@ -2,9 +2,9 @@
 <html>
 
 <head>
-    <title>mealy</title>
-    <meta charset="utf-8">
-    <link rel="shortcut icon" href="#">
+	<title>mealy</title>
+	<meta charset="utf-8">
+	<link rel="shortcut icon" href="#">
 </head>
 
 <body>
@@ -12,20 +12,32 @@
     import { Context } from 'https://esm.sh/mealtime'
 
 		const a = {
-				word: 'hello'
-		}
+			word: "hello",
+		};
 		const b = {
-				word: 'world'
-		}
+			word: "world",
+		};
 
-		const context = new Context()
-		const { target } = context
+		const context = new Context();
+		const { target } = context;
 
-		context.target = a
-		console.log(target.word) //> 'hello'
+		context.target = a;
+		console.log(target.word); //> 'hello'
 
-		context.target = b
-		console.log(target.word) //> 'world'
+		context.target = b;
+		console.log(target.word); //> 'world'
+
+		(async function () {
+			for await (const [key, value] of context) {
+				console.log(value);
+			}
+		})();
+
+		(async function () {
+			target.word = "meal"; //> 'meal'
+			await new Promise((r) => requestAnimationFrame(r));
+			target.word = "time"; //> 'time'
+		})();
 	</script>
 </body>
 
