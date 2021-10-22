@@ -20,7 +20,7 @@ export class Context {
     }
     get proxy() {
         var _a;
-        return __classPrivateFieldSet(this, _Context_proxy, (_a = __classPrivateFieldGet(this, _Context_proxy, "f")) !== null && _a !== void 0 ? _a : new Proxy(__classPrivateFieldGet(this, _Context_target, "f"), this), "f");
+        return __classPrivateFieldSet(this, _Context_proxy, (_a = __classPrivateFieldGet(this, _Context_proxy, "f")) !== null && _a !== void 0 ? _a : new Proxy({}, this), "f");
     }
     setTarget(target) {
         __classPrivateFieldSet(this, _Context_target, target, "f");

@@ -2,7 +2,7 @@ type Key = string | number | symbol;
 type Property = [key: Key, value: any];
 export class Context<T> {
   get proxy(): T {
-    return this.#proxy ??= new Proxy<any>(this.#target, this);
+    return this.#proxy ??= new Proxy<any>({}, this);
   }
   setTarget(target: T) {
     this.#target = target;
