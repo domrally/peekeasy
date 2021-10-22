@@ -19,12 +19,12 @@
 		}
 
 		const context = new Context()
-		const { proxy } = context
+		const { proxy, setTarget } = context
 
-		context.setTarget(a)
+		setTarget(a)
 		console.log(proxy.word) //> 'hello'
 
-		context.setTarget(b)
+		setTarget(b)
 		console.log(proxy.word) //> 'world'
 	</script>
 </body>
