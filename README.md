@@ -6,10 +6,10 @@ proxy–state pattern made in typescript
 ## how to use
 ```js
 const a = {
-    word: 'hello'
+  word: 'hello'
 }
 const b = {
-    word: 'world'
+  word: 'world'
 }
 
 const context = new Context()
@@ -20,6 +20,16 @@ console.log(target.word) //> hello
 
 context.target = b
 console.log(target.word) //> world
+
+target.word = 'meal'
+console.log(target.word) //> meal
+
+const observe = async function () {
+  for await (const { value } of context) {
+    console.log(value)
+  }
+}()
+target.word = 'time' //> time
 ```
 ## how to install & import
 ### javascript or deno
