@@ -21,10 +21,11 @@ export class Context<T> implements AsyncIterable<Property> {
     this.#publish({ key, value });
     return true;
   }
-  #proxy: T = new Proxy<any>({}, {
+  #handler = {
     get: (_: T, key: Key) => this.#get(key),
     set: <V>(_: T, key: Key, value: V) => this.#set(key, value),
-  });
+  };
+  #proxy: T = new Proxy<any>({}, this.#handler);
   #target?: any;
   #next?: Promise<Property>;
   #publish = (_property: Property) => {};
