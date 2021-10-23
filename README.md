@@ -12,7 +12,7 @@ const b = {
   word: 'world'
 }
 
-const context = new Context()
+const context = new Context() // new Context<{ word: string }>()
 const { target } = context
 
 context.target = a
