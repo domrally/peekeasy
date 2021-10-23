@@ -49,14 +49,3 @@ import { Context } from 'mealtime'
     import { Context } from 'https://esm.sh/mealtime'	
 </script>
 ```
-
-## software design patterns
-the Proxy class in javascript—a uniquely exotic language feature—builds in an implemention of the [proxy pattern](https://en.wikipedia.org/wiki/Proxy_pattern)
-> a proxy is a wrapper or agent object that is being called by the client to access the real serving object behind the scenes. Use of the proxy can simply be forwarding to the real object or can provide additional logic.
-
-typescript keeps the Proxy class and adds the static typing we need to implement a classic [state pattern](https://en.wikipedia.org/wiki/state_pattern)
-> allows an object to alter its behavior when its internal state changes. This pattern is close to the concept of finite-state machines
-
-## mealtime?
-using mealtime resembles making a [mealy machine](https://en.wikipedia.org/wiki/Mealy_machine)
-> in the theory of computation, a Mealy machine is a finite-state machine whose output values are determined both by its current state and the current inputs
