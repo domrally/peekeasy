@@ -5,31 +5,27 @@ proxy–state pattern made in typescript
 
 ## how to use
 ```js
-const a = {
-  word: 'hello'
+function makeTV() {
+  const tvContext = new Context()
+  let volume = 50
+  const off = {
+    get volume() { return -1 },
+    power: () => tvContext.target = on,
+  };
+  const on = {
+    get volume() { return volume },
+    set volume(v) { volume = v },
+    power: () => tvContext.target = off,
+  };
+  tvContext.target = off;
+  return tvContext.target;
 }
-const b = {
-  word: 'world'
-}
 
-const context = new Context() // new Context<{ word: string }>()
-const { target } = context
-
-context.target = a
-console.log(target.word) //> hello
-
-context.target = b
-console.log(target.word) //> world
-
-target.word = 'meal'
-console.log(target.word) //> meal
-
-const observe = async function () {
-  for await (const { value } of context) {
-    console.log(value)
-  }
-}()
-target.word = 'time' //> time
+const tv = makeTV();
+tv.power();
+console.log(tv.volume); // 50
+tv.power();
+console.log(tv.volume); // -1
 ```
 ## how to install & import
 ### javascript or deno
