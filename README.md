@@ -6,7 +6,7 @@ proxy–state pattern made in typescript
 ## how to use
 ```js
 class Powerable { // abstract
-  state // string
+  state // : string
   power() {}
 }
 class TV extends Powerable {
