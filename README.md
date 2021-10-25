@@ -23,7 +23,7 @@ class TV extends Powerable {
   #off = { // #off: Powerable = {
     state: 'off',
     power: () => this.#context.target = this.#on
-  };
+  }
   
   #on = { // #on: Powerable = {
     state: 'on',
