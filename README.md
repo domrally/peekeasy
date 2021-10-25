@@ -24,6 +24,7 @@ class TV extends Powerable {
     state: 'off',
     power: () => this.#context.target = this.#on
   };
+  
   #on = { // #on: Powerable = {
     state: 'on',
     power: () => this.#context.target = this.#off
@@ -32,6 +33,7 @@ class TV extends Powerable {
 
 const tv = new TV()
 console.log('tv is', tv.state) // tv is off
+
 tv.power()
 console.log('tv is', tv.state) // tv is on
 ```
