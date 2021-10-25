@@ -21,21 +21,21 @@ class TV extends Powerable {
   }
   
   #off = { // #off: Powerable = {
-    state: 'off',
+    state: 'tv is off',
     power: () => this.#context.target = this.#on
   }
   
   #on = { // #on: Powerable = {
-    state: 'on',
+    state: 'tv is on',
     power: () => this.#context.target = this.#off
   }
 }
 
 const tv = new TV()
-console.log('tv is', tv.state) // tv is off
+console.log(tv.state) // tv is off
 
 tv.power()
-console.log('tv is', tv.state) // tv is on
+console.log(tv.state) // tv is on
 ```
 ## how to install & import
 ### javascript or deno
