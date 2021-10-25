@@ -5,7 +5,8 @@ proxy–state pattern made in typescript
 
 ## how to use
 ```js
-class Powerable {
+class Powerable { // abstract
+  state // string
   power() {}
 }
 class TV extends Powerable {
@@ -14,21 +15,21 @@ class TV extends Powerable {
     this.#context.target = this.#off
     return this.#context.target
   }
-  #context = new Context()
-  #off = {
+  #context = new Context() // <Powerable>
+  #off = { // : Powerable
     state: 'off',
-    power: () => this.#context.target = this.#on,
+    power: () => this.#context.target = this.#on
   };
-  #on = {
+  #on = { // : Powerable
     state: 'on',
-    power: () => this.#context.target = this.#off,
-  };
+    power: () => this.#context.target = this.#off
+  }
 }
 
 const tv = new TV()
-console.log('tv is', tv.state)
+console.log('tv is', tv.state) // tv is off
 tv.power()
-console.log('tv is', tv.state)
+console.log('tv is', tv.state) // tv is on
 ```
 ## how to install & import
 ### javascript or deno
