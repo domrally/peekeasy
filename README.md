@@ -5,7 +5,7 @@ proxy–state pattern made in typescript
 
 ## how to use
 ```js
-class Powerable { // abstract
+class Powerable { // abstract class Powerable {
   state = ''
   power() {}
 }
@@ -13,14 +13,14 @@ class TV extends Powerable {
   constructor() {
     super()
     this.#context.target = this.#off
-    return this.#context.target // as any
+    return this.#context.target // return this.#context.target as any
   }
-  #context = new Context() // <Powerable>
-  #off = { // : Powerable
+  #context = new Context() // #context = new Context<Powerable>()
+  #off = { // #off: Powerable = {
     state: 'off',
     power: () => this.#context.target = this.#on
   };
-  #on = { // : Powerable
+  #on = { // #on: Powerable = {
     state: 'on',
     power: () => this.#context.target = this.#off
   }
