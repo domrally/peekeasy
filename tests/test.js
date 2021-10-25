@@ -1,1 +1,2 @@
-import "./hello-world.js";
+import "./mario.js";
+import "./tv.js";
