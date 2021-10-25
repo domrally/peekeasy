@@ -6,14 +6,14 @@ proxy–state pattern made in typescript
 ## how to use
 ```js
 class Powerable { // abstract
-  state // : string
+  state = ''
   power() {}
 }
 class TV extends Powerable {
   constructor() {
     super()
     this.#context.target = this.#off
-    return this.#context.target
+    return this.#context.target // as any
   }
   #context = new Context() // <Powerable>
   #off = { // : Powerable
