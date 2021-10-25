@@ -9,6 +9,7 @@ class Powerable { // abstract class Powerable {
   state = ''
   power() {}
 }
+
 class TV extends Powerable {
 
   #context = new Context() // #context = new Context<Powerable>()
@@ -18,6 +19,7 @@ class TV extends Powerable {
     this.#context.target = this.#off
     return this.#context.target // return this.#context.target as any
   }
+  
   #off = { // #off: Powerable = {
     state: 'off',
     power: () => this.#context.target = this.#on
