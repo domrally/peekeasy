@@ -16,18 +16,18 @@ class TV extends Powerable {
   
   constructor() {
     super()
-    this.#context.target = this.#off
-    return this.#context.target // return this.#context.target as any
+    this.#context.state = this.#off
+    return this.#context.state // return this.#context.state as any
   }
   
   #off = { // #off: Powerable = {
     state: 'tv is off',
-    power: () => this.#context.target = this.#on
+    power: () => this.#context.state = this.#on
   }
   
   #on = { // #on: Powerable = {
     state: 'tv is on',
-    power: () => this.#context.target = this.#off
+    power: () => this.#context.state = this.#off
   }
 }
 
@@ -37,7 +37,7 @@ console.log(tv.state) // tv is off
 tv.power()
 console.log(tv.state) // tv is on
 ```
-## how to install & import
+## hot to import
 ### javascript or deno
 ```js
 import { Context } from 'https://esm.sh/mealtime'
