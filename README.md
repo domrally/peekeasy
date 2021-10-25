@@ -10,12 +10,14 @@ class Powerable { // abstract class Powerable {
   power() {}
 }
 class TV extends Powerable {
+
+  #context = new Context() // #context = new Context<Powerable>()
+  
   constructor() {
     super()
     this.#context.target = this.#off
     return this.#context.target // return this.#context.target as any
   }
-  #context = new Context() // #context = new Context<Powerable>()
   #off = { // #off: Powerable = {
     state: 'off',
     power: () => this.#context.target = this.#on
