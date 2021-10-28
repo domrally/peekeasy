@@ -37,7 +37,7 @@ console.log(tv.state) // tv is off
 tv.power()
 console.log(tv.state) // tv is on
 ```
-## hot to import
+## importing
 ### javascript or deno
 ```js
 import { Context } from 'https://esm.sh/mealtime'
