@@ -1,4 +1,4 @@
-import { Context } from "../code/context.min.js";
+import { Context } from "../index.js";
 
 const Events = {
   mushroom: Symbol(),
