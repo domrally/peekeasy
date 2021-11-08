@@ -5,13 +5,13 @@
   "description": "proxy–state pattern made in typescript",
   "license": "Fair",
   "repository": "domrally/mealtime",
-  "main": "code/context.min.js",
-  "types": "code/context.d.ts",
   "scripts": {
     "test": "node tests/test.js"
   },
+  "main": "index.js",
+  "types": "index.d.ts",
   "files": [
-    "code/*.min.js",
+    "code/*.js",
     "code/*.d.ts"
   ],
   "keywords": [

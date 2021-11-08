@@ -1,0 +1,1 @@
+export class Sender{constructor(){const n={};return new Proxy(this,{get:(o,t)=>r(n,t)})}}function r(r,n){const o=()=>r[n].forEach((r=>r()));return o.on=o=>{var t;return(null!==(t=r[n])&&void 0!==t?t:r[n]=[]).push(o)},o.off=o=>{var t;return r[n]=null===(t=r[n])||void 0===t?void 0:t.filter((r=>o!==r))},o}
