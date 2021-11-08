@@ -1,8 +1,8 @@
 {
   "type": "module",
   "name": "mealtime",
-  "version": "0.0.31",
-  "description": "proxy–state pattern made in typescript",
+  "version": "0.0.32",
+  "description": "proxy patterns made in typescript",
   "license": "Fair",
   "repository": "domrally/mealtime",
   "scripts": {
