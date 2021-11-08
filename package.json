@@ -8,9 +8,9 @@
   "scripts": {
     "test": "node tests/test.js"
   },
-  "types": "index.d.ts",
+  "main": "code/main.js",
+  "types": "code/main.d.ts",
   "files": [
-    "index.d.ts",
     "code/*.js",
     "code/*.d.ts"
   ],

@@ -1,4 +1,4 @@
-import { Delegate, Sender } from "../../index.js";
+import { Delegate, Sender } from "../../code/main.js";
 
 class EventService extends Sender {
   started: Delegate;

@@ -1,4 +1,4 @@
-import { Context } from "../../index.js";
+import { Context } from "../../code/main.js";
 import { Mover } from "./Mover.js";
 
 class Fighter extends Mover {

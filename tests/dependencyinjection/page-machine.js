@@ -1,4 +1,4 @@
-import { Context } from "../../index.js";
+import { Context } from "../../code/main.js";
 import { Events } from "./event-service.js";
 import { HomePage } from "./home-page.js";
 import { LoadingPage } from "./loading-page.js";
