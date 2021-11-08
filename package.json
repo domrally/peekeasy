@@ -1,16 +1,16 @@
 {
   "type": "module",
   "name": "mealtime",
-  "version": "0.0.32",
+  "version": "0.0.33",
   "description": "proxy patterns made in typescript",
   "license": "Fair",
   "repository": "domrally/mealtime",
   "scripts": {
     "test": "node tests/test.js"
   },
-  "main": "index.js",
   "types": "index.d.ts",
   "files": [
+    "index.d.ts",
     "code/*.js",
     "code/*.d.ts"
   ],
