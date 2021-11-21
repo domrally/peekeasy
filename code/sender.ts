@@ -1,25 +1,16 @@
-import { Action } from "./action.js";
-import { Key } from "./key.js";
+type Action = () => void;
+export function Sender() {
+  const delegates = new Set<Action>();
 
-export class Sender {
-  constructor() {
-    const events = {};
-
-    const handler = {
-      get: (_: this, key: Key) => delegate(events, key),
-    };
-
-    return new Proxy(this, handler);
+  function send() {
+    const copy = new Set(delegates);
+    copy.forEach((f) => f());
   }
-}
 
-function delegate(events: { [key: Key]: Action[] }, key: Key) {
-  const event = () => events[key].forEach((receiver) => receiver());
+  send.add = (t: Action) => delegates.add(t);
+  send.delete = (t: Action) => delegates.delete(t);
+  send.has = (t: Action) => delegates.has(t);
+  send[Symbol.toStringTag] = delegates[Symbol.toStringTag];
 
-  event.on = (receiver: Action) => (events[key] ??= []).push(receiver);
-
-  event.off = (receiver: Action) =>
-    events[key] = events[key]?.filter((r) => receiver !== r);
-
-  return event;
+  return send;
 }
