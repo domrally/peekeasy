@@ -1,3 +1,3 @@
-declare type Action = () => void;
-export declare function Receiver(delegates: WeakSet<Action>): WeakSet<Action>;
-export {};
+import { Action } from "./action.js";
+export declare type Receiver = WeakSet<Action>;
+export declare function receiver(delegates: Receiver): Receiver;

@@ -1,1 +1,8 @@
-export function Receiver(e){return{has:t=>e.has(t),add:t=>e.add(t),delete:t=>e.delete(t),[Symbol.toStringTag]:e[Symbol.toStringTag]}}
+export function receiver(delegates) {
+    return {
+        has: (t) => delegates.has(t),
+        add: (t) => delegates.add(t),
+        delete: (t) => delegates.delete(t),
+        [Symbol.toStringTag]: delegates[Symbol.toStringTag],
+    };
+}

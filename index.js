@@ -1,3 +1,3 @@
-export { Receiver } from "./code/receiver.js";
-export { Selector } from "./code/selector.js";
-export { Sender } from "./code/sender.js";
+export { receiver } from "./code/receiver.js";
+export { selector } from "./code/selector.js";
+export { sender } from "./code/sender.js";

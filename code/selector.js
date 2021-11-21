@@ -1,1 +1,21 @@
-export function Selector(){let n;function l(l){n=l}return l.get=(l,t)=>(null!=n||(n=l),n[t]),l.set=(l,t,e)=>(null!=n||(n=l),n[t]=e,!0),l.apply=(l,t,e)=>{null!=n||(n=l);return n.bind(t)(...e)},l}
+export function selector() {
+    let selected;
+    function selector(s) {
+        selected = s;
+    }
+    selector.get = (target, key) => {
+        selected !== null && selected !== void 0 ? selected : (selected = target);
+        return selected[key];
+    };
+    selector.set = (target, key, value) => {
+        selected !== null && selected !== void 0 ? selected : (selected = target);
+        selected[key] = value;
+        return true;
+    };
+    selector.apply = (target, that, args) => {
+        selected !== null && selected !== void 0 ? selected : (selected = target);
+        const bound = selected.bind(that);
+        return bound(...args);
+    };
+    return selector;
+}

@@ -1,4 +1,5 @@
-export function Selector<S extends {}>(): ProxyHandler<S> & ((s?: S) => void) {
+export type Selector<S extends {}> = ProxyHandler<S> & ((s?: S) => void);
+export function selector<S extends {}>(): Selector<S> {
   let selected: any;
 
   function selector(s?: S) {

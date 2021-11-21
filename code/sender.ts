@@ -1,5 +1,7 @@
-type Action = () => void;
-export function Sender() {
+import { Action } from "./action.js";
+
+export type Sender = WeakSet<Action> & Action;
+export function sender(): Sender {
   const delegates = new Set<Action>();
 
   function send() {
