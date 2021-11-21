@@ -1,12 +1,12 @@
 {
   "type": "module",
   "name": "mealtime",
-  "version": "0.0.38",
+  "version": "0.0.39",
   "description": "send, receive, and select",
   "license": "Fair",
   "repository": "domrally/mealtime",
   "scripts": {
-    "test": "node ./test/index.js"
+    "test": "node tests/index.js"
   },
   "main": "code/index.js",
   "types": "code/index.d.ts",
