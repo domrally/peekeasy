@@ -6,14 +6,17 @@
   "license": "Fair",
   "repository": "domrally/mealtime",
   "scripts": {
-    "test": "node tests/test.js"
+    "test": "node ./test/index.js"
   },
-  "main": "index.js",
-  "types": "index.d.ts",
+  "main": "code/index.js",
+  "types": "code/index.d.ts",
   "files": [
     "code/*.js",
     "code/*.d.ts"
   ],
+  "exports": {
+    ".": "./code/index.js"
+  },
   "keywords": [
     "mealtime",
     "mealy",
