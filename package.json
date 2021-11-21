@@ -2,14 +2,14 @@
   "type": "module",
   "name": "mealtime",
   "version": "0.0.34",
-  "description": "proxy patterns made in typescript",
+  "description": "send, receive, and select",
   "license": "Fair",
   "repository": "domrally/mealtime",
   "scripts": {
     "test": "node tests/test.js"
   },
-  "main": "code/main.js",
-  "types": "code/main.d.ts",
+  "main": "index.js",
+  "types": "index.d.ts",
   "files": [
     "code/*.js",
     "code/*.d.ts"
