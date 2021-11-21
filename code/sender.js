@@ -1,12 +1,1 @@
-export function Sender() {
-    const delegates = new Set();
-    function send() {
-        const copy = new Set(delegates);
-        copy.forEach((f) => f());
-    }
-    send.add = (t) => delegates.add(t);
-    send.delete = (t) => delegates.delete(t);
-    send.has = (t) => delegates.has(t);
-    send[Symbol.toStringTag] = delegates[Symbol.toStringTag];
-    return send;
-}
+export function Sender(){const e=new Set;function t(){new Set(e).forEach((e=>e()))}return t.add=t=>e.add(t),t.delete=t=>e.delete(t),t.has=t=>e.has(t),t[Symbol.toStringTag]=e[Symbol.toStringTag],t}
