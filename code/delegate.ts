@@ -1,12 +1,12 @@
 import { DelegationHandler } from './delegation-handler.js'
 
-export function Delegate<D extends {}>( delegate: D ) {	
-	const handler = new DelegationHandler( delegate )
+export function Delegate<D extends {}>( initial?: D ) {	
+	const handler = new DelegationHandler( initial )
 	
-	const proxy = new Proxy<D>( delegate, handler )
+	const proxy = new Proxy<D>( initial ?? {} as any, handler )
 	
-	return function ( d?: D ) {
-		handler.delegate = d ?? delegate
+	return function ( delegate?: D ) {
+		handler.delegate = delegate ?? initial
 
 		return proxy
 	}

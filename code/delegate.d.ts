@@ -1,1 +1,1 @@
-export declare function Delegate<D extends {}>(delegate: D): (d?: D | undefined) => D;
+export declare function Delegate<D extends {}>(initial?: D): (delegate?: D | undefined) => D;
