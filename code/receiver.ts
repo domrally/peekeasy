@@ -1,11 +1,23 @@
-import { Action } from "./action.js";
+export class WeakenedSet implements WeakSet<() => void> {
+	has( t: () => void ) {
+		return this.#delegates.has( t )
+	}
+	
+	add( t: () => void ) {
+		return this.#delegates.add( t ) as any
+	}
+	
+	delete( t: () => void ) {
+		return this.#delegates.delete( t ) as any
+	}
+	
+	get [ Symbol.toStringTag ]() {
+		return this.#delegates[ Symbol.toStringTag ]
+	}
 
-export type Receiver = WeakSet<Action>;
-export function receiver(delegates: Receiver): Receiver {
-  return {
-    has: (t: Action) => delegates.has(t),
-    add: (t: Action) => delegates.add(t),
-    delete: (t: Action) => delegates.delete(t),
-    [Symbol.toStringTag]: delegates[Symbol.toStringTag],
-  };
+	constructor( delegates: WeakSet<() => void> ) {
+		this.#delegates = delegates
+	}
+
+	#delegates: WeakSet<() => void>
 }
