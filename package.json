@@ -1,8 +1,8 @@
 {
   "type": "module",
   "name": "mealtime",
-  "version": "0.0.39",
-  "description": "send, receive, and select",
+  "version": "0.0.40",
+  "description": "delegate & weakened set",
   "license": "Fair",
   "repository": "domrally/mealtime",
   "scripts": {
@@ -19,12 +19,9 @@
   },
   "keywords": [
     "mealtime",
-    "mealy",
-    "finite",
-    "state",
-    "machine",
-    "pattern",
+		"delegation",
+		"delegate",
     "proxy",
-    "async"
+    "pattern"
   ]
 }
