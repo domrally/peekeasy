@@ -4,43 +4,46 @@
 proxy–state pattern made in typescript
 
 ## how to use
-```js
-class Powerable { // abstract class Powerable {
-  state = ''
-  power() {}
+```ts
+class Player {
+   constructor(public readonly name: string) { }
+
+   #select = new Set<() => void>()
+
+   #onSelect = new WeakenedSet( this.#select )
+
+   get onSelect() {
+      return this.#onSelect
+   }
+
+   select() {
+      this.#select.forEach( e => e() )
+   }
 }
 
-class TV extends Powerable {
+class SelectedPlayer extends Player {
+   #delegate = Delegate<Player>()
 
-  #context = new Context() // #context = new Context<Powerable>()
-  
-  constructor() {
-    super()
-    this.#context.state = this.#off
-    return this.#context.state // return this.#context.state as any
-  }
-  
-  #off = { // #off: Powerable = {
-    state: 'tv is off',
-    power: () => this.#context.state = this.#on
-  }
-  
-  #on = { // #on: Powerable = {
-    state: 'tv is on',
-    power: () => this.#context.state = this.#off
-  }
+   #onSelect( player: Player ) {
+      const select = () => this.#delegate( player )
+
+      player.onSelect.add( select )
+   }
+
+   constructor( ...players: Player[] ) {
+      super('')
+
+      players.forEach( this.#onSelect.bind(this) )
+
+      return this.#delegate(this) as any
+   }
 }
 
-const tv = new TV()
-console.log(tv.state) // tv is off
-
-tv.power()
-console.log(tv.state) // tv is on
 ```
 ## importing
 ### javascript or deno
 ```js
-import { Context } from 'https://esm.sh/mealtime'
+import { Context } from 'https://cdn.skypack.dev/mealtime'
 ```
 ### node
 ```
@@ -52,6 +55,6 @@ import { Context } from 'mealtime'
 ### html
 ```html
 <script type="module">
-    import { Context } from 'https://esm.sh/mealtime'	
+    import { Context } from 'https://cdn.skypack.dev/mealtime'	
 </script>
 ```
