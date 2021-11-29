@@ -1,3 +1,2 @@
-export { receiver } from "./receiver.js";
-export { selector } from "./selector.js";
-export { sender } from "./sender.js";
+export { Delegate } from "./delegate.js";
+export { WeakenedSet } from "./weakened-set.js";
