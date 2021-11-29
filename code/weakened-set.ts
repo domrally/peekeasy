@@ -1,4 +1,4 @@
-export class WeakenedSet implements WeakSet<() => void> {
+export class WeakenedSet implements WeakSet< () => void > {
 	has( t: () => void ) {
 		return this.#delegates.has( t )
 	}
@@ -15,9 +15,9 @@ export class WeakenedSet implements WeakSet<() => void> {
 		return this.#delegates[ Symbol.toStringTag ]
 	}
 
-	constructor( delegates: WeakSet<() => void> ) {
+	constructor( delegates: WeakSet< () => void > ) {
 		this.#delegates = delegates
 	}
 
-	#delegates: WeakSet<() => void>
+	#delegates: WeakSet< () => void >
 }

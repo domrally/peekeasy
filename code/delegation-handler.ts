@@ -1,6 +1,6 @@
-export class DelegationHandler<S extends {}> implements ProxyHandler<S>  {
+export class DelegationHandler< S extends {} > implements ProxyHandler< S >  {
 	get( _: S, key: string | symbol | number ) {
-		return this.delegate[key]
+		return this.delegate[ key ]
 	}
 	
 	set<V>( _: S, key: string | symbol | number, value: V ) {
@@ -15,5 +15,5 @@ export class DelegationHandler<S extends {}> implements ProxyHandler<S>  {
 		return bound( ...args )
 	}
 	
-	constructor( public delegate: any ) {}
+	constructor( public delegate: any ) { }
 }
