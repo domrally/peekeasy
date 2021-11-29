@@ -5,7 +5,9 @@ proxy–state pattern made in typescript
 
 ## how to use
 ```ts
-abstract class Player {
+class Player {
+   constructor(public readonly name: string) { }
+
    #select = new Set<() => void>()
 
    #onSelect = new WeakenedSet( this.#select )
@@ -22,18 +24,18 @@ abstract class Player {
 class SelectedPlayer extends Player {
    #delegate = Delegate<Player>()
 
+   #onSelect( player: Player ) {
+      const select = () => this.#delegate( player )
+
+      player.onSelect.add( select )
+   }
+
    constructor( ...players: Player[] ) {
-      super()
+      super('')
 
-      for ( const player of players ) {
-         const select = () => this.#delegate( player )
+      players.forEach( this.#onSelect.bind(this) )
 
-         const { add } = player.onSelect
-
-         add( select )
-      }
-
-      return this.#delegate() as any
+      return this.#delegate(this) as any
    }
 }
 
