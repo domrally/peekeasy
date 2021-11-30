@@ -5,7 +5,7 @@ proxy–state pattern made in typescript
 
 ## how to use
 ```ts
-class Player {
+class Page {
    constructor (public readonly name: string) { }
 
    #select = new Set<() => void>()
@@ -21,25 +21,35 @@ class Player {
    }
 }
 
-class SelectedPlayer extends Player {
-   #delegate = Delegate<Player>()
+class CurrentPage extends Page {
+   #delegate = Delegate<Page>()
 
-   #onSelect (player: Player) {
-      const select = () => this.#delegate(player)
+   #onSelect (page: Page) {
+      const select = () => this.#delegate(page)
 
-      player.onSelect.add(select)
+      page.onSelect.add(select)
    }
 
-   constructor (...players: Player[]) {
+   constructor (...pages: Page[]) {
       super('')
 
       const onSelect = this.#onSelect.bind(this)
 
-      players.forEach(onSelect)
+      pages.forEach(onSelect)
 
       return this.#delegate(this) as any
    }
 }
+
+const home        = new Page('Home'),
+
+      settings    = new Page('Settings'),
+
+      currentPage = new CurrentPage(home, settings)
+
+home.select()     // currentPage.name === 'Home'
+
+settings.select() // currentPage.name === 'Settings'
 
 ```
 ## importing
