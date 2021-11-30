@@ -41,20 +41,18 @@ class SelectedPlayer extends Player {
 
 ```
 ## importing
-### javascript or deno
+### javascript
 ```js
-import { Context } from 'https://cdn.skypack.dev/mealtime'
+import { Delegate, WeakenedSet } from 'https://cdn.skypack.dev/mealtime?min'
 ```
 ### node
 ```
 npm i mealtime
 ```
 ```js
-import { Context } from 'mealtime'
+import { Delegate, WeakenedSet } from 'mealtime'
 ```
-### html
-```html
-<script type="module">
-    import { Context } from 'https://cdn.skypack.dev/mealtime'	
-</script>
+### deno
+```ts
+import { Delegate, WeakenedSet } from 'https://cdn.skypack.dev/mealtime?dts'
 ```
