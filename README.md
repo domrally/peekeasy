@@ -69,7 +69,7 @@ console.log(currentPage.name) // Settings
 
 ```
 
-## importing
+## what to import
 ### javascript
 ```js
 import { Delegate, WeakenedSet } from 'https://cdn.skypack.dev/mealtime?min'
