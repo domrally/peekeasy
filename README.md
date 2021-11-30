@@ -6,34 +6,36 @@ proxy–state pattern made in typescript
 ## how to use
 ```ts
 class Player {
-   constructor(public readonly name: string) { }
+   constructor (public readonly name: string) { }
 
    #select = new Set<() => void>()
 
-   #onSelect = new WeakenedSet( this.#select )
+   #onSelect = new WeakenedSet(this.#select)
 
-   get onSelect() {
+   get onSelect () {
       return this.#onSelect
    }
 
-   select() {
-      this.#select.forEach( e => e() )
+   select () {
+      this.#select.forEach(e => e())
    }
 }
 
 class SelectedPlayer extends Player {
    #delegate = Delegate<Player>()
 
-   #onSelect( player: Player ) {
-      const select = () => this.#delegate( player )
+   #onSelect (player: Player) {
+      const select = () => this.#delegate(player)
 
-      player.onSelect.add( select )
+      player.onSelect.add(select)
    }
 
-   constructor( ...players: Player[] ) {
+   constructor (...players: Player[]) {
       super('')
 
-      players.forEach( this.#onSelect.bind(this) )
+      const onSelect = this.#onSelect.bind(this)
+
+      players.forEach(onSelect)
 
       return this.#delegate(this) as any
    }
