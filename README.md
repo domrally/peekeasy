@@ -6,12 +6,6 @@ proxy–state pattern made in typescript
 ## how to use
 ```ts
 abstract class Page {
-   constructor (public readonly name: string) { }
-
-   #select = new Set<() => void>()
-
-   #onSelect = new WeakenedSet(this.#select)
-
    get onSelect () {
       return this.#onSelect
    }
@@ -19,17 +13,15 @@ abstract class Page {
    select () {
       this.#select.forEach(e => e())
    }
+   
+   constructor (public readonly name: string) { }
+   
+   #select = new Set<() => void>()
+
+   #onSelect = new WeakenedSet(this.#select)
 }
 
 class CurrentPage extends Page {
-   #delegate = Delegate<Page>()
-
-   #onSelect (page: Page) {
-      const select = () => this.#delegate(page)
-
-      page.onSelect.add(select)
-   }
-
    constructor (...pages: Page[]) {
       super('')
 
@@ -38,6 +30,14 @@ class CurrentPage extends Page {
       pages.forEach(onSelect)
 
       return this.#delegate(this) as any
+   }
+   
+   #delegate = Delegate<Page>()
+
+   #onSelect (page: Page) {
+      const select = () => this.#delegate(page)
+
+      page.onSelect.add(select)
    }
 }
 
