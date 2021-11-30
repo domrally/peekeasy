@@ -5,7 +5,7 @@ proxy–state pattern made in typescript
 
 ## how to use
 ```ts
-class Page {
+abstract class Page {
    constructor (public readonly name: string) { }
 
    #select = new Set<() => void>()
@@ -41,9 +41,21 @@ class CurrentPage extends Page {
    }
 }
 
-const home        = new Page('Home'),
+class HomePage extends Page {
+   constructor() {
+      super('Home')
+   }
+}
 
-      settings    = new Page('Settings'),
+class SettingsPage extends Page {
+   constructor() {
+      super('Settings')
+   }
+}
+
+const home        = new HomePage(),
+
+      settings    = new SettingsPage(),
 
       currentPage = new CurrentPage(home, settings)
 
@@ -52,6 +64,7 @@ home.select()     // currentPage.name === 'Home'
 settings.select() // currentPage.name === 'Settings'
 
 ```
+
 ## importing
 ### javascript
 ```js
