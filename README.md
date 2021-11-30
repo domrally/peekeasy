@@ -59,9 +59,13 @@ const home        = new HomePage(),
 
       currentPage = new CurrentPage(home, settings)
 
-home.select()     // currentPage.name === 'Home'
+home.select()
 
-settings.select() // currentPage.name === 'Settings'
+console.log(currentPage.name) // Home
+
+settings.select()
+
+console.log(currentPage.name) // Settings
 
 ```
 
