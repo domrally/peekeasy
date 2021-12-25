@@ -1,87 +1,45 @@
 # mealtime
 [![](https://badgen.net/packagephobia/install/mealtime?icon=npm&label&color=black&scale=1.3)](https://www.npmjs.com/package/mealtime) [![](https://badgen.net/npm/types/tslib?icon=typescript&label&color=black&scale=1.3)](https://github.com/domrally/mealtime/blob/main/code/context.d.ts) [![](https://badgen.net/github/status/domrally/mealtime?icon=github&label&color=black&scale=1.3)](https://github.com/domrally/mealtime/actions) [![](https://badgen.net/badge/license/Fair?color=grey&scale=1.3)](https://github.com/domrally/mealtime/blob/main/LICENSE) [![](https://badgen.net/github/tag/domrally/mealtime?icon=git&label&color=grey&scale=1.3)](https://github.com/domrally/mealtime/releases)
 
-proxy delegation pattern made in typescript
+abstracted proxy delegation pattern made in typescript
 
 ## how to use
+
 ```ts
-abstract class Page {
-   get onSelect () {
-      return this.#onSelect
-   }
+type Action = () => void
 
-   select () {
-      this.#select.forEach(e => e())
-   }
-   
-   constructor (public readonly name: string) { }
-   
-   #select = new Set<() => void>()
+class Event {
+	private spiesForSend = new SetHandler<Action>()
 
-   #onSelect = new WeakenedSet(this.#select)
+	public spyOnSend: WeakSet<Action> = new WeakerSet(this.spiesForSend)
+
+	sendToSpies: Action = new Proxy(() => { }, this.spiesForSend)
 }
 
-class CurrentPage extends Page {
-   constructor (...pages: Page[]) {
-      super('')
+const event = new Event()
 
-      const onSelect = this.#onSelect.bind(this)
+event.spyOnSend.add(() => console.log('Hello, world!'))
 
-      pages.forEach(onSelect)
-
-      return this.#delegate(this) as any
-   }
-   
-   #delegate = Delegate<Page>()
-
-   #onSelect (page: Page) {
-      const select = () => this.#delegate(page)
-
-      page.onSelect.add(select)
-   }
-}
-
-class HomePage extends Page {
-   constructor() {
-      super('Home')
-   }
-}
-
-class SettingsPage extends Page {
-   constructor() {
-      super('Settings')
-   }
-}
-
-const home        = new HomePage(),
-
-      settings    = new SettingsPage(),
-
-      currentPage = new CurrentPage(home, settings)
-
-home.select()
-
-console.log(currentPage.name) // Home
-
-settings.select()
-
-console.log(currentPage.name) // Settings
+event.sendToSpies()
 
 ```
 
 ## what to import
+
 ### javascript
 ```js
-import { Delegate, WeakenedSet } from 'https://cdn.skypack.dev/mealtime?min'
+import { SetHandler, WeakerSet } from 'https://cdn.skypack.dev/mealtime?min'
 ```
+
 ### node
 ```
 npm i mealtime
 ```
 ```js
-import { Delegate, WeakenedSet } from 'mealtime'
+import { SetHandler, WeakerSet } from 'mealtime'
 ```
+
 ### deno
 ```ts
-import { Delegate, WeakenedSet } from 'https://cdn.skypack.dev/mealtime?dts'
+import { SetHandler, WeakerSet } from 'https://cdn.skypack.dev/mealtime?dts'
 ```

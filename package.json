@@ -1,8 +1,8 @@
 {
   "type": "module",
   "name": "mealtime",
-  "version": "0.0.41",
-  "description": "delegate & weakened set",
+  "version": "0.0.42",
+  "description": "abstracted proxy delegation pattern made in typescript",
   "license": "Fair",
   "repository": "domrally/mealtime",
   "scripts": {

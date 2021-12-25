@@ -9,22 +9,22 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
-var _WeakenedSet_delegates;
-export class WeakenedSet {
-    constructor(delegates) {
-        _WeakenedSet_delegates.set(this, void 0);
-        __classPrivateFieldSet(this, _WeakenedSet_delegates, delegates, "f");
+var _WeakerSet_weak;
+export class WeakerSet {
+    constructor(weak) {
+        _WeakerSet_weak.set(this, void 0);
+        __classPrivateFieldSet(this, _WeakerSet_weak, weak, "f");
     }
     has(t) {
-        return __classPrivateFieldGet(this, _WeakenedSet_delegates, "f").has(t);
+        return __classPrivateFieldGet(this, _WeakerSet_weak, "f").has(t);
     }
     add(t) {
-        return __classPrivateFieldGet(this, _WeakenedSet_delegates, "f").add(t);
+        return __classPrivateFieldGet(this, _WeakerSet_weak, "f").add(t);
     }
     delete(t) {
-        return __classPrivateFieldGet(this, _WeakenedSet_delegates, "f").delete(t);
+        return __classPrivateFieldGet(this, _WeakerSet_weak, "f").delete(t);
     }
-    get [(_WeakenedSet_delegates = new WeakMap(), Symbol.toStringTag)]() {
-        return __classPrivateFieldGet(this, _WeakenedSet_delegates, "f")[Symbol.toStringTag];
+    get [(_WeakerSet_weak = new WeakMap(), Symbol.toStringTag)]() {
+        return __classPrivateFieldGet(this, _WeakerSet_weak, "f")[Symbol.toStringTag];
     }
 }

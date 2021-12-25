@@ -5,45 +5,11 @@
 	<title>mealtime</title>
 	<meta charset="utf-8">
 	<link rel="shortcut icon" href="#">
+	<script type="module" src="index.js"></script>
 </head>
 
 <body>
-	<script type="module">
-    import { Context } from 'https://esm.sh/mealtime'
-
-		class Powerable { // abstract class Powerable {
-			state = ''
-			power() {}
-		}
-
-		class TV extends Powerable {
-
-			#context = new Context() // #context = new Context<Powerable>()
-			
-			constructor() {
-				super()
-				this.#context.state = this.#off
-				return this.#context.state // return this.#context.state as any
-			}
-			
-			#off = { // #off: Powerable = {
-				state: 'tv is off',
-				power: () => this.#context.state = this.#on
-			}
-			
-			#on = { // #on: Powerable = {
-				state: 'tv is on',
-				power: () => this.#context.state = this.#off
-			}
-		}
-
-		const tv = new TV()
-		console.log(tv.state) // tv is off
-
-		tv.power()
-		console.log(tv.state) // tv is on
-
-	</script>
+	<input is="hamburger-button">
 </body>
 
 </html>

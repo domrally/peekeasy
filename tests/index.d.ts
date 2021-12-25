@@ -1,1 +1,1 @@
-export {};
+import './readme.js';

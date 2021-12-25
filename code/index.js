@@ -1,2 +1,2 @@
-export { Delegate } from "./delegate.js";
-export { WeakenedSet } from "./weakened-set.js";
+export { SetHandler } from "./set-handler.js";
+export { WeakerSet } from "./weaker-set.js";
