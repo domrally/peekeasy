@@ -18,6 +18,7 @@ const { spyOnSend, sendToSpies } = new Event(),
 	log = () => console.log('Hello, world!')
 
 spyOnSend.add(log)
+
 sendToSpies()
 
 ```
