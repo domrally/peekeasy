@@ -9,9 +9,9 @@ abstracted proxy delegation pattern made in typescript
 type Action = () => void
 
 class Event {
-	spiesForSend: SetHandler<Action> = new SetHandler()
-	spyOnSend: WeakSet<Action> = new WeakerSet(this.spiesForSend)
-	sendToSpies: Action = new Proxy(() => { }, this.spiesForSend)
+    spiesForSend: SetHandler<Action> = new SetHandler()
+    spyOnSend: WeakSet<Action> = new WeakerSet(this.spiesForSend)
+    sendToSpies: Action = new Proxy(() => { }, this.spiesForSend)
 }
 
 const { spyOnSend, sendToSpies } = new Event(),
