@@ -23,15 +23,13 @@ class MyClass {
 
 class Event {
     spies: Set<MyClass> & ProxyHandler<MyClass> = new SetHandler()
-
     defaultCase: MyClass                        = new MyClass('no', 'spies')
     sender: MyClass                             = new Proxy(this.defaultCase, this.spies)
-	 
     spyOnSender: WeakSet<MyClass>               = new WeakerSet(this.spies)
 }
 
 const { spyOnSender, sender } = new Event(),
-        test                     = new MyClass('Hello,', 'world!')
+        test                  = new MyClass('Hello,', 'world!')
 
 spyOnSender.add(test)
 
