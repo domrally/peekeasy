@@ -16,14 +16,17 @@ class MyClass {
 
 class Event {
     spies:        Set<MyClass> & ProxyHandler<MyClass> = new SetHandler()
-    spyOnSending: WeakSet<MyClass>                     = new WeakerSet(this.spies)
-    spySender:    MyClass                              = new Proxy(new MyClass('no spies'), this.spies)
+
+	 defaultCase:  MyClass                              = new MyClass('no spies')
+    spySender:    MyClass                              = new Proxy(this.defaultCase, this.spies)
+	 
+    spyOnSender: WeakSet<MyClass>                      = new WeakerSet(this.spies)
 }
 
-const { spyOnSending, spySender } = new Event(),
+const { spyOnSender, spySender } = new Event(),
         test                      = new MyClass('Hello, world!')
 
-spyOnSending.add(test)
+spyOnSender.add(test)
 
 spySender.sendMessage()
 
