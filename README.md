@@ -24,7 +24,7 @@ sendToSpies()
 
 ## what to import
 
-### javascript
+### web
 ```js
 import { SetHandler, WeakerSet } from 'https://cdn.skypack.dev/mealtime?min'
 ```
