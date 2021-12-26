@@ -1,7 +1,7 @@
 import { SetHandler, WeakerSet } from '../code/index.js'
 
 class Example {
-    constructor(private message: string) { }
+    constructor(private message: string = 'empty') { }
     test() {
         console.log(this.message)
     }
@@ -16,7 +16,7 @@ subscriber.forEach(sub => sub.test())
 // our syntax
 const subscribers: Set<Example>   = new SetHandler(),
       onPublish: WeakSet<Example> = new WeakerSet(subscribers),
-      defaultCase: Example        = new Example('no spies'),
+      defaultCase: Example        = new Example(),
       publisher: Example          = new Proxy(defaultCase, subscribers)
 onPublish.add(example)
 publisher.test()
