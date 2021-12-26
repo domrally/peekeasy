@@ -24,7 +24,7 @@ class Event {
 }
 
 const { spyOnSender, spySender } = new Event(),
-        test                      = new MyClass('Hello, world!')
+        test                     = new MyClass('Hello, world!')
 
 spyOnSender.add(test)
 
