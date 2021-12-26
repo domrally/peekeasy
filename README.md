@@ -7,11 +7,11 @@ toolset for proxied delegation in typescript
 
 ```ts
 class MyClass {
-	constructor(private message: string) { }
+    constructor(private message: string) { }
 
-	sendMessage() {
-		console.log(this.message)
-	}
+    sendMessage() {
+        console.log(this.message)
+    }
 }
 
 class Event {
