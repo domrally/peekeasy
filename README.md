@@ -13,19 +13,22 @@ class MyClass {
         console.log(this.message)
     }
 }
-
+// common prep
 const spies: Set<MyClass> & ProxyHandler<MyClass> = new SetHandler(),
-      defaultCase: MyClass                        = new MyClass('no spies'),
-      sender: MyClass                             = new Proxy(defaultCase, spies),
       spyOnSender: WeakSet<MyClass>               = new WeakerSet(spies),
       example: MyClass                            = new MyClass('Hello, world!')
 
+// our prep
+const defaultCase: MyClass = new MyClass('no spies'),
+      sender: MyClass      = new Proxy(defaultCase, spies)
+
+// subscription
 spyOnSender.add(example)
 
-// functional syntax
+// functional publish syntax
 spies.forEach(spy => spy.test())
 
-// our syntax
+// our publish syntax
 sender.test()
 
 ```
