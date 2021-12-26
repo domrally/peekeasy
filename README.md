@@ -6,19 +6,26 @@ toolset for proxied delegation in typescript
 ## how to use
 
 ```ts
-type Action = () => void
-class Event {
-    spies:        Set<Action> & ProxyHandler<Action> = new SetHandler()
-    spyOnSending: WeakSet<Action>                    = new WeakerSet(this.spies)
-    sendToSpies:  Action                             = new Proxy(() => { }, this.spies)
+class MyClass {
+	constructor(private message: string) { }
+
+	sendMessage() {
+		console.log(this.message)
+	}
 }
 
-const { spyOnSending, sendToSpies } = new Event(),
-        log                         = () => console.log('Hello, world!')
+class Event {
+    spies:        Set<MyClass> & ProxyHandler<MyClass> = new SetHandler()
+    spyOnSending: WeakSet<MyClass>                     = new WeakerSet(this.spies)
+    spySender:    MyClass                              = new Proxy(new MyClass('no spies'), this.spies)
+}
 
-spyOnSending.add(log)
+const { spyOnSending, spySender } = new Event(),
+        test                      = new MyClass('Hello, world!')
 
-sendToSpies()
+spyOnSending.add(test)
+
+spySender.sendMessage()
 
 ```
 

@@ -1,17 +1,24 @@
 import { SetHandler, WeakerSet } from '../code/index.js'
 
-type Action = () => void
+class MyClass {
+	constructor(private message: string) { }
 
-class Event {
-	spiesForSend: SetHandler<Action> = new SetHandler()
-	spyOnSend: WeakSet<Action> = new WeakerSet(this.spiesForSend)
-	sendToSpies: Action = new Proxy(() => { }, this.spiesForSend)
+	sendMessage() {
+		console.log(this.message)
+	}
 }
 
-const { spyOnSend, sendToSpies } = new Event(),
-	log = () => console.log('Hello, world!')
+class Event {
+    spies:        Set<MyClass> & ProxyHandler<MyClass> = new SetHandler()
+    spyOnSending: WeakSet<MyClass>                     = new WeakerSet(this.spies)
+    spySender:    MyClass                              = new Proxy(new MyClass('no spies'), this.spies)
+}
 
-spyOnSend.add(log)
-sendToSpies()
+const { spyOnSending, spySender } = new Event(),
+        test                      = new MyClass('Hello, world!')
+
+spyOnSending.add(test)
+
+spySender.sendMessage()
 
 console.log('✅ readme')

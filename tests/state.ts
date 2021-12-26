@@ -1,4 +1,4 @@
-import { SetHandler, WeakerSet } from '../code/index.js'
+import { SetHandler } from '../code/index.js'
 
 interface Action { }
 interface Type { }
@@ -49,11 +49,6 @@ class PlayingCard extends Card {
 
 		return new Proxy<this>(this, this.#behavior)
 	}
-	
-	// observer
-	#registrants = new SetHandler<CardObserver>()
-	registry = new WeakerSet(this.#registrants)
-	#registrar: CardObserver = new Proxy({} as any, this.#registrants)
 }
 
 const deck: Iterable<PlayingCard> = []
