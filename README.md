@@ -17,7 +17,7 @@ class MyClass {
 class Event {
     spies:        Set<MyClass> & ProxyHandler<MyClass> = new SetHandler()
 
-	 defaultCase:  MyClass                              = new MyClass('no spies')
+    defaultCase:  MyClass                              = new MyClass('no spies')
     spySender:    MyClass                              = new Proxy(this.defaultCase, this.spies)
 	 
     spyOnSender: WeakSet<MyClass>                      = new WeakerSet(this.spies)
