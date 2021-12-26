@@ -6,36 +6,26 @@ toolset for proxied delegation in typescript
 ## how to use
 
 ```ts
-class MyClass {
+class Example {
     constructor(private message: string) { }
-
     test() {
         console.log(this.message)
     }
 }
+const example: Example = new Example('Hello, world!')
 
-
-// publish subscribe syntax
-
-const subscribers: Set<MyClass> = new Set()
-
-const sub: MyClass = new MyClass('Hello, world!')
-subscribers.add(sub)
-
-subscribers.forEach(sub => sub.test())
-
+// common pattern
+const subscriber: Set<Example> = new Set()
+subscriber.add(example)
+subscriber.forEach(sub => sub.test())
 
 // our syntax
-
-const spies: Set<MyClass> & ProxyHandler<MyClass> = new SetHandler(),
-      spyOnSender: WeakSet<MyClass>               = new WeakerSet(spies),
-      defaultCase: MyClass                        = new MyClass('no spies'),
-      sender: MyClass                             = new Proxy(defaultCase, spies)
-
-const spy: MyClass = new MyClass('Hello, world!')
-spyOnSender.add(spy)
-
-sender.test()
+const subscribers: Set<Example>   = new SetHandler(),
+      onPublish: WeakSet<Example> = new WeakerSet(subscribers),
+      defaultCase: Example        = new Example('no spies'),
+      publisher: Example          = new Proxy(defaultCase, subscribers)
+onPublish.add(example)
+publisher.test()
 
 ```
 
