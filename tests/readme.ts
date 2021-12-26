@@ -14,10 +14,10 @@ subscriber.add(example)
 subscriber.forEach(sub => sub.test())
 
 // our syntax
-const subscribers: Set<Example> = new SetHandler(),
+const subscribers: Set<Example>   = new SetHandler(),
       onPublish: WeakSet<Example> = new WeakerSet(subscribers),
-      defaultCase: Example = new Example('no spies'),
-      publisher: Example = new Proxy(defaultCase, subscribers)
+      defaultCase: Example        = new Example('no spies'),
+      publisher: Example          = new Proxy(defaultCase, subscribers)
 onPublish.add(example)
 publisher.test()
 
