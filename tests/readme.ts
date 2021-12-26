@@ -6,8 +6,12 @@ class MyClass {
         private end: string,
     ) { }
 
-    sendMessage() {
-        console.log(`${this.start} ${this.end}`)
+    sendStart() {
+        console.log(this.start)
+    }
+
+    sendEnd() {
+        console.log(this.end)
     }
 }
 
@@ -25,7 +29,7 @@ const { spyOnSender, spySender } = new Event(),
 
 spyOnSender.add(test)
 
-spySender.sendMessage()
-
+spySender.sendStart()
+spySender.sendEnd()
 
 console.log('✅ readme')
