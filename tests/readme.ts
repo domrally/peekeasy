@@ -1,35 +1,25 @@
 import { SetHandler, WeakerSet } from '../code/index.js'
 
 class MyClass {
-    constructor(
-        private start: string,
-        private end: string,
-    ) { }
+    constructor(private message: string) { }
 
-    sendStart() {
-        console.log(this.start)
-    }
-
-    sendEnd() {
-        console.log(this.end)
+    test() {
+        console.log(this.message)
     }
 }
 
-class Event {
-    spies: Set<MyClass> & ProxyHandler<MyClass> = new SetHandler()
+const spies: Set<MyClass> & ProxyHandler<MyClass> = new SetHandler(),
+      defaultCase: MyClass                        = new MyClass('no spies'),
+      sender: MyClass                             = new Proxy(defaultCase, spies),
+      spyOnSender: WeakSet<MyClass>               = new WeakerSet(spies),
+      example: MyClass                            = new MyClass('Hello, world!')
 
-    defaultCase: MyClass                        = new MyClass('no', 'spies')
-    spySender: MyClass                          = new Proxy(this.defaultCase, this.spies)
-	 
-    spyOnSender: WeakSet<MyClass>               = new WeakerSet(this.spies)
-}
+spyOnSender.add(example)
 
-const { spyOnSender, spySender } = new Event(),
-        test                     = new MyClass('Hello,', 'world!')
+// functional syntax
+spies.forEach(spy => spy.test())
 
-spyOnSender.add(test)
-
-spySender.sendStart()
-spySender.sendEnd()
+// our syntax
+sender.test()
 
 console.log('✅ readme')

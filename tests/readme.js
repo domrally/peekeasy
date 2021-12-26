@@ -3,18 +3,14 @@ class MyClass {
     constructor(message) {
         this.message = message;
     }
-    sendMessage() {
+    test() {
         console.log(this.message);
     }
 }
-class Event {
-    constructor() {
-        this.spies = new SetHandler();
-        this.spyOnSending = new WeakerSet(this.spies);
-        this.spySender = new Proxy(new MyClass('no spies'), this.spies);
-    }
-}
-const { spyOnSending, spySender } = new Event(), test = new MyClass('Hello, world!');
-spyOnSending.add(test);
-spySender.sendMessage();
+const spies = new SetHandler(), defaultCase = new MyClass('no spies'), sender = new Proxy(defaultCase, spies), spyOnSender = new WeakerSet(spies), example = new MyClass('Hello, world!');
+spyOnSender.add(example);
+// functional syntax
+spies.forEach(spy => spy.test());
+// our syntax
+sender.test();
 console.log('✅ readme');
