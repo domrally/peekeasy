@@ -25,18 +25,18 @@ class Event {
     spies: Set<MyClass> & ProxyHandler<MyClass> = new SetHandler()
 
     defaultCase: MyClass                        = new MyClass('no', 'spies')
-    spySender: MyClass                          = new Proxy(this.defaultCase, this.spies)
+    sender: MyClass                             = new Proxy(this.defaultCase, this.spies)
 	 
     spyOnSender: WeakSet<MyClass>               = new WeakerSet(this.spies)
 }
 
-const { spyOnSender, spySender } = new Event(),
+const { spyOnSender, sender } = new Event(),
         test                     = new MyClass('Hello,', 'world!')
 
 spyOnSender.add(test)
 
-spySender.sendStart()
-spySender.sendEnd()
+sender.sendStart()
+sender.sendEnd()
 ```
 
 ## what to import
