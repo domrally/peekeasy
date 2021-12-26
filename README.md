@@ -13,22 +13,28 @@ class MyClass {
         console.log(this.message)
     }
 }
-// common prep
+
+
+// publish subscribe syntax
+
+const subscribers: Set<MyClass> = new Set()
+
+const sub: MyClass = new MyClass('Hello, world!')
+subscribers.add(sub)
+
+subscribers.forEach(sub => sub.test())
+
+
+// our syntax
+
 const spies: Set<MyClass> & ProxyHandler<MyClass> = new SetHandler(),
       spyOnSender: WeakSet<MyClass>               = new WeakerSet(spies),
-      example: MyClass                            = new MyClass('Hello, world!')
+      defaultCase: MyClass                        = new MyClass('no spies'),
+      sender: MyClass                             = new Proxy(defaultCase, spies)
 
-// our prep
-const defaultCase: MyClass = new MyClass('no spies'),
-      sender: MyClass      = new Proxy(defaultCase, spies)
+const spy: MyClass = new MyClass('Hello, world!')
+spyOnSender.add(spy)
 
-// subscription
-spyOnSender.add(example)
-
-// functional publish syntax
-spies.forEach(spy => spy.test())
-
-// our publish syntax
 sender.test()
 
 ```

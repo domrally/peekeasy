@@ -7,10 +7,14 @@ class MyClass {
         console.log(this.message);
     }
 }
-const spies = new SetHandler(), defaultCase = new MyClass('no spies'), sender = new Proxy(defaultCase, spies), spyOnSender = new WeakerSet(spies), example = new MyClass('Hello, world!');
-spyOnSender.add(example);
-// functional syntax
-spies.forEach(spy => spy.test());
+// publish subscribe syntax
+const subscribers = new Set();
+const sub = new MyClass('Hello, world!');
+subscribers.add(sub);
+subscribers.forEach(sub => sub.test());
 // our syntax
+const spies = new SetHandler(), spyOnSender = new WeakerSet(spies), defaultCase = new MyClass('no spies'), sender = new Proxy(defaultCase, spies);
+const spy = new MyClass('Hello, world!');
+spyOnSender.add(spy);
 sender.test();
 console.log('✅ readme');
