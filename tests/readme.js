@@ -7,14 +7,14 @@ class Actor {
     }
 }
 // decouple event emmission from event subscription
-const event = new EventDelegate(new Actor()), { weakSet: listeners, proxy: emitter } = event;
+const eventDelegate = new EventDelegate(new Actor()), { event, delegate } = eventDelegate;
 // add event listener
 const actor = new Actor('Hello,', 'world!');
-listeners.add(actor);
+event.add(actor);
 // emit act event to all listeners -> 'Hello,'
-emitter.act();
+delegate.act();
 // get text property from delegate -> 'world!'
-console.log(emitter.text);
+console.log(delegate.text);
 // vanilla
 // const listeners = new Set<Example>()
 // listeners.add(example)

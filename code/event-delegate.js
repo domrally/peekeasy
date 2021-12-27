@@ -1,10 +1,10 @@
 import { WeakSetWrapper } from './weak-set-wrapper.js';
 export class EventDelegate extends Set {
-    constructor(proxy) {
+    constructor(delegate) {
         super();
-        this.proxy = proxy;
-        this.weakSet = new WeakSetWrapper(this);
-        this.proxy = new Proxy(proxy, this);
+        this.delegate = delegate;
+        this.event = new WeakSetWrapper(this);
+        this.delegate = new Proxy(delegate, this);
     }
     get(target, key) {
         let item;
