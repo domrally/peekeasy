@@ -22,8 +22,7 @@ subscriber.forEach(sub => sub.test())
 // our syntax
 const subscribers: Set<Example>   = new SetHandler(),
       onPublish: WeakSet<Example> = new WeakerSet(subscribers),
-      defaultCase: Example        = new Example(),
-      publisher: Example          = new Proxy(defaultCase, subscribers)
+      publisher: Example          = new Proxy(new Example(), subscribers)
 onPublish.add(example)
 publisher.test()
 
