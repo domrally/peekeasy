@@ -2,8 +2,8 @@ import { SetAndProxyHandler, WeakSetWrapper } from '../code/index.js'
 
 class Subscriber {
     constructor(
-        private onStart: string = 'start',
-        private onStop:  string = 'stop',
+        private onStart?: string,
+        private onStop?:  string,
     ) { }
 
     start = () => console.log(this.onStart)
@@ -26,6 +26,12 @@ publisher.start()
 
 // call stop on all subscribers  -> 'world!'
 publisher.stop()
+
+// remove subscription
+onPublish.delete(subscriber)
+
+// call start on all subscribers -> undefined
+publisher.start()
 
 // vanilla
 // const subscribers = new Set<Example>()

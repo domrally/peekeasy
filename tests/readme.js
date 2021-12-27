@@ -1,6 +1,6 @@
-import { SetHandler, WeakerSet } from '../code/index.js';
+import { SetAndProxyHandler, WeakSetWrapper } from '../code/index.js';
 class Subscriber {
-    constructor(onStart = 'start', onStop = 'stop') {
+    constructor(onStart, onStop) {
         this.onStart = onStart;
         this.onStop = onStop;
         this.start = () => console.log(this.onStart);
@@ -8,15 +8,19 @@ class Subscriber {
     }
 }
 // decouple subscription and publication
-const subscription = new SetHandler(), onPublish = new WeakerSet(subscription), publisher = new Proxy(new Subscriber(), subscription);
+const subscription = new SetAndProxyHandler(), onPublish = new WeakSetWrapper(subscription), publisher = new Proxy(new Subscriber(), subscription);
 // create subscriber
 const subscriber = new Subscriber('Hello,', 'world!');
 // add subscription
 onPublish.add(subscriber);
-// send start to subscribers
+// call start on all subscribers -> 'Hello,'
 publisher.start();
-// send stop to subscribers
+// call stop on all subscribers  -> 'world!'
 publisher.stop();
+// remove subscription
+onPublish.delete(subscriber);
+// call start on all subscribers -> undefined
+publisher.start();
 // vanilla
 // const subscribers = new Set<Example>()
 // subscribers.add(example)
