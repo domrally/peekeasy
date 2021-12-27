@@ -1,4 +1,4 @@
-import { EventForwarder } from '../code/index.js'
+import { Host } from '../code/index.js'
 
 class Test {
     constructor(public text?: string, private onAct?: string) { }
@@ -6,7 +6,7 @@ class Test {
 }
 
 // decouple event emmission from event subscription
-const { caller, listeners } = new EventForwarder(new Test())
+const { caller, listeners } = new Host(new Test())
 
 // add event listener
 const test = new Test('Hello,', 'world!')

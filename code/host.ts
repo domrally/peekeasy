@@ -1,6 +1,6 @@
 import { WeakSetWrapper } from './weak-set-wrapper.js'
 
-export class EventForwarder<T extends {}> extends Set<T> implements ProxyHandler<T> {
+export class Host<T extends {}> extends Set<T> implements ProxyHandler<T> {
 	constructor(public caller: T) {
 		super()
 
