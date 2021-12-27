@@ -7,10 +7,7 @@ toolset for proxied event delegation in typescript
 
 ```ts
 class Actor {
-    constructor(
-        private onAct?:  string,
-        private onRest?: string,
-    ) { }
+    constructor(private onAct?: string, private onRest?: string) { }
 
     act  = () => console.log(this.onAct)
     rest = () => console.log(this.onRest)
