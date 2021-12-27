@@ -1,24 +1,26 @@
 import { SetHandler, WeakerSet } from '../code/index.js'
 
-class Example {
+class Subscriber {
     constructor(private message: string = 'empty') { }
-    test() {
-        console.log(this.message)
-    }
+
+    sendMessage = () => console.log(this.message)
 }
-const example: Example = new Example('Hello, world!')
+
+// decouple subscription and publication
+const subscription: Set<Subscriber>     = new SetHandler(),
+      onPublish:    WeakSet<Subscriber> = new WeakerSet(subscription),
+      publisher:    Subscriber          = new Proxy(new Subscriber(), subscription)
+
+// create subscriber
+const subscriber = new Subscriber('Hello, world!')
+
+// add subscription
+onPublish.add(subscriber)
+
+// send message to subscribers
+publisher.sendMessage()
 
 // vanilla
-// const subscribers: Set<Example> = new Set()
+// const subscribers = new Set<Example>()
 // subscribers.add(example)
 // subscribers.forEach(sub => sub.test())
-
-// ours
-const subscription: Set<Example>     = new SetHandler(),
-      onPublish:    WeakSet<Example> = new WeakerSet(subscription),
-      publisher:    Example          = new Proxy(new Example(), subscription)
-onPublish.add(example)
-publisher.test()
-
-// finish
-console.log('✅ readme')
