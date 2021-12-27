@@ -1,9 +1,13 @@
 import { SetHandler, WeakerSet } from '../code/index.js'
 
 class Subscriber {
-    constructor(private message: string = 'empty') { }
+    constructor(
+        private onStart: string = 'start',
+        private onStop:  string = 'stop',
+    ) { }
 
-    sendMessage = () => console.log(this.message)
+    start = () => console.log(this.onStart)
+    stop  = () => console.log(this.onStop)
 }
 
 // decouple subscription and publication
@@ -12,13 +16,16 @@ const subscription: Set<Subscriber>     = new SetHandler(),
       publisher:    Subscriber          = new Proxy(new Subscriber(), subscription)
 
 // create subscriber
-const subscriber = new Subscriber('Hello, world!')
+const subscriber = new Subscriber('Hello,', 'world!')
 
 // add subscription
 onPublish.add(subscriber)
 
-// send message to subscribers
-publisher.sendMessage()
+// send start to subscribers
+publisher.start()
+
+// send stop to subscribers
+publisher.stop()
 
 // vanilla
 // const subscribers = new Set<Example>()
