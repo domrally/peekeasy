@@ -1,20 +1,20 @@
 import { SetHandler, WeakerSet } from '../code/index.js';
-class MyClass {
-    constructor(message) {
+class Example {
+    constructor(message = 'empty') {
         this.message = message;
     }
     test() {
         console.log(this.message);
     }
 }
-// publish subscribe syntax
-const subscribers = new Set();
-const sub = new MyClass('Hello, world!');
-subscribers.add(sub);
-subscribers.forEach(sub => sub.test());
-// our syntax
-const spies = new SetHandler(), spyOnSender = new WeakerSet(spies), defaultCase = new MyClass('no spies'), sender = new Proxy(defaultCase, spies);
-const spy = new MyClass('Hello, world!');
-spyOnSender.add(spy);
-sender.test();
+const example = new Example('Hello, world!');
+// vanilla
+// const subscribers: Set<Example> = new Set()
+// subscribers.add(example)
+// subscribers.forEach(sub => sub.test())
+// ours
+const subscription = new SetHandler(), onPublish = new WeakerSet(subscription), publisher = new Proxy(new Example(), subscription);
+onPublish.add(example);
+publisher.test();
+// finish
 console.log('✅ readme');

@@ -14,15 +14,15 @@ class Example {
 }
 const example: Example = new Example('Hello, world!')
 
-// common pattern
-const subscribers: Set<Example> = new Set()
-subscribers.add(example)
-subscribers.forEach(sub => sub.test())
+// vanilla
+// const subscribers: Set<Example> = new Set()
+// subscribers.add(example)
+// subscribers.forEach(sub => sub.test())
 
-// our syntax
-const subscription: Set<Example>  = new SetHandler(),
-      onPublish: WeakSet<Example> = new WeakerSet(subscription),
-      publisher: Example          = new Proxy(new Example(), subscription)
+// ours
+const subscription: Set<Example>     = new SetHandler(),
+      onPublish:    WeakSet<Example> = new WeakerSet(subscription),
+      publisher:    Example          = new Proxy(new Example(), subscription)
 onPublish.add(example)
 publisher.test()
 
