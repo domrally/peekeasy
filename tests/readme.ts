@@ -11,18 +11,14 @@ class Actor {
 }
 
 // decouple event emmission from event subscription
-const {
-    weakSet: listeners,
-    proxy:   emitter
-} = new EventDelegate<Actor>(new Actor())
+const event = new EventDelegate(new Actor()),
+    { weakSet: listeners, proxy: emitter } = event
 
 // call act on all listeners  -> undefined
 emitter.act()
 
-// create subscriber
-const actor = new Actor('Hello,', 'world!')
- 
 // add subscription
+const actor = new Actor('Hello,', 'world!')
 listeners.add(actor)
 
 // call act on all listeners  -> 'Hello,'
