@@ -6,38 +6,38 @@ toolset for proxied delegation in typescript
 ## how to use
 
 ```ts
-class Subscriber {
+class Actor {
     constructor(
-        private onNext?:   string,
-        private onUpdate?: string,
+        private onAct?:  string,
+        private onRest?: string,
     ) { }
 
-    next   = () => console.log(this.onNext)
-    update = () => console.log(this.onUpdate)
+    act  = () => console.log(this.onAct)
+    rest = () => console.log(this.onRest)
 }
 
-// decouple subscription and publication
-const subscribers:  Set<Subscriber>     = new SetAndProxyHandler(),
-      subscription: WeakSet<Subscriber> = new WeakSetWrapper(subscribers),
-      publisher:    Subscriber          = new Proxy(new Subscriber(), subscribers)
+// decouple event emmission from event subscription
+const listeners: Set<Actor>     = new SetAndProxyHandler(),
+      event:     WeakSet<Actor> = new WeakSetWrapper(listeners),
+      emitter:   Actor          = new Proxy(new Actor(), listeners)
 
 // create subscriber
-const subscriber = new Subscriber('Hello,', 'world!')
-
+const actor = new Actor('Hello,', 'world!')
+ 
 // add subscription
-subscription.add(subscriber)
+event.add(actor)
 
-// call next on all subscribers   -> 'Hello,'
-publisher.next()
+// call act on all listeners  -> 'Hello,'
+emitter.act()
 
-// call update on all subscribers -> 'world!'
-publisher.update()
+// call rest on all listeners -> 'world!'
+emitter.rest()
 
-// remove subscription
-subscription.delete(subscriber)
+// delete subscription
+event.delete(actor)
 
-// call next on all subscribers   -> undefined
-publisher.next()
+// call act on all listeners  -> undefined
+emitter.act()
 
 ```
 
