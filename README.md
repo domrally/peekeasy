@@ -17,8 +17,8 @@ class Subscriber {
 }
 
 // decouple subscription and publication
-const subscription: Set<Subscriber>     = new SetHandler(),
-      onPublish:    WeakSet<Subscriber> = new WeakerSet(subscription),
+const subscription: Set<Subscriber>     = new SetAndProxyHandler(),
+      onPublish:    WeakSet<Subscriber> = new WeakSetWrapper(subscription),
       publisher:    Subscriber          = new Proxy(new Subscriber(), subscription)
 
 // create subscriber

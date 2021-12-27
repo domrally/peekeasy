@@ -1,4 +1,4 @@
-import { SetHandler } from '../code/index.js'
+import { SetAndProxyHandler } from '../code/index.js'
 
 interface Action { }
 interface Type { }
@@ -43,7 +43,7 @@ interface CardObserver { }
 
 class PlayingCard extends Card {
 	// behavior
-	#behavior = new SetHandler<Card>()
+	#behavior = new SetAndProxyHandler<Card>()
 	constructor() {
 		super(new Attack(), new Water(), new Asfdasdf())
 

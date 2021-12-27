@@ -1,4 +1,4 @@
-export class SetHandler<T extends {}> extends Set<T> implements ProxyHandler<T> {
+export class SetAndProxyHandler<T extends {}> extends Set<T> implements ProxyHandler<T> {
 	get(target: any, key: string | symbol | number) {
 		let item: any
 

@@ -1,3 +1,3 @@
-export { SetHandler } from "./set-handler.js"
-export { WeakerSet } from "./weaker-set.js"
+export { SetAndProxyHandler } from "./set-and-proxy-handler.js"
+export { WeakSetWrapper } from "./weak-set-wrapper.js"
 
