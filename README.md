@@ -8,36 +8,36 @@ toolset for proxied delegation in typescript
 ```ts
 class Subscriber {
     constructor(
-        private onStart?: string,
-        private onStop?:  string,
+        private onNext?:   string,
+        private onUpdate?: string,
     ) { }
 
-    start = () => console.log(this.onStart)
-    stop  = () => console.log(this.onStop)
+    next   = () => console.log(this.onNext)
+    update = () => console.log(this.onUpdate)
 }
 
 // decouple subscription and publication
-const subscription: Set<Subscriber>     = new SetAndProxyHandler(),
-      onPublish:    WeakSet<Subscriber> = new WeakSetWrapper(subscription),
-      publisher:    Subscriber          = new Proxy(new Subscriber(), subscription)
+const subscribers:  Set<Subscriber>     = new SetAndProxyHandler(),
+      subscription: WeakSet<Subscriber> = new WeakSetWrapper(subscribers),
+      publisher:    Subscriber          = new Proxy(new Subscriber(), subscribers)
 
 // create subscriber
 const subscriber = new Subscriber('Hello,', 'world!')
 
 // add subscription
-onPublish.add(subscriber)
+subscription.add(subscriber)
 
-// call start on all subscribers -> 'Hello,'
-publisher.start()
+// call next on all subscribers   -> 'Hello,'
+publisher.next()
 
-// call stop on all subscribers  -> 'world!'
-publisher.stop()
+// call update on all subscribers -> 'world!'
+publisher.update()
 
 // remove subscription
-onPublish.delete(subscriber)
+subscription.delete(subscriber)
 
-// call start on all subscribers -> undefined
-publisher.start()
+// call next on all subscribers   -> undefined
+publisher.next()
 
 ```
 
