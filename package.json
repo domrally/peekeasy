@@ -2,7 +2,7 @@
   "type": "module",
   "name": "mealtime",
   "version": "0.0.42",
-  "description": "toolset for event delegation in typescript",
+  "description": "tools for event delegation in typescript",
   "license": "Fair",
   "repository": "domrally/mealtime",
   "scripts": {
@@ -18,10 +18,11 @@
     ".": "./code/index.js"
   },
   "keywords": [
-    "mealtime",
-		"delegation",
-		"delegate",
+    "event",
+	 "delegate",
     "proxy",
-    "pattern"
+    "state",
+	 "forwarding",
+	 "observer"
   ]
 }
