@@ -1,21 +1,20 @@
 import { EventDelegate } from '../code/index.js';
 class Actor {
-    constructor(onAct, onRest) {
+    constructor(onAct, rest) {
         this.onAct = onAct;
-        this.onRest = onRest;
+        this.rest = rest;
         this.act = () => console.log(this.onAct);
-        this.rest = () => console.log(this.onRest);
     }
 }
 // decouple event emmission from event subscription
 const event = new EventDelegate(new Actor()), { weakSet: listeners, proxy: emitter } = event;
-// add subscription
+// add event listener
 const actor = new Actor('Hello,', 'world!');
 listeners.add(actor);
-// call act on all listeners  -> 'Hello,'
+// emit act event to all listeners -> 'Hello,'
 emitter.act();
-// call rest on all listeners -> 'world!'
-emitter.rest();
+// get rest property from delegate -> 'world!'
+console.log(emitter.rest);
 // vanilla
 // const listeners = new Set<Example>()
 // listeners.add(example)

@@ -7,24 +7,23 @@ toolset for proxied event delegation in typescript
 
 ```ts
 class Actor {
-    constructor(private onAct?: string, private onRest?: string) { }
-    act  = () => console.log(this.onAct)
-    rest = () => console.log(this.onRest)
+    constructor(private onAct?: string, public rest?: string) { }
+    act = () => console.log(this.onAct)
 }
 
 // decouple event emmission from event subscription
 const event = new EventDelegate(new Actor()),
     { weakSet: listeners, proxy: emitter } = event
 
-// add subscription
+// add event listener
 const actor = new Actor('Hello,', 'world!')
 listeners.add(actor)
 
-// call act on all listeners  -> 'Hello,'
+// emit act event to all listeners -> 'Hello,'
 emitter.act()
 
-// call rest on all listeners -> 'world!'
-emitter.rest()
+// get rest property from delegate -> 'world!'
+console.log(emitter.rest)
 
 ```
 
