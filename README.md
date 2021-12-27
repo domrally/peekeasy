@@ -12,17 +12,17 @@ class Test {
 }
 
 // decouple event emmission from event subscription
-const { event, delegate } = new EventDelegate(new Test())
+const { caller, listeners } = new EventForwarder(new Test())
 
 // add event listener
 const test = new Test('Hello,', 'world!')
-event.add(test)
+listeners.add(test)
 
-// get text property from delegate -> 'Hello,'
-console.log(delegate.text)
+// get text property from listener -> 'Hello,'
+console.log(caller.text)
 
-// emit act event to all listeners -> 'world!'
-delegate.act()
+// call act event on all listeners -> 'world!'
+caller.act()
 
 ```
 
@@ -30,7 +30,7 @@ delegate.act()
 
 ### web
 ```js
-import { EventDelegate } from 'https://cdn.skypack.dev/mealtime?min'
+import { EventForwarder } from 'https://cdn.skypack.dev/mealtime?min'
 ```
 
 ### node
@@ -38,10 +38,10 @@ import { EventDelegate } from 'https://cdn.skypack.dev/mealtime?min'
 npm i mealtime
 ```
 ```js
-import { EventDelegate } from 'mealtime'
+import { EventForwarder } from 'mealtime'
 ```
 
 ### deno
 ```ts
-import { EventDelegate } from 'https://cdn.skypack.dev/mealtime?dts'
+import { EventForwarder } from 'https://cdn.skypack.dev/mealtime?dts'
 ```

@@ -12,10 +12,10 @@ const { caller, listeners } = new EventForwarder(new Test())
 const test = new Test('Hello,', 'world!')
 listeners.add(test)
 
-// get text property from sender   -> 'Hello,'
+// get text property from listener -> 'Hello,'
 console.log(caller.text)
 
-// emit act event to all listeners -> 'world!'
+// call act event on all listeners -> 'world!'
 caller.act()
 
 // vanilla
