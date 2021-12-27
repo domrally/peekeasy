@@ -1,1 +1,1 @@
-export { EventForwarder } from "./event-forwarder.js";
+export { Operator } from "./operator.js";

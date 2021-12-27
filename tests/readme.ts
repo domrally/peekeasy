@@ -1,4 +1,4 @@
-import { Host } from '../code/index.js'
+import { Operator } from '../code/index.js'
 
 class Test {
     constructor(public text?: string, private onAct?: string) { }
@@ -6,7 +6,7 @@ class Test {
 }
 
 // decouple event emmission from event subscription
-const { caller, listeners } = new Host(new Test())
+const { caller, listeners } = new Operator(new Test())
 
 // add event listener
 const test = new Test('Hello,', 'world!')
