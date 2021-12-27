@@ -2,7 +2,7 @@
   "type": "module",
   "name": "mealtime",
   "version": "0.0.42",
-  "description": "toolset for proxied delegation in typescript",
+  "description": "toolset for event delegation in typescript",
   "license": "Fair",
   "repository": "domrally/mealtime",
   "scripts": {
