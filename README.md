@@ -21,6 +21,9 @@ const listeners: Set<Actor>     = new SetAndProxyHandler(),
       event:     WeakSet<Actor> = new WeakSetWrapper(listeners),
       emitter:   Actor          = new Proxy(new Actor(), listeners)
 
+// call act on all listeners  -> undefined
+emitter.act()
+
 // create subscriber
 const actor = new Actor('Hello,', 'world!')
  
@@ -32,12 +35,6 @@ emitter.act()
 
 // call rest on all listeners -> 'world!'
 emitter.rest()
-
-// delete subscription
-event.delete(actor)
-
-// call act on all listeners  -> undefined
-emitter.act()
 
 ```
 
