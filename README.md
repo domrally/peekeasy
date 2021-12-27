@@ -7,7 +7,7 @@ toolset for proxied event delegation in typescript
 
 ```ts
 class Test {
-    constructor(private onAct?: string, public text?: string) { }
+    constructor(public text?: string, private onAct?: string) { }
     act = () => console.log(this.onAct)
 }
 
@@ -18,11 +18,11 @@ const { event, delegate } = new EventDelegate(new Test())
 const test = new Test('Hello,', 'world!')
 event.add(test)
 
-// emit act event to all listeners -> 'Hello,'
-delegate.act()
-
 // get text property from delegate -> 'world!'
 console.log(delegate.text)
+
+// emit act event to all listeners -> 'Hello,'
+delegate.act()
 
 ```
 
