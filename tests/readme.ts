@@ -6,8 +6,7 @@ class Actor {
 }
 
 // decouple event emmission from event subscription
-const eventDelegate = new EventDelegate(new Actor()),
-    { event, delegate } = eventDelegate
+const { event, delegate } = new EventDelegate(new Actor())
 
 // add event listener
 const actor = new Actor('Hello,', 'world!')
