@@ -1,16 +1,16 @@
 import { EventDelegate } from '../code/index.js'
 
-class Actor {
+class Test {
     constructor(private onAct?: string, public text?: string) { }
     act = () => console.log(this.onAct)
 }
 
 // decouple event emmission from event subscription
-const { event, delegate } = new EventDelegate(new Actor())
+const { event, delegate } = new EventDelegate(new Test())
 
 // add event listener
-const actor = new Actor('Hello,', 'world!')
-event.add(actor)
+const test = new Test('Hello,', 'world!')
+event.add(test)
 
 // emit act event to all listeners -> 'Hello,'
 delegate.act()

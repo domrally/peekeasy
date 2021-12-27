@@ -1,5 +1,5 @@
 import { EventDelegate } from '../code/index.js';
-class Actor {
+class Test {
     constructor(onAct, text) {
         this.onAct = onAct;
         this.text = text;
@@ -7,10 +7,10 @@ class Actor {
     }
 }
 // decouple event emmission from event subscription
-const { event, delegate } = new EventDelegate(new Actor());
+const { event, delegate } = new EventDelegate(new Test());
 // add event listener
-const actor = new Actor('Hello,', 'world!');
-event.add(actor);
+const test = new Test('Hello,', 'world!');
+event.add(test);
 // emit act event to all listeners -> 'Hello,'
 delegate.act();
 // get text property from delegate -> 'world!'
