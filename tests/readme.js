@@ -9,8 +9,6 @@ class Actor {
 }
 // decouple event emmission from event subscription
 const event = new EventDelegate(new Actor()), { weakSet: listeners, proxy: emitter } = event;
-// call act on all listeners  -> undefined
-emitter.act();
 // add subscription
 const actor = new Actor('Hello,', 'world!');
 listeners.add(actor);
