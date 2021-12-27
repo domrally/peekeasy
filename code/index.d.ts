@@ -1,1 +1,1 @@
-export { EventDelegate } from "./event-delegate.js";
+export { EventForwarder } from "./event-forwarder.js";

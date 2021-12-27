@@ -1,4 +1,4 @@
-import { EventDelegate } from '../code/index.js';
+import { EventForwarder } from '../code/index.js';
 class Test {
     constructor(text, onAct) {
         this.text = text;
@@ -7,14 +7,14 @@ class Test {
     }
 }
 // decouple event emmission from event subscription
-const { event, delegate } = new EventDelegate(new Test());
+const { caller, listeners } = new EventForwarder(new Test());
 // add event listener
 const test = new Test('Hello,', 'world!');
-event.add(test);
-// get text property from delegate -> 'Hello,'
-console.log(delegate.text);
+listeners.add(test);
+// get text property from sender   -> 'Hello,'
+console.log(caller.text);
 // emit act event to all listeners -> 'world!'
-delegate.act();
+caller.act();
 // vanilla
 // const listeners = new Set<Example>()
 // listeners.add(example)
