@@ -30,18 +30,18 @@ caller.act()
 
 ### web
 ```js
-import { EventForwarder } from 'https://cdn.skypack.dev/mealtime?min'
+import { Operator } from 'https://cdn.skypack.dev/plugboard?min'
 ```
 
 ### node
 ```
-npm i mealtime
+npm i plugboard
 ```
 ```js
-import { EventForwarder } from 'mealtime'
+import { Operator } from 'plugboard'
 ```
 
 ### deno
 ```ts
-import { EventForwarder } from 'https://cdn.skypack.dev/mealtime?dts'
+import { Operator } from 'https://cdn.skypack.dev/plugboard?dts'
 ```
