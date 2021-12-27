@@ -21,10 +21,10 @@ const subscriber = new Subscriber('Hello,', 'world!')
 // add subscription
 onPublish.add(subscriber)
 
-// send start to subscribers -> 'Hello,'
+// call start on all subscribers -> 'Hello,'
 publisher.start()
 
-// send stop to subscribers  -> 'world!'
+// call stop on all subscribers  -> 'world!'
 publisher.stop()
 
 // vanilla
