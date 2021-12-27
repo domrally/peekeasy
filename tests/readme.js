@@ -1,27 +1,25 @@
-import { SetAndProxyHandler, WeakSetWrapper } from '../code/index.js';
-class Subscriber {
-    constructor(onStart, onStop) {
-        this.onStart = onStart;
-        this.onStop = onStop;
-        this.start = () => console.log(this.onStart);
-        this.stop = () => console.log(this.onStop);
+import { EventDelegate } from '../code/index.js';
+class Actor {
+    constructor(onAct, onRest) {
+        this.onAct = onAct;
+        this.onRest = onRest;
+        this.act = () => console.log(this.onAct);
+        this.rest = () => console.log(this.onRest);
     }
 }
-// decouple subscription and publication
-const subscription = new SetAndProxyHandler(), onPublish = new WeakSetWrapper(subscription), publisher = new Proxy(new Subscriber(), subscription);
+// decouple event emmission from event subscription
+const { weakSet: listeners, proxy: emitter } = new EventDelegate(new Actor());
+// call act on all listeners  -> undefined
+emitter.act();
 // create subscriber
-const subscriber = new Subscriber('Hello,', 'world!');
+const actor = new Actor('Hello,', 'world!');
 // add subscription
-onPublish.add(subscriber);
-// call start on all subscribers -> 'Hello,'
-publisher.start();
-// call stop on all subscribers  -> 'world!'
-publisher.stop();
-// remove subscription
-onPublish.delete(subscriber);
-// call start on all subscribers -> undefined
-publisher.start();
+listeners.add(actor);
+// call act on all listeners  -> 'Hello,'
+emitter.act();
+// call rest on all listeners -> 'world!'
+emitter.rest();
 // vanilla
-// const subscribers = new Set<Example>()
-// subscribers.add(example)
-// subscribers.forEach(sub => sub.test())
+// const listeners = new Set<Example>()
+// listeners.add(example)
+// listeners.forEach(sub => sub.test())

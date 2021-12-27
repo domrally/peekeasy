@@ -17,9 +17,10 @@ class Actor {
 }
 
 // decouple event emmission from event subscription
-const listeners: Set<Actor>     = new SetAndProxyHandler(),
-      event:     WeakSet<Actor> = new WeakSetWrapper(listeners),
-      emitter:   Actor          = new Proxy(new Actor(), listeners)
+const {
+    weakSet: listeners,
+    proxy:   emitter
+} = new EventDelegate<Actor>(new Actor())
 
 // call act on all listeners  -> undefined
 emitter.act()
@@ -28,7 +29,7 @@ emitter.act()
 const actor = new Actor('Hello,', 'world!')
  
 // add subscription
-event.add(actor)
+listeners.add(actor)
 
 // call act on all listeners  -> 'Hello,'
 emitter.act()
@@ -42,7 +43,7 @@ emitter.rest()
 
 ### web
 ```js
-import { SetHandler, WeakerSet } from 'https://cdn.skypack.dev/mealtime?min'
+import { EventDelegate } from 'https://cdn.skypack.dev/mealtime?min'
 ```
 
 ### node
@@ -50,10 +51,10 @@ import { SetHandler, WeakerSet } from 'https://cdn.skypack.dev/mealtime?min'
 npm i mealtime
 ```
 ```js
-import { SetHandler, WeakerSet } from 'mealtime'
+import { EventDelegate } from 'mealtime'
 ```
 
 ### deno
 ```ts
-import { SetHandler, WeakerSet } from 'https://cdn.skypack.dev/mealtime?dts'
+import { EventDelegate } from 'https://cdn.skypack.dev/mealtime?dts'
 ```

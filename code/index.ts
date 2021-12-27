@@ -1,3 +1,1 @@
-export { SetAndProxyHandler } from "./set-and-proxy-handler.js"
-export { WeakSetWrapper } from "./weak-set-wrapper.js"
-
+export { EventDelegate } from "./event-delegate.js"

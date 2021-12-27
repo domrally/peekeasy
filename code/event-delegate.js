@@ -1,4 +1,11 @@
-export class SetAndProxyHandler extends Set {
+import { WeakSetWrapper } from './weak-set-wrapper.js';
+export class EventDelegate extends Set {
+    constructor(proxy) {
+        super();
+        this.proxy = proxy;
+        this.weakSet = new WeakSetWrapper(this);
+        this.proxy = new Proxy(proxy, this);
+    }
     get(target, key) {
         let item;
         if (this.size) {

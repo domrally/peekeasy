@@ -1,4 +1,4 @@
-import { SetAndProxyHandler, WeakSetWrapper } from '../code/index.js'
+import { EventDelegate } from '../code/index.js'
 
 class Actor {
     constructor(
@@ -11,27 +11,25 @@ class Actor {
 }
 
 // decouple event emmission from event subscription
-const listeners: Set<Actor>     = new SetAndProxyHandler(),
-      event:     WeakSet<Actor> = new WeakSetWrapper(listeners),
-      emitter:   Actor          = new Proxy(new Actor(), listeners)
+const {
+    weakSet: listeners,
+    proxy:   emitter
+} = new EventDelegate<Actor>(new Actor())
+
+// call act on all listeners  -> undefined
+emitter.act()
 
 // create subscriber
 const actor = new Actor('Hello,', 'world!')
  
 // add subscription
-event.add(actor)
+listeners.add(actor)
 
 // call act on all listeners  -> 'Hello,'
 emitter.act()
 
 // call rest on all listeners -> 'world!'
 emitter.rest()
-
-// delete subscription
-event.delete(actor)
-
-// call act on all listeners  -> undefined
-emitter.act()
 
 // vanilla
 // const listeners = new Set<Example>()
