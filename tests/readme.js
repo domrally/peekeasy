@@ -1,8 +1,8 @@
 import { EventDelegate } from '../code/index.js';
 class Actor {
-    constructor(onAct, rest) {
+    constructor(onAct, text) {
         this.onAct = onAct;
-        this.rest = rest;
+        this.text = text;
         this.act = () => console.log(this.onAct);
     }
 }
@@ -13,8 +13,8 @@ const actor = new Actor('Hello,', 'world!');
 listeners.add(actor);
 // emit act event to all listeners -> 'Hello,'
 emitter.act();
-// get rest property from delegate -> 'world!'
-console.log(emitter.rest);
+// get text property from delegate -> 'world!'
+console.log(emitter.text);
 // vanilla
 // const listeners = new Set<Example>()
 // listeners.add(example)
