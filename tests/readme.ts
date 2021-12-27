@@ -12,10 +12,10 @@ const { event, delegate } = new EventDelegate(new Test())
 const test = new Test('Hello,', 'world!')
 event.add(test)
 
-// get text property from delegate -> 'world!'
+// get text property from delegate -> 'Hello,'
 console.log(delegate.text)
 
-// emit act event to all listeners -> 'Hello,'
+// emit act event to all listeners -> 'world!'
 delegate.act()
 
 // vanilla
