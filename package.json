@@ -6,7 +6,7 @@
   "license": "Fair",
   "repository": "domrally/mealtime",
   "scripts": {
-    "test": "node tests/index.js"
+    "test": "node out/tests/index.js"
   },
   "main": "out/index.js",
   "types": "out/index.d.ts",
