@@ -1,21 +1,9 @@
-import { Operator } from '../code/index.js';
-class Test {
-    constructor(text, onAct) {
-        this.text = text;
-        this.onAct = onAct;
-        this.act = () => console.log(this.onAct);
-    }
-}
-// decouple event emmission from event subscription
-const { caller, listeners } = new Operator(new Test());
-// add event listener
-const test = new Test('Hello,', 'world!');
-listeners.add(test);
-// get text property from listener -> 'Hello,'
-console.log(caller.text);
-// call act event on all listeners -> 'world!'
-caller.act();
-// vanilla
-// const listeners = new Set<Example>()
-// listeners.add(example)
-// listeners.forEach(sub => sub.test())
+import { Holder, Sender } from '../code/index.js';
+const log = () => console.log('listen');
+const logger = { log };
+const { send, sent } = new Sender(); // const listeners = new Set()
+sent.add(log); // listeners.add(listener)
+send(); // listeners.forEach(t => t())
+const { held, hold } = new Holder(); // const holder = { held: null }
+hold(logger); // holder.held = listener
+held.log(); // holder.held.listen()

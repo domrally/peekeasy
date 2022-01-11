@@ -1,15 +1,14 @@
-import { SetAndProxyHandler } from '../code/index.js'
+import { Holder, Sender } from '../../code/index.js'
 
 interface Action { }
 interface Type { }
 interface Effect { }
 
-abstract class Card {
-	constructor(
-		protected type: Type,
-		protected action: Action,
-		protected effect: Effect,
-	) { }
+abstract class Card extends Set<Card> { 
+	constructor() { 
+		super()
+		return new Holder<this>().held
+	}
 }
 
 class Attack implements Action { }
@@ -43,14 +42,29 @@ interface CardObserver { }
 
 class PlayingCard extends Card {
 	// behavior
-	#behavior = new SetAndProxyHandler<Card>()
 	constructor() {
-		super(new Attack(), new Water(), new Asfdasdf())
+		super()
 
-		return new Proxy<this>(this, this.#behavior)
+		const { held, hold } = new Holder<Card>()
+
+		const drawPile = Object.assign(() => console.log('draw'), new East())
+
+		listeners.add(drawPile)
+		listeners.add(hand)
+		listeners.add(table)
+		listeners.add(discardPile)
+
+		return held
 	}
 }
 
-const deck: Iterable<PlayingCard> = []
+const { send: activeCard, sent: deck } = new Sender<Card>()
+
+const pikachu = () => { }
+pikachu.type = new Water()
+pikachu.action = new Attack()
+pikachu.effect = new Asfdasdf()
+
+deck.add(pikachu)
 
 

@@ -1,24 +1,12 @@
-import { Operator } from '../code/index.js'
+import { Holder, Sender } from '../code/index.js'
 
-class Test {
-    constructor(public text?: string, private onAct?: string) { }
-    act = () => console.log(this.onAct)
-}
+const log = () => console.log('listen')
+const logger = { log } 
 
-// decouple event emmission from event subscription
-const { caller, listeners } = new Operator(new Test())
+const { send, sent } = new Sender<typeof log>() // const listeners = new Set()
+sent.add(log) // listeners.add(listener)
+send() // listeners.forEach(t => t())
 
-// add event listener
-const test = new Test('Hello,', 'world!')
-listeners.add(test)
-
-// get text property from listener -> 'Hello,'
-console.log(caller.text)
-
-// call act event on all listeners -> 'world!'
-caller.act()
-
-// vanilla
-// const listeners = new Set<Example>()
-// listeners.add(example)
-// listeners.forEach(sub => sub.test())
+const { held, hold } = new Holder<typeof logger>() // const holder = { held: null }
+hold(logger) // holder.held = listener
+held.log() // holder.held.listen()

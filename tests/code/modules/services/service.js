@@ -9,22 +9,21 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
-var _WeakSetWrapper_set;
-export class WeakSetWrapper {
-    constructor(set) {
-        _WeakSetWrapper_set.set(this, void 0);
-        __classPrivateFieldSet(this, _WeakSetWrapper_set, set, "f");
-    }
-    has(t) {
-        return __classPrivateFieldGet(this, _WeakSetWrapper_set, "f").has(t);
-    }
-    add(t) {
-        return __classPrivateFieldGet(this, _WeakSetWrapper_set, "f").add(t);
-    }
-    delete(t) {
-        return __classPrivateFieldGet(this, _WeakSetWrapper_set, "f").delete(t);
-    }
-    get [(_WeakSetWrapper_set = new WeakMap(), Symbol.toStringTag)]() {
-        return __classPrivateFieldGet(this, _WeakSetWrapper_set, "f")[Symbol.toStringTag];
-    }
+export function service() {
+    var _a, _Service_instance;
+    return _a = class Service {
+            constructor() {
+                __classPrivateFieldSet(Service, _a, this, "f", _Service_instance);
+            }
+            static get instance() {
+                return __classPrivateFieldGet(Service, _a, "f", _Service_instance);
+            }
+        },
+        _Service_instance = { value: void 0 },
+        _a.Class = class {
+            get service() {
+                return _a.instance;
+            }
+        },
+        _a;
 }

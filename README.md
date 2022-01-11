@@ -1,28 +1,27 @@
-# Plugboard
-[![](https://badgen.net/packagephobia/install/mealtime?icon=npm&label&color=black&scale=1.3)](https://www.npmjs.com/package/mealtime) [![](https://badgen.net/npm/types/tslib?icon=typescript&label&color=black&scale=1.3)](https://github.com/domrally/mealtime/blob/main/code/context.d.ts) [![](https://badgen.net/badge/license/Fair?color=grey&scale=1.3)](https://github.com/domrally/mealtime/blob/main/LICENSE) [![](https://badgen.net/github/tag/domrally/mealtime?icon=git&label&color=grey&scale=1.3)](https://github.com/domrally/mealtime/releases) [![](https://badgen.net/github/status/domrally/mealtime?icon=github&label&color=black&scale=1.3)](https://github.com/domrally/mealtime/actions)
+# Peekeasy
+[![](https://badgen.net/packagephobia/install/peekeasy?icon=npm&label&color=black&scale=1.3)](https://www.npmjs.com/package/peekeasy) [![](https://badgen.net/npm/types/tslib?icon=typescript&label&color=black&scale=1.3)](https://github.com/domrally/peekeasy/blob/main/code/context.d.ts) [![](https://badgen.net/badge/license/Fair?color=grey&scale=1.3)](https://github.com/domrally/peekeasy/blob/main/LICENSE) [![](https://badgen.net/github/tag/domrally/peekeasy?icon=git&label&color=grey&scale=1.3)](https://github.com/domrally/peekeasy/releases) [![](https://badgen.net/github/status/domrally/peekeasy?icon=github&label&color=black&scale=1.3)](https://github.com/domrally/peekeasy/actions)
 
 tools for event proxies in typescript
 
 ## how to use
 
+### sending events
 ```ts
-class Test {
-    constructor(public text?: string, private onAct?: string) { }
-    act = () => console.log(this.onAct)
-}
+const listener = () => console.log('sending')
 
-// decouple event emmission from event subscription
-const { caller, listeners } = new Operator(new Test())
+const { send, sent } = new Sender<typeof listener>() // const listeners = new Set()
+sent.add(listener) // listeners.add(listener)
+send() // listeners.forEach(t => t())
 
-// add event listener
-const test = new Test('Hello,', 'world!')
-listeners.add(test)
+```
 
-// get text property from listener -> 'Hello,'
-console.log(caller.text)
+### holding state
+```ts
+const actor = { act: () => console.log('holding') }
 
-// call act event on all listeners -> 'world!'
-caller.act()
+const { hold, held } = new Holder<typeof actor>() // const holder = { held: null }
+hold(actor) // holder.held = actor
+held.act() // holder.held.act()
 
 ```
 
@@ -30,18 +29,18 @@ caller.act()
 
 ### web
 ```js
-import { Operator } from 'https://cdn.skypack.dev/plugboard?min'
+import { Holder, Sender } from 'https://cdn.skypack.dev/peekeasy?min'
 ```
 
 ### node
 ```
-npm i plugboard
+npm i peekeasy
 ```
 ```js
-import { Operator } from 'plugboard'
+import { Holder, Sender } from 'peekeasy'
 ```
 
 ### deno
 ```ts
-import { Operator } from 'https://cdn.skypack.dev/plugboard?dts'
+import { Holder, Sender } from 'https://cdn.skypack.dev/peekeasy?dts'
 ```
