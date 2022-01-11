@@ -6,23 +6,26 @@
   "license": "Fair",
   "repository": "domrally/mealtime",
   "scripts": {
-    "test": "node out/tests/index.js"
+    "test": "node node/tests/index.js"
   },
-  "main": "out/index.js",
-  "types": "out/index.d.ts",
+  "main": "node/code/index.js",
+  "types": "node/types/index.d.ts",
   "files": [
-    "out/*.js",
-    "out/*.d.ts"
+    "node/code",
+    "node/types"
   ],
   "exports": {
-    ".": "./out/index.js"
+    ".": "./node/code/index.js"
   },
   "keywords": [
     "event",
-	 "delegate",
+    "delegate",
     "proxy",
     "state",
-	 "forwarding",
-	 "observer"
-  ]
+    "forwarding",
+    "observer"
+  ],
+  "devDependencies": {
+    "@tsconfig/recommended": "^1.0.1"
+  }
 }
