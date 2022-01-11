@@ -1,5 +1,5 @@
 //     ╭─model──────────────╮
-//  ╭──→ consumer → service ├╮
+//  ╭──→ service ← consumer ├╮
 // app╮╰────────────────────╯│
 // ╰┬─╯╭─global────────────╮ │
 //  ╰──→ listener → events │←╯
