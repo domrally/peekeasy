@@ -2,12 +2,12 @@
   "extends": "@tsconfig/recommended/tsconfig.json",
   "compilerOptions": {
     "module": "ES2015",
-    "outDir": "node",
+    "outDir": "node/js",
     "declarationDir": "node/types",
     "declaration": true,
   },
   "files": [
-    "./code/index.ts",
-    "./tests/index.ts"
+    "code/index.ts",
+    "tests/index.ts"
   ]
 }

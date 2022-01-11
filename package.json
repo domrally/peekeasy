@@ -6,16 +6,16 @@
   "license": "Fair",
   "repository": "domrally/mealtime",
   "scripts": {
-    "test": "node node/tests/index.js"
+    "test": "node node/js/tests/index.js"
   },
-  "main": "node/code/index.js",
-  "types": "node/types/index.d.ts",
+  "main": "node/js/code/index.js",
+  "types": "node/types/code/index.d.ts",
   "files": [
-    "node/code",
-    "node/types"
+    "node/js/code",
+    "node/types/code"
   ],
   "exports": {
-    ".": "./node/code/index.js"
+    ".": "./node/js/code/index.js"
   },
   "keywords": [
     "event",
