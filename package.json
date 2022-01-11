@@ -8,14 +8,14 @@
   "scripts": {
     "test": "node tests/index.js"
   },
-  "main": "code/index.js",
-  "types": "code/index.d.ts",
+  "main": "out/index.js",
+  "types": "out/index.d.ts",
   "files": [
-    "code/*.js",
-    "code/*.d.ts"
+    "out/*.js",
+    "out/*.d.ts"
   ],
   "exports": {
-    ".": "./code/index.js"
+    ".": "./out/index.js"
   },
   "keywords": [
     "event",
