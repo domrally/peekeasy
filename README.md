@@ -1,5 +1,8 @@
 # Peekeasy
-[![](https://badgen.net/packagephobia/install/peekeasy?icon=npm&label&color=black&scale=1.3)](https://www.npmjs.com/package/peekeasy) [![](https://badgen.net/npm/types/tslib?icon=typescript&label&color=black&scale=1.3)](https://github.com/domrally/peekeasy/blob/main/code/context.d.ts) [![](https://badgen.net/badge/license/Fair?color=grey&scale=1.3)](https://github.com/domrally/peekeasy/blob/main/LICENSE) [![](https://badgen.net/github/tag/domrally/peekeasy?icon=git&label&color=grey&scale=1.3)](https://github.com/domrally/peekeasy/releases) [![](https://badgen.net/github/status/domrally/peekeasy?icon=github&label&color=black&scale=1.3)](https://github.com/domrally/peekeasy/actions)
+[![Code Style: Google](https://img.shields.io/badge/code%20style-google-blueviolet.svg)](https://github.com/google/gts)
+[![](https://badgen.net/npm/types/tslib?icon=typescript&label&color=black)](https://github.com/domrally/peekeasy/blob/main/build/types/index.d.ts)
+[![](https://badgen.net/badge/license/Fair?color=grey)](https://github.com/domrally/peekeasy/blob/main/LICENSE)
+[![](https://badgen.net/github/status/domrally/peekeasy?icon=github&label&color=black&scale=1.3)](https://github.com/domrally/peekeasy/actions)
 
 tools for event proxies in typescript
 
