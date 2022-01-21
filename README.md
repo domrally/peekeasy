@@ -1,8 +1,8 @@
 # Peekeasy
 [![Code Style: Google](https://img.shields.io/badge/code%20style-google-blueviolet.svg)](https://github.com/google/gts)
-[![](https://badgen.net/npm/types/tslib?icon=typescript&label&color=black)](https://github.com/domrally/peekeasy/blob/main/build/types/index.d.ts)
-[![](https://badgen.net/badge/license/Fair?color=grey)](https://github.com/domrally/peekeasy/blob/main/LICENSE)
-[![](https://badgen.net/github/status/domrally/peekeasy?icon=github&label&color=black&scale=1.3)](https://github.com/domrally/peekeasy/actions)
+[![](https://badgen.net/npm/types/tslib?icon=typescript&label)](https://github.com/domrally/peekeasy/blob/main/build/types/index.d.ts)
+[![](https://badgen.net/badge/license/Fair)](https://github.com/domrally/peekeasy/blob/main/LICENSE)
+[![](https://badgen.net/github/status/domrally/peekeasy?icon=github&label)](https://github.com/domrally/peekeasy/actions)
 
 tools for event proxies in typescript
 
