@@ -1,9 +1,11 @@
-export declare class Proxier<T extends {}> implements ProxyHandler<T> {
-    private target?;
-    constructor(target?: T | undefined);
+export declare class Proxier<T extends {
+    [key: PropertyKey]: {};
+}> implements ProxyHandler<T> {
+    constructor(target?: T);
+    private target;
     readonly proxy: T;
     setProxy(target: T): T;
-    readonly get: (target: any, key: string) => any;
-    readonly set: <V>(target: any, key: string, value: V) => V;
-    readonly apply: (target: any, that: T, args: []) => any;
+    readonly get: (target: T, key: PropertyKey) => any;
+    readonly set: <V>(target: any, key: PropertyKey, value: V) => V;
+    readonly apply: (target: T, that: T, args: []) => any;
 }
