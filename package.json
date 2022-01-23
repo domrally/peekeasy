@@ -1,7 +1,6 @@
 {
     "name": "peekeasy",
 	 "version": "0.0.42",
-	 "type": "module",
     "description": "tools for event proxies in typescript",
     "main": "build/code/index.js",
     "types": "build/types/index.d.ts",

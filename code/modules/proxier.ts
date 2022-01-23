@@ -5,9 +5,9 @@ export class Proxier<T extends {}> implements ProxyHandler<T> {
 
   readonly proxy: T;
 
-	setProxy(target: T) {
-		return this.target = target;
-	}
+  setProxy(target: T) {
+    return (this.target = target);
+  }
 
   readonly get = (target: any, key: string) =>
     (this.target as any)[key] ?? target[key];

@@ -1,8 +1,8 @@
-import { PeekSet } from './peek-set.js'
+import {PeekSet} from './peek-set.js';
 
-export class Caller<T extends (...args: any[]) => void>
-	extends Set<(parameters: Parameters<T>) => void>
-{
+export class Caller<T extends (...args: any[]) => void> extends Set<
+  (parameters: Parameters<T>) => void
+> {
   readonly callBacks: WeakSet<T> = new PeekSet(this);
 
   readonly call = (...parameters: Parameters<T>) => {
