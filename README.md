@@ -1,8 +1,6 @@
 # Peekeasy
-[![Code Style: Google](https://img.shields.io/badge/code%20style-google-blueviolet.svg)](https://github.com/google/gts)
-[![](https://badgen.net/npm/types/tslib?icon=typescript&label)](https://github.com/domrally/peekeasy/blob/main/build/types/index.d.ts)
-[![](https://badgen.net/badge/license/Fair)](https://github.com/domrally/peekeasy/blob/main/LICENSE)
-[![](https://badgen.net/github/status/domrally/peekeasy?icon=github&label)](https://github.com/domrally/peekeasy/actions)
+
+![](https://img.shields.io/npm/v/mealtime?style=for-the-badge&label=version&logo=npm&color=CB3837) ![](https://img.shields.io/badge/docs-CC%20BY--ND%204.0-f8722a?logo=creativecommons&style=for-the-badge) ![](https://img.shields.io/badge/format-prettier-f8bc45?style=for-the-badge&logo=prettier) ![](https://img.shields.io/npm/l/mealtime?style=for-the-badge&color=3DA639&logo=opensourceinitiative) ![](https://img.shields.io/badge/script-ts-3178c6?logo=typescript&style=for-the-badge) ![](https://img.shields.io/badge/lint-es-4B32C3?logo=eslint&style=for-the-badge) ![](https://img.shields.io/badge/style-google-blueviolet?style=for-the-badge&logo=google&label=style)
 
 tools for event proxies in typescript
 
