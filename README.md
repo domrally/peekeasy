@@ -30,7 +30,7 @@ proxy.log()
 
 ### web
 ```js
-import { Holder, Sender } from 'https://cdn.skypack.dev/peekeasy?min'
+import { Caller, Proxier } from 'https://cdn.skypack.dev/peekeasy?min'
 ```
 
 ### node
@@ -38,10 +38,10 @@ import { Holder, Sender } from 'https://cdn.skypack.dev/peekeasy?min'
 npm i peekeasy
 ```
 ```js
-import { Holder, Sender } from 'peekeasy'
+import { Caller, Proxier } from 'peekeasy'
 ```
 
 ### deno
 ```ts
-import { Holder, Sender } from 'https://cdn.skypack.dev/peekeasy?dts'
+import { Caller, Proxier } from 'https://cdn.skypack.dev/peekeasy?dts'
 ```
