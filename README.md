@@ -8,9 +8,9 @@ tools for event proxies in typescript
 
 ### sending events
 ```ts
-const listener = () => console.log('calling listeners')
-
-const { call, callBacks } = new Caller<typeof listener>()
+const listener = () => console.log('calling listeners'),
+    { call, callBacks } = new Caller<typeof listener>()
+    
 callBacks.add(listener)
 call()
 
@@ -18,9 +18,9 @@ call()
 
 ### holding state
 ```ts
-const actor = { act: () => console.log('proxy state') }
-
-const { proxy, setProxy } = new Proxier<typeof actor>()
+const actor = { act: () => console.log('proxy state') },
+    { proxy, setProxy } = new Proxier<typeof actor>()
+    
 setProxy(actor)
 proxy.log()
 
