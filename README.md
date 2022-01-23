@@ -8,21 +8,21 @@ tools for event proxies in typescript
 
 ### sending events
 ```ts
-const listener = () => console.log('sending')
+const listener = () => console.log('calling listeners')
 
-const { send, sent } = new Sender<typeof listener>() // const listeners = new Set()
-sent.add(listener) // listeners.add(listener)
-send() // listeners.forEach(t => t())
+const { call, callBacks } = new Caller<typeof listener>()
+callBacks.add(listener)
+call()
 
 ```
 
 ### holding state
 ```ts
-const actor = { act: () => console.log('holding') }
+const actor = { act: () => console.log('proxy state') }
 
-const { hold, held } = new Holder<typeof actor>() // const holder = { held: null }
-hold(actor) // holder.held = actor
-held.act() // holder.held.act()
+const { proxy, setProxy } = new Proxier<typeof actor>()
+setProxy(actor)
+proxy.log()
 
 ```
 
