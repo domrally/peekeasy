@@ -1,13 +1,15 @@
 {
-  "extends": "@tsconfig/recommended/tsconfig.json",
+  "extends": "./node_modules/gts/tsconfig-google.json",
   "compilerOptions": {
-    "module": "ES2015",
-    "outDir": "node/js",
-    "declarationDir": "node/types",
-    "declaration": true,
+    "rootDir": "code",
+    "lib": [
+        "es2018", 
+        "dom"
+    ],
+    "outDir": "build/code",
+    "declarationDir": "build/types"
   },
-  "files": [
-    "code/index.ts",
-    "tests/index.ts"
+  "include": [
+    "code/**/*.ts"
   ]
 }
