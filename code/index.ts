@@ -1,3 +1,3 @@
-export { Holder } from "./modules/holder.js"
-export { Sender } from "./modules/sender.js"
+export { Caller } from "./modules/caller.js"
+export { Proxier } from "./modules/proxier.js"
 
