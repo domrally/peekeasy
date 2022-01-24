@@ -42,7 +42,8 @@
     },
     "homepage": "https://domrally.github.io/peekeasy",
     "devDependencies": {
-        "texte": "^0.0.4",
+        "squoval": ">0.0.1",
+        "texte": ">0.0.1",
         "gts": "^3.1.0",
         "typescript": "^4.0.3",
         "@types/node": "^14.11.2",
