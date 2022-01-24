@@ -1,6 +1,6 @@
 # Peekeasy
 
-tools for event proxies in typescript
+tools for observing proxies in typescript
 
 ## how to use
 
