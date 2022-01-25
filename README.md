@@ -2,7 +2,7 @@
 
 tools for observing proxies in typescript
 
-## .Using
+## .Usage
 
 **. sending events**
 ```ts
