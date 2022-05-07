@@ -6,44 +6,44 @@ name: build
 on: [push]
 
 jobs:
-    test:
-        runs-on: ubuntu-latest
-        strategy:
-            matrix:
-                testScriptName: [lint, unit, integration]
-        steps:
-            - name: opening project
-              uses: actions/checkout@v3
+   test:
+      runs-on: ubuntu-latest
+      strategy:
+         matrix:
+            testScriptName: [lint, unit, integration]
+      steps:
+         - name: opening project
+           uses: actions/checkout@v3
 
-            - name: setting up Node.js
-              uses: actions/setup-node@v3
-              with:
-                  node-version: '16.x'
+         - name: setting up Node.js
+           uses: actions/setup-node@v3
+           with:
+              node-version: '16.x'
 
-            - name: installing dependencies
-              run: npm ci
+         - name: installing dependencies
+           run: npm ci
 
-            - name: running tests
-              run: npm run ${{ matrix.testScriptName }}
+         - name: running tests
+           run: npm run ${{ matrix.testScriptName }}
 
-    publish:
-        if: github.ref_name == 'main'
-        needs: test
-        runs-on: ubuntu-latest
-        steps:
-            - name: opening project
-              uses: actions/checkout@v3
+   publish:
+      if: github.ref_name == 'main'
+      needs: test
+      runs-on: ubuntu-latest
+      steps:
+         - name: opening project
+           uses: actions/checkout@v3
 
-            - name: setting up Node.js
-              uses: actions/setup-node@v3
-              with:
-                  node-version: '16.x'
-                  registry-url: https://registry.npmjs.org/
+         - name: setting up Node.js
+           uses: actions/setup-node@v3
+           with:
+              node-version: '16.x'
+              registry-url: https://registry.npmjs.org/
 
-            - name: installing dependencies
-              run: npm ci
+         - name: installing dependencies
+           run: npm ci
 
-            - name: publish node package
-              run: npm publish
-              env:
-                  NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+         - name: publish node package
+           run: npm publish
+           env:
+              NODE_AUTH_TOKEN: ${{secrets.npm_token}}

@@ -8,7 +8,7 @@ tools for observing proxies in typescript
 
 ```ts
 const listener = () => console.log('calling listeners'),
-    { call, callBacks } = new Caller<typeof listener>()
+	{ call, callBacks } = new Caller<typeof listener>()
 
 callBacks.add(listener)
 call()
@@ -18,7 +18,7 @@ call()
 
 ```ts
 const actor = { act: () => console.log('proxy state') },
-    { proxy, setProxy } = new Proxier<typeof actor>()
+	{ proxy, setProxy } = new Proxier<typeof actor>()
 
 setProxy(actor)
 proxy.log()
