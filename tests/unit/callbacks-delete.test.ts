@@ -1,5 +1,5 @@
 import { assert } from 'console'
-import { Caller } from '../../code/modules'
+import { Caller } from '../../code/exports'
 
 async function test() {
 	const { call, callbacks } = new Caller<[isTrue: boolean]>(),

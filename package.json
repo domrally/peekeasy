@@ -4,8 +4,8 @@
 	"name": "peekeasy",
 	"version": "0.0.42",
 	"author": "Dom Mandy",
-	"main": "build/code/index.js",
-	"types": "build/types/index.d.ts",
+	"main": "build/code/exports.js",
+	"types": "build/types/exports.d.ts",
 	"homepage": "https://domrally.github.io/peekeasy",
 	"description": "tools for observing proxies in typescript",
 	"engines": {
@@ -27,7 +27,7 @@
 		"tests": "tests"
 	},
 	"exports": {
-		".": "./build/code/index.js"
+		".": "./build/code/exports.js"
 	},
 	"bugs": {
 		"url": "https://github.com/domrally/peekeasy/issues"
