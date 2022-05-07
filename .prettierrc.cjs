@@ -1,0 +1,8 @@
+module.exports = {
+	semi: false,
+	useTabs: true,
+	singleQuote: true,
+	arrowParens: 'avoid',
+	trailingComma: 'es5',
+	quoteProps: 'as-needed',
+}

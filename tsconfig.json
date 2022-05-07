@@ -1,15 +1,27 @@
 {
-  "extends": "./node_modules/gts/tsconfig-google.json",
-  "compilerOptions": {
-    "rootDir": "code",
-    "lib": [
-        "es2018", 
-        "dom"
-    ],
-    "outDir": "build/code",
-    "declarationDir": "build/types"
-  },
-  "include": [
-    "code/**/*.ts"
-  ]
+	"extends": "@tsconfig/svelte/tsconfig.json",
+	// Most ts-node options can be specified here using their programmatic names.
+	"ts-node": {
+		// It is faster to skip typechecking.
+		// Remove if you want ts-node to do typechecking.
+		"transpileOnly": true,
+		"files": true,
+		"compilerOptions": {
+			// compilerOptions specified here will override those declared below,
+			// but *only* in ts-node.  Useful if you want ts-node and tsc to use
+			// different options with a single tsconfig.json.
+			"module": "ES2015" // ESNext or ES2015, ES2020
+		}
+	},
+	"compilerOptions": {
+		"rootDir": "code",
+		"declaration": true,
+		"outDir": "build/code",
+		"esModuleInterop": true,
+		"resolveJsonModule": true,
+		"declarationDir": "build/types"
+	},
+	"include": ["code/exports/**/*.ts"],
+	"exclude": ["code/index/**/*.ts"],
+	"references": [{ "path": "tsconfig.node.json" }]
 }

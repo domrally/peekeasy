@@ -2,48 +2,76 @@
 
 tools for observing proxies in typescript
 
-## .Usage
+[![](https://img.shields.io/badge/-svelte-FF3E00?style=for-the-badge&labelColor=grey&logo=svelte)](https://svelte.dev)
+[![](https://img.shields.io/npm/v/peekeasy?style=for-the-badge&labelColor=grey&logo=npm&label=)](https://www.npmjs.com/package/peekeasy)
+[![](https://img.shields.io/badge/-prettier-F7B93E?style=for-the-badge&labelColor=grey&logo=prettier)](https://prettier.io)
+[![](https://img.shields.io/badge/-nodejs-339933?style=for-the-badge&labelColor=grey&logo=node.js)](https://nodejs.org)
+[![](https://img.shields.io/badge/-typescript-3178C6?style=for-the-badge&labelColor=grey&logo=typescript)](https://www.typescriptlang.org)
+[![](https://img.shields.io/badge/-tsnode-3178C6?style=for-the-badge&labelColor=grey&logo=ts-node)](https://typestrong.org/ts-node)
+[![](https://img.shields.io/badge/-vite-646CFF?style=for-the-badge&labelColor=grey&logo=vite)](https://vitejs.dev)
+[![](https://img.shields.io/badge/-eslint-4B32C3?style=for-the-badge&labelColor=grey&logo=ESLint)](https://eslint.org)
+[![](https://img.shields.io/badge/-json-000000?style=for-the-badge&labelColor=grey&logo=json)](https://www.json.org/json-en.html)
 
-**. sending events**
+## Using
+
 ```ts
-const listener = () => console.log('calling listeners'),
-    { call, callBacks } = new Caller<typeof listener>()
-    
-callBacks.add(listener)
-call()
+const { call, callbacks } = new Caller(),
+	back = () => console.log('peekeasy')
 
+callbacks.add(back)
+callbacks.has(back) // true
+call() // peekeasy
+
+callbacks.delete(back)
+callbacks.has(back) // false
+call() //
 ```
 
-**. holding state**
-```ts
-const actor = { act: () => console.log('proxy state') },
-    { proxy, setProxy } = new Proxier<typeof actor>()
-    
-setProxy(actor)
-proxy.log()
+## Getting Started
 
-```
+**web**
 
-## .Importing
-
-**. web**
 ```js
-import { Caller, Proxier } from 'https://cdn.skypack.dev/peekeasy?min'
+import { Caller } from 'https://cdn.skypack.dev/peekeasy?min'
 ```
 
-**. node**
+**node**
+
 ```
 npm i peekeasy
 ```
+
 ```js
-import { Caller, Proxier } from 'peekeasy'
+import { Caller } from 'peekeasy'
 ```
 
-**. deno**
+**deno**
+
 ```ts
-import { Caller, Proxier } from 'https://cdn.skypack.dev/peekeasy?dts'
+import { Caller } from 'https://cdn.skypack.dev/peekeasy?dts'
 ```
 
-<br>
+```
+docs╱
+├── index.html
+╰── assets╱
 
-![](https://img.shields.io/npm/v/mealtime?style=for-the-badge&label=version&logo=npm&color=CB3837) ![](https://img.shields.io/badge/docs-CC%20BY--ND%204.0-f8722a?logo=creativecommons&style=for-the-badge) ![](https://img.shields.io/badge/format-prettier-f8bc45?style=for-the-badge&logo=prettier) ![](https://img.shields.io/npm/l/mealtime?style=for-the-badge&color=3DA639&logo=opensourceinitiative) ![](https://img.shields.io/badge/lang-ts-3178c6?logo=typescript&style=for-the-badge) ![](https://img.shields.io/badge/lint-es-4B32C3?logo=eslint&style=for-the-badge&logoColor=4B32C3) ![](https://img.shields.io/badge/style-google-blueviolet?style=for-the-badge&logo=google&label=style&logoColor=blueviolet)
+code╱
+├── exports.ts
+├── index.html
+├── exports╱
+│   ╰── caller.ts
+╰── index╱
+    ├── index.css
+    ├── index.svelte
+    ├── assets╱
+    ├── components╱
+    ├── data╱
+    ╰── environments╱
+
+test╱
+├── integration.ts
+├── unit.ts
+├── integration╱
+╰── unit╱
+```
