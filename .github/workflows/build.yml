@@ -43,6 +43,9 @@ jobs:
       - name: installing dependencies
         run: npm ci
 
+      - name: compile project
+        run: npx tsc
+
       - name: publish node package
         run: npm publish
         env:
