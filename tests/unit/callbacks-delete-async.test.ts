@@ -6,8 +6,10 @@ async function test() {
 	let is = false
 	for await (const [message] of callbacks) {
 		is = message
+		break
 	}
 	call(true)
+	call(false)
 
 	return is
 }
