@@ -50,3 +50,32 @@ import { Caller } from 'peekeasy'
 ```ts
 import { Caller } from 'https://cdn.skypack.dev/peekeasy?dts'
 ```
+
+```
+build╱
+├── code╱
+╰── types╱
+
+docs╱
+├── index.html
+╰── assets╱
+
+code╱
+├── exports.ts
+├── index.html
+├── exports╱
+│   ╰── caller.ts
+╰── index╱
+    ├── index.css
+    ├── index.svelte
+    ├── assets╱
+    ├── components╱
+    ├── data╱
+    ╰── environments╱
+
+test╱
+├── integration.ts
+├── unit.ts
+├── integration╱
+╰── unit╱
+```
