@@ -8,7 +8,7 @@ const { PORT, HOST } = process.env
 export default defineConfig({
 	root: 'code',
 	plugins: [svelte()],
-	envDir: 'src/environments',
+	envDir: 'code/index/environments',
 	build: { outDir: '../docs' },
 	server: {
 		host: HOST ?? 'localhost',

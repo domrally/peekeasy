@@ -21,6 +21,7 @@
 		"resolveJsonModule": true,
 		"declarationDir": "build/types"
 	},
-	"include": ["code/**/*.ts"],
+	"include": ["code/exports/**/*.ts"],
+	"exclude": ["code/index/**/*.ts"],
 	"references": [{ "path": "tsconfig.node.json" }]
 }
