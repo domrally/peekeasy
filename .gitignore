@@ -1,3 +1,10 @@
+# extra
+.DS_Store
+dist-ssr
+*.local
+**/.DS_Store
+.npmrc
+package/
 .vscode/
 build/
 
@@ -111,14 +118,6 @@ dist
 
 .idea
 
-# extra
-.DS_Store
-dist-ssr
-*.local
-**/.DS_Store
-.npmrc
-package/
-
 # Editor directories and files
 !.vscode/extensions.json
 *.suo
@@ -126,4 +125,3 @@ package/
 *.njsproj
 *.sln
 *.sw?
-
