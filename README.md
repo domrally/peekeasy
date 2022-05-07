@@ -16,9 +16,16 @@ tools for observing proxies in typescript
 ## Using
 
 ```ts
-const { call, callbacks } = new Caller()
-callBacks.add(() => console.log('peekeasy'))
-call()
+const { call, callbacks } = new Caller(),
+	back = () => console.log('peekeasy')
+
+callbacks.add(back)
+callbacks.has(back) // true
+call() // peekeasy
+
+callbacks.delete(back)
+callbacks.has(back) // false
+call() //
 ```
 
 ## Getting Started
@@ -26,7 +33,7 @@ call()
 **web**
 
 ```js
-import { Caller, Proxier } from 'https://cdn.skypack.dev/peekeasy?min'
+import { Caller } from 'https://cdn.skypack.dev/peekeasy?min'
 ```
 
 **node**
@@ -36,11 +43,11 @@ npm i peekeasy
 ```
 
 ```js
-import { Caller, Proxier } from 'peekeasy'
+import { Caller } from 'peekeasy'
 ```
 
 **deno**
 
 ```ts
-import { Caller, Proxier } from 'https://cdn.skypack.dev/peekeasy?dts'
+import { Caller } from 'https://cdn.skypack.dev/peekeasy?dts'
 ```
