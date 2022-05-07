@@ -1,0 +1,59 @@
+name: ci
+
+on: [push]
+
+jobs:
+    test:
+        runs-on: ubuntu-latest
+
+        strategy:
+            matrix:
+                testScriptName: [lint, unit, integration]
+
+        steps:
+            - name: opening project
+              uses: actions/checkout@v3
+
+            - name: setting up Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: '16.x'
+
+            - name: installing dependencies
+              run: npm ci
+
+            - name: running tests
+              run: npm run ${{ matrix.testScriptName }}
+
+    publish:
+        if: contains('refs/heads/main,refs/heads/dev,refs/heads/prod', github.ref_name)
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: opening project at ${{ github.ref_name }}
+              uses: actions/checkout@v3
+              with:
+                  persist-credentials: false
+
+            - name: assuming role using OIDC
+              uses: aws-actions/configure-aws-credentials@master
+              with:
+                  role-to-assume: arn:aws:iam::576285970885:role/Github
+                  aws-region: us-east-1
+
+            - name: setting up Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: '16.x'
+                  registry-url: 'https://npm.pkg.github.com/'
+
+            - name: installing ${{ github.ref_name }}
+              run: npm ci
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.PLAYCO_PACKAGES_TOKEN }}
+
+            - name: building ${{ github.ref_name }}
+              run: npm run build
+
+            - name: deploying ${{ github.ref_name }}
+              run: npm run ${{ github.ref_name }}
