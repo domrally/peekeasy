@@ -1,2 +1,2 @@
 export const a = 'hello',
-    b = 'world'
+	b = 'world'

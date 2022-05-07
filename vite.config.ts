@@ -6,7 +6,7 @@ const { PORT, HOST } = process.env
 
 // https://vitejs.dev/config/
 export default defineConfig({
-	root: 'src',
+	root: 'code',
 	plugins: [svelte()],
 	envDir: 'src/environments',
 	build: { outDir: '../docs' },
