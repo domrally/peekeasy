@@ -5,41 +5,45 @@ tools for observing proxies in typescript
 ## .Usage
 
 **. sending events**
+
 ```ts
 const listener = () => console.log('calling listeners'),
     { call, callBacks } = new Caller<typeof listener>()
-    
+
 callBacks.add(listener)
 call()
-
 ```
 
 **. holding state**
+
 ```ts
 const actor = { act: () => console.log('proxy state') },
     { proxy, setProxy } = new Proxier<typeof actor>()
-    
+
 setProxy(actor)
 proxy.log()
-
 ```
 
 ## .Importing
 
 **. web**
+
 ```js
 import { Caller, Proxier } from 'https://cdn.skypack.dev/peekeasy?min'
 ```
 
 **. node**
+
 ```
 npm i peekeasy
 ```
+
 ```js
 import { Caller, Proxier } from 'peekeasy'
 ```
 
 **. deno**
+
 ```ts
 import { Caller, Proxier } from 'https://cdn.skypack.dev/peekeasy?dts'
 ```

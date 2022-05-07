@@ -1,6 +1,6 @@
 {
     "name": "peekeasy",
-	"version": "0.0.42",
+    "version": "0.0.42",
     "description": "tools for observing proxies in typescript",
     "main": "build/code/index.js",
     "types": "build/types/index.d.ts",
@@ -12,13 +12,13 @@
     },
     "license": "MIT",
     "keywords": [
-		"event",
-		"delegate",
-		"proxy",
-		"state",
-		"forwarding",
-		"observer"
-	],
+        "event",
+        "delegate",
+        "proxy",
+        "state",
+        "forwarding",
+        "observer"
+    ],
     "directories": {
         "tests": "tests"
     },
