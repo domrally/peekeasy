@@ -52,10 +52,6 @@ import { Caller } from 'https://cdn.skypack.dev/peekeasy?dts'
 ```
 
 ```
-build╱
-├── code╱
-╰── types╱
-
 docs╱
 ├── index.html
 ╰── assets╱
