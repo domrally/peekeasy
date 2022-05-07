@@ -1,1 +1,2 @@
-import './unit/svg.test'
+import './unit/callbacks.test'
+import './unit/callbacks-async.test'

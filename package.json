@@ -3,6 +3,7 @@
 	"version": "0.0.42",
 	"description": "tools for observing proxies in typescript",
 	"main": "build/code/index.js",
+	"type": "module",
 	"types": "build/types/index.d.ts",
 	"files": [
 		"build"

@@ -1,25 +1,25 @@
-export class Caller<T extends (...args: any[]) => void> {
-	#set = new Set<(parameters: Parameters<T>) => void>()
+export class Caller<T extends any[] = []> {
+	#set = new Set<(...args: T) => void>()
 
-	callbacks: WeakSet<T> = Object.freeze({
-		has: (t: T) => this.#set.has(t),
-		add: (t: T) => this.#set.add(t),
-		delete: (t: T) => this.#set.delete(t),
-		[Symbol.toStringTag]: this.#set[Symbol.toStringTag],
-	} as const)
-
-	call(...parameters: Parameters<T>) {
+	call = ((...parameters: T) => {
 		const copy = new Set(this.#set)
-		copy.forEach(resolve => resolve?.(parameters))
-	}
+		copy.forEach(resolve => resolve?.(...parameters))
+	}).bind(this)
 
-	get callBacksAsync(): Iterable<PromiseLike<Parameters<T>>> {
-		return this.#callBacksAsync()
-	}
+	callbacks: WeakSet<(...args: T) => void> & Iterable<PromiseLike<T>> =
+		Object.freeze({
+			has: (t: (...args: T) => void) => this.#set.has(t),
+			add: (t: (...args: T) => void) => this.#set.add(t),
+			delete: (t: (...args: T) => void) => this.#set.delete(t),
+			[Symbol.toStringTag]: this.#set[Symbol.toStringTag],
+			[Symbol.iterator]: () => this.#callbacksAsync(),
+		} as const);
 
-	*#callBacksAsync() {
+	*#callbacksAsync() {
 		while (true) {
-			yield new Promise<Parameters<T>>(resolve => this.#set.add(resolve))
+			yield new Promise<T>(resolve =>
+				this.#set.add((...args: T) => resolve(args))
+			)
 		}
 	}
 }
