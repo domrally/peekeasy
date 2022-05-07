@@ -1,4 +1,4 @@
-export default class <T extends (...args: any[]) => void> {
+export class Caller<T extends (...args: any[]) => void> {
 	#set = new Set<(parameters: Parameters<T>) => void>();
 
 	callbacks: WeakSet<T> = Object.freeze({

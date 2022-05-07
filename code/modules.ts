@@ -1,1 +1,1 @@
-export Caller from './modules/caller.js'
+export { Caller } from './modules/caller.js'
