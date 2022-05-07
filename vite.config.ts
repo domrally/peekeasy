@@ -9,7 +9,7 @@ export default defineConfig({
 	root: 'src',
 	plugins: [svelte()],
 	envDir: 'src/environments',
-	build: { outDir: '../build' },
+	build: { outDir: '../docs' },
 	server: {
 		host: HOST ?? 'localhost',
 		port: Number.parseInt(PORT ?? '1234'),

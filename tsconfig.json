@@ -15,7 +15,8 @@
 	},
 	"compilerOptions": {
 		"resolveJsonModule": true,
-		"esModuleInterop": true
+		"esModuleInterop": true,
+		"outDir": "build"
 	},
 	"include": ["code/**/*.ts", "tests/**/*.ts"],
 	"references": [{ "path": "tsconfig.node.json" }]
