@@ -14,12 +14,13 @@
 		}
 	},
 	"compilerOptions": {
-		"resolveJsonModule": true,
-		"esModuleInterop": true,
 		"rootDir": "code",
+		"declaration": true,
 		"outDir": "build/code",
+		"esModuleInterop": true,
+		"resolveJsonModule": true,
 		"declarationDir": "build/types"
 	},
-	"include": ["code/**/*.ts", "tests/**/*.ts"],
+	"include": ["code/**/*.ts"],
 	"references": [{ "path": "tsconfig.node.json" }]
 }
