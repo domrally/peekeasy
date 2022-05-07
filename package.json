@@ -23,9 +23,6 @@
 	"files": [
 		"build"
 	],
-	"directories": {
-		"tests": "tests"
-	},
 	"exports": {
 		".": "./build/code/exports.js"
 	},
