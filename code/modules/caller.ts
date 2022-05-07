@@ -1,7 +1,7 @@
 export class Caller<T extends any[] = []> {
 	#set = new Set<(...args: T) => void>()
 
-	call = ((...parameters: T) => {
+	call: (...args: T) => void = ((...parameters: T) => {
 		const copy = new Set(this.#set)
 		copy.forEach(resolve => resolve?.(...parameters))
 	}).bind(this)

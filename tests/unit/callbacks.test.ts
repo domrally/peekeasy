@@ -1,16 +1,19 @@
-import { assert, log } from 'console'
+import { assert } from 'console'
 import { Caller } from '../../code/modules'
 
 async function test() {
-	const { call, callbacks } = new Caller<[string]>()
+	const { call, callbacks } = new Caller<[isTrue: boolean]>()
+	let is = false
+	callbacks.add(message => {
+		is = message
+	})
+	call(true)
 
-	callbacks.add((message: string) => log(message))
-
-	call('callbacks.test')
+	return is
 }
 
 try {
-	test()
+	assert(test(), '❌ callbacks')
 } catch (e) {
-	assert(false, '❌ callbacks.test ', e)
+	assert(false, '❌ callbacks: ', e)
 }
