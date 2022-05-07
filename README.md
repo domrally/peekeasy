@@ -2,37 +2,34 @@
 
 tools for observing proxies in typescript
 
-## .Usage
+[![](https://img.shields.io/npm/v/peekeasy?style=for-the-badge&label=version&logo=npm&color=CB3837)](https://www.npmjs.com/package/peekeasy)
+[![](https://img.shields.io/npm/l/peekeasy?style=for-the-badge)]()
+[![](https://img.shields.io/badge/-svelte-FF3E00?style=for-the-badge&labelColor=grey&logo=svelte)](https://svelte.dev)
+[![](https://img.shields.io/badge/-prettier-F7B93E?style=for-the-badge&labelColor=grey&logo=prettier)](https://prettier.io)
+[![](https://img.shields.io/badge/-nodejs-339933?style=for-the-badge&labelColor=grey&logo=node.js)](https://nodejs.org)
+[![](https://img.shields.io/badge/-typescript-3178C6?style=for-the-badge&labelColor=grey&logo=typescript)](https://www.typescriptlang.org)
+[![](https://img.shields.io/badge/-tsnode-3178C6?style=for-the-badge&labelColor=grey&logo=ts-node)](https://typestrong.org/ts-node)
+[![](https://img.shields.io/badge/-vite-646CFF?style=for-the-badge&labelColor=grey&logo=vite)](https://vitejs.dev)
+[![](https://img.shields.io/badge/-eslint-4B32C3?style=for-the-badge&labelColor=grey&logo=ESLint)](https://eslint.org)
+[![](https://img.shields.io/badge/-json-000000?style=for-the-badge&labelColor=grey&logo=json)](https://www.json.org/json-en.html)
 
-**. sending events**
+## Using
 
 ```ts
-const listener = () => console.log('calling listeners'),
-	{ call, callBacks } = new Caller<typeof listener>()
-
-callBacks.add(listener)
+const { call, callbacks } = new Caller()
+callBacks.add(() => console.log('peekeasy'))
 call()
 ```
 
-**. holding state**
+## Getting Started
 
-```ts
-const actor = { act: () => console.log('proxy state') },
-	{ proxy, setProxy } = new Proxier<typeof actor>()
-
-setProxy(actor)
-proxy.log()
-```
-
-## .Importing
-
-**. web**
+**web**
 
 ```js
 import { Caller, Proxier } from 'https://cdn.skypack.dev/peekeasy?min'
 ```
 
-**. node**
+**node**
 
 ```
 npm i peekeasy
@@ -42,12 +39,8 @@ npm i peekeasy
 import { Caller, Proxier } from 'peekeasy'
 ```
 
-**. deno**
+**deno**
 
 ```ts
 import { Caller, Proxier } from 'https://cdn.skypack.dev/peekeasy?dts'
 ```
-
-<br>
-
-![](https://img.shields.io/npm/v/mealtime?style=for-the-badge&label=version&logo=npm&color=CB3837) ![](https://img.shields.io/badge/docs-CC%20BY--ND%204.0-f8722a?logo=creativecommons&style=for-the-badge) ![](https://img.shields.io/badge/format-prettier-f8bc45?style=for-the-badge&logo=prettier) ![](https://img.shields.io/npm/l/mealtime?style=for-the-badge&color=3DA639&logo=opensourceinitiative) ![](https://img.shields.io/badge/lang-ts-3178c6?logo=typescript&style=for-the-badge) ![](https://img.shields.io/badge/lint-es-4B32C3?logo=eslint&style=for-the-badge&logoColor=4B32C3) ![](https://img.shields.io/badge/style-google-blueviolet?style=for-the-badge&logo=google&label=style&logoColor=blueviolet)

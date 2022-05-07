@@ -4,7 +4,7 @@ authors:
   - family-names: Mandy
     given-names: Dom
     orcid: https://orcid.org/0000-0001-9378-6548
-title: mealtime
+title: peekeasy
 version: 0.1.0
 license: MIT
-repository-code: https://github.com/domrally/mealtime
+repository-code: https://github.com/domrally/peekeasy
