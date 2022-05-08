@@ -24,7 +24,7 @@ npm i peekeasy
 import { Caller } from 'peekeasy'
 
 const { call, callbacks } = new Caller(),
-	log = () => console.log('Hello, world!')
+    log = () => console.log('Hello, world!')
 
 callbacks.has(log) // false
 callbacks.add(log)
@@ -34,16 +34,16 @@ call() // peekeasy
 ## Folders
 
 ```
-docs╱
+docs/
 ├── index.html
 ╰── assets╱
 
-code╱
+code/
 ├── exports.ts
 ├── index.html
-├── exports╱
+├── exports/
 │   ╰── caller.ts
-╰── index╱
+╰── index/
     ├── index.css
     ├── index.svelte
     ├── assets╱
@@ -51,7 +51,7 @@ code╱
     ├── data╱
     ╰── environments╱
 
-test╱
+test/
 ├── integration.ts
 ├── unit.ts
 ├── integration╱
