@@ -1,1 +1,1 @@
-import './integration/app.test'
+import './integration/dependency-injection.test'
