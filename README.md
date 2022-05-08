@@ -24,11 +24,11 @@ npm i peekeasy
 import { Caller } from 'peekeasy'
 
 const { call, callbacks } = new Caller(),
-	log = () => console.log('Hello, world!')
+	log = () => console.log('calling')
 
 callbacks.has(log) // false
 callbacks.add(log)
-call() // peekeasy
+call() // calling
 ```
 
 ## Folders
