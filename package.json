@@ -2,7 +2,7 @@
 	"license": "MIT",
 	"type": "module",
 	"name": "peekeasy",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"author": "Dom Mandy",
 	"main": "build/code/exports.js",
 	"types": "build/types/exports.d.ts",

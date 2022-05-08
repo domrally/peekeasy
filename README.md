@@ -18,13 +18,9 @@ tools for observing proxies in typescript
 const { call, callbacks } = new Caller(),
 	back = () => console.log('peekeasy')
 
-callbacks.add(back)
-callbacks.has(back) // true
-call() // peekeasy
-
-callbacks.delete(back)
 callbacks.has(back) // false
-call() //
+callbacks.add(back)
+call() // peekeasy
 ```
 
 ## Getting Started
@@ -50,6 +46,8 @@ import { Caller } from 'peekeasy'
 ```ts
 import { Caller } from 'https://cdn.skypack.dev/peekeasy?dts'
 ```
+
+## Folders
 
 ```
 docs╱
