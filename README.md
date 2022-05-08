@@ -24,7 +24,7 @@ npm i peekeasy
 import { Caller } from 'peekeasy'
 
 const { call, callbacks } = new Caller(),
-    log = () => console.log('Hello, world!')
+	log = () => console.log('Hello, world!')
 
 callbacks.has(log) // false
 callbacks.add(log)

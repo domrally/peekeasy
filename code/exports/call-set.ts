@@ -1,3 +1,3 @@
-import type { Call } from './call'
+import type { Callable } from './callable'
 
-export type CallSet<T extends any[]> = WeakSet<Call<T>>
+export type CallSet<T extends any[]> = WeakSet<Callable<T>>
