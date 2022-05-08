@@ -12,39 +12,23 @@ tools for observing proxies in typescript
 [![](https://img.shields.io/badge/-eslint-4B32C3?style=for-the-badge&labelColor=grey&logo=ESLint)](https://eslint.org)
 [![](https://img.shields.io/badge/-json-000000?style=for-the-badge&labelColor=grey&logo=json)](https://www.json.org/json-en.html)
 
-## Using
-
-```ts
-const { call, callbacks } = new Caller(),
-	back = () => console.log('peekeasy')
-
-callbacks.has(back) // false
-callbacks.add(back)
-call() // peekeasy
-```
-
 ## Getting Started
 
-**web**
-
-```js
-import { Caller } from 'https://cdn.skypack.dev/peekeasy?min'
-```
-
-**node**
-
-```
+```ts
 npm i peekeasy
 ```
 
-```js
-import { Caller } from 'peekeasy'
-```
-
-**deno**
+## Using
 
 ```ts
-import { Caller } from 'https://cdn.skypack.dev/peekeasy?dts'
+import { Caller } from 'peekeasy'
+
+const { call, callbacks } = new Caller(),
+	log = () => console.log('Hello, world!')
+
+callbacks.has(log) // false
+callbacks.add(log)
+call() // peekeasy
 ```
 
 ## Folders
