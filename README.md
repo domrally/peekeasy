@@ -51,6 +51,8 @@ import { Caller } from 'peekeasy'
 import { Caller } from 'https://cdn.skypack.dev/peekeasy?dts'
 ```
 
+## Folders
+
 ```
 docs╱
 ├── index.html
