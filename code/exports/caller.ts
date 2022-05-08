@@ -9,14 +9,13 @@ export class Caller<T extends any[] = []> {
 		copy.forEach(resolve => resolve?.(...parameters))
 	}).bind(this)
 
-	callbacks: CallSet<T> & Iterable<PromiseLike<T>> =
-		Object.freeze({
-			has: (t: Call<T>) => this.#set.has(t),
-			add: (t: Call<T>) => this.#set.add(t),
-			delete: (t: Call<T>) => this.#set.delete(t),
-			[Symbol.toStringTag]: this.#set[Symbol.toStringTag],
-			[Symbol.iterator]: () => this.#callbacks(),
-		} as const);
+	callbacks: CallSet<T> & Iterable<PromiseLike<T>> = Object.freeze({
+		has: (t: Call<T>) => this.#set.has(t),
+		add: (t: Call<T>) => this.#set.add(t),
+		delete: (t: Call<T>) => this.#set.delete(t),
+		[Symbol.toStringTag]: this.#set[Symbol.toStringTag],
+		[Symbol.iterator]: () => this.#callbacks(),
+	} as const);
 
 	*#callbacks() {
 		while (true) {
