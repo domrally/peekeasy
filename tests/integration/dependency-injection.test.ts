@@ -1,9 +1,9 @@
 import { assert } from 'console'
 import { Caller } from '../../code/exports'
-import type { CallSet } from '../../code/exports/call-set'
+import type { CallableSet } from '../../code/exports'
 
 class Consumer {
-	constructor(private onTest: CallSet<[string]>) {
+	constructor(private onTest: CallableSet<[string]>) {
 		onTest.add(this.consume)
 	}
 

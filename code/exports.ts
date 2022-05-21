@@ -1,3 +1,3 @@
-export { Caller } from './exports/caller'
-export type { CallSet } from './exports/call-set'
-export type { Callable } from './exports/callable'
+export { Delegate } from './exports/delegate/delegate'
+export type { ProxySet } from './exports/delegate/proxy-set'
+export type { VoidFunction } from './exports/delegate/void-function'
