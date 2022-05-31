@@ -13,9 +13,9 @@
 	},
 	"scripts": {
 		"build": "npx vite build",
-		"prestart": "npm i && npx eslint --fix && npx prettier --write .",
+		"format": "npx eslint --fix && npx prettier --write .",
 		"start": "npx vite",
-		"test": "npm i && npm run lint && npm run unit && npm run integration",
+		"test": "node --experimental-specifier-resolution node --loader ts-node/esm code/exports/delegate/state/test.ts",
 		"lint": "npx eslint && npx prettier --check .",
 		"unit": "node --experimental-specifier-resolution node --loader ts-node/esm tests/unit.test.ts",
 		"integration": "node --experimental-specifier-resolution node --loader ts-node/esm tests/integration.test.ts"
