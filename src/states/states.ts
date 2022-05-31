@@ -1,4 +1,4 @@
-import _State  from './state'
+import _State from './state'
 import _WeakState from './weak-state'
 
 export namespace States {
