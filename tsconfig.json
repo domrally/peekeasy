@@ -18,10 +18,9 @@
 		"skipLibCheck": true,
 		"forceConsistentCasingInFileNames": true,
 		//
-		"rootDir": "src",
 		"outDir": "build",
 		"declaration": true,
 		"resolveJsonModule": true
 	},
-	"include": ["src/**/*"]
+	"include": ["src/**/*", "tests/**/*"]
 }

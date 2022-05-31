@@ -4,8 +4,8 @@
 	"name": "peekeasy",
 	"version": "0.1.2",
 	"author": "Dom Mandy",
-	"main": "build/src.js",
-	"types": "build/src.d.ts",
+	"main": "build/src/src.js",
+	"types": "build/src/src.d.ts",
 	"homepage": "https://domrally.github.io/peekeasy",
 	"description": "tools for observing proxies in typescript",
 	"engines": {
@@ -20,10 +20,10 @@
 		"integration": "npx ts-node tests/integration.test.ts"
 	},
 	"files": [
-		"build"
+		"build/src"
 	],
 	"exports": {
-		".": "./build/src.js"
+		".": "./build/src/src.js"
 	},
 	"bugs": {
 		"url": "https://github.com/domrally/peekeasy/issues"
