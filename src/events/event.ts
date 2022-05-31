@@ -1,3 +1,5 @@
+export default Event
+
 export interface Event<params extends any[]>
 	extends WeakSet<Action>,
 		AsyncIterable<params>,

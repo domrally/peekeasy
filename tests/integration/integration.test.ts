@@ -1,0 +1,1 @@
+import './dependency-injection.test'

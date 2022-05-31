@@ -1,5 +1,7 @@
 import type { Event } from './event'
 
+export default WeakEvent
+
 export interface WeakEvent<params extends any[]>
 	extends WeakSet<(...args: any[]) => void>,
 		AsyncIterable<params>,

@@ -21,39 +21,25 @@ npm i peekeasy
 ## Using
 
 ```ts
-import { Caller } from 'peekeasy'
-
-const { call, callbacks } = new Caller(),
-	log = () => console.log('calling')
-
-callbacks.has(log) // false
-callbacks.add(log)
-call() // calling
+import Peekeasy from 'peekeasy'
 ```
 
 ## Folders
 
 ```
 docs/
-├── index.html
-╰── assets╱
-
-code/
-├── exports.ts
-├── index.html
-├── exports/
-│   ╰── caller.ts
-╰── index/
-    ├── index.css
-    ├── index.svelte
+├── assets╱
+╰── index╱
     ├── assets╱
     ├── components╱
     ├── data╱
     ╰── environments╱
 
-test/
-├── integration.ts
-├── unit.ts
-├── integration╱
-╰── unit╱
+src/
+├── enums/
+├── events/
+├── states/
+╰── tests/
+    ├── integration╱
+    ╰── unit╱
 ```

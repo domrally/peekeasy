@@ -1,3 +1,5 @@
+export default State
+
 export function State<T>(initial: T): State<T> {
 	const state: any = (s: T) => Object.assign(state, s)
 	state(initial)

@@ -4,8 +4,8 @@
 	"name": "peekeasy",
 	"version": "0.1.2",
 	"author": "Dom Mandy",
-	"main": "build/code/exports.js",
-	"types": "build/types/exports.d.ts",
+	"main": "build/src.js",
+	"types": "build/src.d.ts",
 	"homepage": "https://domrally.github.io/peekeasy",
 	"description": "tools for observing proxies in typescript",
 	"engines": {
@@ -15,7 +15,7 @@
 		"build": "npx vite build",
 		"format": "npx eslint --fix && npx prettier --write .",
 		"start": "npx vite",
-		"test": "node --experimental-specifier-resolution node --loader ts-node/esm code/exports/delegate/state/test.ts",
+		"test": "node --experimental-specifier-resolution node --loader ts-node/esm tests/tests.ts",
 		"lint": "npx eslint && npx prettier --check .",
 		"unit": "node --experimental-specifier-resolution node --loader ts-node/esm tests/unit.test.ts",
 		"integration": "node --experimental-specifier-resolution node --loader ts-node/esm tests/integration.test.ts"
@@ -24,7 +24,7 @@
 		"build"
 	],
 	"exports": {
-		".": "./build/code/exports.js"
+		".": "./build/src.js"
 	},
 	"bugs": {
 		"url": "https://github.com/domrally/peekeasy/issues"
