@@ -12,13 +12,12 @@
 		"node": "16.x"
 	},
 	"scripts": {
-		"build": "npx vite build",
 		"format": "npx eslint --fix && npx prettier --write .",
-		"start": "npx vite",
-		"test": "node --experimental-specifier-resolution node --loader ts-node/esm tests/tests.ts",
+		"start": "",
+		"test": "npx ts-node tests/tests.ts",
 		"lint": "npx eslint && npx prettier --check .",
-		"unit": "node --experimental-specifier-resolution node --loader ts-node/esm tests/unit.test.ts",
-		"integration": "node --experimental-specifier-resolution node --loader ts-node/esm tests/integration.test.ts"
+		"unit": "npx ts-node tests/unit.test.ts",
+		"integration": "npx ts-node tests/integration.test.ts"
 	},
 	"files": [
 		"build"
@@ -42,19 +41,14 @@
 		"observer"
 	],
 	"devDependencies": {
-		"@sveltejs/vite-plugin-svelte": "^1.0.0-next.42",
-		"@tsconfig/svelte": "^3.0.0",
-		"@types/node": "^14.18.15",
-		"@typescript-eslint/eslint-plugin": "^5.22.0",
-		"@typescript-eslint/parser": "^5.22.0",
-		"eslint": "^8.14.0",
-		"eslint-config-alloy": "^4.5.1",
-		"eslint-config-prettier": "^8.5.0",
-		"prettier": "2.6.2",
-		"svelte-check": "^2.7.0",
-		"svelte-preprocess": "^4.10.6",
-		"ts-node": "^10.7.0",
-		"typescript": "^4.6.4",
-		"vite": "^2.9.8"
+		"@types/node": "<15",
+		"@typescript-eslint/eslint-plugin": "<6",
+		"@typescript-eslint/parser": "<6",
+		"eslint": "<9",
+		"eslint-config-alloy": "<5",
+		"eslint-config-prettier": "<9",
+		"prettier": "<3",
+		"ts-node": "<11",
+		"typescript": "<5"
 	}
 }
