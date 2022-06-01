@@ -19,7 +19,7 @@ npm i peekeasy
 ## Using
 
 ```ts
-import Peekeasy from 'peekeasy'
+import { Event, State, WeakEvent, WeakState } from 'peekeasy'
 ```
 
 ## Folders

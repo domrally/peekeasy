@@ -1,5 +1,4 @@
-import { Event } from '../src/events/event'
-import { WeakEvent } from '../src/events/weak-event'
+import { Event, State, WeakEvent, WeakState } from '../src/src'
 
 class FizzBuzz {
 	#onMessage = new Event('-1')
@@ -23,10 +22,12 @@ class FizzBuzz {
 	}
 }
 
-const fizzBuzz = new FizzBuzz()
+const a = new FizzBuzz(),
+	b = new FizzBuzz(),
+	fizzBuzz = State(a),
+	fizzBuzzWeak = WeakState(fizzBuzz)
 
-fizzBuzz.onMessage.add(console.log)
-
-while (fizzBuzz.count) {
-	fizzBuzz.count()
+fizzBuzzWeak.onMessage.add(console.log)
+while (fizzBuzzWeak.count) {
+	fizzBuzzWeak.count()
 }
