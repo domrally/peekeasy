@@ -8,7 +8,7 @@
 	"homepage": "https://domrally.github.io/peekeasy",
 	"description": "tools for observing proxies in typescript",
 	"engines": {
-		"node": "16.x"
+		"node": "18"
 	},
 	"scripts": {
 		"format": "npx eslint --fix && npx prettier --write .",

@@ -26,7 +26,7 @@ jobs:
           key: ${{ hashFiles('**/package-lock.json') }}
 
       - name: compile project
-        run: npx tsc
+        run: tsc
 
       - name: publish node package
         run: npm publish
