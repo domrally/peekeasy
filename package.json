@@ -1,7 +1,7 @@
 {
 	"license": "MIT",
 	"name": "peekeasy",
-	"version": "0.1.2",
+	"version": "0.2.0",
 	"author": "Dom Mandy",
 	"main": "build/src/src.js",
 	"types": "build/src/src.d.ts",
