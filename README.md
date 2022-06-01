@@ -27,19 +27,24 @@ import Peekeasy from 'peekeasy'
 ## Folders
 
 ```
+.github/
+╰── workflows/
+
 docs/
-├── assets╱
-╰── index╱
-    ├── assets╱
-    ├── components╱
-    ├── data╱
-    ╰── environments╱
+╰── assets/
 
 src/
-├── enums/
-├── events/
-├── states/
+├── exports/
+│   ├── events/
+│   ╰── states/
+│
+├── pages/
+│   ├── assets/
+│   ├── components/
+│   ├── data/
+│   ╰── environments/
+│
 ╰── tests/
-    ├── integration╱
-    ╰── unit╱
+    ├── integration/
+    ╰── unit/
 ```
