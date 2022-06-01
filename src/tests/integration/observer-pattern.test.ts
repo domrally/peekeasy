@@ -1,4 +1,4 @@
-import { Event } from '../../src/src'
+import { Event } from '../../exports/exports'
 import { assert } from 'console'
 
 class Subject<T> extends Event<[T]> {

@@ -1,5 +1,5 @@
 import { assert } from 'console'
-import { Event, WeakEvent } from '../../src/src'
+import { Event, WeakEvent } from '../../exports/exports'
 
 class Consumer {
 	constructor(onTest: WeakEvent<[string]>) {

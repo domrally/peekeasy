@@ -1,5 +1,5 @@
 import { assert } from 'console'
-import { Event } from '../../src/src'
+import { Event } from '../../exports/exports'
 
 async function test() {
 	const event = new Event<[isTrue: boolean]>(false),

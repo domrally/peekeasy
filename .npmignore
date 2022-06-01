@@ -1,5 +1,5 @@
 src/
 docs/
-tests/
 .github/
-build/tests
+build/src/index
+build/src/tests

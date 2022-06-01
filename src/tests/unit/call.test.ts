@@ -1,13 +1,9 @@
 import { assert } from 'console'
-import { Event } from '../../src/src'
+import { Event } from '../../exports/exports'
 
 async function test() {
-	const event = new Event(),
-		t = () => {}
-
-	event.add(t)
-
-	return event.has(t)
+	new Event()()
+	return true
 }
 
 try {

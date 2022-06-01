@@ -1,8 +1,8 @@
-import { Event, State, WeakEvent, WeakState } from '../src/src'
+import Peekeasy from '../exports/exports'
 
 class FizzBuzz {
-	#onMessage = new Event('-1')
-	onMessage = new WeakEvent(this.#onMessage)
+	#onMessage = new Peekeasy.Event('-1')
+	onMessage = new Peekeasy.WeakEvent(this.#onMessage)
 
 	#count = 0
 	count? = () => {
@@ -24,8 +24,8 @@ class FizzBuzz {
 
 const a = new FizzBuzz(),
 	b = new FizzBuzz(),
-	fizzBuzz = State(a),
-	fizzBuzzWeak = WeakState(fizzBuzz)
+	fizzBuzz = Peekeasy.State(a),
+	fizzBuzzWeak = Peekeasy.WeakState(fizzBuzz)
 
 fizzBuzzWeak.onMessage.add(console.log)
 while (fizzBuzzWeak.count) {
