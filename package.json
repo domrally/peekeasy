@@ -1,6 +1,5 @@
 {
 	"license": "MIT",
-	"type": "module",
 	"name": "peekeasy",
 	"version": "0.1.2",
 	"author": "Dom Mandy",
@@ -13,11 +12,11 @@
 	},
 	"scripts": {
 		"format": "npx eslint --fix && npx prettier --write .",
-		"start": "",
+		"start": "npx ts-node docs/fizz-buzz.ts",
 		"test": "npx ts-node tests/tests.ts",
 		"lint": "npx eslint && npx prettier --check .",
-		"unit": "npx ts-node tests/unit.test.ts",
-		"integration": "npx ts-node tests/integration.test.ts"
+		"unit": "npx ts-node tests/unit/unit.ts",
+		"integration": "npx ts-node tests/integration/integration.ts"
 	},
 	"files": [
 		"build/src"
@@ -48,7 +47,7 @@
 		"eslint-config-alloy": "<5",
 		"eslint-config-prettier": "<9",
 		"prettier": "<3",
-		"ts-node": "<11",
+		"ts-node": "^10.8.0",
 		"typescript": "<5"
 	}
 }

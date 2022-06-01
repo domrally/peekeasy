@@ -1,14 +1,13 @@
-export default Event
-
 export interface Event<params extends any[]>
 	extends WeakSet<Action>,
 		PromiseLike<params>,
 		AsyncIterable<params> {
 	(...args: params): void
 }
-
-export class Event<params extends any[]> {
+export class Event<params extends any[]> extends WeakSet<Action> {
 	constructor(...initial: params) {
+		super()
+
 		const set = new Set<Action>(),
 			event: Partial<Event<params>> = (...args: params) => {
 				const copy = new Set(set)
@@ -50,5 +49,6 @@ export class Event<params extends any[]> {
 		return event as unknown as this
 	}
 }
+export default Event
 
 type Action = (...args: any[]) => void

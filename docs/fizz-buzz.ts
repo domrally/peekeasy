@@ -1,5 +1,5 @@
-import { Event } from '../../src/events/event'
-import { WeakEvent } from '../../src/events/weak-event'
+import { Event } from '../src/events/event'
+import { WeakEvent } from '../src/events/weak-event'
 
 class FizzBuzz {
 	#onMessage = new Event('-1')

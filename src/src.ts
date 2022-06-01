@@ -1,15 +1,9 @@
-import { Events } from './events/events'
+export { Events as PeekeasyEvents } from './events/events'
 // import { Enums } from './enums/enums'
-import { States } from './states/states'
+export { States as PeekeasyStates } from './states/states'
 
-export default {
-	// Enums,
-	Events,
-	States,
-}
-
-// export const PeekeasyEnum = Enums.Enum
-export const PeekeasyEvent = Events.Event
-export const PeekeasyState = States.State
-export const PeekeasyWeakEvent = Events.WeakEvent
-export const PeekeasyWeakState = States.WeakState
+// export const PeekeasyEnum = _Enums.Enum
+export { Event } from './events/event'
+export { State } from './states/state'
+export { WeakEvent } from './events/weak-event'
+export { WeakState } from './states/weak-state'

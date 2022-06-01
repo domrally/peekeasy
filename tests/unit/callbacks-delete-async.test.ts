@@ -1,15 +1,15 @@
 import { assert } from 'console'
-import { Caller } from '../../code/exports'
+import { Event } from '../../src/src'
 
 async function test() {
-	const { call, callbacks } = new Caller<[isTrue: boolean]>()
+	const event = new Event<[isTrue: boolean]>(false)
 	let is = false
-	for await (const [message] of callbacks) {
+	for await (const [message] of event) {
 		is = message
 		break
 	}
-	call(true)
-	call(false)
+	event(true)
+	event(false)
 
 	return is
 }

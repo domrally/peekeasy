@@ -1,4 +1,3 @@
-export default EnumValue
 export type EnumValue<S extends string> = symbol & { description: S }
 export function EnumValue<a extends string, S extends symbol>(symbol: S) {
 	if (symbol.description) {
@@ -6,3 +5,4 @@ export function EnumValue<a extends string, S extends symbol>(symbol: S) {
 		return { [tha]: symbol }
 	}
 }
+export default EnumValue

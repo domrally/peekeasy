@@ -1,13 +1,13 @@
 import { assert } from 'console'
-import { Caller } from '../../code/exports'
+import { Event } from '../../src/src'
 
 async function test() {
-	const { callbacks } = new Caller(),
+	const event = new Event(),
 		t = () => {}
 
-	callbacks.add(t)
+	event.add(t)
 
-	return callbacks.has(t)
+	return event.has(t)
 }
 
 try {

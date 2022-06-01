@@ -1,7 +1,5 @@
 import type { State } from './state'
 
-export default WeakState
-
 export function WeakState<T>(state: State<T>): T {
 	return new Proxy(state, {
 		apply: () => {
@@ -9,3 +7,4 @@ export function WeakState<T>(state: State<T>): T {
 		},
 	})
 }
+export default WeakState

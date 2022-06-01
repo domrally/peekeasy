@@ -1,9 +1,8 @@
 import { assert } from 'console'
-import { Caller } from '../../code/exports'
-import type { CallableSet } from '../../code/exports'
+import { Event, WeakEvent } from '../../src/src'
 
 class Consumer {
-	constructor(private onTest: CallableSet<[string]>) {
+	constructor(onTest: WeakEvent<[string]>) {
 		onTest.add(this.consume)
 	}
 
@@ -13,10 +12,10 @@ class Consumer {
 }
 
 async function test() {
-	const { call, callbacks } = new Caller<[string]>(),
-		consumer = new Consumer(callbacks)
+	const event = new Event('Hello, world!'),
+		consumer = new Consumer(new WeakEvent(event))
 
-	call('Hello, world!')
+	event('Hello, world!')
 
 	return true
 }

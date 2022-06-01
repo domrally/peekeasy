@@ -1,8 +1,8 @@
 import { assert } from 'console'
-import { Caller } from '../../code/exports'
+import { Event } from '../../src/src'
 
 async function test() {
-	new Caller().call()
+	new Event()()
 	return true
 }
 
