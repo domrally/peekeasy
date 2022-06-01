@@ -1,14 +1,11 @@
 name: publish
 
 on:
-  pull_request_review:
-    types: submitted
+  push:
     branches: ${{ github.event.repository.default_branch }}
 
 jobs:
   publish:
-    if: github.event.review.state == 'approved'
-
     runs-on: ubuntu-latest
 
     steps:
