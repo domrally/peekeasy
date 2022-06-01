@@ -1,0 +1,36 @@
+name: publish
+
+on:
+  pull_request_review:
+    types: submitted
+    branches: ${{ github.event.repository.default_branch }}
+
+jobs:
+  publish:
+    if: github.event.review.state == 'approved'
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: opening project
+        uses: actions/checkout@v3
+
+      - name: setting up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          registry-url: https://registry.npmjs.org/
+
+      - name: loading node modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ hashFiles('**/package-lock.json') }}
+
+      - name: compile project
+        run: npx tsc
+
+      - name: publish node package
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
