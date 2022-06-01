@@ -1,5 +1,5 @@
-import { State } from './state'
-import { WeakState } from './weak-state'
+import { State } from '../../exports/states/state'
+import { WeakState } from '../../exports/states/weak-state'
 
 class Context {
 	#state = State({ value: 'hello' })
