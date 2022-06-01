@@ -17,16 +17,12 @@ jobs:
         with:
           node-version: 18
           registry-url: https://registry.npmjs.org/
-          cache: 'npm'
 
-      - name: loading node modules
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: ${{ hashFiles('**/package-lock.json') }}
+      - name: installing dependencies
+        run: npm ci
 
       - name: compile project
-        run: tsc
+        run: npx tsc
 
       - name: publish node package
         run: npm publish
