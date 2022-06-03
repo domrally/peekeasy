@@ -28,22 +28,22 @@ import Peekeasy from 'peekeasy'
 
 ```
 .github/
-╰── workflows/
+╰─ workflows/
 
 docs/
-╰── assets/
+╰─ assets/
 
 src/
-├── exports/
-│   ├── events/
-│   ├── states/
-│   ╰── wasms/
+├─ exports/
+│   ├─ events/
+│   ├─ states/
+│   ╰─ wasms/
 │
-├── pages/
-│   ├── assets/
-│   ╰── components/
+├─ pages/
+│   ├─ assets/
+│   ╰─ components/
 │
-╰── tests/
-    ├── integration/
-    ╰── unit/
+╰─ tests/
+    ├─ integration/
+    ╰─ unit/
 ```
