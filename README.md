@@ -1,6 +1,6 @@
 # Peekeasy
 
-tools for observing proxies in typescript
+tools for observing proxies in typescript & web assembly
 
 [![](https://img.shields.io/npm/v/peekeasy?style=for-the-badge&labelColor=grey&logo=npm&label=)](https://www.npmjs.com/package/peekeasy)
 [![](https://img.shields.io/badge/-prettier-F7B93E?style=for-the-badge&labelColor=grey&logo=prettier)](https://prettier.io)
@@ -19,7 +19,7 @@ npm i peekeasy
 ## Using
 
 ```ts
-import { Event, State, WeakEvent, WeakState } from 'peekeasy'
+import { Event, State, Wasm, WeakEvent, WeakState } from 'peekeasy'
 // or
 import Peekeasy from 'peekeasy'
 ```
@@ -36,13 +36,12 @@ docs/
 src/
 ├── exports/
 │   ├── events/
-│   ╰── states/
+│   ├── states/
+│   ╰── wasms/
 │
 ├── pages/
 │   ├── assets/
-│   ├── components/
-│   ├── data/
-│   ╰── environments/
+│   ╰── components/
 │
 ╰── tests/
     ├── integration/
