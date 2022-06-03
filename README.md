@@ -10,13 +10,27 @@ tools for observing proxies in typescript & web assembly
 [![](https://img.shields.io/badge/-eslint-4B32C3?style=for-the-badge&labelColor=grey&logo=ESLint)](https://eslint.org)
 [![](https://img.shields.io/badge/-json-000000?style=for-the-badge&labelColor=grey&logo=json)](https://www.json.org/json-en.html)
 
-## Getting Started
+## Contents
+
+- [Using](#Using)
+  - [install](#install)
+  - [import](#import)
+- [Contributing](#Contributing)
+  - [getting started](#getting%20started)
+  - [run](#run)
+  - [deploy](#deploy)
+- [Project](#Project)
+  - [structure](#structure)
+
+## Using
+
+### install
 
 ```ts
 npm i peekeasy
 ```
 
-## Using
+### import
 
 ```ts
 import { Event, State, Wasm, WeakEvent, WeakState } from 'peekeasy'
@@ -24,14 +38,42 @@ import { Event, State, Wasm, WeakEvent, WeakState } from 'peekeasy'
 import Peekeasy from 'peekeasy'
 ```
 
+## Contributing
+
+### getting started
+
+```sh
+gh repo clone domrally/skene
+```
+
+```sh
+cd Documents/Github/skene
+```
+
+```sh
+npm i
+```
+
+### run
+
+```sh
+npm test
+```
+
+```sh
+npm start
+```
+
+### deploy
+
+merge a [pull request](https://github.com/domrally/peekeasy/compare) into `main` to publish to npm
+
 ## Folders
 
 - .github/
   - workflows/
-
 - docs/
   - assets/
-
 - src/
   - exports/
     - events/
