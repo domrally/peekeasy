@@ -26,7 +26,6 @@ import Peekeasy from 'peekeasy'
 
 ## Folders
 
-```
 - .github/
   - workflows/
 
@@ -44,4 +43,3 @@ import Peekeasy from 'peekeasy'
   - tests/
     - integration/
     - unit/
-```
