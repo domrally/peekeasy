@@ -6,7 +6,7 @@
 	"main": "build/src/exports/exports.js",
 	"types": "build/src/exports/exports.d.ts",
 	"homepage": "https://domrally.github.io/peekeasy",
-	"description": "tools for observing proxies in typescript",
+	"description": "tools for observing proxies in typescript & web assembly",
 	"engines": {
 		"node": "18"
 	},
