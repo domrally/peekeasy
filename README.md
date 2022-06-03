@@ -12,17 +12,17 @@ tools for observing proxies in typescript & web assembly
 
 ## Contents
 
-- [Using](#Using)
+- [Use](#Use)
   - [install](#install)
   - [import](#import)
-- [Contributing](#Contributing)
-  - [getting started](#getting%20started)
+- [Contribute](#Contribute)
+  - [get started](#get%20started)
   - [run](#run)
   - [deploy](#deploy)
 - [Project](#Project)
-  - [structure](#structure)
+  - [folders](#folders)
 
-## Using
+## Use
 
 ### install
 
@@ -38,9 +38,9 @@ import { Event, State, Wasm, WeakEvent, WeakState } from 'peekeasy'
 import Peekeasy from 'peekeasy'
 ```
 
-## Contributing
+## Contribute
 
-### getting started
+### get started
 
 ```sh
 gh repo clone domrally/skene
@@ -68,7 +68,9 @@ npm start
 
 merge a [pull request](https://github.com/domrally/peekeasy/compare) into `main` to publish to npm
 
-## Folders
+## Docs
+
+### folders
 
 - .github/
   - workflows/
