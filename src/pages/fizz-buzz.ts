@@ -1,4 +1,4 @@
-import Peekeasy, {Event, WeakEvent} from '../exports/exports'
+import Peekeasy, { Event, WeakEvent } from '../exports/exports'
 
 interface FizzBuzz {
 	onMessage: WeakEvent<[string]>
@@ -13,12 +13,13 @@ class FizzBuzz {
 			count(index: number) {
 				const zzif = index % 3,
 					zzub = index % 5,
-					message = zzif && zzub
-						? index.toString()
-						: `${!zzif ? 'fizz' : ''}${!zzub ? 'buzz' : ''}`
-		
+					message =
+						zzif && zzub
+							? index.toString()
+							: `${!zzif ? 'fizz' : ''}${!zzub ? 'buzz' : ''}`
+
 				onMessage(message)
-			}
+			},
 		}
 	}
 }
