@@ -55,7 +55,7 @@ class FizzBuzzState extends Peekeasy.WeakEvent<[]> {
 	}
 }
 
-const fizzbuzz = Peekeasy.State(
+const fizzbuzz: FizzBuzzState = Peekeasy.State(
 	new FizzBuzzState(),
 	new FizzBuzzState(3, 'fizz'),
 	new FizzBuzzState(5, 'buzz'),

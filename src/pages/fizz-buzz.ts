@@ -10,7 +10,9 @@ class FizzBuzzState extends Peekeasy.WeakEvent<[]> {
 	}
 
 	count = (count: number) => {
-		if (!this.index) this.word = count.toString()
+		if (!this.index) {
+			this.word = count.toString()
+		}
 
 		if (!(this.index && count % this.index)) {
 			this.claimState()
@@ -18,7 +20,7 @@ class FizzBuzzState extends Peekeasy.WeakEvent<[]> {
 	}
 }
 
-const fizzbuzz = Peekeasy.State(
+const fizzbuzz: FizzBuzzState = Peekeasy.State(
 	new FizzBuzzState(),
 	new FizzBuzzState(3, 'fizz'),
 	new FizzBuzzState(5, 'buzz'),
