@@ -33,7 +33,7 @@ npm i peekeasy
 ### import
 
 ```ts
-import Peekeasy from 'Peekeasy'
+import Peekeasy from 'peekeasy'
 
 class FizzBuzzState extends Peekeasy.WeakEvent<[]> {
 	constructor(
