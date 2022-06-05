@@ -1,33 +1,32 @@
-import Peekeasy, { Event, WeakEvent } from '../exports/exports'
+import Peekeasy from '../exports/exports'
 
-interface FizzBuzz {
-	onMessage: WeakEvent<[string]>
-	count(index: number): void
-}
-class FizzBuzz {
-	constructor() {
-		const onMessage = new Peekeasy.Event('-1')
-		return {
-			...this,
-			onMessage: new Peekeasy.WeakEvent(this.onMessage as Event<[string]>),
-			count(index: number) {
-				const zzif = index % 3,
-					zzub = index % 5,
-					message =
-						zzif && zzub
-							? index.toString()
-							: `${!zzif ? 'fizz' : ''}${!zzub ? 'buzz' : ''}`
+class FizzBuzzState extends Peekeasy.WeakEvent<[]> {
+	constructor(
+		private index?: number,
+		public word?: string,
+		private claimState = new Peekeasy.Event<[]>()
+	) {
+		super(claimState)
+	}
 
-				onMessage(message)
-			},
+	count = (count: number) => {
+		if (!this.index) this.word = count.toString()
+
+		if (!(this.index && count % this.index)) {
+			this.claimState()
 		}
 	}
 }
 
-const fizzBuzz = new FizzBuzz()
-
-fizzBuzz.onMessage.add(console.log)
+const fizzbuzz = Peekeasy.State(
+	new FizzBuzzState(),
+	new FizzBuzzState(3, 'fizz'),
+	new FizzBuzzState(5, 'buzz'),
+	new FizzBuzzState(15, 'fizzbuzz')
+)
 
 for (let i = 0; i < 100; i++) {
-	fizzBuzz.count(i)
+	fizzbuzz.count(i)
+
+	console.log(fizzbuzz.word)
 }

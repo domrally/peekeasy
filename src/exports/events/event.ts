@@ -5,12 +5,13 @@ export interface Event<params extends any[]>
 	(...args: params): void
 }
 export class Event<params extends any[]> extends WeakSet<Action> {
-	constructor(...initial: params) {
+	constructor(initial?: params) {
 		super()
 
 		const set = new Set<Action>(),
 			event: Partial<Event<params>> = (...args: params) => {
 				const copy = new Set(set)
+
 				copy.forEach(resolve => resolve?.(...args))
 			}
 
@@ -19,8 +20,10 @@ export class Event<params extends any[]> extends WeakSet<Action> {
 		event.delete = (a: Action) => set.delete(a)
 
 		event.add = (a: Action) => {
-			a(...initial)
+			if (initial) a(...initial)
+
 			set.add(a)
+
 			return this
 		}
 
@@ -31,6 +34,7 @@ export class Event<params extends any[]> extends WeakSet<Action> {
 			try {
 				const thing = (await event[Symbol.asyncIterator]!().next())
 					.value as params
+
 				return onfulfilled?.(thing)
 			} catch (error) {
 				return onrejected?.(error)
@@ -41,6 +45,7 @@ export class Event<params extends any[]> extends WeakSet<Action> {
 			while (true) {
 				yield new Promise<params>(resolve => {
 					const resolution = ((...args: params) => resolve(args)) as Action
+
 					set.add(resolution)
 				})
 			}

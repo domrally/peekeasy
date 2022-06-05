@@ -2,7 +2,7 @@ import { assert } from 'console'
 import { Event } from '../../exports/exports'
 
 async function test() {
-	const event = new Event<[isTrue: boolean]>(false),
+	const event = new Event<[isTrue: boolean]>([false]),
 		t = (message: boolean) => (is = message)
 	let is = false
 	event.add(t)
