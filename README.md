@@ -41,7 +41,7 @@ import Peekeasy from 'peekeasy'
 
 ### example
 
-*[fizz-buzz.ts](https://github.com/domrally/peekeasy/blob/wasm/src/tests/integration/fizz-buzz.ts):*
+_[fizz-buzz.ts](https://github.com/domrally/peekeasy/blob/wasm/src/tests/integration/fizz-buzz.ts):_
 
 ```ts
 // states must implement WeakEvent<[]>

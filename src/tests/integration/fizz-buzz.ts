@@ -1,4 +1,4 @@
-import Peekeasy from '../exports/exports'
+import Peekeasy from '../../exports/exports'
 
 // states must implement WeakEvent<[]>
 class FizzBuzzState extends Peekeasy.WeakEvent<[]> {
