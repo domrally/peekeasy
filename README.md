@@ -12,18 +12,18 @@ tools for observing proxies in typescript & web assembly
 
 ## Contents
 
-- [Use](#Use)
+- [**Use**](#Use)
   - [install](#install)
   - [import](#import)
   - [example](#example)
-- [Contribute](#Contribute)
+- [**Contribute**](#Contribute)
   - [clone repo](#clone-repo)
   - [open directory](#open-directory)
   - [download dependencies](#download-dependencies)
   - [run tests](#run-tests)
   - [build docs](#build-docs)
   - [deploy](#deploy)
-- [Project](#Project)
+- [**Project**](#Project)
   - [documentation](#documentation)
   - [structure](#structure)
 
