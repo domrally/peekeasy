@@ -17,7 +17,9 @@ tools for observing proxies in typescript & web assembly
   - [import](#import)
   - [example](#example)
 - [Contribute](#Contribute)
-  - [get started](#get%20started)
+  - [clone repo](#clone%20repo)
+  - [open directory](#open%20directory)
+  - [download dependencies](#download%20dependencies)
   - [run tests](#run%20tests)
   - [build docs](#build%20docs)
   - [deploy](#deploy)
@@ -83,15 +85,19 @@ for (let i = 1; i <= 100; i++) {
 
 ## Contribute
 
-### get started
+### clone repo
 
 ```
 gh repo clone domrally/peekeasy
 ```
 
+### open directory
+
 ```
 cd Documents/Github/peekeasy
 ```
+
+### install dependencies
 
 ```
 npm i
