@@ -1,14 +1,14 @@
 import Peekeasy from '../../exports/exports'
 
-// states must implement WeakEvent<[]>
+// states must implement Event<[]>
 class FizzBuzzState extends Peekeasy.Event<[]> {
 	constructor(
 		public word?: string,
 		private index?: number,
-		// in order to activate this state need to create an event
-		private claimState = new Peekeasy.Delegate<[]>()
+		// in order to activate this state need to create a delegate
+		private delegate = new Peekeasy.Delegate<[]>()
 	) {
-		super(claimState)
+		super(delegate)
 	}
 
 	// functions must not be methods
@@ -16,7 +16,7 @@ class FizzBuzzState extends Peekeasy.Event<[]> {
 		if (!this.index) this.word = `${count}`
 
 		// activate state if the count is divisible by the index
-		if (!(this.index && count % this.index)) this.claimState()
+		if (!(this.index && count % this.index)) this.delegate()
 	}
 }
 

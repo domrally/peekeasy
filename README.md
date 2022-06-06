@@ -48,15 +48,15 @@ import Peekeasy from 'peekeasy'
 _[fizz-buzz.ts](https://github.com/domrally/peekeasy/blob/wasm/src/tests/integration/fizz-buzz.ts):_
 
 ```ts
-// states must implement WeakEvent<[]>
-class FizzBuzzState extends Peekeasy.WeakEvent<[]> {
+// states must implement Event<[]>
+class FizzBuzzState extends Peekeasy.Event<[]> {
 	constructor(
 		public word?: string,
 		private index?: number,
-		// in order to activate this state need to create an event
-		private claimState = new Peekeasy.Event<[]>()
+		// in order to activate this state need to create a delegate
+		private delegate = new Peekeasy.Delegate<[]>()
 	) {
-		super(claimState)
+		super(delegate)
 	}
 
 	// functions must not be methods
@@ -64,12 +64,12 @@ class FizzBuzzState extends Peekeasy.WeakEvent<[]> {
 		if (!this.index) this.word = `${count}`
 
 		// activate state if the count is divisible by the index
-		if (!(this.index && count % this.index)) this.claimState()
+		if (!(this.index && count % this.index)) this.delegate()
 	}
 }
 
 // pass all legal states to the state pattern
-const fizzbuzz = Peekeasy.State(
+const fizzbuzz = Peekeasy.vectorize(
 	new FizzBuzzState(),
 	new FizzBuzzState('fizz', 3),
 	new FizzBuzzState('buzz', 5),
@@ -89,21 +89,22 @@ for (let i = 1; i <= 100; i++) {
 
 ### goals
 
-- syntactic sugar for:
-  - state pattern
-  - web assembly instancing
-- bring concepts to typescript from:
-  - _C#_ [`delegates`](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/delegates/) and [`events`](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/events/)
-  - [array programming](https://en.wikipedia.org/wiki/Array_programming)
-- use built-in _javascript_ types
+- syntactic sugar in typescript for
+  - [state pattern](https://en.wikipedia.org/wiki/State_pattern)
+  - [streaming web assembly](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/instantiateStreaming) [exported functions](https://developer.mozilla.org/en-US/docs/WebAssembly/Exported_functions)
+- use built-in javascript types
   - [`Set`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set) and [`WeakSet`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet) interfaces
-  - [for await...of](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for-await...of) and [`Proxy`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) objects
+  - [`for await...of`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for-await...of) and [`Proxy`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) objects
+- bring concepts to typescript from
+  - C# [`delegates`](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/delegates/) and [`events`](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/events/)
+  - [array programming](https://en.wikipedia.org/wiki/Array_programming)
 
 ### non-goals
 
-- event framework
-- state machine framework
-- observer pattern
+- a complete event system
+- web-assembly build tools
+- a state machine framework
+- an implementation of an observer pattern
 
 ### clone repo
 
