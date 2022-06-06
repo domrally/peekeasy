@@ -97,7 +97,7 @@ gh repo clone domrally/peekeasy
 cd Documents/Github/peekeasy
 ```
 
-### install dependencies
+### download dependencies
 
 ```
 npm i
