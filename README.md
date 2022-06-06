@@ -34,6 +34,8 @@ npm i peekeasy
 
 ### import
 
+*[fizz-buzz.ts](https://github.com/domrally/peekeasy/blob/wasm/src/tests/integration/fizz-buzz.ts):*
+
 ```ts
 import Peekeasy from 'peekeasy'
 
