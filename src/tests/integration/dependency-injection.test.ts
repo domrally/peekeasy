@@ -12,7 +12,7 @@ class Consumer {
 }
 
 async function test() {
-	const event = new Event('Hello, world!'),
+	const event = new Event<[string]>(['Hello, world!']),
 		consumer = new Consumer(new WeakEvent(event))
 
 	event('Hello, world!')

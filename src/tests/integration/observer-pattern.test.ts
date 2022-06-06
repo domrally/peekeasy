@@ -8,7 +8,7 @@ class Subject<T> extends Event<[T]> {
 }
 
 async function test() {
-	const subject = new Subject<boolean>(false),
+	const subject = new Subject<boolean>([false]),
 		observer = { notify: (message: boolean) => (is = message) }
 
 	let is = false
