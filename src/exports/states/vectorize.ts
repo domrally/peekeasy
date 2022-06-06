@@ -51,16 +51,13 @@ export function vectorize<T extends Event<[]>>(
  * @param values all state property values
  * @returns an object either containing the current parameter value or an object to interact with all states
  */
-function result<T>(value: T, values: T[]): any {
+function result<T extends (...args: any[]) => any>(value: T, values: T[]): any {
 	return typeof value === 'function'
-		? (...params: Parameters<typeof result>) => {
-				const copy: any[] = values.filter(v => v !== value)
+		? (...params: Parameters<T>) => {
+				const index = values.indexOf(value),
+					results = values.map(v => v(...params))
 
-				const r = value(...params)
-
-				copy.forEach(c => c(...params))
-
-				return r
+				return results[index]
 		  }
 		: value
 }
