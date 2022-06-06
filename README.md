@@ -15,6 +15,7 @@ tools for observing proxies in typescript & web assembly
 - [Use](#Use)
   - [install](#install)
   - [import](#import)
+  - [example](#example)
 - [Contribute](#Contribute)
   - [get started](#get%20started)
   - [run tests](#run%20tests)
@@ -34,11 +35,15 @@ npm i peekeasy
 
 ### import
 
+```ts
+import Peekeasy from 'peekeasy'
+```
+
+### example
+
 *[fizz-buzz.ts](https://github.com/domrally/peekeasy/blob/wasm/src/tests/integration/fizz-buzz.ts):*
 
 ```ts
-import Peekeasy from 'peekeasy'
-
 // states must implement WeakEvent<[]>
 class FizzBuzzState extends Peekeasy.WeakEvent<[]> {
 	constructor(
