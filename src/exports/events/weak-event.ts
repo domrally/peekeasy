@@ -19,4 +19,3 @@ export class WeakEvent<params extends any[]> {
 		})
 	}
 }
-export default WeakEvent

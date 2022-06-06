@@ -88,6 +88,5 @@ export class Event<params extends any[]> extends WeakSet<Action> {
 		return event as unknown as this
 	}
 }
-export default Event
 
 type Action = (...args: any[]) => void
