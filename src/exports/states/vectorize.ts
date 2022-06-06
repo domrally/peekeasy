@@ -1,18 +1,18 @@
-import { WeakEvent } from '../exports'
+import { Event } from '../exports'
 
 /**
- * Creates and manages a state pattern based on an initial set of possible states
- * @param initial state of the returned object
+ * Creates and manages a state pattern based on a target set of possible states
+ * @param target state of the returned object
  * @param states array of states that can be activated
  * @returns a state without the extended event interface
  */
-export function State<T extends WeakEvent<[]>>(
-	initial: T,
+export function vectorize<T extends Event<[]>>(
+	target: T,
 	...states: T[]
-): Omit<T, keyof WeakEvent<[]>> {
-	let current: any = initial
+): Omit<T, keyof Event<[]>> {
+	let current: any = target
 
-	states = [initial, ...states]
+	states = [target, ...states]
 
 	for (const state of states) {
 		state.add(() => (current = state))

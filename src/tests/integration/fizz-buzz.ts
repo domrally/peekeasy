@@ -1,12 +1,12 @@
 import Peekeasy from '../../exports/exports'
 
 // states must implement WeakEvent<[]>
-class FizzBuzzState extends Peekeasy.WeakEvent<[]> {
+class FizzBuzzState extends Peekeasy.Event<[]> {
 	constructor(
 		public word?: string,
 		private index?: number,
 		// in order to activate this state need to create an event
-		private claimState = new Peekeasy.Event<[]>()
+		private claimState = new Peekeasy.Delegate<[]>()
 	) {
 		super(claimState)
 	}
@@ -21,7 +21,7 @@ class FizzBuzzState extends Peekeasy.WeakEvent<[]> {
 }
 
 // pass all legal states to the state pattern
-const fizzbuzz = Peekeasy.State(
+const fizzbuzz = Peekeasy.vectorize(
 	new FizzBuzzState(),
 	new FizzBuzzState('fizz', 3),
 	new FizzBuzzState('buzz', 5),

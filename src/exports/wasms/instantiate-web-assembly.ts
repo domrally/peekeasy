@@ -3,7 +3,7 @@
  * @param path state of the returned object
  * @returns a typed object isomorphic to the wasm module exports
  */
-export async function Wasm<T>(path: `${string}.wasm`) {
+export async function instantiateWebAssembly<T>(path: `${string}.wasm`) {
 	//
 	const wasm = fetch(path),
 		obj = await WebAssembly.instantiateStreaming(wasm),

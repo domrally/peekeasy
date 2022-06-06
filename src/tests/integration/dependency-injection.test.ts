@@ -1,8 +1,8 @@
 import { assert } from 'console'
-import { Event, WeakEvent } from '../../exports/exports'
+import { Delegate, Event } from '../../exports/exports'
 
 class Consumer {
-	constructor(onTest: WeakEvent<[string]>) {
+	constructor(onTest: Event<[string]>) {
 		onTest.add(this.consume)
 	}
 
@@ -12,10 +12,10 @@ class Consumer {
 }
 
 async function test() {
-	const event = new Event<[string]>(['Hello, world!']),
-		consumer = new Consumer(new WeakEvent(event))
+	const delegate = new Delegate<[string]>(['Hello, world!']),
+		consumer = new Consumer(new Event(delegate))
 
-	event('Hello, world!')
+	delegate('Hello, world!')
 
 	return true
 }

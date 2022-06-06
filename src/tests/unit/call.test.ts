@@ -1,8 +1,8 @@
 import { assert } from 'console'
-import { Event } from '../../exports/exports'
+import { Delegate } from '../../exports/exports'
 
 async function test() {
-	new Event()()
+	new Delegate()()
 	return true
 }
 

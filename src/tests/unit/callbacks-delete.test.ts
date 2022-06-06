@@ -1,14 +1,14 @@
 import { assert } from 'console'
-import { Event } from '../../exports/exports'
+import { Delegate } from '../../exports/exports'
 
 async function test() {
-	const event = new Event<[isTrue: boolean]>([false]),
+	const delegate = new Delegate<[isTrue: boolean]>([false]),
 		t = (message: boolean) => (is = message)
 	let is = false
-	event.add(t)
-	event(true)
-	event.delete(t)
-	event(false)
+	delegate.add(t)
+	delegate(true)
+	delegate.delete(t)
+	delegate(false)
 
 	return is
 }

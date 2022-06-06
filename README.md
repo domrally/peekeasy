@@ -17,6 +17,8 @@ tools for observing proxies in typescript & web assembly
   - [import](#import)
   - [example](#example)
 - [**Contribute**](#Contribute)
+  - [goals](#goals)
+  - [non-goals](#non-goals)
   - [clone repo](#clone-repo)
   - [open directory](#open-directory)
   - [download dependencies](#download-dependencies)
@@ -84,6 +86,24 @@ for (let i = 1; i <= 100; i++) {
 ```
 
 ## Contribute
+
+### goals
+
+- syntactic sugar for:
+  - state pattern
+  - web assembly instancing
+- bring concepts to typescript from:
+  - _C#_ [`delegates`](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/delegates/) and [`events`](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/events/)
+  - [array programming](https://en.wikipedia.org/wiki/Array_programming)
+- use built-in _javascript_ types
+  - [`Set`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set) and [`WeakSet`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet) interfaces
+  - [for await...of](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for-await...of) and [`Proxy`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) objects
+
+### non-goals
+
+- event framework
+- state machine framework
+- observer pattern
 
 ### clone repo
 
