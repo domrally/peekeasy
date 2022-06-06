@@ -20,7 +20,8 @@ tools for observing proxies in typescript & web assembly
   - [run](#run)
   - [deploy](#deploy)
 - [Project](#Project)
-  - [folders](#folders)
+  - [documentation](#documentation)
+  - [structure](#structure)
 
 ## Use
 
