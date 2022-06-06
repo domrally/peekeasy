@@ -1,10 +1,10 @@
-interface wasm<T> extends Promise<T> {}
+export interface Webassembly<T> extends Promise<T> {}
 /**
  * Creates and manages a state pattern based on an initial set of possible states
  * @param path state of the returned object
  * @returns a typed object isomorphic to the wasm module exports
  */
-class wasm<T> extends Promise<T> {
+export class Webassembly<T> extends Promise<T> {
 	constructor(path: `${string}.wasm`) {
 		super(async resolve => {
 			//
@@ -21,7 +21,6 @@ class wasm<T> extends Promise<T> {
 		})
 	}
 }
-export default wasm
 
 /**
  * wasm functions should return a byte offset and length into the memory where the json is stored as a string
