@@ -1,13 +1,13 @@
-import { Delegate } from './events/delegate'
-import { Event } from './events/event'
-import { instantiateWebAssembly } from './wasms/instantiate-web-assembly'
-import { vectorize } from './states/vectorize'
+import { Delegate } from './delegate'
+import { Event } from './event'
+import { Vector } from './vector'
+import WebAssembly from './web-assembly'
 
-export { Delegate, Event, instantiateWebAssembly, vectorize }
+export { Delegate, Event, Vector, WebAssembly }
 
 export default {
 	Delegate,
 	Event,
-	instantiateWebAssembly,
-	vectorize,
+	Vector,
+	WebAssembly,
 }
