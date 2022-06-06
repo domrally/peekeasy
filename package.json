@@ -33,11 +33,14 @@
 	},
 	"keywords": [
 		"event",
-		"delegate",
 		"proxy",
 		"state",
-		"forwarding",
-		"observer"
+		"forward",
+		"pattern",
+		"delegate",
+		"observer",
+		"delegation",
+		"forwarding"
 	],
 	"devDependencies": {
 		"@types/node": "<15",
