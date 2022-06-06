@@ -1,38 +1,29 @@
 import Peekeasy from '../exports/exports'
 
-interface FizzBuzz {
-	count(count: number): void
-	word?: string
-}
-
-class FizzBuzzState extends Peekeasy.WeakEvent<[]> implements FizzBuzz {
+class FizzBuzzState extends Peekeasy.WeakEvent<[]> {
 	constructor(
-		private index?: number,
 		public word?: string,
+		private index?: number,
 		private claimState = new Peekeasy.Event<[]>()
 	) {
 		super(claimState)
 	}
 
 	count = (count: number) => {
-		if (!this.index) {
-			this.word = count.toString()
-		}
+		if (!this.index) this.word = `${count}`
 
-		if (!(this.index && count % this.index)) {
-			this.claimState()
-		}
+		if (!(this.index && count % this.index)) this.claimState()
 	}
 }
 
-const fizzbuzz: FizzBuzz = Peekeasy.State(
+const fizzbuzz = Peekeasy.State(
 	new FizzBuzzState(),
-	new FizzBuzzState(3, 'fizz'),
-	new FizzBuzzState(5, 'buzz'),
-	new FizzBuzzState(15, 'fizzbuzz')
+	new FizzBuzzState('fizz', 3),
+	new FizzBuzzState('buzz', 5),
+	new FizzBuzzState('fizzbuzz', 15)
 )
 
-for (let i = 0; i < 100; i++) {
+for (let i = 1; i <= 100; i++) {
 	fizzbuzz.count(i)
 
 	console.log(fizzbuzz.word)
