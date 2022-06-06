@@ -79,11 +79,11 @@ for (let i = 1; i <= 100; i++) {
 ### get started
 
 ```
-gh repo clone domrally/skene
+gh repo clone domrally/peekeasy
 ```
 
 ```
-cd Documents/Github/skene
+cd Documents/Github/peekeasy
 ```
 
 ```

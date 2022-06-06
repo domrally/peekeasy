@@ -48,7 +48,7 @@
 		"eslint-config-prettier": "<9",
 		"prettier": "<3",
 		"ts-node": "<11",
-		"typedoc": "^0.22.17",
+		"typedoc": "<1.0.1",
 		"typescript": "<5"
 	}
 }
