@@ -35,7 +35,12 @@ npm i peekeasy
 ```ts
 import Peekeasy from 'peekeasy'
 
-class FizzBuzzState extends Peekeasy.WeakEvent<[]> {
+interface FizzBuzz {
+	count(count: number): void
+	word?: string
+}
+
+class FizzBuzzState extends Peekeasy.WeakEvent<[]> implements FizzBuzz {
 	constructor(
 		private index?: number,
 		public word?: string,
@@ -55,7 +60,7 @@ class FizzBuzzState extends Peekeasy.WeakEvent<[]> {
 	}
 }
 
-const fizzbuzz: FizzBuzzState = Peekeasy.State(
+const fizzbuzz: FizzBuzz = Peekeasy.State(
 	new FizzBuzzState(),
 	new FizzBuzzState(3, 'fizz'),
 	new FizzBuzzState(5, 'buzz'),

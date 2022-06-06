@@ -1,6 +1,6 @@
 import { WeakEvent } from '../exports'
 
-export function State<T extends WeakEvent<[]>>(initial: T, ...states: T[]): T {
+export function State<T extends WeakEvent<[]>>(initial: T, ...states: T[]): Omit<T, keyof WeakEvent<[]>> {
 	let current: any = initial
 
 	states = [initial, ...states]
