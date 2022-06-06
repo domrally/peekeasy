@@ -17,7 +17,8 @@ tools for observing proxies in typescript & web assembly
   - [import](#import)
 - [Contribute](#Contribute)
   - [get started](#get%20started)
-  - [run](#run)
+  - [run tests](#run%20tests)
+  - [build docs](#build%20docs)
   - [deploy](#deploy)
 - [Project](#Project)
   - [documentation](#documentation)
@@ -89,11 +90,13 @@ cd Documents/Github/skene
 npm i
 ```
 
-### run
+### run tests
 
 ```
 npm test
 ```
+
+### build docs
 
 ```
 npm start
