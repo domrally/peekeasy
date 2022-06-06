@@ -1,3 +1,8 @@
+/**
+ * Creates and manages a state pattern based on an initial set of possible states
+ * @param path state of the returned object
+ * @returns a typed object isomorphic to the wasm module exports
+ */
 export async function Wasm<T>(path: `${string}.wasm`) {
 	//
 	const wasm = fetch(path),
@@ -9,21 +14,23 @@ export async function Wasm<T>(path: `${string}.wasm`) {
 		get = (_: T, key: string) => () =>
 			parse(memory, getOffset(key), getLength(key))
 
-	//
 	return new Proxy({}, { get }) as T
 }
-export default Wasm
 
-// wasm functions should return
-// a byte offset and length into the memory
-// where the json is stored as a string
+/**
+ * wasm functions should return a byte offset and length into the memory where the json is stored as a string
+ * https://stackoverflow.com/questions/47529643/how-to-return-a-string-or-similar-from-rust-in-webassembly
+ * @param arrayBuffer memory buffer of the wasm module
+ * @param byteOffset offset of the json string in the memory buffer
+ * @param byteLength	length of the json string in the memory buffer
+ * @returns an object parsed from the json string located in the memory buffer
+ */
 function parse(
 	arrayBuffer: ArrayBufferLike,
 	byteOffset: number,
 	byteLength: number
 ) {
-	// https://stackoverflow.com/questions/47529643/how-to-return-a-string-or-similar-from-rust-in-webassembly
-	//
+	// access memory
 	const stringBuffer = new Uint8Array(arrayBuffer, byteOffset, byteLength)
 
 	// create a string from this buffer
@@ -32,7 +39,6 @@ function parse(
 		str += String.fromCharCode(stringBuffer[i])
 	}
 
-	//
 	return JSON.parse(str)
 }
 

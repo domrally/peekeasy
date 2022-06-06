@@ -1,10 +1,10 @@
 import { WeakEvent } from '../exports'
 
 /**
- * Manages the state pattern
- * @param initial initial state before any other states are activated
- * @param states states that can be activated
- * @returns a state without the event
+ * Creates and manages a state pattern based on an initial set of possible states
+ * @param initial state of the returned object
+ * @param states array of states that can be activated
+ * @returns a state without the extended event interface
  */
 export function State<T extends WeakEvent<[]>>(
 	initial: T,
@@ -44,13 +44,12 @@ export function State<T extends WeakEvent<[]>>(
 
 	return new Proxy({} as any, proxyHandler)
 }
-export default State
 
 /**
- * Returns the result of the function or the first truthy value
- * @param value initial state before any other states are activated
- * @param values states that can be activated
- * @returns a state without the event
+ * creates a function that executes the function on all states
+ * @param value current state property value
+ * @param values all state property values
+ * @returns an object either containing the current parameter value or an object to interact with all states
  */
 function result<T>(value: T, values: T[]): any {
 	return typeof value === 'function'
