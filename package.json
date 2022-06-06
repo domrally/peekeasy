@@ -1,28 +1,28 @@
 {
 	"license": "MIT",
 	"name": "peekeasy",
-	"version": "0.2.0",
+	"version": "0.5.0",
 	"author": "Dom Mandy",
-	"main": "build/src/src.js",
-	"types": "build/src/src.d.ts",
+	"main": "build/src/exports/exports.js",
+	"types": "build/src/exports/exports.d.ts",
 	"homepage": "https://domrally.github.io/peekeasy",
-	"description": "tools for observing proxies in typescript",
+	"description": "tools for observing proxies in typescript & web assembly",
 	"engines": {
 		"node": "18"
 	},
 	"scripts": {
 		"format": "npx eslint --fix && npx prettier --write .",
-		"start": "npx ts-node docs/fizz-buzz.ts",
-		"test": "npx ts-node tests/tests.ts",
+		"start": "npx typedoc",
+		"test": "npm run lint && npm run unit && npm run integration",
 		"lint": "npx eslint && npx prettier --check .",
-		"unit": "npx ts-node tests/unit/unit.ts",
-		"integration": "npx ts-node tests/integration/integration.ts"
+		"unit": "npx ts-node src/tests/unit/unit.ts",
+		"integration": "npx ts-node src/tests/integration/integration.ts"
 	},
 	"files": [
-		"build/src"
+		"build/src/exports"
 	],
 	"exports": {
-		".": "./build/src/src.js"
+		".": "./build/src/exports/exports.js"
 	},
 	"bugs": {
 		"url": "https://github.com/domrally/peekeasy/issues"
@@ -47,7 +47,8 @@
 		"eslint-config-alloy": "<5",
 		"eslint-config-prettier": "<9",
 		"prettier": "<3",
-		"ts-node": "^10.8.0",
+		"ts-node": "<11",
+		"typedoc": "^0.22.17",
 		"typescript": "<5"
 	}
 }

@@ -1,0 +1,125 @@
+<!DOCTYPE html><html class="default"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>peekeasy</title><meta name="description" content="Documentation for peekeasy"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script async src="assets/search.js" id="search-script"></script></head><body><script>document.body.classList.add(localStorage.getItem("tsd-theme") || "os")</script><header><div class="tsd-page-toolbar"><div class="container"><div class="table-wrap"><div class="table-cell" id="tsd-search" data-base="."><div class="field"><label for="tsd-search-field" class="tsd-widget search no-caption">Search</label><input type="text" id="tsd-search-field"/></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="index.html" class="title">peekeasy</a></div><div class="table-cell" id="tsd-widgets"><div id="tsd-filter"><a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a><div class="tsd-filter-group"><div class="tsd-select" id="tsd-filter-visibility"><span class="tsd-select-label">All</span><ul class="tsd-select-list"><li data-value="public">Public</li><li data-value="protected">Public/Protected</li><li data-value="private" class="selected">All</li></ul></div> <input type="checkbox" id="tsd-filter-inherited" checked/><label class="tsd-widget" for="tsd-filter-inherited">Inherited</label><input type="checkbox" id="tsd-filter-externals" checked/><label class="tsd-widget" for="tsd-filter-externals">Externals</label></div></div><a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a></div></div></div></div><div class="tsd-page-title"><div class="container"><h1> peekeasy </h1></div></div></header><div class="container container-main"><div class="row"><div class="col-8 col-content"><div class="tsd-panel tsd-typography">
+<a href="#peekeasy" id="peekeasy" style="color: inherit; text-decoration: none;">
+  <h1>Peekeasy</h1>
+</a>
+<p>tools for observing proxies in typescript &amp; web assembly</p>
+<p><a href="https://www.npmjs.com/package/peekeasy"><img src="https://img.shields.io/npm/v/peekeasy?style=for-the-badge&labelColor=grey&logo=npm&label=" alt=""></a>
+<a href="https://prettier.io"><img src="https://img.shields.io/badge/-prettier-F7B93E?style=for-the-badge&labelColor=grey&logo=prettier" alt=""></a>
+<a href="https://nodejs.org"><img src="https://img.shields.io/badge/-nodejs-339933?style=for-the-badge&labelColor=grey&logo=node.js" alt=""></a>
+<a href="https://www.typescriptlang.org"><img src="https://img.shields.io/badge/-typescript-3178C6?style=for-the-badge&labelColor=grey&logo=typescript" alt=""></a>
+<a href="https://typestrong.org/ts-node"><img src="https://img.shields.io/badge/-tsnode-3178C6?style=for-the-badge&labelColor=grey&logo=ts-node" alt=""></a>
+<a href="https://eslint.org"><img src="https://img.shields.io/badge/-eslint-4B32C3?style=for-the-badge&labelColor=grey&logo=ESLint" alt=""></a>
+<a href="https://www.json.org/json-en.html"><img src="https://img.shields.io/badge/-json-000000?style=for-the-badge&labelColor=grey&logo=json" alt=""></a></p>
+
+<a href="#contents" id="contents" style="color: inherit; text-decoration: none;">
+  <h2>Contents</h2>
+</a>
+<ul>
+<li><a href="#Use">Use</a><ul>
+<li><a href="#install">install</a></li>
+<li><a href="#import">import</a></li>
+</ul>
+</li>
+<li><a href="#Contribute">Contribute</a><ul>
+<li><a href="#get%20started">get started</a></li>
+<li><a href="#run%20tests">run tests</a></li>
+<li><a href="#build%20docs">build docs</a></li>
+<li><a href="#deploy">deploy</a></li>
+</ul>
+</li>
+<li><a href="#Project">Project</a><ul>
+<li><a href="#documentation">documentation</a></li>
+<li><a href="#structure">structure</a></li>
+</ul>
+</li>
+</ul>
+
+<a href="#use" id="use" style="color: inherit; text-decoration: none;">
+  <h2>Use</h2>
+</a>
+
+<a href="#install" id="install" style="color: inherit; text-decoration: none;">
+  <h3>install</h3>
+</a>
+<pre><code><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-0">i</span><span class="hl-1"> </span><span class="hl-0">peekeasy</span>
+</code></pre>
+
+<a href="#import" id="import" style="color: inherit; text-decoration: none;">
+  <h3>import</h3>
+</a>
+<pre><code class="language-ts"><span class="hl-2">import</span><span class="hl-1"> </span><span class="hl-0">Peekeasy</span><span class="hl-1"> </span><span class="hl-2">from</span><span class="hl-1"> </span><span class="hl-3">&#39;peekeasy&#39;</span><br/><br/><span class="hl-4">// states must implement WeakEvent&lt;[]&gt;</span><br/><span class="hl-5">class</span><span class="hl-1"> </span><span class="hl-6">FizzBuzzState</span><span class="hl-1"> </span><span class="hl-5">extends</span><span class="hl-1"> </span><span class="hl-6">Peekeasy</span><span class="hl-1">.</span><span class="hl-6">WeakEvent</span><span class="hl-1">&lt;[]&gt; {</span><br/><span class="hl-1">    </span><span class="hl-5">constructor</span><span class="hl-1">(</span><br/><span class="hl-1">        </span><span class="hl-5">public</span><span class="hl-1"> </span><span class="hl-0">word</span><span class="hl-1">?: </span><span class="hl-6">string</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-5">private</span><span class="hl-1"> </span><span class="hl-0">index</span><span class="hl-1">?: </span><span class="hl-6">number</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-4">// in order to activate this state need to create an event</span><br/><span class="hl-1">        </span><span class="hl-5">private</span><span class="hl-1"> </span><span class="hl-0">claimState</span><span class="hl-1"> = </span><span class="hl-5">new</span><span class="hl-1"> </span><span class="hl-0">Peekeasy</span><span class="hl-1">.</span><span class="hl-7">Event</span><span class="hl-1">&lt;[]&gt;()</span><br/><span class="hl-1">    ) {</span><br/><span class="hl-1">        </span><span class="hl-5">super</span><span class="hl-1">(</span><span class="hl-0">claimState</span><span class="hl-1">)</span><br/><span class="hl-1">    }</span><br/><br/><span class="hl-1">    </span><span class="hl-4">// functions must not be methods</span><br/><span class="hl-1">    </span><span class="hl-7">count</span><span class="hl-1"> = (</span><span class="hl-0">count</span><span class="hl-1">: </span><span class="hl-6">number</span><span class="hl-1">) </span><span class="hl-5">=&gt;</span><span class="hl-1"> {</span><br/><span class="hl-1">        </span><span class="hl-2">if</span><span class="hl-1"> (!</span><span class="hl-5">this</span><span class="hl-1">.</span><span class="hl-0">index</span><span class="hl-1">) </span><span class="hl-5">this</span><span class="hl-1">.</span><span class="hl-0">word</span><span class="hl-1"> = </span><span class="hl-3">`</span><span class="hl-5">${</span><span class="hl-0">count</span><span class="hl-5">}</span><span class="hl-3">`</span><br/><br/><span class="hl-1">        </span><span class="hl-4">// activate state if the count is divisible by the index</span><br/><span class="hl-1">        </span><span class="hl-2">if</span><span class="hl-1"> (!(</span><span class="hl-5">this</span><span class="hl-1">.</span><span class="hl-0">index</span><span class="hl-1"> &amp;&amp; </span><span class="hl-0">count</span><span class="hl-1"> % </span><span class="hl-5">this</span><span class="hl-1">.</span><span class="hl-0">index</span><span class="hl-1">)) </span><span class="hl-5">this</span><span class="hl-1">.</span><span class="hl-7">claimState</span><span class="hl-1">()</span><br/><span class="hl-1">    }</span><br/><span class="hl-1">}</span><br/><br/><span class="hl-4">// pass all legal states to the state pattern</span><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-8">fizzbuzz</span><span class="hl-1"> = </span><span class="hl-0">Peekeasy</span><span class="hl-1">.</span><span class="hl-7">State</span><span class="hl-1">(</span><br/><span class="hl-1">    </span><span class="hl-5">new</span><span class="hl-1"> </span><span class="hl-7">FizzBuzzState</span><span class="hl-1">(),</span><br/><span class="hl-1">    </span><span class="hl-5">new</span><span class="hl-1"> </span><span class="hl-7">FizzBuzzState</span><span class="hl-1">(</span><span class="hl-3">&#39;fizz&#39;</span><span class="hl-1">, </span><span class="hl-9">3</span><span class="hl-1">),</span><br/><span class="hl-1">    </span><span class="hl-5">new</span><span class="hl-1"> </span><span class="hl-7">FizzBuzzState</span><span class="hl-1">(</span><span class="hl-3">&#39;buzz&#39;</span><span class="hl-1">, </span><span class="hl-9">5</span><span class="hl-1">),</span><br/><span class="hl-1">    </span><span class="hl-5">new</span><span class="hl-1"> </span><span class="hl-7">FizzBuzzState</span><span class="hl-1">(</span><span class="hl-3">&#39;fizzbuzz&#39;</span><span class="hl-1">, </span><span class="hl-9">15</span><span class="hl-1">)</span><br/><span class="hl-1">)</span><br/><br/><span class="hl-2">for</span><span class="hl-1"> (</span><span class="hl-5">let</span><span class="hl-1"> </span><span class="hl-0">i</span><span class="hl-1"> = </span><span class="hl-9">1</span><span class="hl-1">; </span><span class="hl-0">i</span><span class="hl-1"> &lt;= </span><span class="hl-9">100</span><span class="hl-1">; </span><span class="hl-0">i</span><span class="hl-1">++) {</span><br/><span class="hl-1">    </span><span class="hl-4">// called on all states</span><br/><span class="hl-1">    </span><span class="hl-0">fizzbuzz</span><span class="hl-1">.</span><span class="hl-7">count</span><span class="hl-1">(</span><span class="hl-0">i</span><span class="hl-1">)</span><br/><br/><span class="hl-1">    </span><span class="hl-4">// return values always come from the current state</span><br/><span class="hl-1">    </span><span class="hl-0">console</span><span class="hl-1">.</span><span class="hl-7">log</span><span class="hl-1">(</span><span class="hl-0">fizzbuzz</span><span class="hl-1">.</span><span class="hl-0">word</span><span class="hl-1">)</span><br/><span class="hl-1">}</span>
+</code></pre>
+
+<a href="#contribute" id="contribute" style="color: inherit; text-decoration: none;">
+  <h2>Contribute</h2>
+</a>
+
+<a href="#get-started" id="get-started" style="color: inherit; text-decoration: none;">
+  <h3>get started</h3>
+</a>
+<pre><code><span class="hl-0">gh</span><span class="hl-1"> </span><span class="hl-0">repo</span><span class="hl-1"> </span><span class="hl-0">clone</span><span class="hl-1"> </span><span class="hl-0">domrally</span><span class="hl-1">/</span><span class="hl-0">skene</span>
+</code></pre>
+<pre><code><span class="hl-0">cd</span><span class="hl-1"> </span><span class="hl-0">Documents</span><span class="hl-1">/</span><span class="hl-0">Github</span><span class="hl-1">/</span><span class="hl-0">skene</span>
+</code></pre>
+<pre><code><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-0">i</span>
+</code></pre>
+
+<a href="#run-tests" id="run-tests" style="color: inherit; text-decoration: none;">
+  <h3>run tests</h3>
+</a>
+<pre><code><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-0">test</span>
+</code></pre>
+
+<a href="#build-docs" id="build-docs" style="color: inherit; text-decoration: none;">
+  <h3>build docs</h3>
+</a>
+<pre><code><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-0">start</span>
+</code></pre>
+
+<a href="#deploy" id="deploy" style="color: inherit; text-decoration: none;">
+  <h3>deploy</h3>
+</a>
+<p>merge a <a href="https://github.com/domrally/peekeasy/compare">pull request</a> into <code>main</code> to publish to <strong>npm</strong></p>
+
+<a href="#project" id="project" style="color: inherit; text-decoration: none;">
+  <h2>Project</h2>
+</a>
+
+<a href="#documentation" id="documentation" style="color: inherit; text-decoration: none;">
+  <h3>documentation</h3>
+</a>
+<p><a href="https://domrally.github.io/peekeasy">https://domrally.github.io/peekeasy</a></p>
+
+<a href="#structure" id="structure" style="color: inherit; text-decoration: none;">
+  <h3>structure</h3>
+</a>
+<ul>
+<li>.github/<ul>
+<li>workflows/</li>
+</ul>
+</li>
+<li>docs/<ul>
+<li>assets/</li>
+</ul>
+</li>
+<li>src/<ul>
+<li>exports/<ul>
+<li>events/</li>
+<li>states/</li>
+<li>wasms/</li>
+</ul>
+</li>
+<li>pages/<ul>
+<li>assets/</li>
+<li>components/</li>
+</ul>
+</li>
+<li>tests/<ul>
+<li>integration/</li>
+<li>unit/</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div></div><div class="col-4 col-menu menu-sticky-wrap menu-highlight"><nav class="tsd-navigation primary"><ul><li class="current"><a href="modules.html">Modules</a></li><li class=" tsd-kind-module"><a href="modules/events_event.html">events/event</a></li><li class=" tsd-kind-module"><a href="modules/events_weak_event.html">events/weak-<wbr/>event</a></li><li class=" tsd-kind-module"><a href="modules/states_state.html">states/state</a></li><li class=" tsd-kind-module"><a href="modules/wasms_web_assembly.html">wasms/web-<wbr/>assembly</a></li></ul></nav></div></div></div><footer class="with-border-bottom"><div class="container"><h2>Legend</h2><div class="tsd-legend-group"><ul class="tsd-legend"><li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li></ul></div><h2>Settings</h2><p>Theme <select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></p></div></footer><div class="container tsd-generator"><p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div><div class="overlay"></div><script src="assets/main.js"></script></body></html>

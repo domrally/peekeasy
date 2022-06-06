@@ -1,0 +1,10 @@
+{
+	"$schema": "https://typedoc.org/schema.json",
+	"entryPoints": [
+		"./src/exports/events/event.ts",
+		"./src/exports/events/weak-event.ts",
+		"./src/exports/states/state.ts",
+		"./src/exports/wasms/web-assembly.ts"
+	],
+	"out": "docs"
+}
