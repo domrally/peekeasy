@@ -1,5 +1,5 @@
 import { assert } from 'console'
-import { Delegate } from '../../exports/exports'
+import { Delegate } from '../../../exports/exports'
 
 async function test() {
 	const delegate = new Delegate<[isTrue: boolean]>([false]),
