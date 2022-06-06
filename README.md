@@ -114,18 +114,17 @@ https://domrally.github.io/peekeasy
 
 ### structure
 
-- .github/
-  - workflows/
-- docs/
-  - assets/
-- src/
-  - exports/
-    - events/
-    - states/
-    - wasms/
-  - pages/
-    - assets/
-    - components/
-  - tests/
-    - integration/
-    - unit/
+- [.github/](https://github.com/domrally/peekeasy/tree/main/.github)
+  - [workflows/](https://github.com/domrally/peekeasy/tree/main/.github/workflows)
+- [docs/](https://github.com/domrally/peekeasy/tree/main/docs)
+  - [assets/](https://github.com/domrally/peekeasy/tree/main/docs/assets)
+  - [classes/](https://github.com/domrally/peekeasy/tree/main/docs/classes)
+  - [modules/](https://github.com/domrally/peekeasy/tree/main/docs/modules)
+- [src/](https://github.com/domrally/peekeasy/tree/main/src)
+  - [exports/](https://github.com/domrally/peekeasy/tree/main/src/exports)
+    - [events/](https://github.com/domrally/peekeasy/tree/main/src/exports/events)
+    - [states/](https://github.com/domrally/peekeasy/tree/main/src/exports/states)
+    - [wasms/](https://github.com/domrally/peekeasy/tree/main/src/exports/wasms)
+  - [tests/](https://github.com/domrally/peekeasy/tree/main/src/tests)
+    - [integration/](https://github.com/domrally/peekeasy/tree/main/src/tests/integration)
+    - [unit/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit)
