@@ -26,7 +26,7 @@ tools for observing proxies in typescript & web assembly
 
 ### install
 
-```ts
+```
 npm i peekeasy
 ```
 
@@ -76,35 +76,39 @@ for (let i = 1; i <= 100; i++) {
 
 ### get started
 
-```sh
+```
 gh repo clone domrally/skene
 ```
 
-```sh
+```
 cd Documents/Github/skene
 ```
 
-```sh
+```
 npm i
 ```
 
 ### run
 
-```sh
+```
 npm test
 ```
 
-```sh
+```
 npm start
 ```
 
 ### deploy
 
-merge a [pull request](https://github.com/domrally/peekeasy/compare) into `main` to publish to npm
+merge a [pull request](https://github.com/domrally/peekeasy/compare) into `main` to publish to **npm**
 
-## Docs
+## Project
 
-### folders
+### documentation
+
+https://domrally.github.io/peekeasy
+
+### structure
 
 - .github/
   - workflows/
