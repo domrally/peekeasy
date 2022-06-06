@@ -5,14 +5,14 @@ export interface Event<params extends any[]>
 	(...args: params): void
 }
 /**
- * Creates and manages a state pattern based on an initial set of possible states
+ * function that sends a message to all listeners
+ * @param args tuple of data that is passed to the listeners
  */
 export class Event<params extends any[]> extends WeakSet<Action> {
 	/**
-	 * Creates and manages a state pattern based on an initial set of possible states
 	 * @param initial state of the returned object
 	 * @param states array of states that can be activated
-	 * @returns a state without the extended event interface
+	 * @returns an event that can be called and listened to
 	 */
 	constructor(initial?: params) {
 		super()

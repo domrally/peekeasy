@@ -5,12 +5,12 @@ export interface WeakEvent<params extends any[]>
 		AsyncIterable<params>,
 		PromiseLike<params> {}
 /**
- * Creates and manages a state pattern based on an initial set of possible states
- * @param initial state of the returned object
- * @param states array of states that can be activated
- * @returns a state without the extended event interface
+ * a wrapped event that can't be called directly
  */
 export class WeakEvent<params extends any[]> {
+	/**
+	 * @param event callable parent event
+	 */
 	constructor(event: Event<params>) {
 		return new Proxy(event, {
 			apply: () => {
