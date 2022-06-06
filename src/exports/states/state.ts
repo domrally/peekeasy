@@ -44,6 +44,7 @@ export function State<T extends WeakEvent<[]>>(
 
 	return new Proxy({} as any, proxyHandler)
 }
+export default State
 
 /**
  * creates a function that executes the function on all states

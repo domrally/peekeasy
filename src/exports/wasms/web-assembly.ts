@@ -16,6 +16,7 @@ export async function Wasm<T>(path: `${string}.wasm`) {
 
 	return new Proxy({}, { get }) as T
 }
+export default Wasm
 
 /**
  * wasm functions should return a byte offset and length into the memory where the json is stored as a string
