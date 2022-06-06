@@ -1,5 +1,11 @@
 import { WeakEvent } from '../exports'
 
+/**
+ * Manages the state pattern
+ * @param initial initial state before any other states are activated
+ * @param states states that can be activated
+ * @returns a state without the event
+ */
 export function State<T extends WeakEvent<[]>>(
 	initial: T,
 	...states: T[]
@@ -40,6 +46,12 @@ export function State<T extends WeakEvent<[]>>(
 }
 export default State
 
+/**
+ * Returns the result of the function or the first truthy value
+ * @param value initial state before any other states are activated
+ * @param values states that can be activated
+ * @returns a state without the event
+ */
 function result<T>(value: T, values: T[]): any {
 	return typeof value === 'function'
 		? (...params: Parameters<typeof result>) => {
