@@ -30,8 +30,7 @@ const fizzbuzz = new Peekeasy.Vector(
 )()
 
 for (let i = 1; i <= 100; i++) {
-	// fizzbuzz.forEach(f => f.count(i))
 	fizzbuzz.count()(i)
-	// console.log(fizzbuzz[index].word)
+
 	console.log(fizzbuzz().word)
 }

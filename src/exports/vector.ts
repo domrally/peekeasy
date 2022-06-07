@@ -1,6 +1,6 @@
 import { Event } from './exports'
 
-export interface Vector<T extends Partial<Event<[]>>> {
+export interface Vector<T extends Partial<Event<[]>>> extends Iterable<T> {
 	(): Vectored<T>
 }
 /**
