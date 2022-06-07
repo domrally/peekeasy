@@ -22,6 +22,7 @@ class FizzBuzzState extends Peekeasy.Event<[]> {
 
 // pass all legal states to the state pattern
 const fizzbuzz = new Peekeasy.Vector(
+	0,
 	new FizzBuzzState(),
 	new FizzBuzzState('fizz', 3),
 	new FizzBuzzState('buzz', 5),
@@ -29,9 +30,8 @@ const fizzbuzz = new Peekeasy.Vector(
 )()
 
 for (let i = 1; i <= 100; i++) {
-	// called on all states
-	fizzbuzz.count(i)
-
-	// return values always come from the current state
-	console.log(fizzbuzz.word)
+	// fizzbuzz.forEach(f => f.count(i))
+	fizzbuzz.count()(i)
+	// console.log(fizzbuzz[index].word)
+	console.log(fizzbuzz().word)
 }

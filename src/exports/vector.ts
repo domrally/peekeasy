@@ -1,7 +1,7 @@
 import { Event } from './exports'
 
-export interface Vector<T extends Event<[]>> extends Set<T> {
-	(): T
+export interface Vector<T extends Partial<Event<[]>>> {
+	(): Vectored<T>
 }
 /**
  * Creates and manages a state pattern based on a target set of possible states
@@ -9,69 +9,64 @@ export interface Vector<T extends Event<[]>> extends Set<T> {
  * @param states array of states that can be activated
  * @returns a state without the extended event interface
  */
-export class Vector<T extends Event<[]>> extends Set<T> {
-	constructor(target: T, ...states: T[]) {
-		super([target, ...states])
+export class Vector<T extends Partial<Event<[]>>> {
+	constructor(start: number, state: T, ...states: T[]) {
+		this.#index = start
+		this.#states = [state, ...states]
 
-		let current = target
-
-		for (const state of this) {
-			state.add(() => (current = state))
+		for (let i = 0; i < this.#states.length; i++) {
+			this.#states[i].add?.(() => (this.#index = i))
 		}
 
-		const proxy = new Proxy(
-			target,
-			proxyHandler(() => current, ...this)
-		)
+		const vector: any = (() => new Proxy(() => {}, this)).bind(this)
 
-		const get = () => proxy
-		Object.assign(get, this)
+		vector[Symbol.iterator] = this.#states[Symbol.iterator].bind(this)
 
-		return get as unknown as this
+		return vector as unknown as this
+	}
+
+	#index = 0
+	#states: T[]
+
+	apply(_: any) {
+		return new Proxy(() => {}, {
+			apply: (_: any, thisArg, args) => {
+				const values = this.#states.map((value: any) =>
+					value.apply(thisArg, args)
+				)
+
+				return values[this.#index]
+			},
+			get: (_, key) => {
+				const values = this.#states.map((state: any) => state[key])
+
+				if (typeof values[this.#index] === 'function') {
+					values[this.#index] = values[this.#index].bind(this)
+				}
+
+				return values[this.#index]
+			},
+			set: (_, key, value) => {
+				const values = this.#states.map((state: any) => (state[key] = value))
+
+				return values[this.#index]
+			},
+		})
+	}
+
+	get(_: any, property: PropertyKey) {
+		const [v, ...values] = this.#states.map((t: any) => t[property])
+
+		return new Vector(this.#index, v, ...values)()
+	}
+
+	set(_: any, property: PropertyKey, value: any) {
+		const [v, ...values] = this.#states.map((t: any) => (t[property] = value))
+
+		return new Vector(this.#index, v, ...values)() as any
 	}
 }
 
-function proxyHandler<T extends {}>(
-	target: () => any,
-	...states: T[]
-): ProxyHandler<T> {
-	return {
-		apply: (_: T, thisArg: T, args: any[]) => {
-			const others: any = states.filter(state => state !== target())
-
-			for (const other of others) {
-				other.apply?.(thisArg, args)
-			}
-
-			return target().apply?.(thisArg, args)
-		},
-		get: (_: T, property: PropertyKey) => {
-			const values = states.map((s: any) => s[property])
-			return result(values[states.indexOf(target())], values)
-		},
-		set: (_: T, property: PropertyKey, value: any) => {
-			for (const state of states) {
-				;(state as any)[property] = value
-			}
-
-			return true
-		},
-	}
-}
-
-/**
- * creates a function that executes the function on all states
- * @param value current state property value
- * @param values all state property values
- * @returns an object either containing the current parameter value or an object to interact with all states
- */
-function result<T extends (...args: any[]) => any>(value: T, values: T[]): any {
-	return typeof value === 'function'
-		? (...params: Parameters<T>) => {
-				const index = values.indexOf(value),
-					results = values.map(v => v(...params))
-
-				return results[index]
-		  }
-		: value
+type Vectored<T> = (() => T) & {
+	[K in keyof T]: Vectored<T[K]>
 }
