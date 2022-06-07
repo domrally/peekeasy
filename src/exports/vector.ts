@@ -1,6 +1,6 @@
 import { Event } from './exports'
 
-export interface Vector<T extends Partial<Event<[]>>> extends Iterable<T> {
+export interface Vector<T extends Partial<Event<[]>>> extends Set<T> {
 	(): Vectored<T>
 }
 /**
@@ -21,6 +21,12 @@ export class Vector<T extends Partial<Event<[]>>> {
 		const vector: any = (() => new Proxy(() => {}, this)).bind(this)
 
 		vector[Symbol.iterator] = this.#states[Symbol.iterator].bind(this)
+		vector.add = this.#states.push.bind(this)
+		vector.clear = this.#states.splice.bind(this, 0, this.#states.length)
+		vector.delete = (value: T) =>
+			this.#states.splice.bind(this, this.#states.indexOf(value), 1)
+		vector.forEach = this.#states.forEach.bind(this)
+		vector.has = this.#states.includes.bind(this)
 
 		return vector as unknown as this
 	}
