@@ -1,7 +1,7 @@
 import { Event } from './exports'
 
 export interface Vector<T extends Partial<Event<[]>>> extends Set<T> {
-	(): Vectored<T>
+	(): Vectorized<T>
 }
 /**
  * Creates and manages a state pattern based on a target set of possible states
@@ -73,6 +73,6 @@ export class Vector<T extends Partial<Event<[]>>> {
 	}
 }
 
-type Vectored<T> = (() => T) & {
-	[K in keyof T]: Vectored<T[K]>
+type Vectorized<T> = (() => T) & {
+	[K in keyof T]: Vectorized<T[K]>
 }
