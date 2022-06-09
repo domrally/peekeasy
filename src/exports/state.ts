@@ -1,14 +1,13 @@
-import { Delegate } from './delegate'
-import { Event } from './event'
+import { Event } from './exports'
 
 export type State<T> = T
 export const State = function <T extends Partial<Event<[]>>>(
-	states: Iterable<T>
+	states: IterableIterator<T>
 ) {
-	let value = states[Symbol.iterator]?.().next().value
+	states.next ??= states[Symbol.iterator]().next.bind(states[Symbol.iterator]())
 
 	for (const state of states) {
-		state.add?.(() => (value = state))
+		state.add?.(() => (states.next = () => ({ value: state })))
 	}
 
 	const apply = (_: T, thisArg: any, args: any[]) => {
@@ -17,7 +16,7 @@ export const State = function <T extends Partial<Event<[]>>>(
 		for (const state of states) {
 			const r = (state as any).apply(thisArg, args)
 
-			if (value !== state) continue
+			if (states.next().value !== state) continue
 
 			result = r
 		}
@@ -26,7 +25,7 @@ export const State = function <T extends Partial<Event<[]>>>(
 	}
 
 	const get = (_: T, key: PropertyKey) => {
-		return value[key]
+		return states.next().value[key]
 	}
 
 	const set = (_: T, key: PropertyKey, value: T[any]) => {
@@ -37,14 +36,11 @@ export const State = function <T extends Partial<Event<[]>>>(
 		return true
 	}
 
-	return new Proxy<any>(
-		{},
-		{
-			apply,
-			get,
-			set,
-		}
-	)
+	return new Proxy<any>(() => {}, {
+		apply,
+		get,
+		set,
+	})
 } as unknown as new <T extends Partial<Event<[]>>>(
 	states: Iterable<T>
 ) => State<T>

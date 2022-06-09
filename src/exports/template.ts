@@ -1,8 +1,5 @@
 type Mapped<T> = T
-const Mapped = {} as new <T>() => Mapped<T>
-Mapped.constructor = () => {
-	return {}
-}
+const Mapped = function () {} as unknown as new <T>() => Mapped<T>
 
 class Example {
 	hello = 'world'

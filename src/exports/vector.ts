@@ -1,22 +1,24 @@
 import { Event, State } from './exports'
 
 export type Vector<T> = (() => State<T>) & { [K in keyof T]: Vector<T[K]> }
-export const Vector = function <T extends Event<[]>>(...states: T[]) {
-	let value = states[Symbol.iterator]?.().next().value
+export const Vector = function <T extends Event<[]>>(
+	states: IterableIterator<T>
+) {
+	states.next ??= states[Symbol.iterator]().next.bind(states[Symbol.iterator]())
 
 	for (const state of states) {
-		state.add?.(() => (value = state))
+		state.add?.(() => (states.next = () => ({ value: state })))
 	}
 
-	const apply = (_: any) => new State(states)
+	const apply = () => new State(states)
 
-	const get = (_: T, property: PropertyKey) => {
-		const values = new Set<T>()
+	const get: any = (_: T, key: PropertyKey) => {
+		const values: any[] = []
 
 		for (const state of states) {
-			const value = (state as any)[property]
+			const v = (state as any)[key]
 
-			values.add(value)
+			values.push(v)
 		}
 
 		return new Vector(values)
