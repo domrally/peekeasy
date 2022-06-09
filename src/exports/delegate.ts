@@ -1,22 +1,22 @@
-export interface Delegate<params extends any[]>
-	extends WeakSet<Action>,
-		PromiseLike<params>,
-		AsyncIterable<params> {
+export interface Delegate<params extends any[]> extends WeakSet<Action>,
+	PromiseLike<params>,
+	AsyncIterable<params> {
 	(...args: params): void
 }
+
 /**
  * function that sends a message to all listeners
  * @param args tuple of data that is passed to the listeners
  */
-export class Delegate<params extends any[]> extends WeakSet<Action> {
+export class Delegate<params extends any[]> {
 	/**
 	 * @param initial state of the returned object
 	 * @param states array of states that can be activated
 	 * @returns an event that can be called and listened to
 	 */
-	constructor(initial?: params) {
-		super()
-
+	constructor(
+		initial?: params
+	) {
 		const set = new Set<Action>(),
 			event: Partial<Delegate<params>> = (...args: params) => {
 				const copy = new Set(set)
@@ -46,9 +46,7 @@ export class Delegate<params extends any[]> extends WeakSet<Action> {
 		event.add = (a: Action) => {
 			if (initial) a(...initial)
 
-			set.add(a)
-
-			return this
+			return set.add(a) as unknown as Delegate<params>
 		}
 		/**
 		 * Creates and manages a state pattern based on an initial set of possible states
@@ -85,7 +83,7 @@ export class Delegate<params extends any[]> extends WeakSet<Action> {
 			}
 		}
 
-		return event as unknown as this
+		return event as unknown as Delegate<params>
 	}
 }
 

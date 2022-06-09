@@ -40,7 +40,7 @@ npm i peekeasy
 ### import
 
 ```ts
-import Peekeasy from 'peekeasy'
+import { Delegate, Event, State, Vector, WebAssembly } from 'peekeasy'
 ```
 
 ### example

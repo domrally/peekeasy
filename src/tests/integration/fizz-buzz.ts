@@ -21,13 +21,13 @@ class FizzBuzzState extends Peekeasy.Event<[]> {
 }
 
 // pass all legal states to the state pattern
-const fizzbuzz = new Peekeasy.Vector(
-	0,
-	new FizzBuzzState(),
-	new FizzBuzzState('fizz', 3),
-	new FizzBuzzState('buzz', 5),
-	new FizzBuzzState('fizzbuzz', 15)
-)()
+const states = [
+		new FizzBuzzState(),
+		new FizzBuzzState('fizz', 3),
+		new FizzBuzzState('buzz', 5),
+		new FizzBuzzState('fizzbuzz', 15),
+	],
+	fizzbuzz = Peekeasy.vectorize(() => states)
 
 for (let i = 1; i <= 100; i++) {
 	fizzbuzz.count()(i)
