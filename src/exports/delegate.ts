@@ -1,6 +1,7 @@
-export interface Delegate<params extends any[]> extends WeakSet<Action>,
-	PromiseLike<params>,
-	AsyncIterable<params> {
+export interface Delegate<params extends any[]>
+	extends WeakSet<Action>,
+		PromiseLike<params>,
+		AsyncIterable<params> {
 	(...args: params): void
 }
 
@@ -14,9 +15,7 @@ export class Delegate<params extends any[]> {
 	 * @param states array of states that can be activated
 	 * @returns an event that can be called and listened to
 	 */
-	constructor(
-		initial?: params
-	) {
+	constructor(initial?: params) {
 		const set = new Set<Action>(),
 			event: Partial<Delegate<params>> = (...args: params) => {
 				const copy = new Set(set)

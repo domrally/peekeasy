@@ -1,14 +1,16 @@
 import { Event, State } from './exports'
 
 export type Vector<T> = (() => State<T>) & { [K in keyof T]: Vector<T[K]> }
-export const Vector = {} as new <T extends Partial<Event<[]>>>(states: Iterable<T>) => Vector<T>
+export const Vector = {} as new <T extends Partial<Event<[]>>>(
+	states: Iterable<T>
+) => Vector<T>
 
 Vector.constructor = <T extends Event<[]>>(...states: T[]) => {
 	let value = states[Symbol.iterator]?.().next().value
 
-		for (const state of states) {
-			state.add?.(() => value = state)
-		}
+	for (const state of states) {
+		state.add?.(() => (value = state))
+	}
 
 	const apply = (_: any) => new State(states)
 

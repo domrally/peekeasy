@@ -2,12 +2,14 @@ import { Delegate } from './delegate'
 import { Event } from './event'
 
 export type State<T> = T
-export const State = {} as new <T extends Partial<Event<[]>>>(states: Iterable<T>) => State<T>
+export const State = {} as new <T extends Partial<Event<[]>>>(
+	states: Iterable<T>
+) => State<T>
 State.constructor = <T extends Partial<Event<[]>>>(states: Iterable<T>) => {
 	let value = states[Symbol.iterator]?.().next().value
 
 	for (const state of states) {
-		state.add?.(() => value = state)
+		state.add?.(() => (value = state))
 	}
 
 	const apply = (_: T, thisArg: any, args: any[]) => {
@@ -36,9 +38,12 @@ State.constructor = <T extends Partial<Event<[]>>>(states: Iterable<T>) => {
 		return true
 	}
 
-	return new Proxy<any>({}, {
-		apply,
-		get,
-		set,
-	})
+	return new Proxy<any>(
+		{},
+		{
+			apply,
+			get,
+			set,
+		}
+	)
 }
