@@ -1,12 +1,12 @@
-import Peekeasy from '../../exports/exports'
+import { Delegate, Event, Vector } from '../../exports/exports'
 
 // states must implement Event<[]>
-class FizzBuzzState extends Peekeasy.Event<[]> {
+class FizzBuzzState extends Event<[]> {
 	constructor(
 		public word?: string,
 		private index?: number,
 		// in order to activate this state need to create a delegate
-		private delegate = new Peekeasy.Delegate<[]>()
+		private delegate = new Delegate<[]>()
 	) {
 		super(delegate)
 	}
@@ -27,7 +27,7 @@ const states = [
 		new FizzBuzzState('buzz', 5),
 		new FizzBuzzState('fizzbuzz', 15),
 	],
-	fizzbuzz = Peekeasy.vectorize(() => states)
+	fizzbuzz = new Vector(states)
 
 for (let i = 1; i <= 100; i++) {
 	fizzbuzz.count()(i)
