@@ -1,37 +1,15 @@
-import { Event } from './exports'
-
 export type State<T> = T
-export const State = function <T extends Partial<Event<[]>>>(
-	states: IterableIterator<T>
-) {
-	states.next ??= states[Symbol.iterator]().next.bind(states[Symbol.iterator]())
-
-	for (const state of states) {
-		state.add?.(() => (states.next = () => ({ value: state })))
+export const State = function <T>(context: IterableIterator<T>) {
+	function apply(_: T, thisArg: any, args: any[]) {
+		return context.next().value.apply(thisArg, args)
 	}
 
-	const apply = (_: T, thisArg: any, args: any[]) => {
-		let result
-
-		for (const state of states) {
-			const r = (state as any).apply(thisArg, args)
-
-			if (states.next().value !== state) continue
-
-			result = r
-		}
-
-		return result
+	function get(_: T, key: PropertyKey) {
+		return context.next().value[key]
 	}
 
-	const get = (_: T, key: PropertyKey) => {
-		return states.next().value[key]
-	}
-
-	const set = (_: T, key: PropertyKey, value: T[any]) => {
-		for (const state of states) {
-			;(state as any)[key] = value
-		}
+	function set(_: T, key: PropertyKey, value: T[any]) {
+		context.next().value[key] = value
 
 		return true
 	}
@@ -41,6 +19,4 @@ export const State = function <T extends Partial<Event<[]>>>(
 		get,
 		set,
 	})
-} as unknown as new <T extends Partial<Event<[]>>>(
-	states: Iterable<T>
-) => State<T>
+} as unknown as new <T>(context: Iterator<T>) => State<T>

@@ -1,33 +1,34 @@
-import { Event, State } from './exports'
+export type Vector<T> = (() => IterableIterator<T>) & {
+	[K in keyof T]: Vector<T[K]>
+}
+export const Vector = function <T>(context: IterableIterator<T>) {
+	const apply = () => context
 
-export type Vector<T> = (() => State<T>) & { [K in keyof T]: Vector<T[K]> }
-export const Vector = function <T extends Event<[]>>(
-	states: IterableIterator<T>
-) {
-	states.next ??= states[Symbol.iterator]().next.bind(states[Symbol.iterator]())
+	function get(_: any, key: PropertyKey) {
+		const child: any = []
 
-	for (const state of states) {
-		state.add?.(() => (states.next = () => ({ value: state })))
-	}
+		for (const state of context) {
+			const value = (state as any)[key]
 
-	const apply = () => new State(states)
-
-	const get: any = (_: T, key: PropertyKey) => {
-		const values: any[] = []
-
-		for (const state of states) {
-			const v = (state as any)[key]
-
-			values.push(v)
+			child.push(value)
 		}
 
-		return new Vector(values)
+		child.next = () => ({ value: context.next().value[key] })
+
+		return new Vector(child)
+	}
+
+	function set(_: any, key: PropertyKey, value: T[any]) {
+		for (const state of context) {
+			;(state as any)[key] = value
+		}
+
+		return true
 	}
 
 	return new Proxy(() => {}, {
 		apply,
 		get,
+		set,
 	})
-} as unknown as new <T extends Partial<Event<[]>>>(
-	states: Iterable<T>
-) => Vector<T>
+} as unknown as new <T>(context: IterableIterator<T>) => Vector<T>
