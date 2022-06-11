@@ -40,7 +40,15 @@ npm i peekeasy
 ### import
 
 ```ts
-import { Delegate, Event, State, Vector, WebAssembly } from 'peekeasy'
+import {
+	Delegate,
+	Event,
+	IterableIterator,
+	IteratorReturnResultValue,
+	Stream,
+	Vector,
+	WebAssembly,
+} from 'peekeasy'
 ```
 
 ### example
@@ -49,15 +57,17 @@ _[fizz-buzz.ts](https://github.com/domrally/peekeasy/blob/wasm/src/tests/integra
 
 ```ts
 // states must implement Event<[]>
-class FizzBuzzState extends Peekeasy.Event<[]> {
+class FizzBuzzState extends Event<[]> {
 	constructor(
-		public word?: string,
+		private word: string,
 		private index?: number,
 		// in order to activate this state need to create a delegate
-		private delegate = new Peekeasy.Delegate<[]>()
+		private delegate = new Delegate<[]>()
 	) {
 		super(delegate)
 	}
+
+	getWord = () => this.word
 
 	// functions must not be methods
 	count = (count: number) => {
@@ -69,19 +79,22 @@ class FizzBuzzState extends Peekeasy.Event<[]> {
 }
 
 // pass all legal states to the state pattern
-const fizzbuzz = new Peekeasy.Vector(
-	new FizzBuzzState(),
-	new FizzBuzzState('fizz', 3),
-	new FizzBuzzState('buzz', 5),
-	new FizzBuzzState('fizzbuzz', 15)
-)()
+const context = new IterableIterator(
+		new FizzBuzzState(''),
+		new FizzBuzzState('fizz', 3),
+		new FizzBuzzState('buzz', 5),
+		new FizzBuzzState('fizzbuzz', 15)
+	),
+	vector = new Vector(context),
+	getWord = new IteratorReturnResultValue(vector.getWord()),
+	counts = vector.count()
 
 for (let i = 1; i <= 100; i++) {
-	// called on all states
-	fizzbuzz.count(i)
+	for (const count of counts) {
+		count(i)
+	}
 
-	// return values always come from the current state
-	console.log(fizzbuzz.word)
+	console.log(getWord())
 }
 ```
 
