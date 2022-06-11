@@ -17,8 +17,6 @@ tools for observing proxies in typescript & web assembly
   - [import](#import)
   - [example](#example)
 - [**Contribute**](#Contribute)
-  - [goals](#goals)
-  - [non-goals](#non-goals)
   - [clone repo](#clone-repo)
   - [open directory](#open-directory)
   - [download dependencies](#download-dependencies)
@@ -26,6 +24,8 @@ tools for observing proxies in typescript & web assembly
   - [build docs](#build-docs)
   - [deploy](#deploy)
 - [**Project**](#Project)
+  - [goals](#goals)
+  - [non-goals](#non-goals)
   - [documentation](#documentation)
   - [structure](#structure)
 
@@ -100,26 +100,6 @@ for (let i = 1; i <= 100; i++) {
 
 ## Contribute
 
-### goals
-
-- syntactic sugar in typescript for
-  - [state pattern](https://en.wikipedia.org/wiki/State_pattern)
-  - [streaming web assembly](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/instantiateStreaming) [exported functions](https://developer.mozilla.org/en-US/docs/WebAssembly/Exported_functions)
-- implementations for built-in javascript types
-  - [`Set`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set) and [`WeakSet`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet) interfaces
-  - `Iterable`, `Iterator`, `IterableIterator`, and `IteratorReturnResult`
-  - [`for await...of`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for-await...of) and [`Proxy`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) objects
-- bring concepts to typescript from
-  - C# [`delegates`](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/delegates/) and [`events`](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/events/)
-  - [array programming](https://en.wikipedia.org/wiki/Array_programming)
-
-### non-goals
-
-- a complete event system
-- web-assembly build tools
-- a state machine framework
-- an implementation of an observer pattern
-
 ### clone repo
 
 ```
@@ -156,6 +136,26 @@ merge a [pull request](https://github.com/domrally/peekeasy/compare) into `main`
 
 ## Project
 
+### goals
+
+- syntactic sugar in typescript for
+  - [state pattern](https://en.wikipedia.org/wiki/State_pattern)
+  - [streaming web assembly](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/instantiateStreaming) [exported functions](https://developer.mozilla.org/en-US/docs/WebAssembly/Exported_functions)
+- implementations for built-in javascript types
+  - [`Set`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set) and [`WeakSet`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet) interfaces
+  - `Iterable`, `Iterator`, `IterableIterator`, and `IteratorReturnResult`
+  - [`for await...of`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for-await...of) and [`Proxy`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) objects
+- bring concepts to typescript from
+  - C# [`delegates`](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/delegates/) and [`events`](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/events/)
+  - [array programming](https://en.wikipedia.org/wiki/Array_programming)
+
+### non-goals
+
+- a complete event system
+- web-assembly build tools
+- a state machine framework
+- an implementation of an observer pattern
+
 ### documentation
 
 https://domrally.github.io/peekeasy
@@ -173,10 +173,10 @@ https://domrally.github.io/peekeasy
   - [tests/](https://github.com/domrally/peekeasy/tree/main/src/tests)
     - [integration/](https://github.com/domrally/peekeasy/tree/main/src/tests/integration)
     - [unit/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit)
-    - [delegate/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/delegate)
-    - [event/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/event)
-    - [iterable-iterator/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/iterable-iterator)
-    - [iterator-return-result-value/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/iterator-return-result-value)
-    - [stream/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/stream)
-    - [vector/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/vector)
-    - [web-assembly/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/web-assembly)
+      - [delegate/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/delegate)
+      - [event/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/event)
+      - [iterable-iterator/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/iterable-iterator)
+      - [iterator-return-result-value/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/iterator-return-result-value)
+      - [stream/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/stream)
+      - [vector/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/vector)
+      - [web-assembly/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/web-assembly)
