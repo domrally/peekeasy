@@ -1,6 +1,7 @@
 import { warn } from 'console'
 
 warn('\n🧪 delegates:')
+import './delegate/delegate-add.test'
 import './delegate/delegate-call.test'
 import './delegate/delegate-delete.test'
 import './delegate/delegate-has.test'
