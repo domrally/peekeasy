@@ -1,3 +1,4 @@
+export type { Action } from './action'
 export { Delegate } from './delegate'
 export { Event } from './event'
 export { IterableIterator } from './iterable-iterator'

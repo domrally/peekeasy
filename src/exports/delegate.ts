@@ -1,3 +1,5 @@
+import { Action } from './exports'
+
 /**
  * function that sends a message to all listeners
  * @param args tuple of data that is passed to the listeners
@@ -49,5 +51,3 @@ export const Delegate = function <params extends any[]>(initial?: params) {
 
 	return delegate
 } as unknown as new <params extends any[]>(initial?: params) => Delegate<params>
-
-type Action<params extends any[]> = (...args: params) => void

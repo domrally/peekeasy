@@ -1,4 +1,4 @@
-import type { Delegate } from './exports'
+import type { Action, Delegate } from './exports'
 
 export type Stream<params> = AsyncIterable<params> & PromiseLike<params>
 /**
@@ -13,7 +13,8 @@ export const Stream = function <params extends any[]>(
 	const asyncIterator = async function* () {
 		while (true) {
 			yield new Promise<params>(resolve => {
-				const resolution = ((...args: params) => resolve(args)) as Action
+				const resolution = ((...args: params) =>
+					resolve(args)) as Action<params>
 
 				delegate.add(resolution)
 			})

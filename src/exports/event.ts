@@ -1,4 +1,4 @@
-import type { Delegate } from './exports'
+import type { Action, Delegate } from './exports'
 import { error } from 'console'
 
 /**
@@ -7,7 +7,7 @@ import { error } from 'console'
 /**
  * @param delegate callable parent delegate
  */
-export type Event<params extends any[]> = WeakSet<(...args: params) => void>
+export type Event<params extends any[]> = WeakSet<Action<params>>
 export const Event = function <params extends any[]>(
 	delegate: Delegate<params>
 ) {
