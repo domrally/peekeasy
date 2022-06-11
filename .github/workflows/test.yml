@@ -36,13 +36,5 @@ jobs:
         name: installing dependencies
         run: npm ci
 
-      - if: steps.check-npm.outputs.cache-hit == false
-        continue-on-error: true
-        name: caching node modules
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: ${{ hashFiles('**/package-lock.json') }}
-
       - name: running tests
         run: npm run ${{ matrix.testScriptName }}

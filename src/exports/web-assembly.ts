@@ -1,20 +1,23 @@
 /**
- * Creates and manages a state pattern based on an initial set of possible states
- * @param path state of the returned object
- * @returns a typed object isomorphic to the wasm module exports
+ * A typed object isomorphic to the module exported from the wasm file
+ * @param path source of the wasm file
  */
-export async function Wasm<T>(path: `${string}.wasm`) {
-	//
-	const wasm = fetch(path),
-		obj = await WebAssembly.instantiateStreaming(wasm),
-		exports = obj.instance.exports as unknown as Exports,
-		getOffset = (key: string) => exports[key](),
-		getLength = (key: string) => exports[key + 'Length'](),
-		memory = exports.memory,
-		get = (_: T, key: string) => () =>
-			parse(memory, getOffset(key), getLength(key))
+export class Webassembly<T> extends Promise<T> {
+	constructor(path: `${string}.wasm`) {
+		super(async resolve => {
+			//
+			const wasm = fetch(path),
+				obj = await WebAssembly.instantiateStreaming(wasm),
+				exports = obj.instance.exports as unknown as Exports,
+				getOffset = (key: string) => exports[key](),
+				getLength = (key: string) => exports[key + 'Length'](),
+				memory = exports.memory,
+				get = (_: T, key: string) => () =>
+					parse(memory, getOffset(key), getLength(key))
 
-	return new Proxy({}, { get }) as T
+			resolve(new Proxy({}, { get }) as T)
+		})
+	}
 }
 
 /**

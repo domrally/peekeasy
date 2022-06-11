@@ -12,15 +12,20 @@ tools for observing proxies in typescript & web assembly
 
 ## Contents
 
-- [Use](#Use)
+- [**Use**](#Use)
   - [install](#install)
   - [import](#import)
-- [Contribute](#Contribute)
-  - [get started](#get%20started)
-  - [run tests](#run%20tests)
-  - [build docs](#build%20docs)
+  - [example](#example)
+- [**Contribute**](#Contribute)
+  - [goals](#goals)
+  - [non-goals](#non-goals)
+  - [clone repo](#clone-repo)
+  - [open directory](#open-directory)
+  - [download dependencies](#download-dependencies)
+  - [run tests](#run-tests)
+  - [build docs](#build-docs)
   - [deploy](#deploy)
-- [Project](#Project)
+- [**Project**](#Project)
   - [documentation](#documentation)
   - [structure](#structure)
 
@@ -35,56 +40,99 @@ npm i peekeasy
 ### import
 
 ```ts
-import Peekeasy from 'peekeasy'
+import {
+	Delegate,
+	Event,
+	IterableIterator,
+	IteratorReturnResultValue,
+	Stream,
+	Vector,
+	WebAssembly,
+} from 'peekeasy'
+```
 
-// states must implement WeakEvent<[]>
-class FizzBuzzState extends Peekeasy.WeakEvent<[]> {
+### example
+
+_[fizz-buzz.ts](https://github.com/domrally/peekeasy/blob/wasm/src/tests/integration/fizz-buzz.ts):_
+
+```ts
+// states must implement Event<[]>
+class FizzBuzzState extends Event<[]> {
 	constructor(
-		public word?: string,
+		private word: string,
 		private index?: number,
-		// in order to activate this state need to create an event
-		private claimState = new Peekeasy.Event<[]>()
+		// in order to activate this state need to create a delegate
+		private delegate = new Delegate<[]>()
 	) {
-		super(claimState)
+		super(delegate)
 	}
+
+	getWord = () => this.word
 
 	// functions must not be methods
 	count = (count: number) => {
 		if (!this.index) this.word = `${count}`
 
 		// activate state if the count is divisible by the index
-		if (!(this.index && count % this.index)) this.claimState()
+		if (!(this.index && count % this.index)) this.delegate()
 	}
 }
 
 // pass all legal states to the state pattern
-const fizzbuzz = Peekeasy.State(
-	new FizzBuzzState(),
-	new FizzBuzzState('fizz', 3),
-	new FizzBuzzState('buzz', 5),
-	new FizzBuzzState('fizzbuzz', 15)
-)
+const context = new IterableIterator(
+		new FizzBuzzState(''),
+		new FizzBuzzState('fizz', 3),
+		new FizzBuzzState('buzz', 5),
+		new FizzBuzzState('fizzbuzz', 15)
+	),
+	vector = new Vector(context),
+	getWord = new IteratorReturnResultValue(vector.getWord()),
+	counts = vector.count()
 
 for (let i = 1; i <= 100; i++) {
-	// called on all states
-	fizzbuzz.count(i)
+	for (const count of counts) {
+		count(i)
+	}
 
-	// return values always come from the current state
-	console.log(fizzbuzz.word)
+	console.log(getWord())
 }
 ```
 
 ## Contribute
 
-### get started
+### goals
+
+- syntactic sugar in typescript for
+  - [state pattern](https://en.wikipedia.org/wiki/State_pattern)
+  - [streaming web assembly](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/instantiateStreaming) [exported functions](https://developer.mozilla.org/en-US/docs/WebAssembly/Exported_functions)
+- implementations for built-in javascript types
+  - [`Set`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set) and [`WeakSet`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet) interfaces
+  - `Iterable`, `Iterator`, `IterableIterator`, and `IteratorReturnResult`
+  - [`for await...of`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for-await...of) and [`Proxy`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) objects
+- bring concepts to typescript from
+  - C# [`delegates`](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/delegates/) and [`events`](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/events/)
+  - [array programming](https://en.wikipedia.org/wiki/Array_programming)
+
+### non-goals
+
+- a complete event system
+- web-assembly build tools
+- a state machine framework
+- an implementation of an observer pattern
+
+### clone repo
 
 ```
 gh repo clone domrally/peekeasy
 ```
 
+### open directory
+
 ```
 cd Documents/Github/peekeasy
 ```
+
+### download dependencies
 
 ```
 npm i
@@ -114,18 +162,21 @@ https://domrally.github.io/peekeasy
 
 ### structure
 
-- .github/
-  - workflows/
-- docs/
-  - assets/
-- src/
-  - exports/
-    - events/
-    - states/
-    - wasms/
-  - pages/
-    - assets/
-    - components/
-  - tests/
-    - integration/
-    - unit/
+- [.github/](https://github.com/domrally/peekeasy/tree/main/.github)
+  - [workflows/](https://github.com/domrally/peekeasy/tree/main/.github/workflows)
+- [docs/](https://github.com/domrally/peekeasy/tree/main/docs)
+  - [assets/](https://github.com/domrally/peekeasy/tree/main/docs/assets)
+  - [classes/](https://github.com/domrally/peekeasy/tree/main/docs/classes)
+  - [modules/](https://github.com/domrally/peekeasy/tree/main/docs/modules)
+- [src/](https://github.com/domrally/peekeasy/tree/main/src)
+  - [exports/](https://github.com/domrally/peekeasy/tree/main/src/exports)
+  - [tests/](https://github.com/domrally/peekeasy/tree/main/src/tests)
+    - [integration/](https://github.com/domrally/peekeasy/tree/main/src/tests/integration)
+    - [unit/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit)
+    - [delegate/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/delegate)
+    - [event/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/event)
+    - [iterable-iterator/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/iterable-iterator)
+    - [iterator-return-result-value/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/iterator-return-result-value)
+    - [stream/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/stream)
+    - [vector/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/vector)
+    - [web-assembly/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/web-assembly)

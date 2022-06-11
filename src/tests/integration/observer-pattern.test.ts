@@ -1,7 +1,7 @@
-import { Event } from '../../exports/exports'
+import { Delegate } from '../../exports/exports'
 import { assert } from 'console'
 
-class Subject<T> extends Event<[T]> {
+class Subject<T> extends Delegate<[T]> {
 	subscribe({ notify }: { notify(t: T): void }) {
 		this.add(notify)
 	}
