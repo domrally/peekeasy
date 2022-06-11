@@ -36,6 +36,12 @@ warn('\t ✅ for of')
 import './iterable-iterator/iterable-iterator-next.test'
 warn('\t ✅ next')
 
+// iterator result value
+warn('\n 🧪 iterator result values:')
+
+import './iterator-result-value/iterable-result-value-value.test'
+warn('\t ✅ value')
+
 // stream
 warn('\n 🧪 streams:')
 
