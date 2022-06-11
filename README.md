@@ -3,7 +3,7 @@
 tools for observing proxies in typescript & web assembly
 
 [![](https://img.shields.io/npm/v/peekeasy?style=for-the-badge&labelColor=grey&logo=npm&label=)](https://www.npmjs.com/package/peekeasy)
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/domrally/peekeasy/test?label=test&logo=github&logoColor=181717&style=for-the-badge)
+[![](https://img.shields.io/github/workflow/status/domrally/peekeasy/test?label=test&logo=github&logoColor=181717&style=for-the-badge)](https://github.com/domrally/peekeasy/actions/workflows/test.yml)
 
 [![](https://img.shields.io/badge/-prettier-F7B93E?style=for-the-badge&labelColor=grey&logo=prettier)](https://prettier.io)
 [![](https://img.shields.io/badge/-nodejs-339933?style=for-the-badge&labelColor=grey&logo=node.js)](https://nodejs.org)
