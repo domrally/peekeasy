@@ -1,5 +1,5 @@
-import { assert } from 'console'
 import { Delegate, Event } from '../../exports/exports'
+import { assert } from 'console'
 
 class Consumer {
 	constructor(onTest: Event<[string]>) {

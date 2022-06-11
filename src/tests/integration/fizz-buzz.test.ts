@@ -5,6 +5,7 @@ import {
 	IteratorResultValue,
 	Vector,
 } from '../../exports/exports'
+import { warn } from 'console'
 
 // states must implement Event<[]>
 class FizzBuzzState extends Event<[]> {
@@ -39,10 +40,19 @@ const context = new IterableIterator(
 	getWord = new IteratorResultValue(vector.getWord()),
 	counts = vector.count()
 
-for (let i = 1; i <= 100; i++) {
+let row = '\t'
+
+for (let i = 1; i <= 16; i++) {
 	for (const count of counts) {
 		count(i)
 	}
 
-	console.log(getWord())
+	const word = `${i < 10 ? ' ' : ''}${i}. ${getWord()}`
+	row += `${word}${word.length > 7 ? '\t' : '\t\t'}`
+
+	if (i % 4) continue
+
+	warn(row)
+	row = '\t'
 }
+warn('\n')

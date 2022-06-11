@@ -3,13 +3,9 @@
   <h1>Peekeasy</h1>
 </a>
 <p>tools for observing proxies in typescript &amp; web assembly</p>
-<p><a href="https://www.npmjs.com/package/peekeasy"><img src="https://img.shields.io/npm/v/peekeasy?style=for-the-badge&labelColor=grey&logo=npm&label=" alt=""></a>
-<a href="https://prettier.io"><img src="https://img.shields.io/badge/-prettier-F7B93E?style=for-the-badge&labelColor=grey&logo=prettier" alt=""></a>
-<a href="https://nodejs.org"><img src="https://img.shields.io/badge/-nodejs-339933?style=for-the-badge&labelColor=grey&logo=node.js" alt=""></a>
-<a href="https://www.typescriptlang.org"><img src="https://img.shields.io/badge/-typescript-3178C6?style=for-the-badge&labelColor=grey&logo=typescript" alt=""></a>
-<a href="https://typestrong.org/ts-node"><img src="https://img.shields.io/badge/-tsnode-3178C6?style=for-the-badge&labelColor=grey&logo=ts-node" alt=""></a>
-<a href="https://eslint.org"><img src="https://img.shields.io/badge/-eslint-4B32C3?style=for-the-badge&labelColor=grey&logo=ESLint" alt=""></a>
-<a href="https://www.json.org/json-en.html"><img src="https://img.shields.io/badge/-json-000000?style=for-the-badge&labelColor=grey&logo=json" alt=""></a></p>
+<p><a href="https://www.npmjs.com/package/peekeasy"><img src="https://img.shields.io/npm/v/peekeasy?style=for-the-badge&labelColor=181717&logo=npm&label=" alt=""></a>
+<a href="https://github.com/domrally/peekeasy/actions/workflows/test.yml"><img src="https://img.shields.io/github/workflow/status/domrally/peekeasy/test?logo=github&labelColor=181717&style=for-the-badge&label=test" alt=""></a>
+<a href="https://github.com/domrally/peekeasy/actions/workflows/publish.yml"><img src="https://img.shields.io/github/workflow/status/domrally/peekeasy/publish?logo=github&labelColor=181717&style=for-the-badge" alt=""></a></p>
 
 <a href="#contents" id="contents" style="color: inherit; text-decoration: none;">
   <h2>Contents</h2>
@@ -22,8 +18,6 @@
 </ul>
 </li>
 <li><a href="#Contribute"><strong>Contribute</strong></a><ul>
-<li><a href="#goals">goals</a></li>
-<li><a href="#non-goals">non-goals</a></li>
 <li><a href="#clone-repo">clone repo</a></li>
 <li><a href="#open-directory">open directory</a></li>
 <li><a href="#download-dependencies">download dependencies</a></li>
@@ -33,6 +27,8 @@
 </ul>
 </li>
 <li><a href="#Project"><strong>Project</strong></a><ul>
+<li><a href="#goals">goals</a></li>
+<li><a href="#non-goals">non-goals</a></li>
 <li><a href="#documentation">documentation</a></li>
 <li><a href="#structure">structure</a></li>
 </ul>
@@ -52,51 +48,19 @@
 <a href="#import" id="import" style="color: inherit; text-decoration: none;">
   <h3>import</h3>
 </a>
-<pre><code class="language-ts"><span class="hl-2">import</span><span class="hl-1"> {</span><br/><span class="hl-1">    </span><span class="hl-0">Delegate</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-0">Event</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-0">IterableIterator</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-0">IteratorReturnResultValue</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-0">Stream</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-0">Vector</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-0">WebAssembly</span><span class="hl-1">,</span><br/><span class="hl-1">} </span><span class="hl-2">from</span><span class="hl-1"> </span><span class="hl-3">&#39;peekeasy&#39;</span>
+<pre><code class="language-ts"><span class="hl-2">import</span><span class="hl-1"> {</span><br/><span class="hl-1">    </span><span class="hl-0">Delegate</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-0">Event</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-0">IterableIterator</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-0">IteratorResultValue</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-0">Stream</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-0">Vector</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-0">WebAssembly</span><span class="hl-1">,</span><br/><span class="hl-1">} </span><span class="hl-2">from</span><span class="hl-1"> </span><span class="hl-3">&#39;peekeasy&#39;</span>
 </code></pre>
 
 <a href="#example" id="example" style="color: inherit; text-decoration: none;">
   <h3>example</h3>
 </a>
 <p><em><a href="https://github.com/domrally/peekeasy/blob/wasm/src/tests/integration/fizz-buzz.ts">fizz-buzz.ts</a>:</em></p>
-<pre><code class="language-ts"><span class="hl-4">// states must implement Event&lt;[]&gt;</span><br/><span class="hl-5">class</span><span class="hl-1"> </span><span class="hl-6">FizzBuzzState</span><span class="hl-1"> </span><span class="hl-5">extends</span><span class="hl-1"> </span><span class="hl-6">Event</span><span class="hl-1">&lt;[]&gt; {</span><br/><span class="hl-1">    </span><span class="hl-5">constructor</span><span class="hl-1">(</span><br/><span class="hl-1">        </span><span class="hl-5">private</span><span class="hl-1"> </span><span class="hl-0">word</span><span class="hl-1">: </span><span class="hl-6">string</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-5">private</span><span class="hl-1"> </span><span class="hl-0">index</span><span class="hl-1">?: </span><span class="hl-6">number</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-4">// in order to activate this state need to create a delegate</span><br/><span class="hl-1">        </span><span class="hl-5">private</span><span class="hl-1"> </span><span class="hl-0">delegate</span><span class="hl-1"> = </span><span class="hl-5">new</span><span class="hl-1"> </span><span class="hl-7">Delegate</span><span class="hl-1">&lt;[]&gt;()</span><br/><span class="hl-1">    ) {</span><br/><span class="hl-1">        </span><span class="hl-5">super</span><span class="hl-1">(</span><span class="hl-0">delegate</span><span class="hl-1">)</span><br/><span class="hl-1">    }</span><br/><br/><span class="hl-1">    </span><span class="hl-7">getWord</span><span class="hl-1"> = () </span><span class="hl-5">=&gt;</span><span class="hl-1"> </span><span class="hl-5">this</span><span class="hl-1">.</span><span class="hl-0">word</span><br/><br/><span class="hl-1">    </span><span class="hl-4">// functions must not be methods</span><br/><span class="hl-1">    </span><span class="hl-7">count</span><span class="hl-1"> = (</span><span class="hl-0">count</span><span class="hl-1">: </span><span class="hl-6">number</span><span class="hl-1">) </span><span class="hl-5">=&gt;</span><span class="hl-1"> {</span><br/><span class="hl-1">        </span><span class="hl-2">if</span><span class="hl-1"> (!</span><span class="hl-5">this</span><span class="hl-1">.</span><span class="hl-0">index</span><span class="hl-1">) </span><span class="hl-5">this</span><span class="hl-1">.</span><span class="hl-0">word</span><span class="hl-1"> = </span><span class="hl-3">`</span><span class="hl-5">${</span><span class="hl-0">count</span><span class="hl-5">}</span><span class="hl-3">`</span><br/><br/><span class="hl-1">        </span><span class="hl-4">// activate state if the count is divisible by the index</span><br/><span class="hl-1">        </span><span class="hl-2">if</span><span class="hl-1"> (!(</span><span class="hl-5">this</span><span class="hl-1">.</span><span class="hl-0">index</span><span class="hl-1"> &amp;&amp; </span><span class="hl-0">count</span><span class="hl-1"> % </span><span class="hl-5">this</span><span class="hl-1">.</span><span class="hl-0">index</span><span class="hl-1">)) </span><span class="hl-5">this</span><span class="hl-1">.</span><span class="hl-7">delegate</span><span class="hl-1">()</span><br/><span class="hl-1">    }</span><br/><span class="hl-1">}</span><br/><br/><span class="hl-4">// pass all legal states to the state pattern</span><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-8">context</span><span class="hl-1"> = </span><span class="hl-5">new</span><span class="hl-1"> </span><span class="hl-7">IterableIterator</span><span class="hl-1">(</span><br/><span class="hl-1">        </span><span class="hl-5">new</span><span class="hl-1"> </span><span class="hl-7">FizzBuzzState</span><span class="hl-1">(</span><span class="hl-3">&#39;&#39;</span><span class="hl-1">),</span><br/><span class="hl-1">        </span><span class="hl-5">new</span><span class="hl-1"> </span><span class="hl-7">FizzBuzzState</span><span class="hl-1">(</span><span class="hl-3">&#39;fizz&#39;</span><span class="hl-1">, </span><span class="hl-9">3</span><span class="hl-1">),</span><br/><span class="hl-1">        </span><span class="hl-5">new</span><span class="hl-1"> </span><span class="hl-7">FizzBuzzState</span><span class="hl-1">(</span><span class="hl-3">&#39;buzz&#39;</span><span class="hl-1">, </span><span class="hl-9">5</span><span class="hl-1">),</span><br/><span class="hl-1">        </span><span class="hl-5">new</span><span class="hl-1"> </span><span class="hl-7">FizzBuzzState</span><span class="hl-1">(</span><span class="hl-3">&#39;fizzbuzz&#39;</span><span class="hl-1">, </span><span class="hl-9">15</span><span class="hl-1">)</span><br/><span class="hl-1">    ),</span><br/><span class="hl-1">    </span><span class="hl-8">vector</span><span class="hl-1"> = </span><span class="hl-5">new</span><span class="hl-1"> </span><span class="hl-7">Vector</span><span class="hl-1">(</span><span class="hl-0">context</span><span class="hl-1">),</span><br/><span class="hl-1">    </span><span class="hl-8">getWord</span><span class="hl-1"> = </span><span class="hl-5">new</span><span class="hl-1"> </span><span class="hl-7">IteratorReturnResultValue</span><span class="hl-1">(</span><span class="hl-0">vector</span><span class="hl-1">.</span><span class="hl-7">getWord</span><span class="hl-1">()),</span><br/><span class="hl-1">    </span><span class="hl-8">counts</span><span class="hl-1"> = </span><span class="hl-0">vector</span><span class="hl-1">.</span><span class="hl-7">count</span><span class="hl-1">()</span><br/><br/><span class="hl-2">for</span><span class="hl-1"> (</span><span class="hl-5">let</span><span class="hl-1"> </span><span class="hl-0">i</span><span class="hl-1"> = </span><span class="hl-9">1</span><span class="hl-1">; </span><span class="hl-0">i</span><span class="hl-1"> &lt;= </span><span class="hl-9">100</span><span class="hl-1">; </span><span class="hl-0">i</span><span class="hl-1">++) {</span><br/><span class="hl-1">    </span><span class="hl-2">for</span><span class="hl-1"> (</span><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-8">count</span><span class="hl-1"> </span><span class="hl-5">of</span><span class="hl-1"> </span><span class="hl-0">counts</span><span class="hl-1">) {</span><br/><span class="hl-1">        </span><span class="hl-7">count</span><span class="hl-1">(</span><span class="hl-0">i</span><span class="hl-1">)</span><br/><span class="hl-1">    }</span><br/><br/><span class="hl-1">    </span><span class="hl-0">console</span><span class="hl-1">.</span><span class="hl-7">log</span><span class="hl-1">(</span><span class="hl-7">getWord</span><span class="hl-1">())</span><br/><span class="hl-1">}</span>
+<pre><code class="language-ts"><span class="hl-4">// states must implement Event&lt;[]&gt;</span><br/><span class="hl-5">class</span><span class="hl-1"> </span><span class="hl-6">FizzBuzzState</span><span class="hl-1"> </span><span class="hl-5">extends</span><span class="hl-1"> </span><span class="hl-6">Event</span><span class="hl-1">&lt;[]&gt; {</span><br/><span class="hl-1">    </span><span class="hl-5">constructor</span><span class="hl-1">(</span><br/><span class="hl-1">        </span><span class="hl-5">private</span><span class="hl-1"> </span><span class="hl-0">word</span><span class="hl-1">: </span><span class="hl-6">string</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-5">private</span><span class="hl-1"> </span><span class="hl-0">index</span><span class="hl-1">?: </span><span class="hl-6">number</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-4">// in order to activate this state need to create a delegate</span><br/><span class="hl-1">        </span><span class="hl-5">private</span><span class="hl-1"> </span><span class="hl-0">delegate</span><span class="hl-1"> = </span><span class="hl-5">new</span><span class="hl-1"> </span><span class="hl-7">Delegate</span><span class="hl-1">&lt;[]&gt;()</span><br/><span class="hl-1">    ) {</span><br/><span class="hl-1">        </span><span class="hl-5">super</span><span class="hl-1">(</span><span class="hl-0">delegate</span><span class="hl-1">)</span><br/><span class="hl-1">    }</span><br/><br/><span class="hl-1">    </span><span class="hl-7">getWord</span><span class="hl-1"> = () </span><span class="hl-5">=&gt;</span><span class="hl-1"> </span><span class="hl-5">this</span><span class="hl-1">.</span><span class="hl-0">word</span><br/><br/><span class="hl-1">    </span><span class="hl-4">// functions must not be methods</span><br/><span class="hl-1">    </span><span class="hl-7">count</span><span class="hl-1"> = (</span><span class="hl-0">count</span><span class="hl-1">: </span><span class="hl-6">number</span><span class="hl-1">) </span><span class="hl-5">=&gt;</span><span class="hl-1"> {</span><br/><span class="hl-1">        </span><span class="hl-2">if</span><span class="hl-1"> (!</span><span class="hl-5">this</span><span class="hl-1">.</span><span class="hl-0">index</span><span class="hl-1">) </span><span class="hl-5">this</span><span class="hl-1">.</span><span class="hl-0">word</span><span class="hl-1"> = </span><span class="hl-3">`</span><span class="hl-5">${</span><span class="hl-0">count</span><span class="hl-5">}</span><span class="hl-3">`</span><br/><br/><span class="hl-1">        </span><span class="hl-4">// activate state if the count is divisible by the index</span><br/><span class="hl-1">        </span><span class="hl-2">if</span><span class="hl-1"> (!(</span><span class="hl-5">this</span><span class="hl-1">.</span><span class="hl-0">index</span><span class="hl-1"> &amp;&amp; </span><span class="hl-0">count</span><span class="hl-1"> % </span><span class="hl-5">this</span><span class="hl-1">.</span><span class="hl-0">index</span><span class="hl-1">)) </span><span class="hl-5">this</span><span class="hl-1">.</span><span class="hl-7">delegate</span><span class="hl-1">()</span><br/><span class="hl-1">    }</span><br/><span class="hl-1">}</span><br/><br/><span class="hl-4">// pass all legal states to the state pattern</span><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-8">context</span><span class="hl-1"> = </span><span class="hl-5">new</span><span class="hl-1"> </span><span class="hl-7">IterableIterator</span><span class="hl-1">(</span><br/><span class="hl-1">        </span><span class="hl-5">new</span><span class="hl-1"> </span><span class="hl-7">FizzBuzzState</span><span class="hl-1">(</span><span class="hl-3">&#39;&#39;</span><span class="hl-1">),</span><br/><span class="hl-1">        </span><span class="hl-5">new</span><span class="hl-1"> </span><span class="hl-7">FizzBuzzState</span><span class="hl-1">(</span><span class="hl-3">&#39;fizz&#39;</span><span class="hl-1">, </span><span class="hl-9">3</span><span class="hl-1">),</span><br/><span class="hl-1">        </span><span class="hl-5">new</span><span class="hl-1"> </span><span class="hl-7">FizzBuzzState</span><span class="hl-1">(</span><span class="hl-3">&#39;buzz&#39;</span><span class="hl-1">, </span><span class="hl-9">5</span><span class="hl-1">),</span><br/><span class="hl-1">        </span><span class="hl-5">new</span><span class="hl-1"> </span><span class="hl-7">FizzBuzzState</span><span class="hl-1">(</span><span class="hl-3">&#39;fizzbuzz&#39;</span><span class="hl-1">, </span><span class="hl-9">15</span><span class="hl-1">)</span><br/><span class="hl-1">    ),</span><br/><span class="hl-1">    </span><span class="hl-8">vector</span><span class="hl-1"> = </span><span class="hl-5">new</span><span class="hl-1"> </span><span class="hl-7">Vector</span><span class="hl-1">(</span><span class="hl-0">context</span><span class="hl-1">),</span><br/><span class="hl-1">    </span><span class="hl-8">getWord</span><span class="hl-1"> = </span><span class="hl-5">new</span><span class="hl-1"> </span><span class="hl-7">IteratorResultValue</span><span class="hl-1">(</span><span class="hl-0">vector</span><span class="hl-1">.</span><span class="hl-7">getWord</span><span class="hl-1">()),</span><br/><span class="hl-1">    </span><span class="hl-8">counts</span><span class="hl-1"> = </span><span class="hl-0">vector</span><span class="hl-1">.</span><span class="hl-7">count</span><span class="hl-1">()</span><br/><br/><span class="hl-2">for</span><span class="hl-1"> (</span><span class="hl-5">let</span><span class="hl-1"> </span><span class="hl-0">i</span><span class="hl-1"> = </span><span class="hl-9">1</span><span class="hl-1">; </span><span class="hl-0">i</span><span class="hl-1"> &lt;= </span><span class="hl-9">100</span><span class="hl-1">; </span><span class="hl-0">i</span><span class="hl-1">++) {</span><br/><span class="hl-1">    </span><span class="hl-2">for</span><span class="hl-1"> (</span><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-8">count</span><span class="hl-1"> </span><span class="hl-5">of</span><span class="hl-1"> </span><span class="hl-0">counts</span><span class="hl-1">) {</span><br/><span class="hl-1">        </span><span class="hl-7">count</span><span class="hl-1">(</span><span class="hl-0">i</span><span class="hl-1">)</span><br/><span class="hl-1">    }</span><br/><br/><span class="hl-1">    </span><span class="hl-0">console</span><span class="hl-1">.</span><span class="hl-7">log</span><span class="hl-1">(</span><span class="hl-7">getWord</span><span class="hl-1">())</span><br/><span class="hl-1">}</span>
 </code></pre>
 
 <a href="#contribute" id="contribute" style="color: inherit; text-decoration: none;">
   <h2>Contribute</h2>
 </a>
-
-<a href="#goals" id="goals" style="color: inherit; text-decoration: none;">
-  <h3>goals</h3>
-</a>
-<ul>
-<li>syntactic sugar in typescript for<ul>
-<li><a href="https://en.wikipedia.org/wiki/State_pattern">state pattern</a></li>
-<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/instantiateStreaming">streaming web assembly</a> <a href="https://developer.mozilla.org/en-US/docs/WebAssembly/Exported_functions">exported functions</a></li>
-</ul>
-</li>
-<li>implementations for built-in javascript types<ul>
-<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set"><code>Set</code></a> and <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet"><code>WeakSet</code></a> interfaces</li>
-<li><code>Iterable</code>, <code>Iterator</code>, <code>IterableIterator</code>, and <code>IteratorReturnResult</code></li>
-<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for-await...of"><code>for await...of</code></a> and <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy"><code>Proxy</code></a> objects</li>
-</ul>
-</li>
-<li>bring concepts to typescript from<ul>
-<li>C# <a href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/delegates/"><code>delegates</code></a> and <a href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/events/"><code>events</code></a></li>
-<li><a href="https://en.wikipedia.org/wiki/Array_programming">array programming</a></li>
-</ul>
-</li>
-</ul>
-
-<a href="#non-goals" id="non-goals" style="color: inherit; text-decoration: none;">
-  <h3>non-goals</h3>
-</a>
-<ul>
-<li>a complete event system</li>
-<li>web-assembly build tools</li>
-<li>a state machine framework</li>
-<li>an implementation of an observer pattern</li>
-</ul>
 
 <a href="#clone-repo" id="clone-repo" style="color: inherit; text-decoration: none;">
   <h3>clone repo</h3>
@@ -137,6 +101,38 @@
   <h2>Project</h2>
 </a>
 
+<a href="#goals" id="goals" style="color: inherit; text-decoration: none;">
+  <h3>goals</h3>
+</a>
+<ul>
+<li>syntactic sugar in typescript for<ul>
+<li><a href="https://en.wikipedia.org/wiki/State_pattern">state pattern</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/instantiateStreaming">streaming web assembly</a> <a href="https://developer.mozilla.org/en-US/docs/WebAssembly/Exported_functions">exported functions</a></li>
+</ul>
+</li>
+<li>implementations for built-in javascript types<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set"><code>Set</code></a> and <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet"><code>WeakSet</code></a> interfaces</li>
+<li><code>Iterable</code>, <code>Iterator</code>, <code>IterableIterator</code>, and <code>IteratorReturnResult</code></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for-await...of"><code>for await...of</code></a> and <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy"><code>Proxy</code></a> objects</li>
+</ul>
+</li>
+<li>bring concepts to typescript from<ul>
+<li>C# <a href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/delegates/"><code>delegates</code></a> and <a href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/events/"><code>events</code></a></li>
+<li><a href="https://en.wikipedia.org/wiki/Array_programming">array programming</a></li>
+</ul>
+</li>
+</ul>
+
+<a href="#non-goals" id="non-goals" style="color: inherit; text-decoration: none;">
+  <h3>non-goals</h3>
+</a>
+<ul>
+<li>a complete event system</li>
+<li>web-assembly build tools</li>
+<li>a state machine framework</li>
+<li>an implementation of an observer pattern</li>
+</ul>
+
 <a href="#documentation" id="documentation" style="color: inherit; text-decoration: none;">
   <h3>documentation</h3>
 </a>
@@ -163,11 +159,9 @@
 <li><a href="https://github.com/domrally/peekeasy/tree/main/src/tests/unit">unit/</a><ul>
 <li><a href="https://github.com/domrally/peekeasy/tree/main/src/tests/unit/delegate">delegate/</a></li>
 <li><a href="https://github.com/domrally/peekeasy/tree/main/src/tests/unit/event">event/</a></li>
-</ul>
-</li>
 <li><a href="https://github.com/domrally/peekeasy/tree/main/src/tests/unit/iterable-iterator">iterable-iterator/</a></li>
-<li><a href="https://github.com/domrally/peekeasy/tree/main/src/tests/unit/iterator-return-result-value">iterator-return-result-value/</a></li>
-<li><a href="https://github.com/domrally/peekeasy/tree/main/src/tests/unit/stream">stream/</a><ul>
+<li><a href="https://github.com/domrally/peekeasy/tree/main/src/tests/unit/iterator-result-value">iterator-result-value/</a></li>
+<li><a href="https://github.com/domrally/peekeasy/tree/main/src/tests/unit/stream">stream/</a></li>
 <li><a href="https://github.com/domrally/peekeasy/tree/main/src/tests/unit/vector">vector/</a></li>
 <li><a href="https://github.com/domrally/peekeasy/tree/main/src/tests/unit/web-assembly">web-assembly/</a></li>
 </ul>
@@ -177,4 +171,10 @@
 </ul>
 </li>
 </ul>
-</div></div><div class="col-4 col-menu menu-sticky-wrap menu-highlight"><nav class="tsd-navigation primary"><ul><li class="current"><a href="modules.html">Modules</a></li><li class=" tsd-kind-module"><a href="modules/action.html">action</a></li><li class=" tsd-kind-module"><a href="modules/delegate.html">delegate</a></li><li class=" tsd-kind-module"><a href="modules/event.html">event</a></li><li class=" tsd-kind-module"><a href="modules/iterable_iterator.html">iterable-<wbr/>iterator</a></li><li class=" tsd-kind-module"><a href="modules/iterator_return_result_value.html">iterator-<wbr/>return-<wbr/>result-<wbr/>value</a></li><li class=" tsd-kind-module"><a href="modules/stream.html">stream</a></li><li class=" tsd-kind-module"><a href="modules/vector.html">vector</a></li><li class=" tsd-kind-module"><a href="modules/web_assembly.html">web-<wbr/>assembly</a></li></ul></nav></div></div></div><footer class="with-border-bottom"><div class="container"><h2>Legend</h2><div class="tsd-legend-group"><ul class="tsd-legend"><li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li><li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li></ul></div><h2>Settings</h2><p>Theme <select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></p></div></footer><div class="container tsd-generator"><p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div><div class="overlay"></div><script src="assets/main.js"></script></body></html>
+<p><a href="https://prettier.io"><img src="https://img.shields.io/badge/-prettier-F7B93E?style=for-the-badge&labelColor=181717&logo=prettier" alt=""></a>
+<a href="https://nodejs.org"><img src="https://img.shields.io/badge/-nodejs-339933?style=for-the-badge&labelColor=181717&logo=node.js" alt=""></a>
+<a href="https://www.typescriptlang.org"><img src="https://img.shields.io/badge/-typescript-3178C6?style=for-the-badge&labelColor=181717&logo=typescript" alt=""></a>
+<a href="https://typestrong.org/ts-node"><img src="https://img.shields.io/badge/-tsnode-3178C6?style=for-the-badge&labelColor=181717&logo=ts-node" alt=""></a>
+<a href="https://eslint.org"><img src="https://img.shields.io/badge/-eslint-4B32C3?style=for-the-badge&labelColor=181717&logo=ESLint" alt=""></a>
+<a href="https://www.json.org/json-en.html"><img src="https://img.shields.io/badge/-json-000000?style=for-the-badge&labelColor=181717&logo=json" alt=""></a></p>
+</div></div><div class="col-4 col-menu menu-sticky-wrap menu-highlight"><nav class="tsd-navigation primary"><ul><li class="current"><a href="modules.html">Modules</a></li><li class=" tsd-kind-module"><a href="modules/action.html">action</a></li><li class=" tsd-kind-module"><a href="modules/delegate.html">delegate</a></li><li class=" tsd-kind-module"><a href="modules/event.html">event</a></li><li class=" tsd-kind-module"><a href="modules/iterable_iterator.html">iterable-<wbr/>iterator</a></li><li class=" tsd-kind-module"><a href="modules/iterator_result_value.html">iterator-<wbr/>result-<wbr/>value</a></li><li class=" tsd-kind-module"><a href="modules/stream.html">stream</a></li><li class=" tsd-kind-module"><a href="modules/vector.html">vector</a></li><li class=" tsd-kind-module"><a href="modules/web_assembly.html">web-<wbr/>assembly</a></li></ul></nav></div></div></div><footer class="with-border-bottom"><div class="container"><h2>Legend</h2><div class="tsd-legend-group"><ul class="tsd-legend"><li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li><li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li></ul></div><h2>Settings</h2><p>Theme <select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></p></div></footer><div class="container tsd-generator"><p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div><div class="overlay"></div><script src="assets/main.js"></script></body></html>
