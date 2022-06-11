@@ -39,7 +39,7 @@ warn('\t ✅ next')
 // iterator result value
 warn('\n 🧪 iterator result values:')
 
-import './iterator-result-value/iterable-result-value-value.test'
+import './iterator-result-value/iterator-result-value-value.test'
 warn('\t ✅ value')
 
 // stream
@@ -47,6 +47,15 @@ warn('\n 🧪 streams:')
 
 import './stream/stream-delete-async.test'
 warn('\t ✅ delete async')
+
+// vector
+warn('\n 🧪 vectors:')
+
+import './vector/vector-apply.test'
+warn('\t ✅ apply')
+
+import './vector/vector-key.test'
+warn('\t ✅ key')
 
 //
 warn('\n')
