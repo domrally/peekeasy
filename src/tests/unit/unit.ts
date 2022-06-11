@@ -57,5 +57,7 @@ warn('\t✅ apply')
 import './vector/vector-key.test'
 warn('\t✅ key')
 
+import './vector/vector-keys.test'
+
 //
 warn('\n')
