@@ -35,12 +35,17 @@
 		"event",
 		"proxy",
 		"state",
+		"action",
+		"stream",
 		"forward",
 		"pattern",
 		"delegate",
+		"iterator",
 		"observer",
 		"delegation",
-		"forwarding"
+		"forwarding",
+		"vectorized",
+		"web-assembly"
 	],
 	"devDependencies": {
 		"@types/node": "<15",
