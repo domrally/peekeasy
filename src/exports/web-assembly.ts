@@ -1,7 +1,6 @@
 /**
- * Creates and manages a state pattern based on an initial set of possible states
- * @param path state of the returned object
- * @returns a typed object isomorphic to the wasm module exports
+ * A typed object isomorphic to the module exported from the wasm file
+ * @param path source of the wasm file
  */
 export class Webassembly<T> extends Promise<T> {
 	constructor(path: `${string}.wasm`) {

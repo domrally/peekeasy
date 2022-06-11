@@ -1,5 +1,9 @@
 import { Event } from './exports'
 
+/**
+ * Constructor function
+ * @param values values to iterate over
+ */
 export const IterableIterator = function (...values: any) {
 	values.next = () => ({ value: values[0] })
 

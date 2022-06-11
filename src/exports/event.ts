@@ -2,12 +2,13 @@ import type { Action, Delegate } from './exports'
 import { error } from 'console'
 
 /**
- * a wrapped delegate that can't be called directly
- */
-/**
- * @param delegate callable parent delegate
+ * A weak set of event listeners
  */
 export type Event<params extends any[]> = WeakSet<Action<params>>
+/**
+ * Constructor function
+ * @param delegate callable parent delegate
+ */
 export const Event = function <params extends any[]>(
 	delegate: Delegate<params>
 ) {

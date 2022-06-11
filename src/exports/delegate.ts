@@ -7,7 +7,7 @@ import { Action } from './exports'
 export type Delegate<params extends any[]> = Action<params> &
 	Set<Action<params>>
 /**
- * Delegate constructor
+ * Constructor function
  * @param initial optional data that can be passed to the listeners immediately
  */
 export const Delegate = function <params extends any[]>(initial?: params) {

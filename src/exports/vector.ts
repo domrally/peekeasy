@@ -1,6 +1,14 @@
+/**
+ * Similar to a vectorized object from array programming
+ * @returns values to iterate over
+ */
 export type Vector<T> = (() => IterableIterator<T>) & {
 	[K in keyof T]: Vector<T[K]>
 }
+/**
+ * Constructor function
+ * @param context manager of the state pattern
+ */
 export const Vector = function (context: any) {
 	const apply = () => context
 

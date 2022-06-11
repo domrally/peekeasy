@@ -1,10 +1,11 @@
 import type { Action, Delegate } from './exports'
 
+/**
+ * an asynchronous sequence of event data
+ */
 export type Stream<params> = AsyncIterable<params> & PromiseLike<params>
 /**
- * a wrapped delegate that can't be called directly
- */
-/**
+ * Constructor function
  * @param delegate callable parent delegate
  */
 export const Stream = function <params extends any[]>(
