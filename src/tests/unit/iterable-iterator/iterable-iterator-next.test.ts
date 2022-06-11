@@ -1,7 +1,7 @@
-import { assert } from 'console'
 import { IterableIterator } from '../../../exports/exports'
+import { test } from '../../test.test'
 
-async function test() {
+function next() {
 	const { next } = new IterableIterator(true),
 		result = next(),
 		{ value } = result
@@ -9,8 +9,4 @@ async function test() {
 	return value
 }
 
-try {
-	assert(test(), '❌ next')
-} catch (e) {
-	assert(false, '❌ next: ', e)
-}
+test(next)

@@ -1,20 +1,18 @@
 import { assert } from 'console'
 import { IterableIterator, Vector } from '../../../exports/exports'
+import { test } from '../../test.test'
 
-async function test() {
+function key() {
 	const ii = new IterableIterator({ is: true }),
 		vector = new Vector(ii),
 		result = vector.is()
 
+	let r = false
 	for (const is of result) {
-		assert(is, '❌ key')
+		r = is
 	}
 
 	return true
 }
 
-try {
-	test()
-} catch (e) {
-	assert(false, '❌ key: ', e)
-}
+test(key)

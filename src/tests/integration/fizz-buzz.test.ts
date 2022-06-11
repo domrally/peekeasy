@@ -6,6 +6,7 @@ import {
 	Vector,
 } from '../../exports/exports'
 import { warn } from 'console'
+import { test } from '../test.test'
 
 // states must implement Event<[]>
 class FizzBuzzState extends Event<[]> {
@@ -29,30 +30,35 @@ class FizzBuzzState extends Event<[]> {
 	}
 }
 
-// pass all legal states to the state pattern
-const context = new IterableIterator(
-		new FizzBuzzState(''),
-		new FizzBuzzState('fizz', 3),
-		new FizzBuzzState('buzz', 5),
-		new FizzBuzzState('fizzbuzz', 15)
-	),
-	vector = new Vector(context),
-	getWord = new IteratorResultValue(vector.getWord()),
-	counts = vector.count()
+function fizzbuzz() {
+	// pass all legal states to the state pattern
+	const context = new IterableIterator(
+			new FizzBuzzState(''),
+			new FizzBuzzState('fizz', 3),
+			new FizzBuzzState('buzz', 5),
+			new FizzBuzzState('fizzbuzz', 15)
+		),
+		vector = new Vector(context),
+		getWord = new IteratorResultValue(vector.getWord()),
+		counts = vector.count()
 
-let row = '\t'
+	let row = '\t'
 
-for (let i = 1; i <= 16; i++) {
-	for (const count of counts) {
-		count(i)
+	for (let i = 1; i <= 16; i++) {
+		for (const count of counts) {
+			count(i)
+		}
+
+		const word = `${i < 10 ? ' ' : ''}${i}. ${getWord()}`
+		row += `${word}${word.length > 7 ? '\t' : '\t\t'}`
+
+		if (i % 4) continue
+
+		warn(row)
+		row = '\t'
 	}
 
-	const word = `${i < 10 ? ' ' : ''}${i}. ${getWord()}`
-	row += `${word}${word.length > 7 ? '\t' : '\t\t'}`
-
-	if (i % 4) continue
-
-	warn(row)
-	row = '\t'
+	return true
 }
-warn('\n')
+
+test(fizzbuzz)

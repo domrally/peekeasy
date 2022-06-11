@@ -7,7 +7,6 @@ Delegate
 Event
 🧪`)
 import './dependency-injection.test'
-warn('\t✅ dependency injection')
 
 warn(`
 
@@ -19,6 +18,3 @@ IteratorResultValue
 Vector
 🧪`)
 import './fizz-buzz.test'
-warn('\t✅ fizzbuzz')
-
-warn('\n')

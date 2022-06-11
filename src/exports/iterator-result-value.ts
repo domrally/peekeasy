@@ -26,4 +26,6 @@ export const IteratorResultValue = function <T>(context: Iterator<T>) {
 		get,
 		set,
 	})
-} as unknown as new <T>(context: Iterator<T>) => IteratorResultValue<T>
+} as unknown as new <T extends object>(
+	context: Iterator<T>
+) => IteratorResultValue<T>

@@ -1,7 +1,8 @@
 import { assert } from 'console'
 import { IterableIterator } from '../../../exports/exports'
+import { test } from '../../test.test'
 
-async function test() {
+function forOf() {
 	let i = 0
 
 	for (const index of new IterableIterator(1, 2, 3)) {
@@ -11,8 +12,4 @@ async function test() {
 	return true
 }
 
-try {
-	assert(test(), '❌ for of')
-} catch (e) {
-	assert(false, '❌ for of: ', e)
-}
+test(forOf)

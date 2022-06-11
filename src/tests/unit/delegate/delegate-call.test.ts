@@ -1,14 +1,10 @@
-import { assert } from 'console'
 import { Delegate } from '../../../exports/exports'
+import { test } from '../../test.test'
 
-async function test() {
+function call() {
 	new Delegate()()
 
 	return true
 }
 
-try {
-	assert(test(), '❌ callbacks')
-} catch (e) {
-	assert(false, '❌ callbacks: ', e)
-}
+test(call)

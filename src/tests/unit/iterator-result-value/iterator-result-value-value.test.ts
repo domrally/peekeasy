@@ -1,15 +1,16 @@
-import { assert } from 'console'
 import { IterableIterator, IteratorResultValue } from '../../../exports/exports'
+import { test } from '../../test.test'
 
-async function test() {
-	const ii = new IterableIterator(true),
+function value() {
+	const ii = new IterableIterator({ is: true }),
 		value = new IteratorResultValue(ii)
 
-	return value && value === ii
+	let is = true
+	for (const v of ii) {
+		is = is && v.is && value.is
+	}
+
+	return is
 }
 
-try {
-	assert(test(), '❌ value')
-} catch (e) {
-	assert(false, '❌ value: ', e)
-}
+test(value)

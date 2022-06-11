@@ -1,7 +1,7 @@
-import { assert } from 'console'
 import { IterableIterator, Vector } from '../../../exports/exports'
+import { test } from '../../test.test'
 
-async function test() {
+function apply() {
 	const ii = new IterableIterator(true),
 		vector = new Vector(ii),
 		result = vector()
@@ -9,8 +9,4 @@ async function test() {
 	return result === ii
 }
 
-try {
-	assert(test(), '❌ apply')
-} catch (e) {
-	assert(false, '❌ apply: ', e)
-}
+test(apply)

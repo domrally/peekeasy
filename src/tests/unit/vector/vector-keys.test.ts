@@ -1,7 +1,8 @@
 import { assert, warn } from 'console'
 import { IterableIterator, Vector } from '../../../exports/exports'
+import { test } from '../../test.test'
 
-function test() {
+function keys() {
 	const ii = new IterableIterator({ index: 1 }, { index: 2 }, { index: 3 }),
 		vector = new Vector(ii),
 		result = vector.index()
@@ -18,8 +19,4 @@ function test() {
 	return is
 }
 
-try {
-	if (test()) warn('\t✅ keys')
-} catch (e) {
-	assert(false, '❌ keys: ', e)
-}
+test(keys)

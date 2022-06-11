@@ -1,7 +1,7 @@
-import { assert } from 'console'
 import { Delegate, Event } from '../../../exports/exports'
+import { test } from '../../test.test'
 
-async function test() {
+function has() {
 	const delegate = new Delegate(),
 		t = () => {},
 		event = new Event(delegate)
@@ -11,8 +11,4 @@ async function test() {
 	return event.has(t)
 }
 
-try {
-	assert(test(), '❌ callbacks')
-} catch (e) {
-	assert(false, '❌ callbacks: ', e)
-}
+test(has)
