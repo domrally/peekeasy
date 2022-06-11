@@ -1,89 +1,53 @@
-export interface Delegate<params extends any[]>
-	extends WeakSet<Action>,
-		PromiseLike<params>,
-		AsyncIterable<params> {
-	(...args: params): void
-}
-
 /**
  * function that sends a message to all listeners
  * @param args tuple of data that is passed to the listeners
  */
-export class Delegate<params extends any[]> {
-	/**
-	 * @param initial state of the returned object
-	 * @param states array of states that can be activated
-	 * @returns an event that can be called and listened to
-	 */
-	constructor(initial?: params) {
-		const set = new Set<Action>(),
-			event: Partial<Delegate<params>> = (...args: params) => {
-				const copy = new Set(set)
-
-				copy.forEach(resolve => resolve?.(...args))
-			}
-		/**
-		 * Creates and manages a state pattern based on an initial set of possible states
-		 * @param initial state of the returned object
-		 * @param states array of states that can be activated
-		 * @returns a state without the extended event interface
-		 */
-		event.has = (a: Action) => set.has(a)
-		/**
-		 * Creates and manages a state pattern based on an initial set of possible states
-		 * @param initial state of the returned object
-		 * @param states array of states that can be activated
-		 * @returns a state without the extended event interface
-		 */
-		event.delete = (a: Action) => set.delete(a)
-		/**
-		 * Creates and manages a state pattern based on an initial set of possible states
-		 * @param initial state of the returned object
-		 * @param states array of states that can be activated
-		 * @returns a state without the extended event interface
-		 */
-		event.add = (a: Action) => {
-			if (initial) a(...initial)
-
-			return set.add(a) as unknown as Delegate<params>
-		}
-		/**
-		 * Creates and manages a state pattern based on an initial set of possible states
-		 * @param initial state of the returned object
-		 * @param states array of states that can be activated
-		 * @returns a state without the extended event interface
-		 */
-		event.then = async <U = params, V = never>(
-			onfulfilled: (args: params) => PromiseLike<U>,
-			onrejected: (reason: any) => PromiseLike<V>
-		) => {
-			try {
-				const thing = (await event[Symbol.asyncIterator]!().next())
-					.value as params
-
-				return onfulfilled?.(thing)
-			} catch (error) {
-				return onrejected?.(error)
-			}
-		}
-		/**
-		 * Creates and manages a state pattern based on an initial set of possible states
-		 * @param initial state of the returned object
-		 * @param states array of states that can be activated
-		 * @returns a state without the extended event interface
-		 */
-		event[Symbol.asyncIterator] = async function* () {
-			while (true) {
-				yield new Promise<params>(resolve => {
-					const resolution = ((...args: params) => resolve(args)) as Action
-
-					set.add(resolution)
-				})
-			}
+export type Delegate<params extends any[]> = Action<params> &
+	Set<Action<params>>
+export const Delegate = function <params extends any[]>(initial?: params) {
+	const set: any = new Set<Action<params>>(),
+		delegate: any = (...args: params) => {
+			new Set<Action<params>>(set).forEach(action => action(...args))
 		}
 
-		return event as unknown as Delegate<params>
+	delegate.add = (value: Action<params>) => {
+		const result = set.add(value)
+
+		delegate.size = set.size
+
+		return result
 	}
-}
 
-type Action = (...args: any[]) => void
+	delegate.clear = () => {
+		const result = set.clear()
+
+		delegate.size = set.size
+
+		return result
+	}
+
+	delegate.delete = (value: Action<params>) => {
+		const result = set.delete(value)
+
+		delegate.size = set.size
+
+		return result
+	}
+
+	delegate.forEach = (
+		callbackfn: (
+			value: Action<params>,
+			value2: Action<params>,
+			set: Set<Action<params>>
+		) => void,
+		thisArg?: any
+	) => set.forEach(callbackfn, thisArg)
+
+	delegate.has = (value: Action<params>) => set.has(value)
+
+	delegate.size = set.size
+
+	return delegate
+} as unknown as new <params extends any[]>(initial?: params) => Delegate<params>
+
+type Action<params extends any[]> = (...args: params) => void

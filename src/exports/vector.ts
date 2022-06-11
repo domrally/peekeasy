@@ -1,26 +1,23 @@
 export type Vector<T> = (() => IterableIterator<T>) & {
 	[K in keyof T]: Vector<T[K]>
 }
-export const Vector = function <T>(context: IterableIterator<T>) {
+export const Vector = function (context: any) {
 	const apply = () => context
 
-	function get(_: any, key: PropertyKey) {
-		const child: any = []
-
-		for (const state of context) {
-			const value = (state as any)[key]
-
-			child.push(value)
-		}
-
-		child.next = () => ({ value: context.next().value[key] })
-
-		return new Vector(child)
+	const get = (_: any, key: PropertyKey) => {
+		return new Vector({
+			next: () => ({ value: context.next().value[key] }),
+			[Symbol.iterator]: function* () {
+				for (const state of context) {
+					yield state[key]
+				}
+			},
+		})
 	}
 
-	function set(_: any, key: PropertyKey, value: T[any]) {
+	const set = (_: any, key: any, value: any) => {
 		for (const state of context) {
-			;(state as any)[key] = value
+			state[key] = value
 		}
 
 		return true

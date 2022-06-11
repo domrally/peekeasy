@@ -1,5 +1,10 @@
-import { Delegate, Event, State, Vector } from '../../exports/exports'
-import { IterableIterator } from '../../exports/iterable-iterator'
+import {
+	Delegate,
+	Event,
+	IterableIterator,
+	IteratorReturnResultValue,
+	Vector,
+} from '../../exports/exports'
 
 // states must implement Event<[]>
 class FizzBuzzState extends Event<[]> {
@@ -31,10 +36,11 @@ const context = new IterableIterator(
 		new FizzBuzzState('fizzbuzz', 15)
 	),
 	vector = new Vector(context),
-	getWord = new State(vector.getWord())
+	getWord = new IteratorReturnResultValue(vector.getWord()),
+	counts = vector.count()
 
 for (let i = 1; i <= 100; i++) {
-	for (const count of vector.count()) {
+	for (const count of counts) {
 		count(i)
 	}
 

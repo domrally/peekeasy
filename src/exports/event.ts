@@ -1,21 +1,31 @@
-import type { Delegate } from './delegate'
+import type { Delegate } from './exports'
+import { error } from 'console'
 
-export interface Event<params extends any[]>
-	extends WeakSet<(...args: any[]) => void>,
-		AsyncIterable<params>,
-		PromiseLike<params> {}
 /**
  * a wrapped delegate that can't be called directly
  */
-export class Event<params extends any[]> {
-	/**
-	 * @param delegate callable parent delegate
-	 */
-	constructor(delegate: Delegate<params>) {
-		return new Proxy(delegate, {
-			apply: () => {
-				throw new Error()
-			},
-		})
+/**
+ * @param delegate callable parent delegate
+ */
+export type Event<params extends any[]> = WeakSet<(...args: params) => void>
+export const Event = function <params extends any[]>(
+	delegate: Delegate<params>
+) {
+	const apply = () => error('an event can only be called through its delegate')
+
+	const get = (target: any, key: PropertyKey) => {
+		if (key in weakSet || !(key in set)) return target[key]
+
+		error('an event does not have properties from Set that are not in WeakSet')
 	}
-}
+
+	return new Proxy(delegate, {
+		apply,
+		get,
+	})
+} as unknown as new <params extends any[]>(
+	delegate: Delegate<params>
+) => Event<params>
+
+const set = new Set(),
+	weakSet = new WeakSet()

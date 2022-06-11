@@ -1,13 +1,11 @@
 import { Event } from './exports'
 
-export const IterableIterator = function <T extends Event<[]>>(...values: T[]) {
-	const states = values as unknown as IterableIterator<T>
+export const IterableIterator = function (...values: any) {
+	values.next = () => ({ value: values[0] })
 
-	states.next = () => ({ value: values[0] })
-
-	for (const event of states) {
-		event.add?.(() => (states.next = () => ({ value: event })))
+	for (const value of values) {
+		value.add?.(() => (values.next = () => ({ value })))
 	}
 
-	return states
+	return values
 } as unknown as new <T extends Event<[]>>(...values: T[]) => IterableIterator<T>

@@ -1,4 +1,3 @@
-export interface Webassembly<T> extends Promise<T> {}
 /**
  * Creates and manages a state pattern based on an initial set of possible states
  * @param path state of the returned object

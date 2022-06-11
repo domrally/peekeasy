@@ -1,10 +1,12 @@
 import { assert } from 'console'
 import { Delegate } from '../../../exports/exports'
+import { Stream } from '../../../exports/stream'
 
 async function test() {
-	const event = new Delegate<[isTrue: boolean]>([false])
+	const event = new Delegate<[isTrue: boolean]>([false]),
+		stream = new Stream(event)
 	let is = false
-	for await (const [message] of event) {
+	for await (const [message] of stream) {
 		is = message
 		break
 	}

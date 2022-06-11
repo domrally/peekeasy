@@ -1,5 +1,6 @@
 export { Delegate } from './delegate'
 export { Event } from './event'
-export { State } from './state'
+export { IterableIterator } from './iterable-iterator'
+export { IteratorReturnResultValue } from './iterator-return-result-value'
 export { Vector } from './vector'
 export { Webassembly as WebAssembly } from './web-assembly'
