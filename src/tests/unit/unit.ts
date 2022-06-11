@@ -1,13 +1,46 @@
 import { warn } from 'console'
 
-import './delegate/call.test'
-warn('✅ call')
+//
+warn('\n')
 
-import './stream/callbacks-delete-async.test'
-warn('✅ callbacks-delete-async')
+// delegate
+warn('\n 🧪 delegates:')
 
-import './delegate/callbacks-delete.test'
-warn('✅ callbacks-delete')
+import './delegate/delegate-call.test'
+warn('\t ✅ call')
 
-import './delegate/callbacks-has.test'
-warn('✅ callbacks-has')
+import './delegate/delegate-delete.test'
+warn('\t ✅ delete')
+
+import './delegate/delegate-has.test'
+warn('\t ✅ has')
+
+// event
+warn('\n 🧪 events:')
+
+import './event/event-call.test'
+warn('\t ✅ call')
+
+import './event/event-delete.test'
+warn('\t ✅ delete')
+
+import './event/event-has.test'
+warn('\t ✅ has')
+
+// iterable iterator
+warn('\n 🧪 iterable iterators:')
+
+import './iterable-iterator/iterable-iterator-for-of.test'
+warn('\t ✅ for of')
+
+import './iterable-iterator/iterable-iterator-next.test'
+warn('\t ✅ next')
+
+// stream
+warn('\n 🧪 streams:')
+
+import './stream/stream-delete-async.test'
+warn('\t ✅ delete async')
+
+//
+warn('\n')
