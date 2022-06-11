@@ -1,13 +1,14 @@
 import { assert } from 'console'
-import { Delegate } from '../../../exports/exports'
+import { Delegate, Event } from '../../../exports/exports'
 
 async function test() {
 	const delegate = new Delegate(),
-		t = () => {}
+		t = () => {},
+		event = new Event(delegate)
 
-	delegate.add(t)
+	event.add(t)
 
-	return delegate.has(t)
+	return event.has(t)
 }
 
 try {

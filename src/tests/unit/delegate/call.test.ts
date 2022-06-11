@@ -3,6 +3,7 @@ import { Delegate } from '../../../exports/exports'
 
 async function test() {
 	new Delegate()()
+
 	return true
 }
 

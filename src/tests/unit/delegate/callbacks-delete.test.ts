@@ -2,11 +2,14 @@ import { assert } from 'console'
 import { Delegate } from '../../../exports/exports'
 
 async function test() {
-	const delegate = new Delegate<[isTrue: boolean]>([false]),
+	const delegate = new Delegate<[isTrue: boolean]>(),
 		t = (message: boolean) => (is = message)
+
 	let is = false
+
 	delegate.add(t)
 	delegate(true)
+
 	delegate.delete(t)
 	delegate(false)
 

@@ -12,8 +12,10 @@ class Consumer {
 }
 
 async function test() {
-	const delegate = new Delegate<[string]>(['Hello, world!']),
-		consumer = new Consumer(new Event(delegate))
+	const delegate = new Delegate<[string]>(),
+		event = new Event(delegate)
+
+	new Consumer(event)
 
 	delegate('Hello, world!')
 

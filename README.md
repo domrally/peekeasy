@@ -40,7 +40,7 @@ import {
 	Delegate,
 	Event,
 	IterableIterator,
-	IteratorReturnResultValue,
+	IteratorResultValue,
 	Stream,
 	Vector,
 	WebAssembly,
@@ -82,7 +82,7 @@ const context = new IterableIterator(
 		new FizzBuzzState('fizzbuzz', 15)
 	),
 	vector = new Vector(context),
-	getWord = new IteratorReturnResultValue(vector.getWord()),
+	getWord = new IteratorResultValue(vector.getWord()),
 	counts = vector.count()
 
 for (let i = 1; i <= 100; i++) {
@@ -172,7 +172,7 @@ https://domrally.github.io/peekeasy
       - [delegate/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/delegate)
       - [event/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/event)
       - [iterable-iterator/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/iterable-iterator)
-      - [iterator-return-result-value/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/iterator-return-result-value)
+      - [iterator-result-value/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/iterator-result-value)
       - [stream/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/stream)
       - [vector/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/vector)
       - [web-assembly/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/web-assembly)

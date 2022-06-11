@@ -2,7 +2,7 @@ import {
 	Delegate,
 	Event,
 	IterableIterator,
-	IteratorReturnResultValue,
+	IteratorResultValue,
 	Vector,
 } from '../../exports/exports'
 
@@ -36,7 +36,7 @@ const context = new IterableIterator(
 		new FizzBuzzState('fizzbuzz', 15)
 	),
 	vector = new Vector(context),
-	getWord = new IteratorReturnResultValue(vector.getWord()),
+	getWord = new IteratorResultValue(vector.getWord()),
 	counts = vector.count()
 
 for (let i = 1; i <= 100; i++) {
