@@ -105,8 +105,9 @@ for (let i = 1; i <= 100; i++) {
 - syntactic sugar in typescript for
   - [state pattern](https://en.wikipedia.org/wiki/State_pattern)
   - [streaming web assembly](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/instantiateStreaming) [exported functions](https://developer.mozilla.org/en-US/docs/WebAssembly/Exported_functions)
-- use built-in javascript types
+- implementations for built-in javascript types
   - [`Set`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set) and [`WeakSet`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet) interfaces
+  - `Iterable`, `Iterator`, `IterableIterator`, and `IteratorReturnResult`
   - [`for await...of`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for-await...of) and [`Proxy`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) objects
 - bring concepts to typescript from
   - C# [`delegates`](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/delegates/) and [`events`](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/events/)
@@ -174,5 +175,8 @@ https://domrally.github.io/peekeasy
     - [unit/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit)
       - [delegate/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/delegate)
       - [event/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/event)
+    - [iterable-iterator/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/iterable-iterator)
+    - [iterator-return-result-value/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/iterator-return-result-value)
+    - [stream/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/stream)
       - [vector/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/vector)
       - [web-assembly/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/web-assembly)
