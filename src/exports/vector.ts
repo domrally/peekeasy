@@ -1,5 +1,28 @@
 /**
+ * ### Description
+ *
  * Similar to a vectorized object from array programming
+ *
+ * _example:_
+ *
+ * ```ts
+ *const ii = new IterableIterator(
+ *        { index: 1 },
+ *        { index: 2 },
+ *        { index: 3 }
+ *      ),
+ *      vector = new Vector(ii),
+ *      result = vector.index()
+ *
+ *let index = 0,
+ *	   is = true
+ *
+ *for (const i of result) {
+ *	  const a = ++index === i
+ *	  is = is && a
+ *	  assert(a, `❌ indices ${i} & ${index} are not equal`)
+ *}
+ *```
  * @returns values to iterate over
  */
 export type Vector<T> = (() => IterableIterator<T>) & {

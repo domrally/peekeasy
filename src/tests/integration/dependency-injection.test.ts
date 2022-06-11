@@ -1,27 +1,23 @@
-import { assert } from 'console'
 import { Delegate, Event } from '../../exports/exports'
+import { test } from '../test.test'
 
 class Consumer {
-	constructor(onTest: Event<[string]>) {
+	constructor(onTest: Event<[boolean]>) {
 		onTest.add(this.consume)
 	}
 
-	consume(message: string) {
-		assert(message === 'Hello, world!')
-	}
+	consume = (is: boolean) => (this.is = is)
+
+	is = false
 }
 
-async function test() {
-	const delegate = new Delegate<[string]>(['Hello, world!']),
-		consumer = new Consumer(new Event(delegate))
+function dependencyInjection() {
+	const delegate = new Delegate([true]),
+		event = new Event(delegate)
 
-	delegate('Hello, world!')
+	const consumer = new Consumer(event)
 
-	return true
+	return consumer.is
 }
 
-try {
-	assert(test(), '❌ dependency-injection')
-} catch (e) {
-	assert(false, '❌ dependency-injection: ', e)
-}
+test(dependencyInjection)

@@ -5,7 +5,7 @@
 		"./src/exports/delegate.ts",
 		"./src/exports/event.ts",
 		"./src/exports/iterable-iterator.ts",
-		"./src/exports/iterator-return-result-value.ts",
+		"./src/exports/iterator-result-value.ts",
 		"./src/exports/stream.ts",
 		"./src/exports/vector.ts",
 		"./src/exports/web-assembly.ts"

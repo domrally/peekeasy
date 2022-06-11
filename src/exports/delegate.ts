@@ -1,13 +1,20 @@
 import { Action } from './exports'
 
 /**
+ * ### Description:
+ *
  * A function that sends a message to all set members
+ *
+ * _example_
+ * ```ts
+ * ```
+ *
  * @param args tuple of data that is passed to the listeners
  */
 export type Delegate<params extends any[]> = Action<params> &
 	Set<Action<params>>
 /**
- * Constructor function
+ * #### constructor function:
  * @param initial optional data that can be passed to the listeners immediately
  */
 export const Delegate = function <params extends any[]>(initial?: params) {

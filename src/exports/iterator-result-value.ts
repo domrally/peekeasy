@@ -1,12 +1,12 @@
 /**
  * current state of the Iterator
  */
-export type IteratorReturnResultValue<T> = IteratorReturnResult<T>['value']
+export type IteratorResultValue<T> = IteratorResult<T>['value']
 /**
  * Constructor function
  * @param context manager of the state pattern
  */
-export const IteratorReturnResultValue = function <T>(context: Iterator<T>) {
+export const IteratorResultValue = function <T>(context: Iterator<T>) {
 	const apply = (_: any, thisArg: any, args: any[]) => {
 		return context.next().value.apply(thisArg, args)
 	}
@@ -26,4 +26,6 @@ export const IteratorReturnResultValue = function <T>(context: Iterator<T>) {
 		get,
 		set,
 	})
-} as unknown as new <T>(context: Iterator<T>) => IteratorReturnResultValue<T>
+} as unknown as new <T extends object>(
+	context: Iterator<T>
+) => IteratorResultValue<T>

@@ -2,13 +2,9 @@
 
 tools for observing proxies in typescript & web assembly
 
-[![](https://img.shields.io/npm/v/peekeasy?style=for-the-badge&labelColor=grey&logo=npm&label=)](https://www.npmjs.com/package/peekeasy)
-[![](https://img.shields.io/badge/-prettier-F7B93E?style=for-the-badge&labelColor=grey&logo=prettier)](https://prettier.io)
-[![](https://img.shields.io/badge/-nodejs-339933?style=for-the-badge&labelColor=grey&logo=node.js)](https://nodejs.org)
-[![](https://img.shields.io/badge/-typescript-3178C6?style=for-the-badge&labelColor=grey&logo=typescript)](https://www.typescriptlang.org)
-[![](https://img.shields.io/badge/-tsnode-3178C6?style=for-the-badge&labelColor=grey&logo=ts-node)](https://typestrong.org/ts-node)
-[![](https://img.shields.io/badge/-eslint-4B32C3?style=for-the-badge&labelColor=grey&logo=ESLint)](https://eslint.org)
-[![](https://img.shields.io/badge/-json-000000?style=for-the-badge&labelColor=grey&logo=json)](https://www.json.org/json-en.html)
+[![](https://img.shields.io/npm/v/peekeasy?style=for-the-badge&labelColor=181717&logo=npm&label=)](https://www.npmjs.com/package/peekeasy)
+[![](https://img.shields.io/github/workflow/status/domrally/peekeasy/test?logo=github&labelColor=181717&style=for-the-badge&label=test)](https://github.com/domrally/peekeasy/actions/workflows/test.yml)
+[![](https://img.shields.io/github/workflow/status/domrally/peekeasy/publish?logo=github&labelColor=181717&style=for-the-badge)](https://github.com/domrally/peekeasy/actions/workflows/publish.yml)
 
 ## Contents
 
@@ -17,8 +13,6 @@ tools for observing proxies in typescript & web assembly
   - [import](#import)
   - [example](#example)
 - [**Contribute**](#Contribute)
-  - [goals](#goals)
-  - [non-goals](#non-goals)
   - [clone repo](#clone-repo)
   - [open directory](#open-directory)
   - [download dependencies](#download-dependencies)
@@ -26,6 +20,8 @@ tools for observing proxies in typescript & web assembly
   - [build docs](#build-docs)
   - [deploy](#deploy)
 - [**Project**](#Project)
+  - [goals](#goals)
+  - [non-goals](#non-goals)
   - [documentation](#documentation)
   - [structure](#structure)
 
@@ -44,7 +40,7 @@ import {
 	Delegate,
 	Event,
 	IterableIterator,
-	IteratorReturnResultValue,
+	IteratorResultValue,
 	Stream,
 	Vector,
 	WebAssembly,
@@ -86,7 +82,7 @@ const context = new IterableIterator(
 		new FizzBuzzState('fizzbuzz', 15)
 	),
 	vector = new Vector(context),
-	getWord = new IteratorReturnResultValue(vector.getWord()),
+	getWord = new IteratorResultValue(vector.getWord()),
 	counts = vector.count()
 
 for (let i = 1; i <= 100; i++) {
@@ -99,26 +95,6 @@ for (let i = 1; i <= 100; i++) {
 ```
 
 ## Contribute
-
-### goals
-
-- syntactic sugar in typescript for
-  - [state pattern](https://en.wikipedia.org/wiki/State_pattern)
-  - [streaming web assembly](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/instantiateStreaming) [exported functions](https://developer.mozilla.org/en-US/docs/WebAssembly/Exported_functions)
-- implementations for built-in javascript types
-  - [`Set`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set) and [`WeakSet`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet) interfaces
-  - `Iterable`, `Iterator`, `IterableIterator`, and `IteratorReturnResult`
-  - [`for await...of`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for-await...of) and [`Proxy`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) objects
-- bring concepts to typescript from
-  - C# [`delegates`](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/delegates/) and [`events`](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/events/)
-  - [array programming](https://en.wikipedia.org/wiki/Array_programming)
-
-### non-goals
-
-- a complete event system
-- web-assembly build tools
-- a state machine framework
-- an implementation of an observer pattern
 
 ### clone repo
 
@@ -156,6 +132,26 @@ merge a [pull request](https://github.com/domrally/peekeasy/compare) into `main`
 
 ## Project
 
+### goals
+
+- syntactic sugar in typescript for
+  - [state pattern](https://en.wikipedia.org/wiki/State_pattern)
+  - [streaming web assembly](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/instantiateStreaming) [exported functions](https://developer.mozilla.org/en-US/docs/WebAssembly/Exported_functions)
+- implementations for built-in javascript types
+  - [`Set`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set) and [`WeakSet`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet) interfaces
+  - `Iterable`, `Iterator`, `IterableIterator`, and `IteratorReturnResult`
+  - [`for await...of`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for-await...of) and [`Proxy`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) objects
+- bring concepts to typescript from
+  - C# [`delegates`](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/delegates/) and [`events`](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/events/)
+  - [array programming](https://en.wikipedia.org/wiki/Array_programming)
+
+### non-goals
+
+- a complete event system
+- web-assembly build tools
+- a state machine framework
+- an implementation of an observer pattern
+
 ### documentation
 
 https://domrally.github.io/peekeasy
@@ -173,10 +169,17 @@ https://domrally.github.io/peekeasy
   - [tests/](https://github.com/domrally/peekeasy/tree/main/src/tests)
     - [integration/](https://github.com/domrally/peekeasy/tree/main/src/tests/integration)
     - [unit/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit)
-    - [delegate/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/delegate)
-    - [event/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/event)
-    - [iterable-iterator/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/iterable-iterator)
-    - [iterator-return-result-value/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/iterator-return-result-value)
-    - [stream/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/stream)
-    - [vector/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/vector)
-    - [web-assembly/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/web-assembly)
+      - [delegate/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/delegate)
+      - [event/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/event)
+      - [iterable-iterator/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/iterable-iterator)
+      - [iterator-result-value/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/iterator-result-value)
+      - [stream/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/stream)
+      - [vector/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/vector)
+      - [web-assembly/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/web-assembly)
+
+[![](https://img.shields.io/badge/-prettier-F7B93E?style=for-the-badge&labelColor=181717&logo=prettier)](https://prettier.io)
+[![](https://img.shields.io/badge/-nodejs-339933?style=for-the-badge&labelColor=181717&logo=node.js)](https://nodejs.org)
+[![](https://img.shields.io/badge/-typescript-3178C6?style=for-the-badge&labelColor=181717&logo=typescript)](https://www.typescriptlang.org)
+[![](https://img.shields.io/badge/-tsnode-3178C6?style=for-the-badge&labelColor=181717&logo=ts-node)](https://typestrong.org/ts-node)
+[![](https://img.shields.io/badge/-eslint-4B32C3?style=for-the-badge&labelColor=181717&logo=ESLint)](https://eslint.org)
+[![](https://img.shields.io/badge/-json-000000?style=for-the-badge&labelColor=181717&logo=json)](https://www.json.org/json-en.html)

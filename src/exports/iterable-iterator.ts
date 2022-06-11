@@ -12,4 +12,6 @@ export const IterableIterator = function (...values: any) {
 	}
 
 	return values
-} as unknown as new <T extends Event<[]>>(...values: T[]) => IterableIterator<T>
+} as unknown as new <T extends Event<[]> | any>(
+	...values: T[]
+) => IterableIterator<T>
