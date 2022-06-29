@@ -1,7 +1,7 @@
 {
 	"license": "MIT",
 	"name": "peekeasy",
-	"version": "0.8.2",
+	"version": "0.8.3",
 	"author": "Dom Mandy",
 	"main": "build/exports/exports.js",
 	"types": "build/exports/exports.d.ts",
@@ -19,7 +19,7 @@
 		"build/exports"
 	],
 	"exports": {
-		".": "./build/src/exports/exports.js"
+		".": "./build/exports/exports.js"
 	},
 	"bugs": {
 		"url": "https://github.com/domrally/peekeasy/issues"
@@ -45,15 +45,15 @@
 		"web-assembly"
 	],
 	"devDependencies": {
-		"@types/node": "<15",
-		"@typescript-eslint/eslint-plugin": "<6",
-		"@typescript-eslint/parser": "<6",
-		"eslint": "<9",
-		"eslint-config-alloy": "<5",
-		"eslint-config-prettier": "<9",
-		"prettier": "<3",
-		"ts-node": "<11",
-		"typedoc": "<1.0.1",
-		"typescript": "<5"
+		"@types/node": "*",
+		"@typescript-eslint/eslint-plugin": "*",
+		"@typescript-eslint/parser": "*",
+		"eslint": "*",
+		"eslint-config-alloy": "*",
+		"eslint-config-prettier": "*",
+		"prettier": "*",
+		"ts-node": "*",
+		"typedoc": "*",
+		"typescript": "*"
 	}
 }
