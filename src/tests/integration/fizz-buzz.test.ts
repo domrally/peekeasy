@@ -1,17 +1,11 @@
-import {
-	Delegate,
-	Event,
-	IterableIterator,
-	IteratorResultValue,
-	Vector,
-} from '../../exports/exports'
+import { Delegate, Event, Reference, Vector } from '../../exports/exports'
 import { warn } from 'console'
 import { test } from '../test.test'
 
 // states must implement Event<[]>
 class FizzBuzzState extends Event<[]> {
 	constructor(
-		private word: string,
+		public word: string,
 		private index?: number,
 		// in order to activate this state need to create a delegate
 		private delegate = new Delegate<[]>()
@@ -32,24 +26,21 @@ class FizzBuzzState extends Event<[]> {
 
 function fizzbuzz() {
 	// pass all legal states to the state pattern
-	const context = new IterableIterator(
+	const context = [
 			new FizzBuzzState(''),
 			new FizzBuzzState('fizz', 3),
 			new FizzBuzzState('buzz', 5),
-			new FizzBuzzState('fizzbuzz', 15)
-		),
+			new FizzBuzzState('fizzbuzz', 15),
+		],
 		vector = new Vector(context),
-		getWord = new IteratorResultValue(vector.getWord()),
-		counts = vector.count()
+		reference = new Reference(context)
 
 	let row = '\t'
 
 	for (let i = 1; i <= 16; i++) {
-		for (const count of counts) {
-			count(i)
-		}
+		vector.count(i)
 
-		const word = `${i < 10 ? ' ' : ''}${i}. ${getWord()}`
+		const word = `${i < 10 ? ' ' : ''}${i}. ${reference.word}`
 		row += `${word}${word.length > 7 ? '\t' : '\t\t'}`
 
 		if (i % 4) continue

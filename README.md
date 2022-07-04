@@ -36,15 +36,7 @@ npm i peekeasy
 ### import
 
 ```ts
-import {
-	Delegate,
-	Event,
-	IterableIterator,
-	IteratorResultValue,
-	Stream,
-	Vector,
-	WebAssembly,
-} from 'peekeasy'
+import { Delegate, Event, Reference, Vector, WebAssembly } from 'peekeasy'
 ```
 
 ### example
@@ -52,45 +44,37 @@ import {
 _[fizz-buzz.ts](https://github.com/domrally/peekeasy/blob/wasm/src/tests/integration/fizz-buzz.ts):_
 
 ```ts
-// states must implement Event<[]>
 class FizzBuzzState extends Event<[]> {
 	constructor(
-		private word: string,
+		public word: string,
 		private index?: number,
-		// in order to activate this state need to create a delegate
 		private delegate = new Delegate<[]>()
 	) {
 		super(delegate)
 	}
 
-	getWord = () => this.word
-
-	// functions must not be methods
+	// functions can't be methods
 	count = (count: number) => {
 		if (!this.index) this.word = `${count}`
 
-		// activate state if the count is divisible by the index
 		if (!(this.index && count % this.index)) this.delegate()
 	}
 }
 
 // pass all legal states to the state pattern
-const context = new IterableIterator(
+const sequence = [
 		new FizzBuzzState(''),
 		new FizzBuzzState('fizz', 3),
 		new FizzBuzzState('buzz', 5),
-		new FizzBuzzState('fizzbuzz', 15)
-	),
-	vector = new Vector(context),
-	getWord = new IteratorResultValue(vector.getWord()),
-	counts = vector.count()
+		new FizzBuzzState('fizzbuzz', 15),
+	],
+	vector = new Vector(sequence),
+	reference = new Reference(sequence)
 
 for (let i = 1; i <= 100; i++) {
-	for (const count of counts) {
-		count(i)
-	}
+	vector.count(i)
 
-	console.log(getWord())
+	console.log(reference.word)
 }
 ```
 
@@ -147,7 +131,8 @@ merge a [pull request](https://github.com/domrally/peekeasy/compare) into `main`
 
 ### non-goals
 
-- a complete event system
+- an event system
+- an app framework
 - web-assembly build tools
 - a state machine framework
 - an implementation of an observer pattern
@@ -173,7 +158,6 @@ https://domrally.github.io/peekeasy
       - [event/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/event)
       - [iterable-iterator/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/iterable-iterator)
       - [iterator-result-value/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/iterator-result-value)
-      - [stream/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/stream)
       - [vector/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/vector)
       - [web-assembly/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/web-assembly)
 

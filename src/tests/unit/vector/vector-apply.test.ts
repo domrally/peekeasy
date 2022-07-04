@@ -1,12 +1,17 @@
-import { IterableIterator, Vector } from '../../../exports/exports'
+import { Vector } from '../../../exports/exports'
 import { test } from '../../test.test'
 
 function apply() {
-	const ii = new IterableIterator(true),
-		vector = new Vector(ii),
-		result = vector()
+	const ii = { v: true },
+		vector = new Vector([ii])
 
-	return result === ii
+	let is = false
+
+	for (const iterator of vector.v) {
+		is = iterator
+	}
+
+	return is
 }
 
 test(apply)
