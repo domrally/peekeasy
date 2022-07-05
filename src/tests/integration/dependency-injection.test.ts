@@ -12,7 +12,7 @@ class Consumer {
 }
 
 function dependencyInjection() {
-	const delegate = new Delegate([true]),
+	const delegate = new Delegate<[boolean]>([true]),
 		event = new Event(delegate)
 
 	const consumer = new Consumer(event)

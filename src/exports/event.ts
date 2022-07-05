@@ -1,32 +1,51 @@
-import type { Action, Delegate } from './exports'
+import type { Action } from './exports'
 import { error } from 'console'
 
 /**
  * A weak set of event listeners
  */
-export type Event<params extends any[]> = WeakSet<Action<params>>
+export type Event<params extends any[]> = WeakSet<Action<params>> &
+	AsyncIterable<params> &
+	PromiseLike<params>
 /**
  * Constructor function
  * @param delegate callable parent delegate
  */
-export const Event = function <params extends any[]>(
-	delegate: Delegate<params>
-) {
-	const apply = () => error('an event can only be called through its delegate')
+export const Event = function <params extends any[]>(delegate: Event<params>) {
+	const event = ((..._: []) =>
+		error(
+			'an event can only be called through its delegate'
+		)) as unknown as Event<params>
+	event.delete = delegate.delete
+	event.add = delegate.add
+	event.has = delegate.has
 
-	const get = (target: any, key: PropertyKey) => {
-		if (key in weakSet || !(key in set)) return target[key]
+	event[Symbol.asyncIterator] = async function* () {
+		while (true) {
+			yield new Promise<params>(resolve => {
+				const resolution = ((...args: params) =>
+					resolve(args)) as Action<params>
 
-		error('an event does not have properties from Set that are not in WeakSet')
+				delegate.add(resolution)
+			})
+		}
 	}
 
-	return new Proxy(delegate, {
-		apply,
-		get,
-	})
-} as unknown as new <params extends any[]>(
-	delegate: Delegate<params>
-) => Event<params>
+	event.then = async <U = params, V = never>(
+		onfulfilled: (args: params) => PromiseLike<U>,
+		onrejected: (reason: unknown) => PromiseLike<V>
+	) => {
+		try {
+			const next = await event[Symbol.asyncIterator]().next(),
+				result = next.value as params
 
-const set = new Set(),
-	weakSet = new WeakSet()
+			return onfulfilled?.(result)
+		} catch (error) {
+			return onrejected?.(error)
+		}
+	}
+
+	return event
+} as unknown as new <params extends any[]>(
+	delegate: Event<params>
+) => Event<params>

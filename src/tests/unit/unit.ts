@@ -11,10 +11,6 @@ import './event/event-call.test'
 import './event/event-delete.test'
 import './event/event-has.test'
 
-warn('\n🧪 iterable iterators:')
-import './iterable-iterator/iterable-iterator-for-of.test'
-import './iterable-iterator/iterable-iterator-next.test'
-
 warn('\n🧪 iterator result values:')
 import './iterator-result-value/iterator-result-value-value.test'
 
