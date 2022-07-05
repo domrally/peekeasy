@@ -1,4 +1,4 @@
-import type { Action, Delegate } from './exports'
+import type { Action } from './exports'
 import { error } from 'console'
 
 /**
@@ -11,11 +11,11 @@ export type Event<params extends any[]> = WeakSet<Action<params>> &
  * Constructor function
  * @param delegate callable parent delegate
  */
-export const Event = function <params extends any[]>(
-	delegate: Delegate<params>
-) {
-	const event: any = (..._: any[]) =>
-		error('an event can only be called through its delegate')
+export const Event = function <params extends any[]>(delegate: Event<params>) {
+	const event = ((..._: []) =>
+		error(
+			'an event can only be called through its delegate'
+		)) as unknown as Event<params>
 	event.delete = delegate.delete
 	event.add = delegate.add
 	event.has = delegate.has
@@ -33,7 +33,7 @@ export const Event = function <params extends any[]>(
 
 	event.then = async <U = params, V = never>(
 		onfulfilled: (args: params) => PromiseLike<U>,
-		onrejected: (reason: any) => PromiseLike<V>
+		onrejected: (reason: unknown) => PromiseLike<V>
 	) => {
 		try {
 			const next = await event[Symbol.asyncIterator]().next(),
@@ -47,5 +47,5 @@ export const Event = function <params extends any[]>(
 
 	return event
 } as unknown as new <params extends any[]>(
-	delegate: Delegate<params>
+	delegate: Event<params>
 ) => Event<params>
