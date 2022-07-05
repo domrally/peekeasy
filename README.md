@@ -48,8 +48,10 @@ class Scalar {
 	log = () => console.log(this.word)
 }
 
+// create a vector from two scalars
 const vector = new Vector([new Scalar('hello'), new Scalar('world')])
 
+// call a method on both scalars
 vector.log()
 ```
 
