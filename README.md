@@ -48,10 +48,7 @@ class Scalar {
 	log = () => console.log(this.word)
 }
 
-const vector = new Vector([
-	new Scalar('hello'), 
-	new Scalar('world'),
-])
+const vector = new Vector([new Scalar('hello'), new Scalar('world')])
 
 vector.log()
 ```
