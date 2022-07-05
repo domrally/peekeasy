@@ -20,10 +20,8 @@
  *}
  *```
  */
-export type Vector<T> = T &
-	Iterable<T> & {
-		[K in keyof T]: Vector<T[K]>
-	} & (<U extends T & ((...args: any[]) => any)>(
+export type Vector<T> = { [K in keyof T]: Vector<T[K]> } & Iterable<T> &
+	(<U extends T & ((...args: any[]) => any)>(
 		...args: any[]
 	) => Vector<ReturnType<U>>)
 /**
@@ -31,43 +29,37 @@ export type Vector<T> = T &
  * @param scalars values of the vectorized element
  */
 export const Vector = function (scalars: Iterable<any>) {
-	const apply = (_: any, thisArg: any, args: any[]) => {
-		let values: any = new Set()
-
-		for (const scalar of scalars) {
-			const v = scalar.apply(thisArg, args)
-
-			values.add(v)
-		}
-
-		return new Vector({
-			[Symbol.iterator]: values[Symbol.iterator],
-		})
-	}
-
-	const get = (_: any, key: PropertyKey) => {
-		if (key === Symbol.iterator) return scalars[Symbol.iterator]
-
-		return new Vector({
-			[Symbol.iterator]: function* () {
-				for (const scalar of scalars) {
-					yield scalar[key]
-				}
-			},
-		})
-	}
-
-	const set = (_: any, key: any, value: any) => {
-		for (const scalar of scalars) {
-			scalar[key] = value
-		}
-
-		return true
-	}
-
 	return new Proxy(() => {}, {
-		apply,
-		get,
-		set,
+		apply(_, thisArg, args) {
+			const values = new Set()
+
+			for (const scalar of scalars) {
+				const v = scalar.apply(thisArg, args)
+
+				values.add(v)
+			}
+
+			return new Vector({ [Symbol.iterator]: values[Symbol.iterator] })
+		},
+
+		get(_, key) {
+			if (key === Symbol.iterator) return scalars[Symbol.iterator]
+
+			return new Vector({
+				[Symbol.iterator]: function* () {
+					for (const scalar of scalars) {
+						yield scalar[key]
+					}
+				},
+			})
+		},
+
+		set(_, key, value) {
+			for (const scalar of scalars) {
+				scalar[key] = value
+			}
+
+			return true
+		},
 	})
 } as unknown as new <T>(scalars: Iterable<T>) => Vector<T>

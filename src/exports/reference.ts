@@ -7,24 +7,24 @@ export type Reference<T> = T
  * @param states permitted states of the state pattern
  */
 export const Reference = function <T>(states: Iterable<T>) {
-	const context = [...states] as any[] & Iterator<T>,
-		[value] = context
+	const values = [...states] as any[] & Iterator<T>,
+		[value] = values
 
-	context.next = () => ({ value })
+	values.next = () => ({ value })
 
-	for (const value of context) {
-		value.add?.(() => (context.next = () => ({ value })))
+	for (const value of values) {
+		value.add?.(() => (values.next = () => ({ value })))
 	}
 
 	const handler = {
 		apply(_: any, thisArg: unknown, args: unknown[]) {
-			return context.next().value.apply(thisArg, args)
+			return values.next().value.apply(thisArg, args)
 		},
 		get(_: T, key: PropertyKey) {
-			return context.next().value[key]
+			return values.next().value[key]
 		},
 		set(_: T, key: PropertyKey, value: unknown) {
-			context.next().value[key] = value
+			values.next().value[key] = value
 
 			return true
 		},
