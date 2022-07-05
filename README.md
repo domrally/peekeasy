@@ -41,41 +41,19 @@ import { Delegate, Event, Reference, Vector, WebAssembly } from 'peekeasy'
 
 ### example
 
-_[fizz-buzz.ts](https://github.com/domrally/peekeasy/blob/wasm/src/tests/integration/fizz-buzz.ts):_
-
 ```ts
-class FizzBuzzState extends Event<[]> {
-	constructor(
-		public word: string,
-		private index?: number,
-		private delegate = new Delegate<[]>()
-	) {
-		super(delegate)
-	}
+class Scalar {
+	constructor(private word: string) {}
 
-	// functions can't be methods
-	count = (count: number) => {
-		if (!this.index) this.word = `${count}`
-
-		if (!(this.index && count % this.index)) this.delegate()
-	}
+	log = () => console.log(this.word)
 }
 
-// pass all legal states to the state pattern
-const sequence = [
-		new FizzBuzzState(''),
-		new FizzBuzzState('fizz', 3),
-		new FizzBuzzState('buzz', 5),
-		new FizzBuzzState('fizzbuzz', 15),
-	],
-	vector = new Vector(sequence),
-	reference = new Reference(sequence)
+const vector = new Vector([
+	new Scalar('hello'), 
+	new Scalar('world'),
+])
 
-for (let i = 1; i <= 100; i++) {
-	vector.count(i)
-
-	console.log(reference.word)
-}
+vector.log()
 ```
 
 ## Contribute
