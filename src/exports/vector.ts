@@ -28,7 +28,7 @@ export type Vector<T> = { [K in keyof T]: Vector<T[K]> } & Iterable<T> &
  * Constructor function
  * @param scalars values of the vectorized element
  */
-export const Vector = function (scalars: Iterable<any>) {
+export const Vector = function (...scalars: any[]) {
 	return new Proxy(() => {}, {
 		apply(_, thisArg, args) {
 			const values = new Set()
@@ -62,4 +62,4 @@ export const Vector = function (scalars: Iterable<any>) {
 			return true
 		},
 	})
-} as unknown as new <T>(scalars: Iterable<T>) => Vector<T>
+} as unknown as new <T>(...scalars: T[]) => Vector<T>
