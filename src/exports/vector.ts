@@ -34,7 +34,7 @@ export const Vector = function (scalars: Iterable<any>) {
 			const values = new Set()
 
 			for (const scalar of scalars) {
-				const v = scalar.apply?.(thisArg, args)
+				const v = scalar?.apply?.(thisArg, args)
 
 				values.add(v)
 			}
