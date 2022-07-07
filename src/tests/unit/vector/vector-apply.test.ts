@@ -2,8 +2,7 @@ import { Vector } from '../../../exports/exports'
 import { test } from '../../test.test'
 
 function apply() {
-	const ii = { v: true },
-		vector = new Vector([ii])
+	const vector = new Vector({ v: true })
 
 	let is = false
 

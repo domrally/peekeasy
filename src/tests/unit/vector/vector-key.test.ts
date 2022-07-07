@@ -4,7 +4,7 @@ import { test } from '../../test.test'
 
 function key() {
 	const ii = { is: true },
-		vector = new Vector([ii]),
+		vector = new Vector(ii),
 		result = vector.is
 
 	let r = false
