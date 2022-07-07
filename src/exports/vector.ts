@@ -20,8 +20,9 @@
  *}
  *```
  */
-export type Vector<T> = { [K in keyof T]: Vector<T[K]> } & Iterable<T> &
-	((...params: Parameters<T>) => Vector<ReturnType<T>>)
+export type Vector<T> = T extends (...args: any) => any
+	? Iterable<T> & ((...params: Parameters<T>) => Vector<ReturnType<T>>)
+	: Iterable<T> & { [K in keyof T]: Vector<T[K]> }
 /**
  * Constructor function
  * @param scalars values of the vectorized element
