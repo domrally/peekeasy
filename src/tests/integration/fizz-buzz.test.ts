@@ -26,14 +26,13 @@ class FizzBuzzState extends Event<[]> {
 
 function fizzbuzz() {
 	// pass all legal states to the state pattern
-	const context = [
+	const vector = new Vector(
 			new FizzBuzzState(''),
 			new FizzBuzzState('fizz', 3),
 			new FizzBuzzState('buzz', 5),
-			new FizzBuzzState('fizzbuzz', 15),
-		],
-		vector = new Vector(context),
-		reference = new Reference(context)
+			new FizzBuzzState('fizzbuzz', 15)
+		),
+		reference = new Reference(vector)
 
 	let row = '\t'
 

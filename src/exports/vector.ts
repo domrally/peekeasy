@@ -31,33 +31,25 @@ export type Vector<T> = { [K in keyof T]: Vector<T[K]> } & Iterable<T> &
 export const Vector = function (...scalars: any[]) {
 	return new Proxy(() => {}, {
 		apply(_, thisArg, args) {
-			const values = new Set()
-
-			for (const scalar of scalars) {
-				const v = scalar?.apply?.(thisArg, args)
-
-				values.add(v)
-			}
-
-			return new Vector({ [Symbol.iterator]: values[Symbol.iterator] })
+			return new Vector(
+				...scalars?.map(scalar => scalar?.apply?.(thisArg, args))
+			)
 		},
 
 		get(_, key) {
-			if (key === Symbol.iterator) return scalars[Symbol.iterator]
+			if (
+				[Symbol.iterator, Symbol.toStringTag, Symbol.asyncIterator].includes(
+					key as symbol
+				)
+			) {
+				return () => scalars[Symbol.iterator]()
+			}
 
-			return new Vector({
-				[Symbol.iterator]: function* () {
-					for (const scalar of scalars) {
-						yield scalar[key]
-					}
-				},
-			})
+			return new Vector(...scalars?.map(scalar => scalar?.[key]))
 		},
 
 		set(_, key, value) {
-			for (const scalar of scalars) {
-				scalar[key] = value
-			}
+			scalars?.forEach(scalar => (scalar[key] = value))
 
 			return true
 		},
