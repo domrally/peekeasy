@@ -11,9 +11,8 @@ import { Action, Event } from './exports'
  *
  * @param args tuple of data that is passed to the listeners
  */
-export type Delegate<params extends any[]> = Action<params> &
-	Set<Action<params>> &
-	Event<params>
+export type Delegate<params extends any[] = []> = Action<params> &
+	Set<Action<params>>
 /**
  * #### constructor function:
  * @param initial optional data that can be passed to the listeners immediately
@@ -64,4 +63,6 @@ export const Delegate = function <params extends any[]>(initial?: params) {
 	delegate.size = set.size
 
 	return delegate
-} as unknown as new <params extends any[]>(initial?: params) => Delegate<params>
+} as unknown as new <params extends any[] = []>(
+	initial?: params
+) => Delegate<params>

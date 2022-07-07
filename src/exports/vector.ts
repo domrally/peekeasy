@@ -40,7 +40,15 @@ export const Vector = function (...scalars: any[]) {
 			if (symbols.includes(key as symbol)) {
 				return () => scalars?.[Symbol.iterator]()
 			} else {
-				const keyed = scalars?.map(scalar => scalar?.[key])
+				const keyed = scalars?.map(scalar => {
+					let value = scalar?.[key]
+
+					if (typeof value === 'function') {
+						value = value.bind?.(scalar)
+					}
+
+					return value
+				})
 
 				return new Vector(...keyed)
 			}
