@@ -21,9 +21,7 @@
  *```
  */
 export type Vector<T> = { [K in keyof T]: Vector<T[K]> } & Iterable<T> &
-	(<U extends T & ((...args: any[]) => any)>(
-		...params: Parameters<U>
-	) => Vector<ReturnType<U>>)
+	((...params: Parameters<T>) => Vector<ReturnType<T>>)
 /**
  * Constructor function
  * @param scalars values of the vectorized element
@@ -40,7 +38,15 @@ export const Vector = function (...scalars: any[]) {
 			if (symbols.includes(key as symbol)) {
 				return () => scalars?.[Symbol.iterator]()
 			} else {
-				const keyed = scalars?.map(scalar => scalar?.[key])
+				const keyed = scalars?.map(scalar => {
+					let value = scalar?.[key]
+
+					if (typeof value === 'function') {
+						value = value.bind?.(scalar)
+					}
+
+					return value
+				})
 
 				return new Vector(...keyed)
 			}

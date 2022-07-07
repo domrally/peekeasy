@@ -2,11 +2,16 @@ import { Vector } from '../../../exports/exports'
 import { test } from '../../test.test'
 
 function apply() {
-	const vector = new Vector({ v: true })
+	class C {
+		v() {
+			return true
+		}
+	}
+	const vector = new Vector(new C())
 
 	let is = false
 
-	for (const iterator of vector.v) {
+	for (const iterator of vector.v()) {
 		is = iterator
 	}
 

@@ -1,22 +1,13 @@
-import { Delegate, Event, Reference, Vector } from '../../exports/exports'
 import { warn } from 'console'
+import { Event, Reference, Vector } from '../../exports/exports'
 import { test } from '../test.test'
 
-// states must implement Event<[]>
-class FizzBuzzState extends Event<[]> {
-	constructor(
-		public word: string,
-		private index?: number,
-		// in order to activate this state need to create a delegate
-		private delegate = new Delegate<[]>()
-	) {
-		super(delegate)
+class FizzBuzzState extends Event {
+	constructor(public word: string, private index?: number) {
+		super()
 	}
 
-	getWord = () => this.word
-
-	// functions must not be methods
-	count = (count: number) => {
+	count(count: number) {
 		if (!this.index) this.word = `${count}`
 
 		// activate state if the count is divisible by the index

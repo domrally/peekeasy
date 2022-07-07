@@ -1,19 +1,29 @@
 import { Delegate } from '../../../exports/exports'
 import { test } from '../../test.test'
 
-class Subject<T> extends Delegate<[T]> {
-	subscribe = ({ notify }: { notify: (t: T) => void }) => {
-		this.add(notify)
+class Subject {
+	#delegate = new Delegate<[]>()
+
+	publish() {
+		this.#delegate()
+	}
+
+	subscribe({ notify }: { notify(): void }) {
+		this.#delegate.add(notify)
 	}
 }
 
 function add() {
-	const subject = new Subject<boolean>([false]),
-		observer = { notify: (message: boolean) => (is = message) }
+	const subject = new Subject(),
+		observer = {
+			notify() {
+				is = true
+			},
+		}
 
 	let is = false
 	subject.subscribe(observer)
-	subject(true)
+	subject.publish()
 
 	return is
 }
