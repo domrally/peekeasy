@@ -32,7 +32,7 @@ function fizzbuzz() {
 			new FizzBuzzState('buzz', 5),
 			new FizzBuzzState('fizzbuzz', 15)
 		),
-		reference = new Reference(vector)
+		reference = new Reference(...vector)
 
 	let row = '\t'
 

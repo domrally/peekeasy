@@ -31,21 +31,19 @@ export type Vector<T> = { [K in keyof T]: Vector<T[K]> } & Iterable<T> &
 export const Vector = function (...scalars: any[]) {
 	return new Proxy(() => {}, {
 		apply(_, thisArg, args) {
-			return new Vector(
-				...scalars?.map(scalar => scalar?.apply?.(thisArg, args))
-			)
+			const applied = scalars?.map(scalar => scalar?.apply?.(thisArg, args))
+
+			return new Vector(...applied)
 		},
 
 		get(_, key) {
-			if (
-				[Symbol.iterator, Symbol.toStringTag, Symbol.asyncIterator].includes(
-					key as symbol
-				)
-			) {
-				return () => scalars[Symbol.iterator]()
-			}
+			if (symbols.includes(key as symbol)) {
+				return () => scalars?.[Symbol.iterator]()
+			} else {
+				const keyed = scalars?.map(scalar => scalar?.[key])
 
-			return new Vector(...scalars?.map(scalar => scalar?.[key]))
+				return new Vector(...keyed)
+			}
 		},
 
 		set(_, key, value) {
@@ -55,3 +53,5 @@ export const Vector = function (...scalars: any[]) {
 		},
 	})
 } as unknown as new <T>(...scalars: T[]) => Vector<T>
+
+const symbols = [Symbol.iterator, Symbol.toStringTag, Symbol.asyncIterator]

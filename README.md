@@ -16,6 +16,7 @@ tools for observing proxies in typescript & web assembly
   - [clone repo](#clone-repo)
   - [open directory](#open-directory)
   - [download dependencies](#download-dependencies)
+  - [fix and format](#fix-and-format)
   - [run tests](#run-tests)
   - [build docs](#build-docs)
   - [deploy](#deploy)
@@ -73,6 +74,12 @@ cd Documents/Github/peekeasy
 
 ```
 npm i
+```
+
+### fix and format
+
+```
+npm stop
 ```
 
 ### run tests
