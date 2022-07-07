@@ -21,9 +21,7 @@
  *```
  */
 export type Vector<T> = { [K in keyof T]: Vector<T[K]> } & Iterable<T> &
-	(<U extends T & ((...args: any[]) => any)>(
-		...params: Parameters<U>
-	) => Vector<ReturnType<U>>)
+	((...params: Parameters<T>) => Vector<ReturnType<T>>)
 /**
  * Constructor function
  * @param scalars values of the vectorized element
