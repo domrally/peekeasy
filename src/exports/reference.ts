@@ -6,28 +6,24 @@ export type Reference<T> = T
  * Constructor function
  * @param states permitted states of the state pattern
  */
-export const Reference = function <T>(states: Iterable<T>) {
-	let next: any
+export const Reference = function (...states: any[]) {
+	let [state] = states
 
 	for (const value of states) {
-		;(value as any).add?.(() => (next = () => ({ value })))
-
-		next ??= () => ({ value })
+		value.add?.(() => (state = value))
 	}
 
-	const handler = {
-		apply(_: any, thisArg: unknown, args: unknown[]) {
-			return next().value.apply(thisArg, args)
+	return new Proxy(() => {}, {
+		apply(_, thisArg, args) {
+			return state.apply(thisArg, args)
 		},
-		get(_: T, key: PropertyKey) {
-			return next().value[key]
+		get(_, key) {
+			return state[key]
 		},
-		set(_: T, key: PropertyKey, value: unknown) {
-			next().value[key] = value
+		set(_, key, value) {
+			state[key] = value
 
 			return true
 		},
-	}
-
-	return new Proxy(() => {}, handler)
-} as unknown as new <T>(states: Iterable<T>) => Reference<T>
+	})
+} as unknown as new <T>(...states: T[]) => Reference<T>

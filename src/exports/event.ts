@@ -12,10 +12,11 @@ export type Event<params extends any[]> = WeakSet<Action<params>> &
  * @param delegate callable parent delegate
  */
 export const Event = function <params extends any[]>(delegate: Event<params>) {
-	const event = ((..._: []) =>
+	const event = (() =>
 		error(
 			'an event can only be called through its delegate'
 		)) as unknown as Event<params>
+
 	event.delete = delegate.delete
 	event.add = delegate.add
 	event.has = delegate.has
@@ -23,8 +24,7 @@ export const Event = function <params extends any[]>(delegate: Event<params>) {
 	event[Symbol.asyncIterator] = async function* () {
 		while (true) {
 			yield new Promise<params>(resolve => {
-				const resolution = ((...args: params) =>
-					resolve(args)) as Action<params>
+				const resolution = (...args: params) => resolve(args)
 
 				delegate.add(resolution)
 			})
@@ -36,10 +36,10 @@ export const Event = function <params extends any[]>(delegate: Event<params>) {
 		onrejected: (reason: unknown) => PromiseLike<V>
 	) => {
 		try {
-			const next = await event[Symbol.asyncIterator]().next(),
-				result = next.value as params
+			const { next } = event[Symbol.asyncIterator](),
+				{ value } = await next()
 
-			return onfulfilled?.(result)
+			return onfulfilled?.(value)
 		} catch (error) {
 			return onrejected?.(error)
 		}
