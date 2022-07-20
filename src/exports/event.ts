@@ -10,12 +10,14 @@ export class Event<params extends any[] = []>
 		PromiseLike<params>
 {
 	constructor(protected delegate: Delegate<params> = new Delegate()) {}
-	[Symbol.toStringTag] = this.toString()
 
-	add: any = this.delegate.add
+	//
+	[Symbol.toStringTag] = this.toString()
+	add: (value: Action<params>) => this = this.delegate.add as any
 	delete = this.delegate.delete
 	has = this.delegate.has
 
+	//
 	async *[Symbol.asyncIterator]() {
 		while (true) {
 			yield new Promise<params>(resolve => {
@@ -26,6 +28,7 @@ export class Event<params extends any[] = []>
 		}
 	}
 
+	//
 	async then<U = params, V = never>(
 		onfulfilled: (args: params) => PromiseLike<U>,
 		onrejected: (reason: unknown) => PromiseLike<V>
