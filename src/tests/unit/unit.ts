@@ -21,3 +21,4 @@ import './vector/vector-keys.test'
 
 warn('\n🧪 streams:')
 import './stream/stream-delete-async.test'
+import './stream/stream-await-async.test'

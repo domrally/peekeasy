@@ -34,8 +34,8 @@ export class Event<params extends any[] = []>
 		onrejected: (reason: unknown) => PromiseLike<V>
 	) {
 		try {
-			const { next } = this[Symbol.asyncIterator](),
-				{ value } = await next()
+			const iterator = this[Symbol.asyncIterator](),
+				{ value } = await iterator.next()
 
 			return onfulfilled?.(value as params)
 		} catch (error) {
