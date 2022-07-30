@@ -46,7 +46,7 @@ npm i peekeasy
 import { Delegate, Event } from 'peekeasy'
 
 const delegate = new Delegate('Hello, world!'),
-	event = new Event(delegate)
+   event = new Event(delegate)
 
 // Hello, world!
 event.then(console.log)
@@ -94,8 +94,8 @@ sequenceDiagram
 import { Vector } from 'peekeasy'
 
 const vector = new Vector(
-	() => console.log('Hello,'),
-	() => console.log('   world!')
+   () => console.log('Hello,'),
+   () => console.log('   world!')
 )
 
 // Hello,
@@ -218,14 +218,14 @@ classDiagram
     IteratorResult <.. Iterator
     Iterator <.. Iterable
     Iterable <|.. Vector
+    Event <.. Reference
     WeakSet~Action~ <|.. Event
-    Action <.. WeakSet~Action~
-    Action <.. Set~Action~
-    Action <|.. Delegate
+    WeakSet~Action~ <|-- Set~Action~
     Set~Action~ <|.. Delegate
     Delegate <.. Event
-    Event <.. Reference
-    WeakSet~Action~ <|-- Set~Action~
+    Action <.. Set~Action~
+    Action <.. WeakSet~Action~
+    Action <|.. Delegate
     class IteratorResult {
         done boolean
         value any
