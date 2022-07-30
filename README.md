@@ -204,8 +204,8 @@ https://domrally.github.io/peekeasy
 ```mermaid
 classDiagram
     direction LR
-    Action <|.. Delegate
     Action <.. Event
+    Action <|.. Delegate
     WeakSet~Action~ <|.. Delegate
     WeakSet~Action~ <|.. Event
     Delegate <.. Event
