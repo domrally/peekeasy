@@ -233,9 +233,9 @@ classDiagram
     Iterable <|.. Vector
     Iterable <|.. Set~Action~
     Delegate <.. Event
-    Action <|.. Delegate
     Action <|.. Event
     Set~Action~ <|.. Delegate
+    Action <|.. Delegate
     WeakSet~Action~ -- Set~Action~
     WeakSet~Action~ <|.. Event
     Event <.. Reference
