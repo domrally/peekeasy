@@ -207,8 +207,8 @@ classDiagram
     Action <.. Event
     Action <|.. Delegate
     Set~Action~ <|.. Delegate
-    WeakSet~Action~ <|.. Event
     Delegate <.. Event
+    WeakSet~Action~ <|.. Event
     AsyncIterable <|.. Event
     PromiseLike <|.. Event
     Event <.. Reference
