@@ -209,8 +209,8 @@ classDiagram
     Set~Action~ <|.. Delegate
     Delegate <.. Event
     WeakSet~Action~ <|.. Event
-    AsyncIterable <|.. Event
     PromiseLike <|.. Event
+    AsyncIterable <|.. Event
     Event <.. Reference
     Iterable <|-- AsyncIterable
     Iterable <|.. Vector
