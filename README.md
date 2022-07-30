@@ -46,7 +46,7 @@ npm i peekeasy
 import { Delegate, Event } from 'peekeasy'
 
 const delegate = new Delegate('Hello, world!'),
-   event = new Event(delegate)
+	event = new Event(delegate)
 
 // Hello, world!
 event.then(console.log)
@@ -94,8 +94,8 @@ sequenceDiagram
 import { Vector } from 'peekeasy'
 
 const vector = new Vector(
-   () => console.log('Hello,'),
-   () => console.log('   world!')
+	() => console.log('Hello,'),
+	() => console.log('   world!')
 )
 
 // Hello,
