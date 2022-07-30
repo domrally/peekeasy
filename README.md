@@ -291,6 +291,7 @@ classDiagram
     class Wasm~T~ {
         constructor(path string) Promise~T~
     }
+    link Wasm~T~ "https://github.com/domrally/peekeasy/blob/main/src/wasm.ts" "wasm.ts"
     class WeakSet {
         add() WeakSet
         delete() WeakSet
@@ -304,6 +305,7 @@ classDiagram
     class Action {
         apply(args: params) void
     }
+	 link Action "https://github.com/domrally/peekeasy/blob/main/src/action.ts" "action.ts"
     class Delegate {
         apply() void
     }
@@ -312,6 +314,8 @@ classDiagram
     link Event "https://github.com/domrally/peekeasy/blob/main/src/event.ts" "event.ts"
     class Vector
     link Vector "https://github.com/domrally/peekeasy/blob/main/src/vector.ts" "vector.ts"
+	 class Reference
+	 link Reference "https://github.com/domrally/peekeasy/blob/main/src/reference.ts" "reference.ts"
 ```
 
 #### external
