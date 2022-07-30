@@ -204,16 +204,16 @@ https://domrally.github.io/peekeasy
 ```mermaid
 classDiagram
     direction LR
+    Iterable <|.. Vector
+    Iterable <|-- AsyncIterable
+    AsyncIterable <|.. Event
     Action <.. Event
     Action <|.. Delegate
     Set~Action~ <|.. Delegate
     Delegate <.. Event
     WeakSet~Action~ <|.. Event
     PromiseLike <|.. Event
-    AsyncIterable <|.. Event
     Event <.. Reference
-    Iterable <|-- AsyncIterable
-    Iterable <|.. Vector
     class Delegate
     link Delegate "https://github.com/domrally/peekeasy/blob/main/src/delegate.ts" "delegate.ts"
     class Event
