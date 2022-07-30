@@ -44,9 +44,9 @@ import { Delegate, Event, Reference, Vector, WebAssembly } from 'peekeasy'
 
 ```ts
 class Scalar {
-	constructor(private word: string) {}
+   constructor(private word: string) {}
 
-	log = () => console.log(this.word)
+   log = () => console.log(this.word)
 }
 
 // create a vector from two scalars
@@ -144,6 +144,54 @@ https://domrally.github.io/peekeasy
       - [iterator-result-value/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/iterator-result-value)
       - [vector/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/vector)
       - [web-assembly/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/web-assembly)
+
+### diagrams
+
+#### classes
+
+```mermaid
+classDiagram
+    direction LR
+    WeakSet <|.. Delegate
+    WeakSet <|.. Event
+    Iterable <|.. Vector
+    Delegate <.. Event
+    Event <.. Reference
+    Action <.. Delegate
+    Action <.. Event
+    class Delegate
+    link Delegate "https://github.com/domrally/peekeasy/blob/main/src/delegate.ts" "delegate.ts"
+    class Event
+    link Event "https://github.com/domrally/peekeasy/blob/main/src/event.ts" "event.ts"
+    class Vector
+    link Vector "https://github.com/domrally/peekeasy/blob/main/src/vector.ts" "vector.ts"
+```
+
+#### sequences
+
+##### vector
+
+```mermaid
+sequenceDiagram
+    client->vector: [key]
+    vector->list: .map(o => o[key])
+```
+
+##### reference
+
+```mermaid
+sequenceDiagram
+    client->reference: [key]
+    reference->list: .map(o => o[key])
+```
+
+##### event delegates
+
+```mermaid
+sequenceDiagram
+    client->event: [key]
+    event->delegate: .map(o => o[key])
+```
 
 [![](https://img.shields.io/badge/-prettier-F7B93E?style=for-the-badge&labelColor=181717&logo=prettier)](https://prettier.io)
 [![](https://img.shields.io/badge/-nodejs-339933?style=for-the-badge&labelColor=181717&logo=node.js)](https://nodejs.org)
