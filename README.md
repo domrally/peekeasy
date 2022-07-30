@@ -195,7 +195,7 @@ sequenceDiagram
 sequenceDiagram
     action->event: event.then(action)
     activate event
-    event->delegate: await new Promise(delegate.then)
+    event->delegate: new Promise(delegate.add)
     deactivate event
     activate delegate
     delegate->promise: await promise
