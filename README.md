@@ -34,57 +34,18 @@ tools for observing proxies in typescript & web assembly
 npm i peekeasy
 ```
 
-### import
-
-```ts
-import { Delegate, Event, Reference, Vector, WebAssembly } from 'peekeasy'
-```
-
-### examples
-
-#### vector
-
-```mermaid
-sequenceDiagram
-    client->vector: vector()
-    activate vector
-    vector->functions: functions.map(f => f())
-    deactivate vector
-```
-
-```ts
-import { Vector } from 'peekeasy'
-
-const vector = new Vector(
-	() => console.log('Hello,'),
-	() => console.log(' world!')
-)
-
-vector() // Hello, world!
-```
-
-#### reference
-
-```mermaid
-sequenceDiagram
-    client->reference: reference[key]
-    activate reference
-    reference->states: (([s]) => s[key])(states)
-    deactivate reference
-```
-
-```ts
-import { Reference } from 'peekeasy'
-
-const vector = new Reference(
-	() => console.log('yes'),
-	() => console.log('no')
-)
-
-vector() // yes
-```
+### exports
 
 #### event delegates
+
+```ts
+import { Delegate, Event } from 'peekeasy'
+
+const delegate = new Delegate('Hello, world!'),
+	event = new Event(delegate)
+
+event.then(console.log) // Hello, world!
+```
 
 ```mermaid
 sequenceDiagram
@@ -97,13 +58,46 @@ sequenceDiagram
     deactivate delegate
 ```
 
+#### reference
+
 ```ts
-import { Delegate, Event } from 'peekeasy'
+import { Reference } from 'peekeasy'
 
-const delegate = new Delegate('Hello, world!'),
-	event = new Event(delegate)
+const vector = new Reference(
+	() => console.log('yes'),
+	() => console.log('no')
+)
 
-event.then(console.log) // Hello, world!
+vector() // yes
+```
+
+```mermaid
+sequenceDiagram
+    client->reference: reference[key]
+    activate reference
+    reference->states: (([s]) => s[key])(states)
+    deactivate reference
+```
+
+#### vector
+
+```ts
+import { Vector } from 'peekeasy'
+
+const vector = new Vector(
+	() => console.log('Hello,'),
+	() => console.log(' world!')
+)
+
+vector() // Hello, world!
+```
+
+```mermaid
+sequenceDiagram
+    client->vector: vector()
+    activate vector
+    vector->functions: functions.map(f => f())
+    deactivate vector
 ```
 
 ## Contribute
