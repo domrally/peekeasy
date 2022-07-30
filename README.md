@@ -41,26 +41,45 @@ npm i peekeasy
 
 ### exports
 
-#### event delegates
+#### delegates
 
 ```ts
-import { Delegate, Event } from 'peekeasy'
+import { Delegate } from 'peekeasy'
 
-const delegate = new Delegate('Hello, world!'),
-	event = new Event(delegate)
+const { log } = console,
+	delegate = new Delegate('Hello, world!')
 
 // Hello, world!
-event.then(console.log)
+delegate.add(log)
 ```
 
 ```mermaid
 sequenceDiagram
-    console->Event: event.then(console.log)
-    activate Event
-    Event->Delegate: Promise(set.add).then(console.log)
-    deactivate Event
+    sender->Delegate: delegate('Hello, world!')
     activate Delegate
-    Delegate->console: console.log('Hello, world!')
+    Delegate->sender: [log].forEach(print => print('Hello, world!'))
+    deactivate Delegate
+```
+
+#### events
+
+```ts
+import { Delegate, Event } from 'peekeasy'
+
+const { log } = console,
+	delegate = new Delegate()
+event = new Event(delegate)
+
+event.then(() => log('Hello, world!'))
+// Hello, world!
+delegate()
+```
+
+```mermaid
+sequenceDiagram
+    sender->Delegate: delegate()
+    activate Delegate
+    Delegate->Event: [() => log('Hello, world!')].forEach(action => action())
     deactivate Delegate
 ```
 
@@ -69,21 +88,24 @@ sequenceDiagram
 ```ts
 import { Reference } from 'peekeasy'
 
-const reference = new Reference(console.log)
+const object: [string] = []
+const { log } = console,
+	reference = new Reference(object)
 
+object[0] = 'Hello, world!'
 // Hello, world!
-reference('Hello, world!')
+console.log(reference[0])
 ```
 
 ```mermaid
 sequenceDiagram
-    console->Reference: reference('Hello, world!')
+    sender->Reference: console.log(reference[0])
     activate Reference
-    Reference->Action: [action] = [console.log]
+    Reference->object: console.log(['Hello, world!'][0])
     deactivate Reference
-    activate Action
-    Action->console: action('Hello, world!')
-    deactivate Action
+    activate object
+    object->sender: console.log('Hello, world!')
+    deactivate object
 ```
 
 #### vectors
@@ -91,23 +113,22 @@ sequenceDiagram
 ```ts
 import { Vector } from 'peekeasy'
 
-const { log, warn } = console,
-	vector = new Vector(log, warn)
+const data = [['Hello, '], ['world!']]
+vector = new Vector(...data)
 
 // Hello, world!
-// Hello, world!
-vector('Hello, world!')
+log(...vector[0])
 ```
 
 ```mermaid
 sequenceDiagram
-    console->Vector: vector('Hello, world!')
-    activate Vector
-    Vector->Array: array = [log, warn]
-    deactivate Vector
-    activate Array
-    Array->console: array.forEach(print => print('Hello, world!'))
-    deactivate Array
+    sender->Vector~[string]~: log(...vector[0])
+    activate Vector~[string]~
+    Vector~[string]~->Vector~string~: log(...[['Hello, '][0], ['world!'][0]])
+    deactivate Vector~[string]~
+    activate Vector~string~
+    Vector~string~->sender: log('Hello, ', 'world!')
+    deactivate Vector~string~
 ```
 
 ## Contribute

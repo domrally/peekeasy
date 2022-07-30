@@ -17,7 +17,7 @@ export type Delegate<params extends any[] = []> = Action<params> &
  * #### constructor function:
  * @param initial optional data that can be passed to the listeners immediately
  */
-export const Delegate = function <params extends any[]>(initial?: params) {
+export const Delegate = function <params extends any[]>(...initial: params) {
 	const set = new Set<Action<params>>(),
 		delegate = (...args: params) => {
 			new Set<Action<params>>(set).forEach(action => action(...args))
@@ -64,5 +64,5 @@ export const Delegate = function <params extends any[]>(initial?: params) {
 
 	return delegate
 } as unknown as new <params extends any[] = []>(
-	initial?: params
+	...initial: params
 ) => Delegate<params>
