@@ -211,12 +211,12 @@ classDiagram
     direction LR
     IteratorResult <.. Iterator
     IteratorResult <.. AsyncIterator
+    AsyncIterator <.. AsyncIterable
+    AsyncIterable <|.. Event
     Iterable <|.. Vector
     Iterator <.. Iterable
     Iterable <|-- AsyncIterable
     Iterator <|-- AsyncIterator
-    AsyncIterator <.. AsyncIterable
-    AsyncIterable <|.. Event
     PromiseLike <.. AsyncIterator
     PromiseLike <|.. Event
     WeakSet~Action~ <|.. Event
