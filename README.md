@@ -224,10 +224,10 @@ classDiagram
     class Vector
     link Vector "https://github.com/domrally/peekeasy/blob/main/src/vector.ts" "vector.ts"
     AsyncIterable {
-        [Symbol.asyncIterator]() AsyncIterator
+        Symbol.asyncIterator() AsyncIterator
     }
     Iterable {
-        [Symbol.iterator]() Iterator
+        Symbol.iterator() Iterator
     }
 ```
 
