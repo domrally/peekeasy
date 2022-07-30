@@ -11,7 +11,8 @@ tools for observing proxies in typescript & web assembly
 - [**Use**](#Use)
   - [install](#install)
   - [exports](#exports)
-    - [event delegates](#event-delegates)
+    - [delegates](#delegates)
+    - [events](#events)
     - [references](#references)
     - [vectors](#vectors)
 - [**Contribute**](#Contribute)
@@ -55,10 +56,10 @@ delegate.add(log)
 
 ```mermaid
 sequenceDiagram
-    sender->Delegate: delegate('Hello, world!')
-    activate Delegate
-    Delegate->sender: [log].forEach(print => print('Hello, world!'))
-    deactivate Delegate
+    Delegate->Set: new Set(...[log]).forEach(print => print('Hello, world!'))
+    activate Set
+    Set->Delegate: log('Hello, world!')
+    deactivate Set
 ```
 
 #### events
@@ -77,10 +78,10 @@ delegate()
 
 ```mermaid
 sequenceDiagram
-    sender->Delegate: delegate()
-    activate Delegate
-    Delegate->Event: [() => log('Hello, world!')].forEach(action => action())
-    deactivate Delegate
+    Delegate->Set: new Set(...[() => log('Hello, world!')]).forEach(f => f())
+    activate Set
+    Set->Event: log('Hello, world!')
+    deactivate Set
 ```
 
 #### references
@@ -99,12 +100,9 @@ console.log(reference[0])
 
 ```mermaid
 sequenceDiagram
-    sender->Reference: console.log(reference[0])
-    activate Reference
-    Reference->object: console.log(['Hello, world!'][0])
-    deactivate Reference
+    Reference->object: log(['Hello, world!'][0])
     activate object
-    object->sender: console.log('Hello, world!')
+    object->Reference: log('Hello, world!')
     deactivate object
 ```
 
@@ -122,10 +120,7 @@ log(...vector[0])
 
 ```mermaid
 sequenceDiagram
-    sender->Vector~[string]~: log(...vector[0])
-    activate Vector~[string]~
     Vector~[string]~->Vector~string~: log(...[['Hello, '][0], ['world!'][0]])
-    deactivate Vector~[string]~
     activate Vector~string~
     Vector~string~->sender: log('Hello, ', 'world!')
     deactivate Vector~string~
@@ -236,6 +231,7 @@ classDiagram
     IteratorResult <.. Iterator
     Iterator <.. Iterable
     Iterable <|.. Vector
+    Iterable <|.. Set~Action~
     Delegate <.. Event
     Action <|.. Delegate
     Set~Action~ <|.. Delegate
