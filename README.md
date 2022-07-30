@@ -10,7 +10,6 @@ tools for observing proxies in typescript & web assembly
 
 - [**Use**](#Use)
   - [install](#install)
-  - [import](#import)
   - [exports](#exports)
     - [event delegates](#event-delegates)
     - [references](#references)
