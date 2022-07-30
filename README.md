@@ -54,12 +54,12 @@ event.then(console.log)
 
 ```mermaid
 sequenceDiagram
-    Event: event.then(console.log)
+    console->Event: event.then(console.log)
     activate Delegate
     Event->Delegate: new Promise(set.add).then(console.log)
     deactivate Event
     activate Delegate
-    Delegate: console.log('Hello, world!')
+    Delegate->console: console.log('Hello, world!')
     deactivate Delegate
 ```
 
@@ -68,21 +68,21 @@ sequenceDiagram
 ```ts
 import { Reference } from 'peekeasy'
 
-const vector = new Reference(() => console.log('Hello, world!'))
+const reference = new Reference(console.log)
 
 // Hello, world!
-vector()
+reference('Hello, world!')
 ```
 
 ```mermaid
 sequenceDiagram
-    Action->Reference: new Reference(action)
+    console->Reference: reference('Hello, world!')
     activate Reference
-    Reference->Array: reference()
+    Reference->Action: const [action] = [console.log]
     deactivate Reference
-    activate Array
-    Array->Action: ([action] = array)()
-    deactivate Array
+    activate Action
+    Action->console: action('Hello, world!')
+    deactivate Action
 ```
 
 #### vectors
@@ -90,24 +90,21 @@ sequenceDiagram
 ```ts
 import { Vector } from 'peekeasy'
 
-const vector = new Vector(
-	() => console.log('Hello,'),
-	() => console.log('   world!')
-)
+const vector = new Vector(console.log, console.warn)
 
-// Hello,
-//    world!
-vector()
+// Hello, world!
+// Hello, world!
+vector('Hello, world!')
 ```
 
 ```mermaid
 sequenceDiagram
-    Action->Vector: new Vector(...actions)
+    console->Vector: vector('Hello, world!')
     activate Vector
-    Vector->Array: vector()
+    Vector->Array: const array = [console.log, console.warn]
     deactivate Vector
     activate Array
-    Array->Action: actions.map(action => action())
+    Array->console: array.forEach(c => c('Hello, world!'))
     deactivate Array
 ```
 
