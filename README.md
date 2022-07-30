@@ -215,6 +215,9 @@ classDiagram
     Iterator <|-- AsyncIterator
     AsyncIterator <.. AsyncIterable
     AsyncIterable <|.. Event
+    PromiseLike <.. AsyncIterator
+    IteratorResult <.. Iterator
+    IteratorResult <.. AsyncIterator
     PromiseLike <|.. Event
     WeakSet~Action~ <|.. Event
     Action <.. WeakSet~Action~
@@ -231,10 +234,10 @@ classDiagram
         Symbol.iterator() Iterator
     }
     class Iterator {
-        next() IteratorReturnResult
+        next() IteratorResult
     }
     class AsyncIterator {
-        next() PromiseLike<IteratorReturnResult>
+        next() PromiseLike~IteratorResult~
     }
     class PromiseLike {
         then() PromiseLike
