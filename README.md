@@ -68,8 +68,8 @@ sequenceDiagram
 import { Delegate, Event } from 'peekeasy'
 
 const { log } = console,
-	delegate = new Delegate()
-event = new Event(delegate)
+	delegate = new Delegate(),
+	event = new Event(delegate)
 
 event.then(() => log('Hello, world!'))
 // Hello, world!
@@ -89,13 +89,13 @@ sequenceDiagram
 ```ts
 import { Reference } from 'peekeasy'
 
-const object: [string] = []
 const { log } = console,
+	object: [string] = [],
 	reference = new Reference(object)
 
 object[0] = 'Hello, world!'
 // Hello, world!
-console.log(reference[0])
+log(reference[0])
 ```
 
 ```mermaid
@@ -111,8 +111,9 @@ sequenceDiagram
 ```ts
 import { Vector } from 'peekeasy'
 
-const data = [['Hello, '], ['world!']]
-vector = new Vector(...data)
+const { log } = console,
+	data = [['Hello, '], ['world!']],
+	vector = new Vector(...data)
 
 // Hello, world!
 log(...vector[0])
