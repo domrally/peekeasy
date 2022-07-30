@@ -198,12 +198,6 @@ sequenceDiagram
     event->delegate: new Promise(delegate.add)
     deactivate event
     activate delegate
-    delegate->promise: await promise
-    deactivate delegate
-    activate promise
-    promise->delegate: delegate()
-    deactivate promise
-    activate delegate
     delegate->action: delegate.forEach(action => action())
     deactivate delegate
 ```
