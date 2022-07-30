@@ -207,8 +207,8 @@ classDiagram
     Iterable <|.. Vector
     Iterable <|-- AsyncIterable
     Iterator <|-- AsyncIterator
-	 Iterator <.. Iterable
-	 AsyncIterator <.. AsyncIterable
+    Iterator <.. Iterable
+    AsyncIterator <.. AsyncIterable
     AsyncIterable <|.. Event
     PromiseLike <|.. Event
     WeakSet~Action~ <|.. Event
@@ -225,11 +225,12 @@ classDiagram
         Symbol.iterator() Iterator
     }
     class Delegate {
-
         apply() void
     }
     link Delegate "https://github.com/domrally/peekeasy/blob/main/src/delegate.ts" "delegate.ts"
-    class Event
+    class Event {
+        then(onfulfilled(args params) PromiseLike, onrejected(reason unknown) PromiseLike) PromiseLike
+    }
     link Event "https://github.com/domrally/peekeasy/blob/main/src/event.ts" "event.ts"
     class Vector
     link Vector "https://github.com/domrally/peekeasy/blob/main/src/vector.ts" "vector.ts"
