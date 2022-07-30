@@ -72,6 +72,7 @@ const { log } = console,
 	event = new Event(delegate)
 
 event.then(() => log('Hello, world!'))
+
 // Hello, world!
 delegate()
 ```
@@ -94,6 +95,7 @@ const { log } = console,
 	reference = new Reference(object)
 
 object[0] = 'Hello, world!'
+
 // Hello, world!
 log(reference[0])
 ```
