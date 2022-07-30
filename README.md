@@ -209,12 +209,12 @@ https://domrally.github.io/peekeasy
 ```mermaid
 classDiagram
     direction LR
+    IteratorResult <.. Iterator
+    IteratorResult <.. AsyncIterator
     Iterable <|.. Vector
     Iterator <.. Iterable
     Iterable <|-- AsyncIterable
     Iterator <|-- AsyncIterator
-    IteratorResult <.. Iterator
-    IteratorResult <.. AsyncIterator
     AsyncIterator <.. AsyncIterable
     AsyncIterable <|.. Event
     PromiseLike <.. AsyncIterator
