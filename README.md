@@ -208,16 +208,16 @@ https://domrally.github.io/peekeasy
 ```mermaid
 classDiagram
     direction LR
-    Iterable <|.. Vector
-    Iterable <|-- AsyncIterable
-    IteratorResult <.. Iterator
-    IteratorResult <.. AsyncIterator
-    AsyncIterator <.. AsyncIterable
-    AsyncIterable <|.. Event
-    Iterator <.. Iterable
-    Iterator <|-- AsyncIterator
-    PromiseLike <.. AsyncIterator
     PromiseLike <|.. Event
+    PromiseLike <.. AsyncIterator
+    IteratorResult <.. AsyncIterator
+    Iterator <|-- AsyncIterator
+    AsyncIterator <.. AsyncIterable
+    Iterable <|-- AsyncIterable
+    AsyncIterable <|.. Event
+    IteratorResult <.. Iterator
+    Iterator <.. Iterable
+    Iterable <|.. Vector
     WeakSet~Action~ <|.. Event
     Action <.. WeakSet~Action~
     Action <.. Set~Action~
