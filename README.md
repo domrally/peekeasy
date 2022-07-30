@@ -236,7 +236,7 @@ classDiagram
     Action <|.. Delegate
     Action <|.. Event
     Set~Action~ <|.. Delegate
-    WeakSet~Action~ <|-- Set~Action~
+    WeakSet~Action~ -- Set~Action~
     WeakSet~Action~ <|.. Event
     Event <.. Reference
     class IteratorResult {
