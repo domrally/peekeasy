@@ -136,7 +136,7 @@ sequenceDiagram
 import { Wasm } from 'peekeasy'
 
 const { log } = console,
-	wasm = new Wasm('Hello, world!'),
+   wasm = new Wasm('Hello, world!'),
 
 // Hello, world!
 log(wasm)
@@ -247,7 +247,7 @@ classDiagram
     direction LR
     PromiseLike <|.. Promise
     PromiseLike *-- Event
-	 Promise *-- Wasm
+    Promise *-- Wasm
     Promise <.. Event
     PromiseLike <.. AsyncIterator
     IteratorResult o-- AsyncIterator
@@ -285,6 +285,12 @@ classDiagram
     class PromiseLike {
         then() PromiseLike
     }
+    class Promise {
+        finally(onfinally () => void) Promise
+    }
+    class Wasm~T~ {
+        constructor(path string) Promise~T~
+    }
     class WeakSet {
         add() WeakSet
         delete() WeakSet
@@ -294,6 +300,7 @@ classDiagram
         size number
         clear() void
         forEach() void
+        Symbol.iterable() Iterator
     }
     class Action {
         apply(args: params) void
@@ -304,7 +311,9 @@ classDiagram
     link Delegate "https://github.com/domrally/peekeasy/blob/main/src/delegate.ts" "delegate.ts"
     class Event
     link Event "https://github.com/domrally/peekeasy/blob/main/src/event.ts" "event.ts"
-    class Vector
+    class Vector {
+        Symbol.iterable() Iterator
+    }
     link Vector "https://github.com/domrally/peekeasy/blob/main/src/vector.ts" "vector.ts"
 ```
 
