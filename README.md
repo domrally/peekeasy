@@ -224,11 +224,11 @@ https://domrally.github.io/peekeasy
 ```mermaid
 classDiagram
     direction LR
+    PromiseLike <|.. Promise
     PromiseLike *-- Event
 	 Promise *-- WebAssembly
     Promise <.. Event
     PromiseLike <.. AsyncIterator
-    PromiseLike <|.. Promise
     IteratorResult o-- AsyncIterator
     Iterator -- AsyncIterator
     AsyncIterator *-- AsyncIterable
