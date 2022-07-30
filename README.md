@@ -11,11 +11,11 @@ tools for observing proxies in typescript & web assembly
 - [**Use**](#Use)
   - [install](#install)
   - [exports](#exports)
-    - [forwards](#forwards)
-    - [delegates](#delegates)
-    - [references](#references)
-    - [vectors](#vectors)
-    - [wasms](#wasms)
+    - [forward](#forward)
+    - [delegate](#delegate)
+    - [reference](#reference)
+    - [vector](#vector)
+    - [wasm](#wasm)
 - [**Contribute**](#Contribute)
   - [clone repo](#clone-repo)
   - [open directory](#open-directory)
@@ -43,7 +43,7 @@ npm i peekeasy
 
 ### exports
 
-#### forwards
+#### forward
 
 ```ts
 import { Forward } from 'peekeasy'
@@ -63,7 +63,7 @@ sequenceDiagram
     deactivate Set
 ```
 
-#### delegates
+#### delegate
 
 ```ts
 import { Delegate, Forward } from 'peekeasy'
@@ -86,7 +86,7 @@ sequenceDiagram
     deactivate Set
 ```
 
-#### references
+#### reference
 
 ```ts
 import { Reference } from 'peekeasy'
@@ -109,7 +109,7 @@ sequenceDiagram
     deactivate object
 ```
 
-#### vectors
+#### vector
 
 ```ts
 import { Vector } from 'peekeasy'
@@ -130,7 +130,7 @@ sequenceDiagram
     deactivate Array
 ```
 
-#### wasms
+#### wasm
 
 ```ts
 import { Wasm } from 'peekeasy'
