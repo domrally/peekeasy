@@ -40,20 +40,70 @@ npm i peekeasy
 import { Delegate, Event, Reference, Vector, WebAssembly } from 'peekeasy'
 ```
 
-### example
+### examples
+
+#### vector
+
+```mermaid
+sequenceDiagram
+    client->vector: vector()
+    activate vector
+    vector->functions: functions.map(f => f())
+    deactivate vector
+```
 
 ```ts
-class Scalar {
-	constructor(private word: string) {}
+import { Vector } from 'peekeasy'
 
-	log = () => console.log(this.word)
-}
+const vector = new Vector(
+	() => console.log('Hello,'),
+	() => console.log(' world!')
+)
 
-// create a vector from two scalars
-const vector = new Vector(new Scalar('hello'), new Scalar('world'))
+vector() // Hello, world!
+```
 
-// call a method on both scalars
-vector.log()
+#### reference
+
+```mermaid
+sequenceDiagram
+    client->reference: reference[key]
+    activate reference
+    reference->states: (([s]) => s[key])(states)
+    deactivate reference
+```
+
+```ts
+import { Reference } from 'peekeasy'
+
+const vector = new Reference(
+	() => console.log('yes'),
+	() => console.log('no')
+)
+
+vector() // yes
+```
+
+#### event delegates
+
+```mermaid
+sequenceDiagram
+    action->event: event.then(action)
+    activate event
+    event->delegate: await new Promise(delegate.add)
+    deactivate event
+    activate delegate
+    delegate->action: delegate.forEach(action => action())
+    deactivate delegate
+```
+
+```ts
+import { Delegate, Event } from 'peekeasy'
+
+const delegate = new Delegate('Hello, world!'),
+	event = new Event(delegate)
+
+event.then(console.log) // Hello, world!
 ```
 
 ## Contribute
@@ -145,9 +195,7 @@ https://domrally.github.io/peekeasy
       - [vector/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/vector)
       - [web-assembly/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/web-assembly)
 
-### diagrams
-
-#### classes
+### classes
 
 ```mermaid
 classDiagram
@@ -165,41 +213,6 @@ classDiagram
     link Event "https://github.com/domrally/peekeasy/blob/main/src/event.ts" "event.ts"
     class Vector
     link Vector "https://github.com/domrally/peekeasy/blob/main/src/vector.ts" "vector.ts"
-```
-
-#### sequences
-
-##### vector
-
-```mermaid
-sequenceDiagram
-    client->vector: vector[key]
-    activate vector
-    vector->objects: objects.map(o => o[key])
-    deactivate vector
-```
-
-##### reference
-
-```mermaid
-sequenceDiagram
-    client->reference: reference[key]
-    activate reference
-    reference->states: (([s]) => s[key])(states)
-    deactivate reference
-```
-
-##### event delegates
-
-```mermaid
-sequenceDiagram
-    action->event: event.then(action)
-    activate event
-    event->delegate: await new Promise(delegate.add)
-    deactivate event
-    activate delegate
-    delegate->action: delegate.forEach(action => action())
-    deactivate delegate
 ```
 
 ### dependencies
