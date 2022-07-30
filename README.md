@@ -288,10 +288,10 @@ classDiagram
     class Promise {
         finally(onfinally () => void) Promise
     }
-    class Wasm~T~ {
-        constructor(path string) Promise~T~
+    class Wasm {
+        constructor(path string) Promise
     }
-    link Wasm~T~ "https://github.com/domrally/peekeasy/blob/main/src/wasm.ts" "wasm.ts"
+    link Wasm "https://github.com/domrally/peekeasy/blob/main/src/wasm.ts" "wasm.ts"
     class WeakSet {
         add() WeakSet
         delete() WeakSet
