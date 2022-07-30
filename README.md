@@ -120,10 +120,10 @@ log(...vector[0])
 
 ```mermaid
 sequenceDiagram
-    Vector~[string]~->Vector~string~: log(...[['Hello, '][0], ['world!'][0]])
-    activate Vector~string~
-    Vector~string~->sender: log('Hello, ', 'world!')
-    deactivate Vector~string~
+    Vector->Array: log(...[['Hello, '][0], ['world!'][0]])
+    activate Array
+    Array->Vector: log('Hello, ', 'world!')
+    deactivate Array
 ```
 
 ## Contribute
@@ -234,11 +234,10 @@ classDiagram
     Iterable <|.. Set~Action~
     Delegate <.. Event
     Action <|.. Delegate
+    Action <|.. Event
     Set~Action~ <|.. Delegate
-    Action .. Set~Action~
     WeakSet~Action~ <|-- Set~Action~
     WeakSet~Action~ <|.. Event
-    Action .. WeakSet~Action~
     Event <.. Reference
     class IteratorResult {
         done boolean
