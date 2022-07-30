@@ -78,7 +78,7 @@ delegate()
 
 ```mermaid
 sequenceDiagram
-    Delegate->Set: new Set(...[() => log('Hello, world!')]).forEach(f => f())
+    Delegate->Set: new Set\n(...[() => log('Hello, world!')]).forEach(f => f())
     activate Set
     Set->Event: log('Hello, world!')
     deactivate Set
