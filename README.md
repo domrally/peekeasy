@@ -220,7 +220,7 @@ classDiagram
         asyncIterator() AsyncIterator
     }
     class Iterable {
-        iterator() Iterator
+        [Symbol.iterator]() Iterator
     }
     class Delegate {
 
