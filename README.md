@@ -44,7 +44,8 @@ import { Delegate, Event } from 'peekeasy'
 const delegate = new Delegate('Hello, world!'),
    event = new Event(delegate)
 
-event.then(console.log) // Hello, world!
+// Hello, world!
+event.then(console.log)
 ```
 
 ```mermaid
@@ -66,12 +67,10 @@ sequenceDiagram
 ```ts
 import { Reference } from 'peekeasy'
 
-const vector = new Reference(
-   () => console.log('yes'),
-   () => console.log('no')
-)
+const vector = new Reference(() => console.log('Hello, world!'))
 
-vector() // yes
+// Hello, world!
+vector()
 ```
 
 ```mermaid
@@ -92,10 +91,12 @@ import { Vector } from 'peekeasy'
 
 const vector = new Vector(
    () => console.log('Hello,'),
-   () => console.log(' world!')
+   () => console.log('   world!')
 )
 
-vector() // Hello, world!
+// Hello,
+//    world!
+vector()
 ```
 
 ```mermaid
