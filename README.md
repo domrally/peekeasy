@@ -226,13 +226,13 @@ classDiagram
     direction LR
     PromiseLike *-- Event
     PromiseLike <.. AsyncIterator
-    IteratorResult <.. AsyncIterator
+    IteratorResult o-- AsyncIterator
     Iterator -- AsyncIterator
-    AsyncIterator <.. AsyncIterable
+    AsyncIterator *-- AsyncIterable
     Iterable -- AsyncIterable
     AsyncIterable *-- Event
-    IteratorResult <.. Iterator
-    Iterator <.. Iterable
+    IteratorResult o-- Iterator
+    Iterator *-- Iterable
     Iterable <|.. Set~Action~
     Delegate *-- Event
     Action <.. Event
