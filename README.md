@@ -216,6 +216,12 @@ classDiagram
     Set~Action~ <|.. Delegate
     Delegate <.. Event
     Event <.. Reference
+    AsyncIterable {
+        asyncIterator() AsyncIterator
+    }
+    Iterable {
+        iterator() Iterator
+    }
     class Delegate {
         apply() void
     }
@@ -224,12 +230,6 @@ classDiagram
     link Event "https://github.com/domrally/peekeasy/blob/main/src/event.ts" "event.ts"
     class Vector
     link Vector "https://github.com/domrally/peekeasy/blob/main/src/vector.ts" "vector.ts"
-    AsyncIterable {
-        asyncIterator() AsyncIterator
-    }
-    Iterable {
-        iterator() Iterator
-    }
 ```
 
 ### dependencies
