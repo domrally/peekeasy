@@ -11,7 +11,10 @@ tools for observing proxies in typescript & web assembly
 - [**Use**](#Use)
   - [install](#install)
   - [import](#import)
-  - [example](#example)
+  - [exports](#exports)
+    - [event delegates](#event-delegates)
+    - [references](#references)
+    - [vectors](#vectors)
 - [**Contribute**](#Contribute)
   - [clone repo](#clone-repo)
   - [open directory](#open-directory)
@@ -25,6 +28,8 @@ tools for observing proxies in typescript & web assembly
   - [non-goals](#non-goals)
   - [documentation](#documentation)
   - [structure](#structure)
+  - [classes](#classes)
+  - [dependencies](#dependencies)
 
 ## Use
 
@@ -62,7 +67,7 @@ sequenceDiagram
     deactivate Set
 ```
 
-#### reference
+#### references
 
 ```ts
 import { Reference } from 'peekeasy'
@@ -84,7 +89,7 @@ sequenceDiagram
     deactivate Array
 ```
 
-#### vector
+#### vectors
 
 ```ts
 import { Vector } from 'peekeasy'
@@ -205,9 +210,9 @@ https://domrally.github.io/peekeasy
 classDiagram
     direction LR
     Iterable <|.. Vector
+    Iterator <.. Iterable
     Iterable <|-- AsyncIterable
     Iterator <|-- AsyncIterator
-    Iterator <.. Iterable
     AsyncIterator <.. AsyncIterable
     AsyncIterable <|.. Event
     PromiseLike <|.. Event
