@@ -196,11 +196,11 @@ classDiagram
     direction LR
     WeakSet <|.. Delegate
     WeakSet <|.. Event
-    Iterable <|.. Vector
     Delegate <.. Event
     Event <.. Reference
     Action <.. Delegate
     Action <.. Event
+    Iterable <|.. Vector
     class Delegate
     link Delegate "https://github.com/domrally/peekeasy/blob/main/src/delegate.ts" "delegate.ts"
     class Event
