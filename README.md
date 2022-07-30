@@ -211,7 +211,6 @@ classDiagram
     WeakSet~Action~ <|.. Event
     Action <.. WeakSet~Action~
     Action <.. Set~Action~
-    Action <.. Event
     Action <|.. Delegate
     Set~Action~ <|.. Delegate
     Delegate <.. Event
