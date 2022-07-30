@@ -220,10 +220,10 @@ classDiagram
     Delegate <.. Event
     Action <|.. Delegate
     Set~Action~ <|.. Delegate
-    Action <.. Set~Action~
+    Action .. Set~Action~
     WeakSet~Action~ <|-- Set~Action~
     WeakSet~Action~ <|.. Event
-    Action <.. WeakSet~Action~
+    Action .. WeakSet~Action~
     Event <.. Reference
     class IteratorResult {
         done boolean
