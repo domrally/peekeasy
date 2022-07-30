@@ -300,7 +300,6 @@ classDiagram
         size number
         clear() void
         forEach() void
-        Symbol.iterable() Iterator
     }
     class Action {
         apply(args: params) void
@@ -311,9 +310,7 @@ classDiagram
     link Delegate "https://github.com/domrally/peekeasy/blob/main/src/delegate.ts" "delegate.ts"
     class Event
     link Event "https://github.com/domrally/peekeasy/blob/main/src/event.ts" "event.ts"
-    class Vector {
-        Symbol.iterable() Iterator
-    }
+    class Vector
     link Vector "https://github.com/domrally/peekeasy/blob/main/src/vector.ts" "vector.ts"
 ```
 
