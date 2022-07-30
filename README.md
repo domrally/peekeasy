@@ -44,9 +44,9 @@ import { Delegate, Event, Reference, Vector, WebAssembly } from 'peekeasy'
 
 ```ts
 class Scalar {
-   constructor(private word: string) {}
+	constructor(private word: string) {}
 
-   log = () => console.log(this.word)
+	log = () => console.log(this.word)
 }
 
 // create a vector from two scalars
@@ -185,7 +185,7 @@ sequenceDiagram
 sequenceDiagram
     client->reference: reference[key]
     activate reference
-    reference->objects: (([object]) => object[key])(objects)
+    reference->states: (([s]) => s[key])(states)
     deactivate reference
 ```
 
@@ -195,7 +195,7 @@ sequenceDiagram
 sequenceDiagram
     action->event: event.then(action)
     activate event
-    event->delegate: await new Promise(resolve => delegate.add(resolve))
+    event->delegate: await new Promise(delegate.then)
     deactivate event
     activate delegate
     delegate->promise: await promise
