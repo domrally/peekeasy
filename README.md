@@ -217,12 +217,15 @@ classDiagram
     Delegate <.. Event
     Event <.. Reference
     AsyncIterable {
+
         asyncIterator() AsyncIterator
     }
     Iterable {
+
         iterator() Iterator
     }
     class Delegate {
+		
         apply() void
     }
     link Delegate "https://github.com/domrally/peekeasy/blob/main/src/delegate.ts" "delegate.ts"
