@@ -207,7 +207,6 @@ classDiagram
     Iterable <|.. Vector
     Iterable <|-- AsyncIterable
     Iterator <|-- AsyncIterator
-    WeakSet~Action~ <|-- Set~Action~
     Iterator <.. Iterable
     AsyncIterator <.. AsyncIterable
     AsyncIterable <|.. Event
@@ -219,6 +218,7 @@ classDiagram
     Set~Action~ <|.. Delegate
     Delegate <.. Event
     Event <.. Reference
+    WeakSet~Action~ <|-- Set~Action~
     class AsyncIterable {
         Symbol.asyncIterator() AsyncIterator
     }
