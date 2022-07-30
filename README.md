@@ -217,7 +217,7 @@ classDiagram
     Event <.. Reference
     class Action <<Interface>>
     class Delegate {
-        (args) void
+        apply(args) void
     }
     link Delegate "https://github.com/domrally/peekeasy/blob/main/src/delegate.ts" "delegate.ts"
     class Event
