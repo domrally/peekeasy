@@ -57,7 +57,7 @@ event.then(console.log)
 sequenceDiagram
     console->Event: event.then(console.log)
     activate Event
-    Event->Delegate: new Promise(set.add).then(console.log)
+    Event->Delegate: Promise(set.add).then(console.log)
     deactivate Event
     activate Delegate
     Delegate->console: console.log('Hello, world!')
@@ -79,7 +79,7 @@ reference('Hello, world!')
 sequenceDiagram
     console->Reference: reference('Hello, world!')
     activate Reference
-    Reference->Action: const [action] = [console.log]
+    Reference->Action: [action] = [console.log]
     deactivate Reference
     activate Action
     Action->console: action('Hello, world!')
@@ -103,10 +103,10 @@ vector('Hello, world!')
 sequenceDiagram
     console->Vector: vector('Hello, world!')
     activate Vector
-    Vector->Array: const array = [log, warn]
+    Vector->Array: array = [log, warn]
     deactivate Vector
     activate Array
-    Array->console: array.forEach(c => c('Hello, world!'))
+    Array->console: array.forEach(print => print('Hello, world!'))
     deactivate Array
 ```
 
