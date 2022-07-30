@@ -226,6 +226,10 @@ classDiagram
     Delegate <.. Event
     Event <.. Reference
     WeakSet~Action~ <|-- Set~Action~
+    class IteratorResult {
+        done boolean
+        value any
+    }
     class AsyncIterable {
         Symbol.asyncIterator() AsyncIterator
     }
@@ -247,7 +251,7 @@ classDiagram
         has() boolean
     }
     class Set {
-        number size
+        size number
         clear() void
         forEach() void
     }
