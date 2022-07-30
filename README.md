@@ -78,7 +78,7 @@ vector() // yes
 sequenceDiagram
     Action->Reference: new Reference(action)
     activate Reference
-    reference->Array: reference()
+    Reference->Array: reference()
     deactivate Reference
     activate Array
     Array->Action: ([action] = array)()
