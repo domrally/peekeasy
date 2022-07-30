@@ -49,13 +49,16 @@ event.then(console.log) // Hello, world!
 
 ```mermaid
 sequenceDiagram
-    action->event: event.then(action)
-    activate event
-    event->delegate: await new Promise(delegate.add)
-    deactivate event
-    activate delegate
-    delegate->action: delegate.forEach(action => action())
-    deactivate delegate
+    Action->Event: event.then(action)
+    activate Event
+    Event->Delegate: new Promise(delegate.add)
+    deactivate Event
+    activate Delegate
+	 Delegate->Set: new Promise(set.add)
+	 deactivate Delegate
+	 activate Set
+	 Set->Action: set.forEach(action => action())
+	 deactivate Set
 ```
 
 #### reference
