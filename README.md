@@ -225,7 +225,10 @@ https://domrally.github.io/peekeasy
 classDiagram
     direction LR
     PromiseLike *-- Event
+    Promise <.. Event
     PromiseLike <.. AsyncIterator
+    PromiseLike <|.. Promise
+	 Promise *-- WebAssembly
     IteratorResult o-- AsyncIterator
     Iterator -- AsyncIterator
     AsyncIterator *-- AsyncIterable
