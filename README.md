@@ -230,6 +230,12 @@ classDiagram
     class Iterable {
         Symbol.iterator() Iterator
     }
+    class Iterator {
+        next() IteratorReturnResult
+    }
+    class AsyncIterator {
+        next() PromiseLike<IteratorReturnResult>
+    }
     class PromiseLike {
         then() PromiseLike
     }
@@ -242,6 +248,9 @@ classDiagram
         number size
         clear() void
         forEach() void
+    }
+    class Action {
+        apply(args: params) void
     }
     class Delegate {
         apply() void
