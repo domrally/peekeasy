@@ -1,68 +1,71 @@
-import { Action } from './exports'
+import { Action, Forward } from './exports'
 
 /**
- * ### Description:
- *
- * A function that sends a message to all set members
- *
- * _example_
- * ```ts
- * ```
- *
- * @param args tuple of data that is passed to the listeners
+ * A weak set of event listeners
  */
-export type Delegate<params extends any[] = []> = Action<params> &
-	Set<Action<params>>
-/**
- * #### constructor function:
- * @param initial optional data that can be passed to the listeners immediately
- */
-export const Delegate = function <params extends any[]>(...initial: params) {
-	const set = new Set<Action<params>>(),
-		delegate = (...args: params) => {
-			new Set<Action<params>>(set).forEach(action => action(...args))
+export class Delegate<params extends any[] = []>
+	implements
+		WeakSet<Action<params>>,
+		AsyncIterable<params>,
+		PromiseLike<params>
+{
+	constructor(
+		protected forward: Forward<params> = new Forward(),
+		...forwards: Forward<params>[]
+	) {
+		forwards ??= []
+		forwards.push(forward)
+		this.#forwards = [...new Set(forwards)]
+	}
+
+	//
+	[Symbol.toStringTag] = this.toString()
+
+	add(value: Action<params>) {
+		this.#forwards.forEach(d => d?.add?.(value))
+
+		return this
+	}
+
+	delete(value: Action<params>) {
+		this.#forwards.forEach(d => d?.delete?.(value))
+
+		return true
+	}
+
+	has(value: Action<params>) {
+		return this.#forwards.some(d => d?.has?.(value))
+	}
+
+	#forwards!: Forward<params>[]
+
+	//
+	async *[Symbol.asyncIterator]() {
+		while (true) {
+			yield new Promise<params>(resolve => {
+				const resolution = (...args: params) => {
+					resolve(args)
+
+					this.#forwards.forEach(d => d?.delete?.(resolution))
+				}
+
+				this.#forwards.forEach(d => d?.add?.(resolution))
+			})
 		}
-
-	delegate.add = (value: Action<params>) => {
-		const result = set.add(value)
-
-		delegate.size = set.size
-
-		if (initial) value(...initial)
-
-		return result
 	}
 
-	delegate.clear = () => {
-		const result = set.clear()
+	//
+	async then<U = params, V = never>(
+		onfulfilled: (args: params) => PromiseLike<U>,
+		onrejected: (reason: unknown) => PromiseLike<V>
+	) {
+		try {
+			const iterator = this[Symbol.asyncIterator](),
+				{ value } = await iterator.next()
 
-		delegate.size = set.size
-
-		return result
+			return onfulfilled?.(value as params)
+		} catch (error) {
+			return onrejected?.(error)
+		}
 	}
-
-	delegate.delete = (value: Action<params>) => {
-		const result = set.delete(value)
-
-		delegate.size = set.size
-
-		return result
-	}
-
-	delegate.forEach = (
-		callbackfn: (
-			value: Action<params>,
-			value2: Action<params>,
-			set: Set<Action<params>>
-		) => void,
-		thisArg?: unknown
-	) => set.forEach(callbackfn, thisArg)
-
-	delegate.has = (value: Action<params>) => set.has(value)
-
-	delegate.size = set.size
-
-	return delegate
-} as unknown as new <params extends any[] = []>(
-	...initial: params
-) => Delegate<params>
+}

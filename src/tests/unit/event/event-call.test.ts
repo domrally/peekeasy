@@ -1,10 +1,10 @@
-import { Delegate, Event } from '../../../exports/exports'
+import { Delegate, Forward } from '../../../exports/exports'
 import { test } from '../../test.test'
 
 function call() {
-	const delegate = new Delegate()
+	const delegate = new Forward()
 
-	new Event(delegate)
+	new Delegate(delegate)
 
 	delegate()
 

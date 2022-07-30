@@ -1,10 +1,10 @@
-import { Delegate, Event } from '../../../exports/exports'
+import { Delegate, Forward } from '../../../exports/exports'
 import { test } from '../../test.test'
 
 function has() {
-	const delegate = new Delegate(),
+	const delegate = new Forward(),
 		t = () => {},
-		event = new Event(delegate)
+		event = new Delegate(delegate)
 
 	event.add(t)
 

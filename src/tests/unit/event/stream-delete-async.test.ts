@@ -1,9 +1,9 @@
 import { assert, warn } from 'console'
-import { Delegate, Event } from '../../../exports/exports'
+import { Delegate, Forward } from '../../../exports/exports'
 
 async function test() {
-	const event = new Delegate<[isTrue: boolean]>([true]),
-		stream = new Event(event)
+	const event = new Forward<[isTrue: boolean]>(true),
+		stream = new Delegate(event)
 
 	let is = false
 	for await (const [message] of stream) {

@@ -1,9 +1,9 @@
-import { Event } from './event'
+import { Delegate } from './delegate'
 
 /**
  * current state of the Iterator
  */
-export type Reference<T extends Event> = T
+export type Reference<T extends Delegate> = T
 /**
  * Constructor function
  * @param states permitted states of the state pattern
@@ -28,4 +28,4 @@ export const Reference = function (...states: any[]) {
 			return true
 		},
 	})
-} as unknown as new <T extends Event>(...states: T[]) => Reference<T>
+} as unknown as new <T extends Delegate>(...states: T[]) => Reference<T>

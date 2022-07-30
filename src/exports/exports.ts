@@ -1,6 +1,6 @@
 export type { Action } from './action'
 export { Delegate } from './delegate'
-export { Event } from './event'
+export { Forward } from './forward'
 export { Reference } from './reference'
 export { Vector } from './vector'
 export { Wasm } from './wasm'
