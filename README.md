@@ -215,9 +215,9 @@ classDiagram
     Iterator <|-- AsyncIterator
     AsyncIterator <.. AsyncIterable
     AsyncIterable <|.. Event
-    PromiseLike <.. AsyncIterator
     IteratorResult <.. Iterator
     IteratorResult <.. AsyncIterator
+    PromiseLike <.. AsyncIterator
     PromiseLike <|.. Event
     WeakSet~Action~ <|.. Event
     Action <.. WeakSet~Action~
