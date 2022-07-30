@@ -230,7 +230,6 @@ classDiagram
     AsyncIterable <|.. Event
     IteratorResult <.. Iterator
     Iterator <.. Iterable
-    Iterable <|.. Vector
     Iterable <|.. Set~Action~
     Delegate <.. Event
     Action <|.. Event
@@ -239,6 +238,7 @@ classDiagram
     WeakSet~Action~ -- Set~Action~
     WeakSet~Action~ <|.. Event
     Event <.. Reference
+    Iterable <|.. Vector
     class IteratorResult {
         done boolean
         value any
