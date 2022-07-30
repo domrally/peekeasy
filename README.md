@@ -198,8 +198,7 @@ https://domrally.github.io/peekeasy
     - [unit/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit)
       - [delegate/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/delegate)
       - [event/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/event)
-      - [iterable-iterator/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/iterable-iterator)
-      - [iterator-result-value/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/iterator-result-value)
+      - [reference/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/reference)
       - [vector/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/vector)
       - [web-assembly/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/web-assembly)
 
@@ -218,14 +217,14 @@ classDiagram
     IteratorResult <.. Iterator
     Iterator <.. Iterable
     Iterable <|.. Vector
-    WeakSet~Action~ <|.. Event
-    Action <.. WeakSet~Action~
-    Action <.. Set~Action~
+    Delegate <.. Event
     Action <|.. Delegate
     Set~Action~ <|.. Delegate
-    Delegate <.. Event
-    Event <.. Reference
+    Action <.. Set~Action~
     WeakSet~Action~ <|-- Set~Action~
+    WeakSet~Action~ <|.. Event
+    Action <.. WeakSet~Action~
+    Event <.. Reference
     class IteratorResult {
         done boolean
         value any
