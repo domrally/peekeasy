@@ -223,6 +223,12 @@ classDiagram
     link Event "https://github.com/domrally/peekeasy/blob/main/src/event.ts" "event.ts"
     class Vector
     link Vector "https://github.com/domrally/peekeasy/blob/main/src/vector.ts" "vector.ts"
+    AsyncIterable {
+        [Symbol.asyncIterator]() AsyncIterator
+    }
+    Iterable {
+        [Symbol.iterator]() Iterator
+    }
 ```
 
 ### dependencies
