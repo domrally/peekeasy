@@ -136,17 +136,17 @@ sequenceDiagram
 import { Wasm } from 'peekeasy'
 
 const { log } = console,
-   wasm = new Wasm('Hello, world!'),
+   wasm = await new Wasm<{data: string}>('hw.wasm'),
 
 // Hello, world!
-log(wasm)
+log(wasm.data)
 ```
 
 ```mermaid
 sequenceDiagram
-    Wasm->WebAssembly: log(...[['Hello, '][0], ['world!'][0]])
+    Wasm->WebAssembly: log({data: 'Hello, world!'}.data)
     activate WebAssembly
-    WebAssembly->Wasm: log('Hello, ', 'world!')
+    WebAssembly->Wasm: log('Hello, world!')
     deactivate WebAssembly
 ```
 
