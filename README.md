@@ -10,8 +10,10 @@ tools for observing proxies in typescript & web assembly
 
 - [**Use**](#Use)
   - [install](#install)
-  - [import](#import)
-  - [example](#example)
+  - [exports](#exports)
+    - [event delegates](#event-delegates)
+    - [references](#references)
+    - [vectors](#vectors)
 - [**Contribute**](#Contribute)
   - [clone repo](#clone-repo)
   - [open directory](#open-directory)
@@ -25,6 +27,8 @@ tools for observing proxies in typescript & web assembly
   - [non-goals](#non-goals)
   - [documentation](#documentation)
   - [structure](#structure)
+  - [classes](#classes)
+  - [dependencies](#dependencies)
 
 ## Use
 
@@ -34,26 +38,80 @@ tools for observing proxies in typescript & web assembly
 npm i peekeasy
 ```
 
-### import
+### exports
+
+#### event delegates
 
 ```ts
-import { Delegate, Event, Reference, Vector, WebAssembly } from 'peekeasy'
+import { Delegate, Event } from 'peekeasy'
+
+const delegate = new Delegate('Hello, world!'),
+	event = new Event(delegate)
+
+// Hello, world!
+event.then(console.log)
 ```
 
-### example
+```mermaid
+sequenceDiagram
+    Action->Event: event.then(action)
+    activate Event
+    Event->Delegate: new Promise(delegate.add)
+    deactivate Event
+    activate Delegate
+    Delegate->Set: new Promise(set.add)
+    deactivate Delegate
+    activate Set
+    Set->Action: set.forEach(action => action())
+    deactivate Set
+```
+
+#### references
 
 ```ts
-class Scalar {
-	constructor(private word: string) {}
+import { Reference } from 'peekeasy'
 
-	log = () => console.log(this.word)
-}
+const vector = new Reference(() => console.log('Hello, world!'))
 
-// create a vector from two scalars
-const vector = new Vector(new Scalar('hello'), new Scalar('world'))
+// Hello, world!
+vector()
+```
 
-// call a method on both scalars
-vector.log()
+```mermaid
+sequenceDiagram
+    Action->Reference: new Reference(action)
+    activate Reference
+    Reference->Array: reference()
+    deactivate Reference
+    activate Array
+    Array->Action: ([action] = array)()
+    deactivate Array
+```
+
+#### vectors
+
+```ts
+import { Vector } from 'peekeasy'
+
+const vector = new Vector(
+	() => console.log('Hello,'),
+	() => console.log('   world!')
+)
+
+// Hello,
+//    world!
+vector()
+```
+
+```mermaid
+sequenceDiagram
+    Action->Vector: new Vector(...actions)
+    activate Vector
+    Vector->Array: vector()
+    deactivate Vector
+    activate Array
+    Array->Action: actions.map(action => action())
+    deactivate Array
 ```
 
 ## Contribute
@@ -140,10 +198,76 @@ https://domrally.github.io/peekeasy
     - [unit/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit)
       - [delegate/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/delegate)
       - [event/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/event)
-      - [iterable-iterator/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/iterable-iterator)
-      - [iterator-result-value/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/iterator-result-value)
+      - [reference/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/reference)
       - [vector/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/vector)
       - [web-assembly/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/web-assembly)
+
+### classes
+
+```mermaid
+classDiagram
+    direction LR
+    PromiseLike <|.. Event
+    PromiseLike <.. AsyncIterator
+    IteratorResult <.. AsyncIterator
+    Iterator <|-- AsyncIterator
+    AsyncIterator <.. AsyncIterable
+    Iterable <|-- AsyncIterable
+    AsyncIterable <|.. Event
+    IteratorResult <.. Iterator
+    Iterator <.. Iterable
+    Iterable <|.. Vector
+    Delegate <.. Event
+    Action <|.. Delegate
+    Set~Action~ <|.. Delegate
+    Action .. Set~Action~
+    WeakSet~Action~ <|-- Set~Action~
+    WeakSet~Action~ <|.. Event
+    Action .. WeakSet~Action~
+    Event <.. Reference
+    class IteratorResult {
+        done boolean
+        value any
+    }
+    class AsyncIterable {
+        Symbol.asyncIterator() AsyncIterator
+    }
+    class Iterable {
+        Symbol.iterator() Iterator
+    }
+    class Iterator {
+        next() IteratorResult
+    }
+    class AsyncIterator {
+        next() PromiseLike~IteratorResult~
+    }
+    class PromiseLike {
+        then() PromiseLike
+    }
+    class WeakSet {
+        add() WeakSet
+        delete() WeakSet
+        has() boolean
+    }
+    class Set {
+        size number
+        clear() void
+        forEach() void
+    }
+    class Action {
+        apply(args: params) void
+    }
+    class Delegate {
+        apply() void
+    }
+    link Delegate "https://github.com/domrally/peekeasy/blob/main/src/delegate.ts" "delegate.ts"
+    class Event
+    link Event "https://github.com/domrally/peekeasy/blob/main/src/event.ts" "event.ts"
+    class Vector
+    link Vector "https://github.com/domrally/peekeasy/blob/main/src/vector.ts" "vector.ts"
+```
+
+### dependencies
 
 [![](https://img.shields.io/badge/-prettier-F7B93E?style=for-the-badge&labelColor=181717&logo=prettier)](https://prettier.io)
 [![](https://img.shields.io/badge/-nodejs-339933?style=for-the-badge&labelColor=181717&logo=node.js)](https://nodejs.org)

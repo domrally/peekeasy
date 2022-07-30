@@ -12,7 +12,7 @@ import './event/event-delete.test'
 import './event/event-has.test'
 
 warn('\n🧪 iterator result values:')
-import './iterator-result-value/iterator-result-value-value.test'
+import './reference/iterator-result-value-value.test'
 
 warn('\n🧪 vectors:')
 import './vector/vector-apply.test'
@@ -20,5 +20,5 @@ import './vector/vector-key.test'
 import './vector/vector-keys.test'
 
 warn('\n🧪 streams:')
-import './stream/stream-delete-async.test'
-import './stream/stream-await-async.test'
+import './event/stream-delete-async.test'
+import './event/stream-await-async.test'

@@ -1,4 +1,4 @@
-import { Action, Event } from './exports'
+import { Action } from './exports'
 
 /**
  * ### Description:
