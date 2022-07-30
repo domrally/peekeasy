@@ -11,11 +11,11 @@ tools for observing proxies in typescript & web assembly
 - [**Use**](#Use)
   - [install](#install)
   - [exports](#exports)
+    - [forwards](#forwards)
     - [delegates](#delegates)
-    - [events](#events)
     - [references](#references)
     - [vectors](#vectors)
-  - [wasms](#wasms)
+    - [wasms](#wasms)
 - [**Contribute**](#Contribute)
   - [clone repo](#clone-repo)
   - [open directory](#open-directory)
@@ -43,46 +43,46 @@ npm i peekeasy
 
 ### exports
 
-#### delegates
+#### forwards
 
 ```ts
-import { Delegate } from 'peekeasy'
+import { Forward } from 'peekeasy'
 
 const { log } = console,
-	delegate = new Delegate('Hello, world!')
+	forward = new Forward('Hello, world!')
 
 // Hello, world!
-delegate.add(log)
+forward.add(log)
 ```
 
 ```mermaid
 sequenceDiagram
-    Delegate->Set: [log].forEach(print => print('Hello, world!'))
+    Forward->Set: [log].forEach(print => print('Hello, world!'))
     activate Set
-    Set->Delegate: log('Hello, world!')
+    Set->Forward: log('Hello, world!')
     deactivate Set
 ```
 
-#### events
+#### delegates
 
 ```ts
-import { Delegate, Event } from 'peekeasy'
+import { Delegate, Forward } from 'peekeasy'
 
 const { log } = console,
-	delegate = new Delegate(),
-	event = new Event(delegate)
+	forward = new Forward(),
+	delegate = new Delegate(forward)
 
-event.then(() => log('Hello, world!'))
+delegate.then(() => log('Hello, world!'))
 
 // Hello, world!
-delegate()
+forward()
 ```
 
 ```mermaid
 sequenceDiagram
-    Delegate->Set: [() => log('Hello, world!')].forEach(f => f())
+    Forward->Set: [() => log('Hello, world!')].forEach(f => f())
     activate Set
-    Set->Event: log('Hello, world!')
+    Set->Delegate: log('Hello, world!')
     deactivate Set
 ```
 
@@ -232,8 +232,8 @@ https://domrally.github.io/peekeasy
   - [tests/](https://github.com/domrally/peekeasy/tree/main/src/tests)
     - [integration/](https://github.com/domrally/peekeasy/tree/main/src/tests/integration)
     - [unit/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit)
+      - [forward/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/forward)
       - [delegate/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/delegate)
-      - [event/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/event)
       - [reference/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/reference)
       - [vector/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/vector)
       - [wasm/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/wasm)
@@ -246,25 +246,25 @@ https://domrally.github.io/peekeasy
 classDiagram
     direction LR
     PromiseLike <|.. Promise
-    PromiseLike *-- Event
+    PromiseLike *-- Delegate
     Promise *-- Wasm
-    Promise <.. Event
+    Promise <.. Delegate
     PromiseLike <.. AsyncIterator
     IteratorResult o-- AsyncIterator
     Iterator -- AsyncIterator
     AsyncIterator *-- AsyncIterable
     Iterable -- AsyncIterable
-    AsyncIterable *-- Event
+    AsyncIterable *-- Delegate
     IteratorResult o-- Iterator
     Iterator *-- Iterable
     Iterable <|.. Set~Action~
-    Delegate *-- Event
-    Action <.. Event
-    Set~Action~ *-- Delegate
-    Action *-- Delegate
+    Forward *-- Delegate
+    Action <.. Delegate
+    Set~Action~ *-- Forward
+    Action *-- Forward
     WeakSet~Action~ -- Set~Action~
-    WeakSet~Action~ <|.. Event
-    Event <-- Reference
+    WeakSet~Action~ <|.. Delegate
+    Delegate <-- Reference
     Iterable *-- Vector
     class IteratorResult {
         done boolean
@@ -306,12 +306,12 @@ classDiagram
         apply(args: params) void
     }
 	 link Action "https://github.com/domrally/peekeasy/blob/main/src/action.ts" "action.ts"
-    class Delegate {
+    class Forward {
         apply() void
     }
+    link Forward "https://github.com/domrally/peekeasy/blob/main/src/forward.ts" "forward.ts"
+    class Delegate
     link Delegate "https://github.com/domrally/peekeasy/blob/main/src/delegate.ts" "delegate.ts"
-    class Event
-    link Event "https://github.com/domrally/peekeasy/blob/main/src/event.ts" "event.ts"
     class Vector
     link Vector "https://github.com/domrally/peekeasy/blob/main/src/vector.ts" "vector.ts"
 	 class Reference
