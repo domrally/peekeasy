@@ -206,6 +206,7 @@ classDiagram
     direction LR
     Iterable <|.. Vector
     Iterable <|-- AsyncIterable
+    Iterator <|-- AsyncIterator
     AsyncIterable <|.. Event
     PromiseLike <|.. Event
     WeakSet~Action~ <|.. Event
