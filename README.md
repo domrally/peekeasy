@@ -240,7 +240,7 @@ classDiagram
     Action *-- Delegate
     WeakSet~Action~ -- Set~Action~
     WeakSet~Action~ <|.. Event
-    Event <.. Reference
+    Event <-- Reference
     Iterable *-- Vector
     class IteratorResult {
         done boolean
