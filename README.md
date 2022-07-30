@@ -42,7 +42,7 @@ npm i peekeasy
 import { Delegate, Event } from 'peekeasy'
 
 const delegate = new Delegate('Hello, world!'),
-	event = new Event(delegate)
+   event = new Event(delegate)
 
 event.then(console.log) // Hello, world!
 ```
@@ -54,11 +54,11 @@ sequenceDiagram
     Event->Delegate: new Promise(delegate.add)
     deactivate Event
     activate Delegate
-	 Delegate->Set: new Promise(set.add)
-	 deactivate Delegate
-	 activate Set
-	 Set->Action: set.forEach(action => action())
-	 deactivate Set
+    Delegate->Set: new Promise(set.add)
+    deactivate Delegate
+    activate Set
+    Set->Action: set.forEach(action => action())
+    deactivate Set
 ```
 
 #### reference
@@ -67,8 +67,8 @@ sequenceDiagram
 import { Reference } from 'peekeasy'
 
 const vector = new Reference(
-	() => console.log('yes'),
-	() => console.log('no')
+   () => console.log('yes'),
+   () => console.log('no')
 )
 
 vector() // yes
@@ -76,10 +76,13 @@ vector() // yes
 
 ```mermaid
 sequenceDiagram
-    client->reference: reference[key]
-    activate reference
-    reference->states: (([s]) => s[key])(states)
-    deactivate reference
+    Action->Reference: new Reference(action)
+    activate Reference
+    reference->Array: reference()
+    deactivate Reference
+    activate Array
+    Array->Action: ([action] = array)()
+    deactivate Array
 ```
 
 #### vector
@@ -88,8 +91,8 @@ sequenceDiagram
 import { Vector } from 'peekeasy'
 
 const vector = new Vector(
-	() => console.log('Hello,'),
-	() => console.log(' world!')
+   () => console.log('Hello,'),
+   () => console.log(' world!')
 )
 
 vector() // Hello, world!
@@ -97,10 +100,13 @@ vector() // Hello, world!
 
 ```mermaid
 sequenceDiagram
-    client->vector: vector()
-    activate vector
-    vector->functions: functions.map(f => f())
-    deactivate vector
+    Action->Vector: new Vector(...actions)
+    activate Vector
+    Vector->Array: vector()
+    deactivate Vector
+    activate Array
+    Array->Action: actions.map(action => action())
+    deactivate Array
 ```
 
 ## Contribute
