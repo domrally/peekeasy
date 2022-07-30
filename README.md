@@ -54,16 +54,13 @@ event.then(console.log)
 
 ```mermaid
 sequenceDiagram
-    Action->Event: event.then(action)
-    activate Event
-    Event->Delegate: new Promise(delegate.add)
+    Event: event.then(console.log)
+    activate Delegate
+    Event->Delegate: new Promise(set.add).then(console.log)
     deactivate Event
     activate Delegate
-    Delegate->Set: new Promise(set.add)
+    Delegate: console.log('Hello, world!')
     deactivate Delegate
-    activate Set
-    Set->Action: set.forEach(action => action())
-    deactivate Set
 ```
 
 #### references
