@@ -210,9 +210,9 @@ classDiagram
     PromiseLike <|.. Event
     PromiseLike <.. AsyncIterator
     IteratorResult <.. AsyncIterator
-    Iterator <|-- AsyncIterator
+    Iterator -- AsyncIterator
     AsyncIterator <.. AsyncIterable
-    Iterable <|-- AsyncIterable
+    Iterable -- AsyncIterable
     AsyncIterable <|.. Event
     IteratorResult <.. Iterator
     Iterator <.. Iterable
