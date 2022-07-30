@@ -207,12 +207,12 @@ classDiagram
     Iterable <|.. Vector
     Iterable <|-- AsyncIterable
     AsyncIterable <|.. Event
+    PromiseLike <|.. Event
+    WeakSet~Action~ <|.. Event
     Action <.. Event
     Action <|.. Delegate
     Set~Action~ <|.. Delegate
     Delegate <.. Event
-    WeakSet~Action~ <|.. Event
-    PromiseLike <|.. Event
     Event <.. Reference
     class Delegate
     link Delegate "https://github.com/domrally/peekeasy/blob/main/src/delegate.ts" "delegate.ts"
