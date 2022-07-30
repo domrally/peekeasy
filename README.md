@@ -15,6 +15,7 @@ tools for observing proxies in typescript & web assembly
     - [events](#events)
     - [references](#references)
     - [vectors](#vectors)
+  - [wasms](#wasms)
 - [**Contribute**](#Contribute)
   - [clone repo](#clone-repo)
   - [open directory](#open-directory)
@@ -129,6 +130,26 @@ sequenceDiagram
     deactivate Array
 ```
 
+#### wasms
+
+```ts
+import { Wasm } from 'peekeasy'
+
+const { log } = console,
+	wasm = new Wasm('Hello, world!'),
+
+// Hello, world!
+log(wasm)
+```
+
+```mermaid
+sequenceDiagram
+    Wasm->WebAssembly: log(...[['Hello, '][0], ['world!'][0]])
+    activate WebAssembly
+    WebAssembly->Wasm: log('Hello, ', 'world!')
+    deactivate WebAssembly
+```
+
 ## Contribute
 
 ### clone repo
@@ -215,7 +236,7 @@ https://domrally.github.io/peekeasy
       - [event/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/event)
       - [reference/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/reference)
       - [vector/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/vector)
-      - [web-assembly/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/web-assembly)
+      - [wasm/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/wasm)
 
 ### dependencies
 
@@ -226,7 +247,7 @@ classDiagram
     direction LR
     PromiseLike <|.. Promise
     PromiseLike *-- Event
-	 Promise *-- WebAssembly
+	 Promise *-- Wasm
     Promise <.. Event
     PromiseLike <.. AsyncIterator
     IteratorResult o-- AsyncIterator

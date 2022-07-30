@@ -2,7 +2,7 @@
  * A typed object isomorphic to the module exported from the wasm file
  * @param path source of the wasm file
  */
-export class Webassembly<T> extends Promise<T> {
+export class Wasm<T> extends Promise<T> {
 	constructor(path: `${string}.wasm`) {
 		super(async resolve => {
 			//
