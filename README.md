@@ -206,7 +206,7 @@ classDiagram
     direction LR
     Action <.. Event
     Action <|.. Delegate
-    WeakSet~Action~ <|.. Delegate
+    Set~Action~ <|.. Delegate
     WeakSet~Action~ <|.. Event
     Delegate <.. Event
     AsyncIterable <|.. Event
