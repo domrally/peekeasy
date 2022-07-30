@@ -215,7 +215,10 @@ classDiagram
     Set~Action~ <|.. Delegate
     Delegate <.. Event
     Event <.. Reference
-    class Delegate
+    class Action <<Interface>>
+    class Delegate~T~ {
+        (...T args) void
+    }
     link Delegate "https://github.com/domrally/peekeasy/blob/main/src/delegate.ts" "delegate.ts"
     class Event
     link Event "https://github.com/domrally/peekeasy/blob/main/src/event.ts" "event.ts"
