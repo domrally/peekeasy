@@ -9,21 +9,47 @@ export class Event<params extends any[] = []>
 		AsyncIterable<params>,
 		PromiseLike<params>
 {
-	constructor(protected delegate: Delegate<params> = new Delegate()) {}
+	constructor(
+		protected delegate: Delegate<params> = new Delegate(),
+		...delegates: Delegate<params>[]
+	) {
+		delegates ??= []
+		delegates.push(delegate)
+		this.#delegates = [...new Set(delegates)]
+	}
 
 	//
 	[Symbol.toStringTag] = this.toString()
-	add: (value: Action<params>) => this = this.delegate.add as any
-	delete = this.delegate.delete
-	has = this.delegate.has
+
+	add(value: Action<params>) {
+		this.#delegates.forEach(d => d?.add?.(value))
+
+		return this
+	}
+
+	delete(value: Action<params>) {
+		this.#delegates.forEach(d => d?.delete?.(value))
+
+		return true
+	}
+
+	has(value: Action<params>) {
+		return this.#delegates.some(d => d?.has?.(value))
+	}
+
+	#delegates!: Delegate<params>[]
 
 	//
 	async *[Symbol.asyncIterator]() {
 		while (true) {
 			yield new Promise<params>(resolve => {
-				const resolution = (...args: params) => resolve(args)
+				const resolution = (...args: params) => {
+					resolve(args)
 
-				this.delegate.add(resolution)
+					this.#delegates.forEach(d => d?.delete?.(resolution))
+				}
+
+				this.#delegates.forEach(d => d?.add?.(resolution))
 			})
 		}
 	}
