@@ -173,24 +173,39 @@ classDiagram
 
 ```mermaid
 sequenceDiagram
-    client->vector: [key]
-    vector->list: .map(o => o[key])
+    client->vector: vector[key]
+    activate vector
+    vector->objects: objects.map(o => o[key])
+    deactivate vector
 ```
 
 ##### reference
 
 ```mermaid
 sequenceDiagram
-    client->reference: [key]
-    reference->list: .map(o => o[key])
+    client->reference: reference[key]
+    activate reference
+    reference->objects: (([object]) => object[key])(objects)
+    deactivate reference
 ```
 
 ##### event delegates
 
 ```mermaid
 sequenceDiagram
-    client->event: [key]
-    event->delegate: .map(o => o[key])
+    action->event: event.then(action)
+    activate event
+    event->delegate: await new Promise(resolve => delegate.add(resolve))
+    deactivate event
+    activate delegate
+    delegate->promise: await promise
+    deactivate delegate
+    activate promise
+    promise->delegate: delegate()
+    deactivate promise
+    activate delegate
+    delegate->action: delegate.forEach(action => action())
+    deactivate delegate
 ```
 
 [![](https://img.shields.io/badge/-prettier-F7B93E?style=for-the-badge&labelColor=181717&logo=prettier)](https://prettier.io)
