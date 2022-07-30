@@ -27,8 +27,9 @@ tools for observing proxies in typescript & web assembly
   - [non-goals](#non-goals)
   - [documentation](#documentation)
   - [structure](#structure)
-  - [classes](#classes)
   - [dependencies](#dependencies)
+    - [internal](#internal)
+    - [external](#external)
 
 ## Use
 
@@ -55,7 +56,7 @@ event.then(console.log)
 ```mermaid
 sequenceDiagram
     console->Event: event.then(console.log)
-    activate Delegate
+    activate Event
     Event->Delegate: new Promise(set.add).then(console.log)
     deactivate Event
     activate Delegate
@@ -90,7 +91,8 @@ sequenceDiagram
 ```ts
 import { Vector } from 'peekeasy'
 
-const vector = new Vector(console.log, console.warn)
+const { log, warn } = console,
+	vector = new Vector(log, warn)
 
 // Hello, world!
 // Hello, world!
@@ -101,7 +103,7 @@ vector('Hello, world!')
 sequenceDiagram
     console->Vector: vector('Hello, world!')
     activate Vector
-    Vector->Array: const array = [console.log, console.warn]
+    Vector->Array: const array = [log, warn]
     deactivate Vector
     activate Array
     Array->console: array.forEach(c => c('Hello, world!'))
@@ -196,7 +198,9 @@ https://domrally.github.io/peekeasy
       - [vector/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/vector)
       - [web-assembly/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/web-assembly)
 
-### classes
+### dependencies
+
+#### internal
 
 ```mermaid
 classDiagram
@@ -261,7 +265,7 @@ classDiagram
     link Vector "https://github.com/domrally/peekeasy/blob/main/src/vector.ts" "vector.ts"
 ```
 
-### dependencies
+#### external
 
 [![](https://img.shields.io/badge/-prettier-F7B93E?style=for-the-badge&labelColor=181717&logo=prettier)](https://prettier.io)
 [![](https://img.shields.io/badge/-nodejs-339933?style=for-the-badge&labelColor=181717&logo=node.js)](https://nodejs.org)
