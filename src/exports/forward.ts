@@ -29,45 +29,75 @@ export type Forward<params extends any[] = []> = Action<params> &
 export const Forward = function <params extends any[]>(...initial: params) {
 	const set = new Set<Action<params>>(),
 		forward = (...args: params) => {
-			new Set<Action<params>>(set).forEach(action => action(...args))
+			try {
+				new Set<Action<params>>(set).forEach(action => action(...args))
+			} catch (message) {
+				throw new Error(`Problem forwarding message to listeners:\n${message}`)
+			}
 		}
 
-	forward.add = (value: Action<params>) => {
-		const result = set.add(value)
+	forward.add = (listener: Action<params>) => {
+		try {
+			const result = set.add(listener)
 
-		forward.size = set.size
+			forward.size = set.size
 
-		if (initial) value(...initial)
+			if (initial) listener(...initial)
 
-		return result
+			return result
+		} catch (message) {
+			throw new Error(`Problem adding listener for Forwarding:\n${message}`)
+		}
 	}
 
 	forward.clear = () => {
-		const result = set.clear()
+		try {
+			const result = set.clear()
 
-		forward.size = set.size
+			forward.size = set.size
 
-		return result
+			return result
+		} catch (message) {
+			throw new Error(`Problem clearing listeners from Forwarding:\n${message}`)
+		}
 	}
 
-	forward.delete = (value: Action<params>) => {
-		const result = set.delete(value)
+	forward.delete = (listener: Action<params>) => {
+		try {
+			const result = set.delete(listener)
 
-		forward.size = set.size
+			forward.size = set.size
 
-		return result
+			return result
+		} catch (message) {
+			throw new Error(`Problem deleting listener from Forwarding:\n${message}`)
+		}
 	}
 
 	forward.forEach = (
 		callbackfn: (
-			value: Action<params>,
-			value2: Action<params>,
+			listener: Action<params>,
+			listener2: Action<params>,
 			set: Set<Action<params>>
 		) => void,
 		thisArg?: unknown
-	) => set.forEach(callbackfn, thisArg)
+	) => {
+		try {
+			set.forEach(callbackfn, thisArg)
+		} catch (message) {
+			throw new Error(
+				`Problem calling back for each listener Forwarded listener:\n${message}`
+			)
+		}
+	}
 
-	forward.has = (value: Action<params>) => set.has(value)
+	forward.has = (listener: Action<params>) => {
+		try {
+			return set.has(listener)
+		} catch (message) {
+			throw new Error(`Problem checking if Forward has listener:\n${message}`)
+		}
+	}
 
 	forward.size = set.size
 
