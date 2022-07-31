@@ -1,14 +1,12 @@
-import { Delegate, Reference } from '../../../exports/exports'
+import type { Delegate } from '../../../exports/exports'
+import { Reference } from '../../../exports/exports'
 import { test } from '../../test.test'
 
-function value() {
-	const value = new Reference(
-		new (class extends Delegate {
-			is = true
-		})()
-	)
+async function referenceEquals() {
+	const delegate = {} as Delegate,
+		reference = new Reference(delegate)
 
-	return value.is
+	return Object.getPrototypeOf(reference) === Object.getPrototypeOf(delegate)
 }
 
-test(value)
+test(referenceEquals)

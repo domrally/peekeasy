@@ -17,6 +17,11 @@ import './forward/forward.size.test'
 import './forward/forward.to-string.test'
 
 // reference
+import './reference/reference.apply.test'
+import './reference/reference.equals.test'
+import './reference/reference.get.test'
+import './reference/reference.set.test'
+import './reference/reference.to-string.test'
 
 // vector
 
