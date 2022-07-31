@@ -31,7 +31,7 @@ export class Delegate<params extends any[] = []>
 	/**
 	 *
 	 */
-	#forwards!: Forward<params>[]
+	private forwards!: Forward<params>[]
 
 	/**
 	 *
@@ -51,7 +51,7 @@ export class Delegate<params extends any[] = []>
 			forwards.push(forward)
 
 			//
-			this.#forwards = [...new Set(forwards)]
+			this.forwards = [...new Set(forwards)]
 		} catch (message) {
 			error(`Problem constructing Delegate:\n${message}`)
 		}
@@ -59,7 +59,7 @@ export class Delegate<params extends any[] = []>
 
 	add(listener: Action<params>) {
 		try {
-			this.#forwards.forEach(d => d?.add?.(listener))
+			this.forwards.forEach(d => d?.add?.(listener))
 		} catch (message) {
 			error(`Problem adding listener to Delegate:\n${message}`)
 		}
@@ -69,7 +69,7 @@ export class Delegate<params extends any[] = []>
 
 	delete(listener: Action<params>) {
 		try {
-			this.#forwards.forEach(d => d?.delete?.(listener))
+			this.forwards.forEach(d => d?.delete?.(listener))
 		} catch (message) {
 			error(`Problem deleting listener from Delegate:\n${message}`)
 		}
@@ -79,7 +79,7 @@ export class Delegate<params extends any[] = []>
 
 	has(listener: Action<params>) {
 		try {
-			return this.#forwards.some(d => d?.has?.(listener))
+			return this.forwards.some(d => d?.has?.(listener))
 		} catch (message) {
 			error(`Problem checking if Delegate has listener:\n${message}`)
 
@@ -110,10 +110,10 @@ export class Delegate<params extends any[] = []>
 					const resolution = (...args: params) => {
 						resolve(args)
 
-						this.#forwards.forEach(d => d?.delete?.(resolution))
+						this.forwards.forEach(d => d?.delete?.(resolution))
 					}
 
-					this.#forwards.forEach(d => d?.add?.(resolution))
+					this.forwards.forEach(d => d?.add?.(resolution))
 				})
 			} catch (message) {
 				error(`Problem awaiting for Delegate:\n${message}`)
