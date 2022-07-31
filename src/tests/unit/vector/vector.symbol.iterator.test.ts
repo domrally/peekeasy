@@ -2,7 +2,7 @@ import { assert } from 'console'
 import { Vector } from '../../../exports/exports'
 import { test } from '../../test.test'
 
-function keys() {
+test(() => {
 	const vector = new Vector({ index: 1 }, { index: 2 }, { index: 3 }),
 		result = vector.index
 
@@ -16,6 +16,4 @@ function keys() {
 	}
 
 	return is
-}
-
-test(keys)
+})

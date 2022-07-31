@@ -6,7 +6,7 @@ warn(`
 Delegate
 Event
 🧪`)
-import './dependency-injection.test'
+import './delegate-forward/dependency-injection.test'
 
 warn(`
 
@@ -17,4 +17,4 @@ IterableIterator
 IteratorResultValue
 Vector
 🧪`)
-import './fizz-buzz.test'
+import './delegate-reference-vector/fizz-buzz.test'
