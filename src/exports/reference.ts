@@ -1,3 +1,4 @@
+import { error } from 'console'
 import { Delegate } from './delegate'
 
 /**
@@ -35,7 +36,7 @@ export const Reference = function (...states: any[]) {
 		try {
 			value.add?.(() => (state = value))
 		} catch (message) {
-			throw new Error(
+			error(
 				`Problem adding state listener "${value}" to Reference:\n${message}`
 			)
 		}
@@ -46,16 +47,14 @@ export const Reference = function (...states: any[]) {
 			try {
 				return state.apply(thisArg, args)
 			} catch (message) {
-				throw new Error(
-					`Problem applying Reference to state function:\n${message}`
-				)
+				error(`Problem applying Reference to state function:\n${message}`)
 			}
 		},
 		get(_, key) {
 			try {
 				return state[key]
 			} catch (message) {
-				throw new Error(
+				error(
 					`Problem getting Reference to state property "${
 						key as string
 					}":\n${message}`
@@ -68,11 +67,13 @@ export const Reference = function (...states: any[]) {
 
 				return true
 			} catch (message) {
-				throw new Error(
+				error(
 					`Problem setting state property "${
 						key as string
 					}" on Reference:\n${message}`
 				)
+
+				return false
 			}
 		},
 	})

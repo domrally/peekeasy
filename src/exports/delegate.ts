@@ -1,3 +1,4 @@
+import { error } from 'console'
 import { Action, Forward } from './exports'
 
 /**
@@ -52,35 +53,37 @@ export class Delegate<params extends any[] = []>
 			//
 			this.#forwards = [...new Set(forwards)]
 		} catch (message) {
-			throw new Error(`Problem constructing Delegate:\n${message}`)
+			error(`Problem constructing Delegate:\n${message}`)
 		}
 	}
 
 	add(listener: Action<params>) {
 		try {
 			this.#forwards.forEach(d => d?.add?.(listener))
-
-			return this
 		} catch (message) {
-			throw new Error(`Problem adding listener to Delegate:\n${message}`)
+			error(`Problem adding listener to Delegate:\n${message}`)
 		}
+
+		return this
 	}
 
 	delete(listener: Action<params>) {
 		try {
 			this.#forwards.forEach(d => d?.delete?.(listener))
-
-			return true
 		} catch (message) {
-			throw new Error(`Problem deleting listener from Delegate:\n${message}`)
+			error(`Problem deleting listener from Delegate:\n${message}`)
 		}
+
+		return true
 	}
 
 	has(listener: Action<params>) {
 		try {
 			return this.#forwards.some(d => d?.has?.(listener))
 		} catch (message) {
-			throw new Error(`Problem checking if Delegate has listener:\n${message}`)
+			error(`Problem checking if Delegate has listener:\n${message}`)
+
+			return false
 		}
 	}
 
@@ -113,16 +116,18 @@ export class Delegate<params extends any[] = []>
 					this.#forwards.forEach(d => d?.add?.(resolution))
 				})
 			} catch (message) {
-				throw new Error(`Problem awaiting for Delegate:\n${message}`)
+				error(`Problem awaiting for Delegate:\n${message}`)
 			}
 		}
 	}
 
 	get [Symbol.toStringTag]() {
 		try {
-			return this.toString()
+			return JSON.stringify(this)
 		} catch (message) {
-			throw new Error(`Problem converting Delegate to string:\n${message}`)
+			error(`Problem converting Delegate to string:\n${message}`)
+
+			return Delegate.name
 		}
 	}
 }

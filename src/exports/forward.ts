@@ -1,3 +1,4 @@
+import { error } from 'console'
 import { Action } from './exports'
 
 /**
@@ -32,7 +33,7 @@ export const Forward = function <params extends any[]>(...initial: params) {
 			try {
 				new Set<Action<params>>(set).forEach(action => action(...args))
 			} catch (message) {
-				throw new Error(`Problem forwarding message to listeners:\n${message}`)
+				error(`Problem forwarding message to listeners:\n${message}`)
 			}
 		}
 
@@ -46,19 +47,19 @@ export const Forward = function <params extends any[]>(...initial: params) {
 
 			return result
 		} catch (message) {
-			throw new Error(`Problem adding listener for Forwarding:\n${message}`)
+			error(`Problem adding listener for Forwarding:\n${message}`)
+
+			return forward
 		}
 	}
 
 	forward.clear = () => {
 		try {
-			const result = set.clear()
+			set.clear()
 
 			forward.size = set.size
-
-			return result
 		} catch (message) {
-			throw new Error(`Problem clearing listeners from Forwarding:\n${message}`)
+			error(`Problem clearing listeners from Forwarding:\n${message}`)
 		}
 	}
 
@@ -70,7 +71,9 @@ export const Forward = function <params extends any[]>(...initial: params) {
 
 			return result
 		} catch (message) {
-			throw new Error(`Problem deleting listener from Forwarding:\n${message}`)
+			error(`Problem deleting listener from Forwarding:\n${message}`)
+
+			return false
 		}
 	}
 
@@ -85,7 +88,7 @@ export const Forward = function <params extends any[]>(...initial: params) {
 		try {
 			set.forEach(callbackfn, thisArg)
 		} catch (message) {
-			throw new Error(
+			error(
 				`Problem calling back for each listener Forwarded listener:\n${message}`
 			)
 		}
@@ -95,7 +98,9 @@ export const Forward = function <params extends any[]>(...initial: params) {
 		try {
 			return set.has(listener)
 		} catch (message) {
-			throw new Error(`Problem checking if Forward has listener:\n${message}`)
+			error(`Problem checking if Forward has listener:\n${message}`)
+
+			return false
 		}
 	}
 

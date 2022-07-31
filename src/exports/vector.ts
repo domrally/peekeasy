@@ -1,3 +1,5 @@
+import { error } from 'console'
+
 /**
  * ### Description
  *
@@ -29,33 +31,55 @@ export type Vector<T> = T extends (...args: any) => any
 export const Vector = function (...scalars: any[]) {
 	return new Proxy(() => {}, {
 		apply(_, thisArg, args) {
-			const applied = scalars?.map(scalar => scalar?.apply?.(thisArg, args))
+			try {
+				const applied = scalars?.map(scalar => scalar?.apply?.(thisArg, args))
 
-			return new Vector(...applied)
+				return new Vector(...applied)
+			} catch (message) {
+				error(`Problem applying Vectorized function:\n${message}`)
+			}
 		},
 
 		get(_, key) {
-			if (symbols.includes(key as symbol)) {
-				return () => scalars?.[Symbol.iterator]()
-			} else {
-				const keyed = scalars?.map(scalar => {
-					let value = scalar?.[key]
+			try {
+				if (symbols.includes(key as symbol)) {
+					return () => scalars?.[Symbol.iterator]()
+				} else {
+					const keyed = scalars?.map(scalar => {
+						let value = scalar?.[key]
 
-					if (typeof value === 'function') {
-						value = value.bind?.(scalar)
-					}
+						if (typeof value === 'function') {
+							value = value.bind?.(scalar)
+						}
 
-					return value
-				})
+						return value
+					})
 
-				return new Vector(...keyed)
+					return new Vector(...keyed)
+				}
+			} catch (message) {
+				error(
+					`Problem getting property "${
+						key as string
+					}" on Vectorized object:\n${message}`
+				)
 			}
 		},
 
 		set(_, key, value) {
-			scalars?.forEach(scalar => (scalar[key] = value))
+			try {
+				scalars?.forEach(scalar => (scalar[key] = value))
 
-			return true
+				return true
+			} catch (message) {
+				error(
+					`Problem setting property "${
+						key as string
+					}" to "${value}" on Vectorized object:\n${message}`
+				)
+
+				return false
+			}
 		},
 	})
 } as unknown as new <T>(...scalars: T[]) => Vector<T>
