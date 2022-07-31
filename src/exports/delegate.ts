@@ -88,9 +88,9 @@ export class Delegate<params extends any[] = []>
 	}
 
 	async then<U = params, V = never>(
-		onfulfilled: (args: params) => PromiseLike<U>,
-		onrejected: (reason: unknown) => PromiseLike<V>
-	) {
+		onfulfilled?: (args: params) => PromiseLike<U>,
+		onrejected?: (reason: unknown) => PromiseLike<V>
+	): Promise<any> {
 		try {
 			const iterator = this[Symbol.asyncIterator](),
 				{ value } = await iterator.next()

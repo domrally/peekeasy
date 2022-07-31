@@ -1,20 +1,15 @@
-import { Delegate, Forward } from '../../../exports/exports'
+import { Delegate } from '../../../exports/exports'
 import { test } from '../../test.test'
 
-function deleted() {
-	const delegate = new Forward<[isTrue?: boolean]>(),
-		t = (message?: boolean) => (is = message as boolean),
-		event = new Delegate(delegate)
+async function delegateDelete() {
+	const delegate = new Delegate(),
+		f = () => {}
 
-	let is = false
+	delegate.delete(f)
+	delegate.add(f)
+	delegate.delete(f)
 
-	event.add(t)
-	delegate(true)
-
-	event.delete(t)
-	delegate(false)
-
-	return is
+	return !delegate.has(f)
 }
 
-test(deleted)
+test(delegateDelete)

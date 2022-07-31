@@ -1,14 +1,13 @@
-import { Delegate, Forward } from '../../../exports/exports'
+import { Delegate } from '../../../exports/exports'
 import { test } from '../../test.test'
 
-function has() {
-	const delegate = new Forward(),
-		t = () => {},
-		event = new Delegate(delegate)
+async function delegateHas() {
+	const delegate = new Delegate(),
+		f = () => {}
 
-	event.add(t)
+	delegate.add(f)
 
-	return event.has(t)
+	return delegate.has(f)
 }
 
-test(has)
+test(delegateHas)

@@ -1,23 +1,17 @@
-import { assert, warn } from 'console'
 import { Delegate, Forward } from '../../../exports/exports'
+import { test } from '../../test.test'
 
-async function test() {
-	const event = new Forward<[isTrue: boolean]>(true),
-		stream = new Delegate(event)
-
+async function delegateSymbolAsyncIterator() {
 	let is = false
-	for await (const [message] of stream) {
-		is = message
+
+	const forward = new Forward(true),
+		delegate = new Delegate(forward)
+
+	for await ([is] of delegate) {
 		break
 	}
 
 	return is
 }
 
-try {
-	;(async () => {
-		warn((await test()) ? '\t✅ async iterable' : '\t❌ async iterable')
-	})()
-} catch (e) {
-	assert(false, '❌ async iterable: ', e)
-}
+test(delegateSymbolAsyncIterator)

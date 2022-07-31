@@ -1,8 +1,8 @@
 import { assert, warn } from 'console'
 
-export function test(test: () => boolean) {
+export async function test(test: () => Promise<boolean>) {
 	try {
-		warn(test() ? `\t✅ ${test.name}` : `\t❌ ${test.name}`)
+		warn((await test()) ? `\t✅ ${test.name}` : `\t❌ ${test.name}`)
 	} catch (e) {
 		assert(false, `❌ ${test.name}: `, e)
 	}

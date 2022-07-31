@@ -1,14 +1,15 @@
 import { Delegate, Forward } from '../../../exports/exports'
 import { test } from '../../test.test'
 
-function call() {
-	const delegate = new Forward()
+async function delegateAdd() {
+	let is = false
 
-	new Delegate(delegate)
+	const forward = new Forward(true),
+		delegate = new Delegate(forward)
 
-	delegate()
+	delegate.add(it => (is = it))
 
-	return true
+	return is
 }
 
-test(call)
+test(delegateAdd)

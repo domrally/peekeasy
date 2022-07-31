@@ -1,19 +1,13 @@
-import { assert, warn } from 'console'
 import { Delegate, Forward } from '../../../exports/exports'
+import { test } from '../../test.test'
 
-async function test() {
-	const event = new Forward<[isTrue: boolean]>(true),
-		stream = new Delegate(event)
+async function delegateThen() {
+	const forward = new Forward(true),
+		delegate = new Delegate(forward)
 
-	const [is] = await stream
+	const [is] = await delegate
 
 	return is
 }
 
-try {
-	;(async () => {
-		warn((await test()) ? '\t✅ async await' : '\t❌ async await')
-	})()
-} catch (e) {
-	assert(false, '❌ async await: ', e)
-}
+test(delegateThen)
