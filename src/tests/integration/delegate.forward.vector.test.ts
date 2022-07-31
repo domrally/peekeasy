@@ -1,8 +1,8 @@
 import { Delegate, Forward, Vector } from '../../exports/exports'
 import { test } from '../test.test'
 
-async function integrationForwardReference() {
+async function integrationDelegateForwardVector() {
 	return false
 }
 
-test(integrationForwardReference)
+test(integrationDelegateForwardVector)
