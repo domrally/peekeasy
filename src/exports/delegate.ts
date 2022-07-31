@@ -29,6 +29,11 @@ export class Delegate<params extends any[] = []>
 {
 	/**
 	 *
+	 */
+	#forwards!: Forward<params>[]
+
+	/**
+	 *
 	 * @param forward default sender
 	 * @param forwards event senders
 	 *
@@ -37,48 +42,48 @@ export class Delegate<params extends any[] = []>
 		protected forward: Forward<params> = new Forward(),
 		...forwards: Forward<params>[]
 	) {
-		forwards ??= []
-		forwards.push(forward)
-		this.#forwards = [...new Set(forwards)]
-	}
+		try {
+			//
+			forwards ??= []
 
-	//
-	[Symbol.toStringTag] = this.toString()
+			//
+			forwards.push(forward)
 
-	add(value: Action<params>) {
-		this.#forwards.forEach(d => d?.add?.(value))
-
-		return this
-	}
-
-	delete(value: Action<params>) {
-		this.#forwards.forEach(d => d?.delete?.(value))
-
-		return true
-	}
-
-	has(value: Action<params>) {
-		return this.#forwards.some(d => d?.has?.(value))
-	}
-
-	#forwards!: Forward<params>[]
-
-	//
-	async *[Symbol.asyncIterator]() {
-		while (true) {
-			yield new Promise<params>(resolve => {
-				const resolution = (...args: params) => {
-					resolve(args)
-
-					this.#forwards.forEach(d => d?.delete?.(resolution))
-				}
-
-				this.#forwards.forEach(d => d?.add?.(resolution))
-			})
+			//
+			this.#forwards = [...new Set(forwards)]
+		} catch (message) {
+			throw new Error(`Problem constructing Delegate:\n${message}`)
 		}
 	}
 
-	//
+	add(listener: Action<params>) {
+		try {
+			this.#forwards.forEach(d => d?.add?.(listener))
+
+			return this
+		} catch (message) {
+			throw new Error(`Problem adding listener to Delegate:\n${message}`)
+		}
+	}
+
+	delete(listener: Action<params>) {
+		try {
+			this.#forwards.forEach(d => d?.delete?.(listener))
+
+			return true
+		} catch (message) {
+			throw new Error(`Problem deleting listener from Delegate:\n${message}`)
+		}
+	}
+
+	has(listener: Action<params>) {
+		try {
+			return this.#forwards.some(d => d?.has?.(listener))
+		} catch (message) {
+			throw new Error(`Problem checking if Delegate has listener:\n${message}`)
+		}
+	}
+
 	async then<U = params, V = never>(
 		onfulfilled: (args: params) => PromiseLike<U>,
 		onrejected: (reason: unknown) => PromiseLike<V>
@@ -88,8 +93,36 @@ export class Delegate<params extends any[] = []>
 				{ value } = await iterator.next()
 
 			return onfulfilled?.(value as params)
-		} catch (error) {
-			return onrejected?.(error)
+		} catch (message) {
+			return onrejected?.(
+				`Problem with callback function awaiting then on Delegate:\n${message}`
+			)
+		}
+	}
+
+	async *[Symbol.asyncIterator]() {
+		while (true) {
+			try {
+				yield new Promise<params>(resolve => {
+					const resolution = (...args: params) => {
+						resolve(args)
+
+						this.#forwards.forEach(d => d?.delete?.(resolution))
+					}
+
+					this.#forwards.forEach(d => d?.add?.(resolution))
+				})
+			} catch (message) {
+				throw new Error(`Problem awaiting for Delegate:\n${message}`)
+			}
+		}
+	}
+
+	get [Symbol.toStringTag]() {
+		try {
+			return this.toString()
+		} catch (message) {
+			throw new Error(`Problem converting Delegate to string:\n${message}`)
 		}
 	}
 }
