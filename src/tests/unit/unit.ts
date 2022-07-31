@@ -17,7 +17,7 @@ import './reference/reference.equals.test'
 warn('\n🧪 vectors:')
 import './vector/vector.apply.test'
 import './vector/vector.get.test'
-import './vector/vector.keys.test'
+import './vector/vector.symbol.iterator.test'
 
 warn('\n🧪 streams:')
 import './delegate/delegate.symbol.async-iterator.test'
