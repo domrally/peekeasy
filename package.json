@@ -6,7 +6,7 @@
 	"main": "build/exports/exports.js",
 	"types": "build/exports/exports.d.ts",
 	"homepage": "https://domrally.github.io/peekeasy",
-	"description": "tools for observing proxies in typescript & web assembly",
+	"description": "proxy objects for delegating to patterns in typescript",
 	"scripts": {
 		"stop": "npx eslint --fix && npx prettier --write .",
 		"start": "npx typedoc",
@@ -41,8 +41,7 @@
 		"reference",
 		"delegation",
 		"forwarding",
-		"vectorized",
-		"web-assembly"
+		"vectorized"
 	],
 	"devDependencies": {
 		"@types/node": "*",

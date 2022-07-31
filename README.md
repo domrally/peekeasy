@@ -15,7 +15,6 @@ tools for observing proxies in typescript & web assembly
     - [delegate](#delegate)
     - [reference](#reference)
     - [vector](#vector)
-    - [wasm](#wasm)
 - [**Contribute**](#Contribute)
   - [clone repo](#clone-repo)
   - [open directory](#open-directory)
@@ -130,26 +129,6 @@ sequenceDiagram
     deactivate Array
 ```
 
-#### wasm
-
-```ts
-import { Wasm } from 'peekeasy'
-
-const { log } = console,
-   wasm = await new Wasm<{data: string}>('hw.wasm'),
-
-// Hello, world!
-log(wasm.data)
-```
-
-```mermaid
-sequenceDiagram
-    Wasm->WebAssembly: log({data: 'Hello, world!'}.data)
-    activate WebAssembly
-    WebAssembly->Wasm: log('Hello, world!')
-    deactivate WebAssembly
-```
-
 ## Contribute
 
 ### clone repo
@@ -236,7 +215,6 @@ https://domrally.github.io/peekeasy
       - [delegate/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/delegate)
       - [reference/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/reference)
       - [vector/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/vector)
-      - [wasm/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/wasm)
 
 ### dependencies
 
@@ -247,7 +225,6 @@ classDiagram
     direction LR
     PromiseLike <|.. Promise
     PromiseLike *-- Delegate
-    Promise *-- Wasm
     Promise <.. Delegate
     PromiseLike <.. AsyncIterator
     IteratorResult o-- AsyncIterator
@@ -287,10 +264,6 @@ classDiagram
     class Promise {
         finally(onfinally () => void) Promise
     }
-    class Wasm {
-        constructor(path string) Promise
-    }
-    link Wasm "https://github.com/domrally/peekeasy/blob/main/src/wasm.ts" "wasm.ts"
     class WeakSet {
         add() WeakSet
         delete() WeakSet

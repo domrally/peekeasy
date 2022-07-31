@@ -29,5 +29,3 @@ import './vector/vector.get.test'
 import './vector/vector.set.test'
 import './vector/vector.symbol.iterator.test'
 import './vector/vector.to-string.test'
-
-// wasm
