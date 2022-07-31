@@ -52,7 +52,11 @@ export const Reference = function (...states: any[]) {
 		},
 		get(_, key) {
 			try {
-				return state[key]
+				if ([Symbol.toStringTag, 'toString'].includes(key)) {
+					return () => JSON.stringify(state)
+				} else {
+					return state[key]
+				}
 			} catch (message) {
 				error(
 					`Problem getting Reference to state property "${
@@ -60,6 +64,9 @@ export const Reference = function (...states: any[]) {
 					}":\n${message}`
 				)
 			}
+		},
+		getPrototypeOf() {
+			return Object.getPrototypeOf(state)
 		},
 		set(_, key, value) {
 			try {
