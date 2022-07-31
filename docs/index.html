@@ -26,9 +26,11 @@
 <li><a href="#Use"><strong>Use</strong></a><ul>
 <li><a href="#install">install</a></li>
 <li><a href="#exports">exports</a><ul>
-<li><a href="#event-delegates">event delegates</a></li>
-<li><a href="#references">references</a></li>
-<li><a href="#vectors">vectors</a></li>
+<li><a href="#forward">forward</a></li>
+<li><a href="#delegate">delegate</a></li>
+<li><a href="#reference">reference</a></li>
+<li><a href="#vector">vector</a></li>
+<li><a href="#wasm">wasm</a></li>
 </ul>
 </li>
 </ul>
@@ -48,8 +50,11 @@
 <li><a href="#non-goals">non-goals</a></li>
 <li><a href="#documentation">documentation</a></li>
 <li><a href="#structure">structure</a></li>
-<li><a href="#classes">classes</a></li>
-<li><a href="#dependencies">dependencies</a></li>
+<li><a href="#dependencies">dependencies</a><ul>
+<li><a href="#internal">internal</a></li>
+<li><a href="#external">external</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -68,52 +73,64 @@
   <h3>exports</h3>
 </a>
 
-<a href="#event-delegates" id="event-delegates" style="color: inherit; text-decoration: none;">
-  <h4>event delegates</h4>
+<a href="#forward" id="forward" style="color: inherit; text-decoration: none;">
+  <h4>forward</h4>
 </a>
-<pre><code class="language-ts"><span class="hl-2">import</span><span class="hl-1"> { </span><span class="hl-0">Delegate</span><span class="hl-1">, </span><span class="hl-0">Event</span><span class="hl-1"> } </span><span class="hl-2">from</span><span class="hl-1"> </span><span class="hl-3">&#39;peekeasy&#39;</span><br/><br/><span class="hl-4">const</span><span class="hl-1"> </span><span class="hl-5">delegate</span><span class="hl-1"> = </span><span class="hl-4">new</span><span class="hl-1"> </span><span class="hl-6">Delegate</span><span class="hl-1">(</span><span class="hl-3">&#39;Hello, world!&#39;</span><span class="hl-1">),</span><br/><span class="hl-1">    </span><span class="hl-5">event</span><span class="hl-1"> = </span><span class="hl-4">new</span><span class="hl-1"> </span><span class="hl-6">Event</span><span class="hl-1">(</span><span class="hl-0">delegate</span><span class="hl-1">)</span><br/><br/><span class="hl-7">// Hello, world!</span><br/><span class="hl-0">event</span><span class="hl-1">.</span><span class="hl-6">then</span><span class="hl-1">(</span><span class="hl-0">console</span><span class="hl-1">.</span><span class="hl-0">log</span><span class="hl-1">)</span>
+<pre><code class="language-ts"><span class="hl-2">import</span><span class="hl-1"> { </span><span class="hl-0">Forward</span><span class="hl-1"> } </span><span class="hl-2">from</span><span class="hl-1"> </span><span class="hl-3">&#39;peekeasy&#39;</span><br/><br/><span class="hl-4">const</span><span class="hl-1"> { </span><span class="hl-5">log</span><span class="hl-1"> } = </span><span class="hl-0">console</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-5">forward</span><span class="hl-1"> = </span><span class="hl-4">new</span><span class="hl-1"> </span><span class="hl-6">Forward</span><span class="hl-1">(</span><span class="hl-3">&#39;Hello, world!&#39;</span><span class="hl-1">)</span><br/><br/><span class="hl-7">// Hello, world!</span><br/><span class="hl-0">forward</span><span class="hl-1">.</span><span class="hl-6">add</span><span class="hl-1">(</span><span class="hl-0">log</span><span class="hl-1">)</span>
 </code></pre>
 <pre><code class="language-mermaid">sequenceDiagram
-    Action-&gt;Event: event.then(action)
-    activate Event
-    Event-&gt;Delegate: new Promise(delegate.add)
-    deactivate Event
-    activate Delegate
-    Delegate-&gt;Set: new Promise(set.add)
-    deactivate Delegate
+    Forward-&gt;Set: [log].forEach(print =&gt; print(&#39;Hello, world!&#39;))
     activate Set
-    Set-&gt;Action: set.forEach(action =&gt; action())
+    Set-&gt;Forward: log(&#39;Hello, world!&#39;)
     deactivate Set
 </code></pre>
 
-<a href="#references" id="references" style="color: inherit; text-decoration: none;">
-  <h4>references</h4>
+<a href="#delegate" id="delegate" style="color: inherit; text-decoration: none;">
+  <h4>delegate</h4>
 </a>
-<pre><code class="language-ts"><span class="hl-2">import</span><span class="hl-1"> { </span><span class="hl-0">Reference</span><span class="hl-1"> } </span><span class="hl-2">from</span><span class="hl-1"> </span><span class="hl-3">&#39;peekeasy&#39;</span><br/><br/><span class="hl-4">const</span><span class="hl-1"> </span><span class="hl-5">vector</span><span class="hl-1"> = </span><span class="hl-4">new</span><span class="hl-1"> </span><span class="hl-6">Reference</span><span class="hl-1">(() </span><span class="hl-4">=&gt;</span><span class="hl-1"> </span><span class="hl-0">console</span><span class="hl-1">.</span><span class="hl-6">log</span><span class="hl-1">(</span><span class="hl-3">&#39;Hello, world!&#39;</span><span class="hl-1">))</span><br/><br/><span class="hl-7">// Hello, world!</span><br/><span class="hl-6">vector</span><span class="hl-1">()</span>
+<pre><code class="language-ts"><span class="hl-2">import</span><span class="hl-1"> { </span><span class="hl-0">Delegate</span><span class="hl-1">, </span><span class="hl-0">Forward</span><span class="hl-1"> } </span><span class="hl-2">from</span><span class="hl-1"> </span><span class="hl-3">&#39;peekeasy&#39;</span><br/><br/><span class="hl-4">const</span><span class="hl-1"> { </span><span class="hl-5">log</span><span class="hl-1"> } = </span><span class="hl-0">console</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-5">forward</span><span class="hl-1"> = </span><span class="hl-4">new</span><span class="hl-1"> </span><span class="hl-6">Forward</span><span class="hl-1">(),</span><br/><span class="hl-1">    </span><span class="hl-5">delegate</span><span class="hl-1"> = </span><span class="hl-4">new</span><span class="hl-1"> </span><span class="hl-6">Delegate</span><span class="hl-1">(</span><span class="hl-0">forward</span><span class="hl-1">)</span><br/><br/><span class="hl-0">delegate</span><span class="hl-1">.</span><span class="hl-6">then</span><span class="hl-1">(() </span><span class="hl-4">=&gt;</span><span class="hl-1"> </span><span class="hl-6">log</span><span class="hl-1">(</span><span class="hl-3">&#39;Hello, world!&#39;</span><span class="hl-1">))</span><br/><br/><span class="hl-7">// Hello, world!</span><br/><span class="hl-6">forward</span><span class="hl-1">()</span>
 </code></pre>
 <pre><code class="language-mermaid">sequenceDiagram
-    Action-&gt;Reference: new Reference(action)
-    activate Reference
-    Reference-&gt;Array: reference()
-    deactivate Reference
+    Forward-&gt;Set: [() =&gt; log(&#39;Hello, world!&#39;)].forEach(f =&gt; f())
+    activate Set
+    Set-&gt;Delegate: log(&#39;Hello, world!&#39;)
+    deactivate Set
+</code></pre>
+
+<a href="#reference" id="reference" style="color: inherit; text-decoration: none;">
+  <h4>reference</h4>
+</a>
+<pre><code class="language-ts"><span class="hl-2">import</span><span class="hl-1"> { </span><span class="hl-0">Reference</span><span class="hl-1"> } </span><span class="hl-2">from</span><span class="hl-1"> </span><span class="hl-3">&#39;peekeasy&#39;</span><br/><br/><span class="hl-4">const</span><span class="hl-1"> { </span><span class="hl-5">log</span><span class="hl-1"> } = </span><span class="hl-0">console</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-5">object</span><span class="hl-1">: [</span><span class="hl-8">string</span><span class="hl-1">] = [],</span><br/><span class="hl-1">    </span><span class="hl-5">reference</span><span class="hl-1"> = </span><span class="hl-4">new</span><span class="hl-1"> </span><span class="hl-6">Reference</span><span class="hl-1">(</span><span class="hl-0">object</span><span class="hl-1">)</span><br/><br/><span class="hl-0">object</span><span class="hl-1">[</span><span class="hl-9">0</span><span class="hl-1">] = </span><span class="hl-3">&#39;Hello, world!&#39;</span><br/><br/><span class="hl-7">// Hello, world!</span><br/><span class="hl-6">log</span><span class="hl-1">(</span><span class="hl-0">reference</span><span class="hl-1">[</span><span class="hl-9">0</span><span class="hl-1">])</span>
+</code></pre>
+<pre><code class="language-mermaid">sequenceDiagram
+    Reference-&gt;object: log([&#39;Hello, world!&#39;][0])
+    activate object
+    object-&gt;Reference: log(&#39;Hello, world!&#39;)
+    deactivate object
+</code></pre>
+
+<a href="#vector" id="vector" style="color: inherit; text-decoration: none;">
+  <h4>vector</h4>
+</a>
+<pre><code class="language-ts"><span class="hl-2">import</span><span class="hl-1"> { </span><span class="hl-0">Vector</span><span class="hl-1"> } </span><span class="hl-2">from</span><span class="hl-1"> </span><span class="hl-3">&#39;peekeasy&#39;</span><br/><br/><span class="hl-4">const</span><span class="hl-1"> { </span><span class="hl-5">log</span><span class="hl-1"> } = </span><span class="hl-0">console</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-5">data</span><span class="hl-1"> = [[</span><span class="hl-3">&#39;Hello, &#39;</span><span class="hl-1">], [</span><span class="hl-3">&#39;world!&#39;</span><span class="hl-1">]],</span><br/><span class="hl-1">    </span><span class="hl-5">vector</span><span class="hl-1"> = </span><span class="hl-4">new</span><span class="hl-1"> </span><span class="hl-6">Vector</span><span class="hl-1">(...</span><span class="hl-0">data</span><span class="hl-1">)</span><br/><br/><span class="hl-7">// Hello, world!</span><br/><span class="hl-6">log</span><span class="hl-1">(...</span><span class="hl-0">vector</span><span class="hl-1">[</span><span class="hl-9">0</span><span class="hl-1">])</span>
+</code></pre>
+<pre><code class="language-mermaid">sequenceDiagram
+    Vector-&gt;Array: log(...[[&#39;Hello, &#39;][0], [&#39;world!&#39;][0]])
     activate Array
-    Array-&gt;Action: ([action] = array)()
+    Array-&gt;Vector: log(&#39;Hello, &#39;, &#39;world!&#39;)
     deactivate Array
 </code></pre>
 
-<a href="#vectors" id="vectors" style="color: inherit; text-decoration: none;">
-  <h4>vectors</h4>
+<a href="#wasm" id="wasm" style="color: inherit; text-decoration: none;">
+  <h4>wasm</h4>
 </a>
-<pre><code class="language-ts"><span class="hl-2">import</span><span class="hl-1"> { </span><span class="hl-0">Vector</span><span class="hl-1"> } </span><span class="hl-2">from</span><span class="hl-1"> </span><span class="hl-3">&#39;peekeasy&#39;</span><br/><br/><span class="hl-4">const</span><span class="hl-1"> </span><span class="hl-5">vector</span><span class="hl-1"> = </span><span class="hl-4">new</span><span class="hl-1"> </span><span class="hl-6">Vector</span><span class="hl-1">(</span><br/><span class="hl-1">    () </span><span class="hl-4">=&gt;</span><span class="hl-1"> </span><span class="hl-0">console</span><span class="hl-1">.</span><span class="hl-6">log</span><span class="hl-1">(</span><span class="hl-3">&#39;Hello,&#39;</span><span class="hl-1">),</span><br/><span class="hl-1">    () </span><span class="hl-4">=&gt;</span><span class="hl-1"> </span><span class="hl-0">console</span><span class="hl-1">.</span><span class="hl-6">log</span><span class="hl-1">(</span><span class="hl-3">&#39;   world!&#39;</span><span class="hl-1">)</span><br/><span class="hl-1">)</span><br/><br/><span class="hl-7">// Hello,</span><br/><span class="hl-7">//    world!</span><br/><span class="hl-6">vector</span><span class="hl-1">()</span>
+<pre><code class="language-ts"><span class="hl-2">import</span><span class="hl-1"> { </span><span class="hl-0">Wasm</span><span class="hl-1"> } </span><span class="hl-2">from</span><span class="hl-1"> </span><span class="hl-3">&#39;peekeasy&#39;</span><br/><br/><span class="hl-4">const</span><span class="hl-1"> { </span><span class="hl-5">log</span><span class="hl-1"> } = </span><span class="hl-0">console</span><span class="hl-1">,</span><br/><span class="hl-1">   </span><span class="hl-5">wasm</span><span class="hl-1"> = </span><span class="hl-2">await</span><span class="hl-1"> </span><span class="hl-4">new</span><span class="hl-1"> </span><span class="hl-6">Wasm</span><span class="hl-1">&lt;{</span><span class="hl-0">data</span><span class="hl-1">: </span><span class="hl-8">string</span><span class="hl-1">}&gt;(</span><span class="hl-3">&#39;hw.wasm&#39;</span><span class="hl-1">),</span><br/><br/><span class="hl-7">// Hello, world!</span><br/><span class="hl-5">log</span><span class="hl-1">(wasm.data)</span>
 </code></pre>
 <pre><code class="language-mermaid">sequenceDiagram
-    Action-&gt;Vector: new Vector(...actions)
-    activate Vector
-    Vector-&gt;Array: vector()
-    deactivate Vector
-    activate Array
-    Array-&gt;Action: actions.map(action =&gt; action())
-    deactivate Array
+    Wasm-&gt;WebAssembly: log({data: &#39;Hello, world!&#39;}.data)
+    activate WebAssembly
+    WebAssembly-&gt;Wasm: log(&#39;Hello, world!&#39;)
+    deactivate WebAssembly
 </code></pre>
 
 <a href="#contribute" id="contribute" style="color: inherit; text-decoration: none;">
@@ -222,12 +239,11 @@
 <li><a href="https://github.com/domrally/peekeasy/tree/main/src/tests">tests/</a><ul>
 <li><a href="https://github.com/domrally/peekeasy/tree/main/src/tests/integration">integration/</a></li>
 <li><a href="https://github.com/domrally/peekeasy/tree/main/src/tests/unit">unit/</a><ul>
+<li><a href="https://github.com/domrally/peekeasy/tree/main/src/tests/unit/forward">forward/</a></li>
 <li><a href="https://github.com/domrally/peekeasy/tree/main/src/tests/unit/delegate">delegate/</a></li>
-<li><a href="https://github.com/domrally/peekeasy/tree/main/src/tests/unit/event">event/</a></li>
-<li><a href="https://github.com/domrally/peekeasy/tree/main/src/tests/unit/iterable-iterator">iterable-iterator/</a></li>
-<li><a href="https://github.com/domrally/peekeasy/tree/main/src/tests/unit/iterator-result-value">iterator-result-value/</a></li>
+<li><a href="https://github.com/domrally/peekeasy/tree/main/src/tests/unit/reference">reference/</a></li>
 <li><a href="https://github.com/domrally/peekeasy/tree/main/src/tests/unit/vector">vector/</a></li>
-<li><a href="https://github.com/domrally/peekeasy/tree/main/src/tests/unit/web-assembly">web-assembly/</a></li>
+<li><a href="https://github.com/domrally/peekeasy/tree/main/src/tests/unit/wasm">wasm/</a></li>
 </ul>
 </li>
 </ul>
@@ -236,29 +252,36 @@
 </li>
 </ul>
 
-<a href="#classes" id="classes" style="color: inherit; text-decoration: none;">
-  <h3>classes</h3>
+<a href="#dependencies" id="dependencies" style="color: inherit; text-decoration: none;">
+  <h3>dependencies</h3>
+</a>
+
+<a href="#internal" id="internal" style="color: inherit; text-decoration: none;">
+  <h4>internal</h4>
 </a>
 <pre><code class="language-mermaid">classDiagram
     direction LR
-    PromiseLike &lt;|.. Event
+    PromiseLike &lt;|.. Promise
+    PromiseLike *-- Delegate
+    Promise *-- Wasm
+    Promise &lt;.. Delegate
     PromiseLike &lt;.. AsyncIterator
-    IteratorResult &lt;.. AsyncIterator
-    Iterator &lt;|-- AsyncIterator
-    AsyncIterator &lt;.. AsyncIterable
-    Iterable &lt;|-- AsyncIterable
-    AsyncIterable &lt;|.. Event
-    IteratorResult &lt;.. Iterator
-    Iterator &lt;.. Iterable
-    Iterable &lt;|.. Vector
-    WeakSet~Action~ &lt;|.. Event
-    Action &lt;.. WeakSet~Action~
-    Action &lt;.. Set~Action~
-    Action &lt;|.. Delegate
-    Set~Action~ &lt;|.. Delegate
-    Delegate &lt;.. Event
-    Event &lt;.. Reference
-    WeakSet~Action~ &lt;|-- Set~Action~
+    IteratorResult o-- AsyncIterator
+    Iterator -- AsyncIterator
+    AsyncIterator *-- AsyncIterable
+    Iterable -- AsyncIterable
+    AsyncIterable *-- Delegate
+    IteratorResult o-- Iterator
+    Iterator *-- Iterable
+    Iterable &lt;|.. Set~Action~
+    Forward *-- Delegate
+    Action &lt;.. Delegate
+    Set~Action~ *-- Forward
+    Action *-- Forward
+    WeakSet~Action~ -- Set~Action~
+    WeakSet~Action~ &lt;|.. Delegate
+    Delegate &lt;-- Reference
+    Iterable *-- Vector
     class IteratorResult {
         done boolean
         value any
@@ -278,6 +301,13 @@
     class PromiseLike {
         then() PromiseLike
     }
+    class Promise {
+        finally(onfinally () =&gt; void) Promise
+    }
+    class Wasm {
+        constructor(path string) Promise
+    }
+    link Wasm &quot;https://github.com/domrally/peekeasy/blob/main/src/wasm.ts&quot; &quot;wasm.ts&quot;
     class WeakSet {
         add() WeakSet
         delete() WeakSet
@@ -291,18 +321,21 @@
     class Action {
         apply(args: params) void
     }
-    class Delegate {
+     link Action &quot;https://github.com/domrally/peekeasy/blob/main/src/action.ts&quot; &quot;action.ts&quot;
+    class Forward {
         apply() void
     }
+    link Forward &quot;https://github.com/domrally/peekeasy/blob/main/src/forward.ts&quot; &quot;forward.ts&quot;
+    class Delegate
     link Delegate &quot;https://github.com/domrally/peekeasy/blob/main/src/delegate.ts&quot; &quot;delegate.ts&quot;
-    class Event
-    link Event &quot;https://github.com/domrally/peekeasy/blob/main/src/event.ts&quot; &quot;event.ts&quot;
     class Vector
     link Vector &quot;https://github.com/domrally/peekeasy/blob/main/src/vector.ts&quot; &quot;vector.ts&quot;
+     class Reference
+     link Reference &quot;https://github.com/domrally/peekeasy/blob/main/src/reference.ts&quot; &quot;reference.ts&quot;
 </code></pre>
 
-<a href="#dependencies" id="dependencies" style="color: inherit; text-decoration: none;">
-  <h3>dependencies</h3>
+<a href="#external" id="external" style="color: inherit; text-decoration: none;">
+  <h4>external</h4>
 </a>
 <p><a href="https://prettier.io"><img src="https://img.shields.io/badge/-prettier-F7B93E?style=for-the-badge&labelColor=181717&logo=prettier" alt=""></a>
 <a href="https://nodejs.org"><img src="https://img.shields.io/badge/-nodejs-339933?style=for-the-badge&labelColor=181717&logo=node.js" alt=""></a>
@@ -334,9 +367,7 @@
 <ul>
 <li class="tsd-kind-module"><a href="modules/action.html">action</a></li>
 <li class="tsd-kind-module"><a href="modules/delegate.html">delegate</a></li>
-<li class="tsd-kind-module"><a href="modules/event.html">event</a></li>
-<li class="tsd-kind-module"><a href="modules/vector.html">vector</a></li>
-<li class="tsd-kind-module"><a href="modules/web_assembly.html">web-<wbr/>assembly</a></li></ul></li></ul></div></details></nav></div></div>
+<li class="tsd-kind-module"><a href="modules/vector.html">vector</a></li></ul></li></ul></div></details></nav></div></div>
 <div class="container tsd-generator">
 <p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div>
 <div class="overlay"></div><script src="assets/main.js"></script></body></html>

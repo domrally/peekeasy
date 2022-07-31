@@ -1,8 +1,8 @@
-import { Delegate } from '../../../exports/exports'
+import { Forward } from '../../../exports/exports'
 import { test } from '../../test.test'
 
 class Subject {
-	#delegate = new Delegate<[]>()
+	#delegate = new Forward<[]>()
 
 	publish() {
 		this.#delegate()

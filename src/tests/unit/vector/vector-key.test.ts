@@ -1,4 +1,3 @@
-import { assert } from 'console'
 import { Vector } from '../../../exports/exports'
 import { test } from '../../test.test'
 

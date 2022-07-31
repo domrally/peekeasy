@@ -1,8 +1,8 @@
 import { warn } from 'console'
-import { Event, Reference, Vector } from '../../exports/exports'
+import { Delegate, Reference, Vector } from '../../exports/exports'
 import { test } from '../test.test'
 
-class FizzBuzzState extends Event {
+class FizzBuzzState extends Delegate {
 	constructor(public word: string, private index?: number) {
 		super()
 	}
@@ -11,7 +11,7 @@ class FizzBuzzState extends Event {
 		if (!this.index) this.word = `${count}`
 
 		// activate state if the count is divisible by the index
-		if (!(this.index && count % this.index)) this.delegate()
+		if (!(this.index && count % this.index)) this.forward()
 	}
 }
 

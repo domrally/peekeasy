@@ -11,9 +11,11 @@ tools for observing proxies in typescript & web assembly
 - [**Use**](#Use)
   - [install](#install)
   - [exports](#exports)
-    - [event delegates](#event-delegates)
-    - [references](#references)
-    - [vectors](#vectors)
+    - [forward](#forward)
+    - [delegate](#delegate)
+    - [reference](#reference)
+    - [vector](#vector)
+    - [wasm](#wasm)
 - [**Contribute**](#Contribute)
   - [clone repo](#clone-repo)
   - [open directory](#open-directory)
@@ -27,8 +29,9 @@ tools for observing proxies in typescript & web assembly
   - [non-goals](#non-goals)
   - [documentation](#documentation)
   - [structure](#structure)
-  - [classes](#classes)
   - [dependencies](#dependencies)
+    - [internal](#internal)
+    - [external](#external)
 
 ## Use
 
@@ -40,78 +43,111 @@ npm i peekeasy
 
 ### exports
 
-#### event delegates
+#### forward
 
 ```ts
-import { Delegate, Event } from 'peekeasy'
+import { Forward } from 'peekeasy'
 
-const delegate = new Delegate('Hello, world!'),
-	event = new Event(delegate)
+const { log } = console,
+	forward = new Forward('Hello, world!')
 
 // Hello, world!
-event.then(console.log)
+forward.add(log)
 ```
 
 ```mermaid
 sequenceDiagram
-    Action->Event: event.then(action)
-    activate Event
-    Event->Delegate: new Promise(delegate.add)
-    deactivate Event
-    activate Delegate
-    Delegate->Set: new Promise(set.add)
-    deactivate Delegate
+    Forward->Set: [log].forEach(print => print('Hello, world!'))
     activate Set
-    Set->Action: set.forEach(action => action())
+    Set->Forward: log('Hello, world!')
     deactivate Set
 ```
 
-#### references
+#### delegate
+
+```ts
+import { Delegate, Forward } from 'peekeasy'
+
+const { log } = console,
+	forward = new Forward(),
+	delegate = new Delegate(forward)
+
+delegate.then(() => log('Hello, world!'))
+
+// Hello, world!
+forward()
+```
+
+```mermaid
+sequenceDiagram
+    Forward->Set: [() => log('Hello, world!')].forEach(f => f())
+    activate Set
+    Set->Delegate: log('Hello, world!')
+    deactivate Set
+```
+
+#### reference
 
 ```ts
 import { Reference } from 'peekeasy'
 
-const vector = new Reference(() => console.log('Hello, world!'))
+const { log } = console,
+	object: [string] = [],
+	reference = new Reference(object)
+
+object[0] = 'Hello, world!'
 
 // Hello, world!
-vector()
+log(reference[0])
 ```
 
 ```mermaid
 sequenceDiagram
-    Action->Reference: new Reference(action)
-    activate Reference
-    Reference->Array: reference()
-    deactivate Reference
-    activate Array
-    Array->Action: ([action] = array)()
-    deactivate Array
+    Reference->object: log(['Hello, world!'][0])
+    activate object
+    object->Reference: log('Hello, world!')
+    deactivate object
 ```
 
-#### vectors
+#### vector
 
 ```ts
 import { Vector } from 'peekeasy'
 
-const vector = new Vector(
-	() => console.log('Hello,'),
-	() => console.log('   world!')
-)
+const { log } = console,
+	data = [['Hello, '], ['world!']],
+	vector = new Vector(...data)
 
-// Hello,
-//    world!
-vector()
+// Hello, world!
+log(...vector[0])
 ```
 
 ```mermaid
 sequenceDiagram
-    Action->Vector: new Vector(...actions)
-    activate Vector
-    Vector->Array: vector()
-    deactivate Vector
+    Vector->Array: log(...[['Hello, '][0], ['world!'][0]])
     activate Array
-    Array->Action: actions.map(action => action())
+    Array->Vector: log('Hello, ', 'world!')
     deactivate Array
+```
+
+#### wasm
+
+```ts
+import { Wasm } from 'peekeasy'
+
+const { log } = console,
+   wasm = await new Wasm<{data: string}>('hw.wasm'),
+
+// Hello, world!
+log(wasm.data)
+```
+
+```mermaid
+sequenceDiagram
+    Wasm->WebAssembly: log({data: 'Hello, world!'}.data)
+    activate WebAssembly
+    WebAssembly->Wasm: log('Hello, world!')
+    deactivate WebAssembly
 ```
 
 ## Contribute
@@ -196,35 +232,40 @@ https://domrally.github.io/peekeasy
   - [tests/](https://github.com/domrally/peekeasy/tree/main/src/tests)
     - [integration/](https://github.com/domrally/peekeasy/tree/main/src/tests/integration)
     - [unit/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit)
+      - [forward/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/forward)
       - [delegate/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/delegate)
-      - [event/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/event)
       - [reference/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/reference)
       - [vector/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/vector)
-      - [web-assembly/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/web-assembly)
+      - [wasm/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/wasm)
 
-### classes
+### dependencies
+
+#### internal
 
 ```mermaid
 classDiagram
     direction LR
-    PromiseLike <|.. Event
+    PromiseLike <|.. Promise
+    PromiseLike *-- Delegate
+    Promise *-- Wasm
+    Promise <.. Delegate
     PromiseLike <.. AsyncIterator
-    IteratorResult <.. AsyncIterator
-    Iterator <|-- AsyncIterator
-    AsyncIterator <.. AsyncIterable
-    Iterable <|-- AsyncIterable
-    AsyncIterable <|.. Event
-    IteratorResult <.. Iterator
-    Iterator <.. Iterable
-    Iterable <|.. Vector
-    Delegate <.. Event
-    Action <|.. Delegate
-    Set~Action~ <|.. Delegate
-    Action .. Set~Action~
-    WeakSet~Action~ <|-- Set~Action~
-    WeakSet~Action~ <|.. Event
-    Action .. WeakSet~Action~
-    Event <.. Reference
+    IteratorResult o-- AsyncIterator
+    Iterator -- AsyncIterator
+    AsyncIterator *-- AsyncIterable
+    Iterable -- AsyncIterable
+    AsyncIterable *-- Delegate
+    IteratorResult o-- Iterator
+    Iterator *-- Iterable
+    Iterable <|.. Set~Action~
+    Forward *-- Delegate
+    Action <.. Delegate
+    Set~Action~ *-- Forward
+    Action *-- Forward
+    WeakSet~Action~ -- Set~Action~
+    WeakSet~Action~ <|.. Delegate
+    Delegate <-- Reference
+    Iterable *-- Vector
     class IteratorResult {
         done boolean
         value any
@@ -244,6 +285,13 @@ classDiagram
     class PromiseLike {
         then() PromiseLike
     }
+    class Promise {
+        finally(onfinally () => void) Promise
+    }
+    class Wasm {
+        constructor(path string) Promise
+    }
+    link Wasm "https://github.com/domrally/peekeasy/blob/main/src/wasm.ts" "wasm.ts"
     class WeakSet {
         add() WeakSet
         delete() WeakSet
@@ -257,17 +305,20 @@ classDiagram
     class Action {
         apply(args: params) void
     }
-    class Delegate {
+	 link Action "https://github.com/domrally/peekeasy/blob/main/src/action.ts" "action.ts"
+    class Forward {
         apply() void
     }
+    link Forward "https://github.com/domrally/peekeasy/blob/main/src/forward.ts" "forward.ts"
+    class Delegate
     link Delegate "https://github.com/domrally/peekeasy/blob/main/src/delegate.ts" "delegate.ts"
-    class Event
-    link Event "https://github.com/domrally/peekeasy/blob/main/src/event.ts" "event.ts"
     class Vector
     link Vector "https://github.com/domrally/peekeasy/blob/main/src/vector.ts" "vector.ts"
+	 class Reference
+	 link Reference "https://github.com/domrally/peekeasy/blob/main/src/reference.ts" "reference.ts"
 ```
 
-### dependencies
+#### external
 
 [![](https://img.shields.io/badge/-prettier-F7B93E?style=for-the-badge&labelColor=181717&logo=prettier)](https://prettier.io)
 [![](https://img.shields.io/badge/-nodejs-339933?style=for-the-badge&labelColor=181717&logo=node.js)](https://nodejs.org)

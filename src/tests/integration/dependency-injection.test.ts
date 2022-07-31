@@ -1,8 +1,8 @@
-import { Delegate, Event } from '../../exports/exports'
+import { Delegate, Forward } from '../../exports/exports'
 import { test } from '../test.test'
 
 class Consumer {
-	constructor(onTest: Event<[boolean]>) {
+	constructor(onTest: Delegate<[boolean]>) {
 		onTest.add(this.consume.bind(this))
 	}
 
@@ -14,9 +14,9 @@ class Consumer {
 }
 
 function dependencyInjection() {
-	const delegate = new Delegate<[boolean]>([true])
+	const delegate = new Forward(true)
 
-	const consumer = new Consumer(new Event(delegate))
+	const consumer = new Consumer(new Delegate(delegate))
 
 	return consumer.is
 }

@@ -1,8 +1,8 @@
-import { Delegate } from '../../../exports/exports'
+import { Forward } from '../../../exports/exports'
 import { test } from '../../test.test'
 
 function call() {
-	new Delegate()()
+	new Forward()()
 
 	return true
 }
