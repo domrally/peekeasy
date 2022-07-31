@@ -1,6 +1,6 @@
 # Peekeasy
 
-tools for observing proxies in typescript & web assembly
+delegated proxy tools in typescript
 
 [![](https://img.shields.io/npm/v/peekeasy?style=for-the-badge&labelColor=181717&logo=npm&label=)](https://www.npmjs.com/package/peekeasy)
 [![](https://img.shields.io/github/workflow/status/domrally/peekeasy/test?logo=github&labelColor=181717&style=for-the-badge&label=test)](https://github.com/domrally/peekeasy/actions/workflows/test.yml)
@@ -177,7 +177,6 @@ merge a [pull request](https://github.com/domrally/peekeasy/compare) into `main`
 
 - syntactic sugar in typescript for
   - [state pattern](https://en.wikipedia.org/wiki/State_pattern)
-  - [streaming web assembly](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/instantiateStreaming) [exported functions](https://developer.mozilla.org/en-US/docs/WebAssembly/Exported_functions)
 - implementations for built-in javascript types
   - [`Set`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set) and [`WeakSet`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet) interfaces
   - `Iterable`, `Iterator`, `IterableIterator`, and `IteratorReturnResult`
@@ -190,7 +189,6 @@ merge a [pull request](https://github.com/domrally/peekeasy/compare) into `main`
 
 - an event system
 - an app framework
-- web-assembly build tools
 - a state machine framework
 - an implementation of an observer pattern
 
