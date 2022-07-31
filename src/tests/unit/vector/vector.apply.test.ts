@@ -1,21 +1,12 @@
 import { Vector } from '../../../exports/exports'
 import { test } from '../../test.test'
 
-function apply() {
-	class C {
-		v() {
-			return true
-		}
-	}
-	const vector = new Vector(new C())
-
-	let is = false
-
-	for (const iterator of vector.v()) {
-		is = iterator
-	}
+async function vectorApply() {
+	const f = () => true,
+		vector = new Vector(f),
+		[is] = vector()
 
 	return is
 }
 
-test(apply)
+test(vectorApply)

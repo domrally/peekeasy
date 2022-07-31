@@ -24,5 +24,10 @@ import './reference/reference.set.test'
 import './reference/reference.to-string.test'
 
 // vector
+import './vector/vector.apply.test'
+import './vector/vector.get.test'
+import './vector/vector.set.test'
+import './vector/vector.symbol.iterator.test'
+import './vector/vector.to-string.test'
 
 // wasm

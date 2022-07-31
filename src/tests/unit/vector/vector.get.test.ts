@@ -1,17 +1,12 @@
 import { Vector } from '../../../exports/exports'
 import { test } from '../../test.test'
 
-function key() {
-	const ii = { is: true },
-		vector = new Vector(ii),
-		result = vector.is
+async function vectorGet() {
+	const f = [true],
+		vector = new Vector(f),
+		[is] = vector[0]
 
-	let r = false
-	for (const is of result) {
-		r = is
-	}
-
-	return r
+	return is
 }
 
-test(key)
+test(vectorGet)
