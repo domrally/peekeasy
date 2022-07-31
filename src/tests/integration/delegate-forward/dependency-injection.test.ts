@@ -13,7 +13,7 @@ class Consumer {
 	is = false
 }
 
-function dependencyInjection() {
+async function dependencyInjection() {
 	const delegate = new Forward(true)
 
 	const consumer = new Consumer(new Delegate(delegate))

@@ -15,7 +15,7 @@ class FizzBuzzState extends Delegate {
 	}
 }
 
-function fizzbuzz() {
+async function fizzbuzz() {
 	// pass all legal states to the state pattern
 	const vector = new Vector(
 			new FizzBuzzState(''),
