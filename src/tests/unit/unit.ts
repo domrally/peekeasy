@@ -1,10 +1,10 @@
 import { warn } from 'console'
 
 warn('\n🧪 delegates:')
-import './delegate/delegate-add.test'
-import './delegate/delegate-call.test'
-import './delegate/delegate-delete.test'
-import './delegate/delegate-has.test'
+import './forward/delegate-add.test'
+import './forward/delegate-call.test'
+import './forward/delegate-delete.test'
+import './forward/delegate-has.test'
 
 warn('\n🧪 events:')
 import './event/event-call.test'

@@ -257,7 +257,6 @@ classDiagram
     AsyncIterable *-- Delegate
     IteratorResult o-- Iterator
     Iterator *-- Iterable
-    Iterable <|.. Set~Action~
     Forward *-- Delegate
     Action <.. Delegate
     Set~Action~ *-- Forward
