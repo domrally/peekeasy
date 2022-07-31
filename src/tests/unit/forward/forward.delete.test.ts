@@ -1,19 +1,18 @@
 import { Forward } from '../../../exports/exports'
 import { test } from '../../test.test'
 
-function deleted() {
-	const delegate = new Forward<[isTrue?: boolean]>(),
-		t = (message?: boolean) => (is = message as boolean)
+async function forwardDelete() {
+	let is
 
-	let is = false
+	const forward = new Forward(false),
+		f = (si: boolean) => (is = si)
 
-	delegate.add(t)
-	delegate(true)
+	forward.delete(f)
+	forward.add(f)
+	forward.delete(f)
+	forward(true)
 
-	delegate.delete(t)
-	delegate(false)
-
-	return is
+	return !is && !forward.size
 }
 
-test(deleted)
+test(forwardDelete)

@@ -1,14 +1,15 @@
 import { Forward } from '../../../exports/exports'
 import { test } from '../../test.test'
 
-async function delegateAdd() {
+async function forwardAdd() {
 	let is = false
 
-	const forward = new Forward(true)
+	const forward = new Forward(true),
+		f = (si: boolean) => (is = si)
 
-	forward.add(it => (is = it))
+	forward.add(f)
 
-	return is
+	return is && forward.has(f)
 }
 
-test(delegateAdd)
+test(forwardAdd)

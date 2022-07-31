@@ -1,10 +1,15 @@
 import { Forward } from '../../../exports/exports'
 import { test } from '../../test.test'
 
-function call() {
-	new Forward()()
+async function forwardApply() {
+	let is = false
 
-	return true
+	const forward = new Forward(false)
+
+	forward.add(si => (is = si))
+	forward(true)
+
+	return is
 }
 
-test(call)
+test(forwardApply)

@@ -1,13 +1,10 @@
 import { Forward } from '../../../exports/exports'
 import { test } from '../../test.test'
 
-function has() {
-	const delegate = new Forward(),
-		t = () => {}
+async function forwardHas() {
+	const forward = new Forward(true)
 
-	delegate.add(t)
-
-	return delegate.has(t)
+	return !forward.has(() => {})
 }
 
-test(has)
+test(forwardHas)
