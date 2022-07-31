@@ -32,20 +32,48 @@ export const Reference = function (...states: any[]) {
 	let [state] = states
 
 	for (const value of states) {
-		value.add?.(() => (state = value))
+		try {
+			value.add?.(() => (state = value))
+		} catch (message) {
+			throw new Error(
+				`Problem adding state listener "${value}" to Reference:\n${message}`
+			)
+		}
 	}
 
 	return new Proxy(() => {}, {
 		apply(_, thisArg, args) {
-			return state.apply(thisArg, args)
+			try {
+				return state.apply(thisArg, args)
+			} catch (message) {
+				throw new Error(
+					`Problem applying Reference to state function:\n${message}`
+				)
+			}
 		},
 		get(_, key) {
-			return state[key]
+			try {
+				return state[key]
+			} catch (message) {
+				throw new Error(
+					`Problem getting Reference to state property "${
+						key as string
+					}":\n${message}`
+				)
+			}
 		},
 		set(_, key, value) {
-			state[key] = value
+			try {
+				state[key] = value
 
-			return true
+				return true
+			} catch (message) {
+				throw new Error(
+					`Problem setting state property "${
+						key as string
+					}" on Reference:\n${message}`
+				)
+			}
 		},
 	})
 } as unknown as new <T extends Delegate>(...states: T[]) => Reference<T>
