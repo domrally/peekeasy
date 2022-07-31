@@ -1,5 +1,5 @@
-import { Delegate, Forward } from '../../../exports/exports'
-import { test } from '../../test.test'
+import { Delegate, Forward } from '../../exports/exports'
+import { test } from '../test.test'
 
 class Consumer {
 	constructor(onTest: Delegate<[boolean]>) {
@@ -13,7 +13,7 @@ class Consumer {
 	is = false
 }
 
-async function dependencyInjection() {
+async function integrateDelegateForward() {
 	const delegate = new Forward(true)
 
 	const consumer = new Consumer(new Delegate(delegate))
@@ -21,4 +21,4 @@ async function dependencyInjection() {
 	return consumer.is
 }
 
-test(dependencyInjection)
+test(integrateDelegateForward)

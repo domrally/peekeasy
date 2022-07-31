@@ -1,6 +1,6 @@
 import { warn } from 'console'
-import { Delegate, Reference, Vector } from '../../../exports/exports'
-import { test } from '../../test.test'
+import { Delegate, Reference, Vector } from '../../exports/exports'
+import { test } from '../test.test'
 
 class FizzBuzzState extends Delegate {
 	constructor(public word: string, private index?: number) {
@@ -15,7 +15,7 @@ class FizzBuzzState extends Delegate {
 	}
 }
 
-async function fizzbuzz() {
+async function integrationDelegateReferenceVector() {
 	// pass all legal states to the state pattern
 	const vector = new Vector(
 			new FizzBuzzState(''),
@@ -42,4 +42,4 @@ async function fizzbuzz() {
 	return true
 }
 
-test(fizzbuzz)
+test(integrationDelegateReferenceVector)
