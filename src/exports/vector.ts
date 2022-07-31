@@ -6,26 +6,25 @@
  * _example:_
  *
  * ```ts
- *const vector = new Vector([
- *    { index: 1 },
- *    { index: 2 },
- *    { index: 3 }
- *])
+ * import { Vector } from 'peekeasy'
  *
- *let index = 0
+ * const { log } = console,
+ * 	data = [['Hello, '], ['world!']],
+ * 	vector = new Vector(...data)
  *
- *for (const i of vector.index) {
- *	   const a = ++index === i
- *	   assert(a, `❌ indices ${i} & ${index} are not equal`)
- *}
- *```
+ * // Hello, world!
+ * log(...vector[0])
+ * ```
+ *
  */
 export type Vector<T> = T extends (...args: any) => any
 	? Iterable<T> & ((...params: Parameters<T>) => Vector<ReturnType<T>>)
 	: Iterable<T> & { [K in keyof T]: Vector<T[K]> }
 /**
- * Constructor function
+ * #### constructor
+ *
  * @param scalars values of the vectorized element
+ *
  */
 export const Vector = function (...scalars: any[]) {
 	return new Proxy(() => {}, {

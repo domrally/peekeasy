@@ -1,21 +1,30 @@
 import { Action } from './exports'
 
 /**
- * ### Description:
+ * ### Description
  *
- * A function that sends a message to all set members
+ * Calls actions on a set of listeners
  *
  * _example_
+ *
  * ```ts
+ * import { Forward } from 'peekeasy'
+ *
+ * const { log } = console,
+ *    forward = new Forward('Hello, world!')
+ *
+ * // Hello, world!
+ * forward.add(log)
  * ```
  *
- * @param args tuple of data that is passed to the listeners
  */
 export type Forward<params extends any[] = []> = Action<params> &
 	Set<Action<params>>
 /**
- * #### constructor function:
+ * #### constructor
+ *
  * @param initial optional data that can be passed to the listeners immediately
+ *
  */
 export const Forward = function <params extends any[]>(...initial: params) {
 	const set = new Set<Action<params>>(),

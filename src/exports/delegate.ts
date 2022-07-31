@@ -1,7 +1,25 @@
 import { Action, Forward } from './exports'
 
 /**
- * A weak set of event listeners
+ * ### Description
+ *
+ * Delegates actions to a weak set of listeners
+ *
+ * _example_
+ *
+ * ```ts
+ * import { Delegate, Forward } from 'peekeasy'
+ *
+ * const { log } = console,
+ * 	forward = new Forward(),
+ * 	delegate = new Delegate(forward)
+ *
+ * delegate.then(() => log('Hello, world!'))
+ *
+ * // Hello, world!
+ * forward()
+ * ```
+ *
  */
 export class Delegate<params extends any[] = []>
 	implements
@@ -9,6 +27,12 @@ export class Delegate<params extends any[] = []>
 		AsyncIterable<params>,
 		PromiseLike<params>
 {
+	/**
+	 *
+	 * @param forward default sender
+	 * @param forwards event senders
+	 *
+	 */
 	constructor(
 		protected forward: Forward<params> = new Forward(),
 		...forwards: Forward<params>[]

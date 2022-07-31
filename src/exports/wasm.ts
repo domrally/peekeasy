@@ -1,11 +1,31 @@
 /**
+ * ### Description
+ *
  * A typed object isomorphic to the module exported from the wasm file
- * @param path source of the wasm file
+ *
+ * _example_
+ *
+ * ```ts
+ * import { Delegate, Forward } from 'peekeasy'
+ *
+ * const { log } = console,
+ * 	forward = new Forward(),
+ * 	delegate = new Delegate(forward)
+ *
+ * delegate.then(() => log('Hello, world!'))
+ *
+ * // Hello, world!
+ * forward()
+ * ```
+ *
  */
 export class Wasm<T> extends Promise<T> {
+	/**
+	 * @param path source of the wasm file
+	 *
+	 */
 	constructor(path: `${string}.wasm`) {
 		super(async resolve => {
-			//
 			const wasm = fetch(path),
 				obj = await WebAssembly.instantiateStreaming(wasm),
 				exports = obj.instance.exports as unknown as Exports,

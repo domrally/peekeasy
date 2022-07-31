@@ -15,7 +15,14 @@
 <li><a href="delegate.Delegate.html">Delegate</a></li></ul>
 <h1>Class Delegate&lt;params&gt;</h1></div>
 <section class="tsd-panel tsd-comment">
-<div class="tsd-comment tsd-typography"><p>A weak set of event listeners</p>
+<div class="tsd-comment tsd-typography">
+<a href="#description" id="description" style="color: inherit; text-decoration: none;">
+  <h3>Description</h3>
+</a>
+<p>Delegates actions to a weak set of listeners</p>
+<p><em>example</em></p>
+<pre><code class="language-ts"><span class="hl-2">import</span><span class="hl-1"> { </span><span class="hl-0">Delegate</span><span class="hl-1">, </span><span class="hl-0">Forward</span><span class="hl-1"> } </span><span class="hl-2">from</span><span class="hl-1"> </span><span class="hl-3">&#39;peekeasy&#39;</span><br/><br/><span class="hl-4">const</span><span class="hl-1"> { </span><span class="hl-5">log</span><span class="hl-1"> } = </span><span class="hl-0">console</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-5">forward</span><span class="hl-1"> = </span><span class="hl-4">new</span><span class="hl-1"> </span><span class="hl-6">Forward</span><span class="hl-1">(),</span><br/><span class="hl-1">    </span><span class="hl-5">delegate</span><span class="hl-1"> = </span><span class="hl-4">new</span><span class="hl-1"> </span><span class="hl-6">Delegate</span><span class="hl-1">(</span><span class="hl-0">forward</span><span class="hl-1">)</span><br/><br/><span class="hl-0">delegate</span><span class="hl-1">.</span><span class="hl-6">then</span><span class="hl-1">(() </span><span class="hl-4">=&gt;</span><span class="hl-1"> </span><span class="hl-6">log</span><span class="hl-1">(</span><span class="hl-3">&#39;Hello, world!&#39;</span><span class="hl-1">))</span><br/><br/><span class="hl-7">// Hello, world!</span><br/><span class="hl-6">forward</span><span class="hl-1">()</span>
+</code></pre>
 </div></section>
 <section class="tsd-panel tsd-type-parameters">
 <h4>Type Parameters</h4>
@@ -72,9 +79,13 @@
 <h4 class="tsd-parameters-title">Parameters</h4>
 <ul class="tsd-parameter-list">
 <li>
-<h5>forward: <span class="tsd-signature-type">Forward</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">params</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></h5></li>
+<h5>forward: <span class="tsd-signature-type">Forward</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">params</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></h5>
+<div class="tsd-comment tsd-typography"><p>default sender</p>
+</div></li>
 <li>
-<h5><code class="tsd-tag ts-flagRest">Rest</code> <span class="tsd-signature-symbol">...</span>forwards: <span class="tsd-signature-type">Forward</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">params</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></h5></li></ul></div>
+<h5><code class="tsd-tag ts-flagRest">Rest</code> <span class="tsd-signature-symbol">...</span>forwards: <span class="tsd-signature-type">Forward</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">params</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></h5>
+<div class="tsd-comment tsd-typography"><p>event senders</p>
+</div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="delegate.Delegate.html" class="tsd-signature-type" data-tsd-kind="Class">Delegate</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">params</span><span class="tsd-signature-symbol">&gt;</span></h4></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Properties</h2>
@@ -82,18 +93,18 @@
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagPrivate">Private</code> <span>#forwards</span><a href="#_forwards" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">#forwards<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Forward</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">params</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/domrally/peekeasy/blob/00ae240/src/exports/delegate.ts#L40">delegate.ts:40</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/domrally/peekeasy/blob/70a084a/src/exports/delegate.ts#L64">delegate.ts:64</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="_toStringTag_" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>[to<wbr/>String<wbr/>Tag]</span><a href="#_toStringTag_" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">[to<wbr/>String<wbr/>Tag]<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = ...</span></div><aside class="tsd-sources">
 <p>Implementation of WeakSet.__@toStringTag@124</p>
 <ul>
-<li>Defined in <a href="https://github.com/domrally/peekeasy/blob/00ae240/src/exports/delegate.ts#L22">delegate.ts:22</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/domrally/peekeasy/blob/70a084a/src/exports/delegate.ts#L46">delegate.ts:46</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a id="forward" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>forward</span><a href="#forward" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">forward<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Forward</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">params</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/domrally/peekeasy/blob/00ae240/src/exports/delegate.ts#L13">delegate.ts:13</a></li></ul></aside></section></section>
+<li>Defined in <a href="https://github.com/domrally/peekeasy/blob/70a084a/src/exports/delegate.ts#L37">delegate.ts:37</a></li></ul></aside></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Methods</h2>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="_asyncIterator_" class="tsd-anchor"></a>

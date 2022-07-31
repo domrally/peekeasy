@@ -1,12 +1,32 @@
 import { Delegate } from './delegate'
 
 /**
- * current state of the Iterator
+ * ### Description
+ *
+ * Calls actions on a set of listeners
+ *
+ * _example_
+ *
+ * ```ts
+ * import { Reference } from 'peekeasy'
+ *
+ * const { log } = console,
+ * 	object: [string] = [],
+ * 	reference = new Reference(object)
+ *
+ * object[0] = 'Hello, world!'
+ *
+ * // Hello, world!
+ * log(reference[0])
+ * ```
+ *
  */
 export type Reference<T extends Delegate> = T
 /**
- * Constructor function
+ * #### constructor
+ *
  * @param states permitted states of the state pattern
+ *
  */
 export const Reference = function (...states: any[]) {
 	let [state] = states
