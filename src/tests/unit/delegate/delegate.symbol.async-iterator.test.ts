@@ -1,17 +1,14 @@
-import { Delegate, Forward } from '../../../exports/exports'
+import { Delegate } from '../../../exports/exports'
 import { test } from '../../test.test'
 
 async function delegateSymbolAsyncIterator() {
-	let is = false
+	const delegate = new Delegate()
 
-	const forward = new Forward(true),
-		delegate = new Delegate(forward)
-
-	for await ([is] of delegate) {
+	for await ([] of delegate) {
 		break
 	}
 
-	return is
+	return true
 }
 
 test(delegateSymbolAsyncIterator)

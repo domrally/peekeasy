@@ -2,12 +2,9 @@ import { Delegate } from '../../../exports/exports'
 import { test } from '../../test.test'
 
 async function delegateHas() {
-	const delegate = new Delegate(),
-		f = () => {}
+	const delegate = new Delegate()
 
-	delegate.add(f)
-
-	return delegate.has(f)
+	return !delegate.has(() => {})
 }
 
 test(delegateHas)
