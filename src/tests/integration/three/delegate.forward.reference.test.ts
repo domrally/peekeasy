@@ -1,5 +1,5 @@
-import { Delegate, Forward, Reference } from '../../exports/exports'
-import { test } from '../test.test'
+import { Delegate, Forward, Reference } from '../../../exports/exports'
+import { test } from '../../test.test'
 
 async function integrationDelegateForwardReference() {
 	const forward = new Forward(),

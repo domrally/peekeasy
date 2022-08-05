@@ -1,5 +1,5 @@
-import { Delegate, Forward } from '../../exports/exports'
-import { test } from '../test.test'
+import { Delegate, Forward } from '../../../exports/exports'
+import { test } from '../../test.test'
 
 class Consumer {
 	constructor(onTest: Delegate<[boolean]>) {

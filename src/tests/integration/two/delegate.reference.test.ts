@@ -1,5 +1,5 @@
-import { Delegate, Reference } from '../../exports/exports'
-import { test } from '../test.test'
+import { Delegate, Reference } from '../../../exports/exports'
+import { test } from '../../test.test'
 
 async function integrationDelegateReference() {
 	const delegate = new Reference(new Delegate()),

@@ -19,31 +19,28 @@ import { Action } from './exports'
  * ```
  *
  */
-export type Forward<params extends any[] = []> = Action<params> &
-	Set<Action<params>>
+export type Forward<T extends any[] = []> = Action<T> & Set<Action<T>>
 /**
  * #### constructor
  *
  * @param initial optional data that can be passed to the listeners immediately
  *
  */
-export const Forward = function <params extends any[]>(...initial: params) {
-	const set = new Set<Action<params>>(),
-		forward = (...args: params) => {
+export const Forward = function <T extends any[]>(...listeners: Action<T>[]) {
+	const set = new Set<Action<T>>(listeners),
+		forward = (...args: T) => {
 			try {
-				new Set<Action<params>>(set).forEach(action => action(...args))
+				new Set<Action<T>>(set).forEach(action => action(...args))
 			} catch (message) {
 				error(`Problem forwarding message to listeners:\n${message}`)
 			}
 		}
 
-	forward.add = (listener: Action<params>) => {
+	forward.add = (listener: Action<T>) => {
 		try {
 			const result = set.add(listener)
 
 			forward.size = set.size
-
-			if (initial) listener(...initial)
 
 			return result
 		} catch (message) {
@@ -63,7 +60,7 @@ export const Forward = function <params extends any[]>(...initial: params) {
 		}
 	}
 
-	forward.delete = (listener: Action<params>) => {
+	forward.delete = (listener: Action<T>) => {
 		try {
 			const result = set.delete(listener)
 
@@ -79,9 +76,9 @@ export const Forward = function <params extends any[]>(...initial: params) {
 
 	forward.forEach = (
 		callbackfn: (
-			listener: Action<params>,
-			listener2: Action<params>,
-			set: Set<Action<params>>
+			listener: Action<T>,
+			listener2: Action<T>,
+			set: Set<Action<T>>
 		) => void,
 		thisArg?: unknown
 	) => {
@@ -94,7 +91,7 @@ export const Forward = function <params extends any[]>(...initial: params) {
 		}
 	}
 
-	forward.has = (listener: Action<params>) => {
+	forward.has = (listener: Action<T>) => {
 		try {
 			return set.has(listener)
 		} catch (message) {
@@ -107,6 +104,6 @@ export const Forward = function <params extends any[]>(...initial: params) {
 	forward.size = set.size
 
 	return forward
-} as unknown as new <params extends any[] = []>(
-	...initial: params
-) => Forward<params>
+} as unknown as new <T extends any[] = []>(
+	...listeners: Action<T>[]
+) => Forward<T>

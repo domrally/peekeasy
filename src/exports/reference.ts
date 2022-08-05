@@ -1,5 +1,4 @@
 import { error } from 'console'
-import { Delegate } from './delegate'
 
 /**
  * ### Description
@@ -22,19 +21,22 @@ import { Delegate } from './delegate'
  * ```
  *
  */
-export type Reference<T extends Delegate> = T
+export type Reference<T> = T
 /**
  * #### constructor
  *
  * @param states permitted states of the state pattern
  *
  */
-export const Reference = function (...states: any[]) {
-	let [state] = states
+export const Reference = function <T>(...states: T[]) {
+	let [state] = states as any
 
 	for (const value of states) {
 		try {
-			value.add?.(() => (state = value))
+			;(async () => {
+				await value
+				state = value
+			})()
 		} catch (message) {
 			error(
 				`Problem adding state listener "${value}" to Reference:\n${message}`
@@ -53,7 +55,15 @@ export const Reference = function (...states: any[]) {
 		get(_, key) {
 			try {
 				if ([Symbol.toStringTag, 'toString'].includes(key)) {
-					return () => JSON.stringify(state)
+					return () => {
+						let json = JSON.stringify(state)
+
+						if (json[0] === '"') {
+							json = json.slice(1, -1)
+						}
+
+						return json
+					}
 				} else {
 					return state[key]
 				}
@@ -84,4 +94,4 @@ export const Reference = function (...states: any[]) {
 			}
 		},
 	})
-} as unknown as new <T extends Delegate>(...states: T[]) => Reference<T>
+} as unknown as new <T>(...states: T[]) => Reference<T>

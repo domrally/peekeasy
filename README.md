@@ -11,8 +11,8 @@ delegated proxy tools in typescript
 - [**Use**](#Use)
   - [install](#install)
   - [exports](#exports)
-    - [forward](#forward)
     - [delegate](#delegate)
+    - [forward](#forward)
     - [reference](#reference)
     - [vector](#vector)
 - [**Contribute**](#Contribute)
@@ -42,36 +42,18 @@ npm i peekeasy
 
 ### exports
 
-#### forward
-
-```ts
-import { Forward } from 'peekeasy'
-
-const { log } = console,
-	forward = new Forward('Hello, world!')
-
-// Hello, world!
-forward.add(log)
-```
-
-```mermaid
-sequenceDiagram
-    Forward->Set: [log].forEach(print => print('Hello, world!'))
-    activate Set
-    Set->Forward: log('Hello, world!')
-    deactivate Set
-```
-
 #### delegate
 
 ```ts
 import { Delegate, Forward } from 'peekeasy'
 
-const { log } = console,
-	forward = new Forward(),
+const forward = new Forward<[string, string]>(),
 	delegate = new Delegate(forward)
 
-delegate.then(() => log('Hello, world!'))
+delegate.then(async message => console.log(...message))
+
+// Hello, delegate!
+forward('Hello,', 'delegate!')
 
 // Hello, world!
 forward()
@@ -85,19 +67,34 @@ sequenceDiagram
     deactivate Set
 ```
 
+#### forward
+
+```ts
+import { Forward } from 'peekeasy'
+
+const forward = new Forward<[string]>(console.log)
+
+// Hello, forward!
+forward('Hello, forward!')
+```
+
+```mermaid
+sequenceDiagram
+    Forward->Set: [log].forEach(print => print('Hello, world!'))
+    activate Set
+    Set->Forward: log('Hello, world!')
+    deactivate Set
+```
+
 #### reference
 
 ```ts
 import { Reference } from 'peekeasy'
 
-const { log } = console,
-	object: [string] = [],
-	reference = new Reference(object)
+const reference = new Reference('Hello, reference!')
 
-object[0] = 'Hello, world!'
-
-// Hello, world!
-log(reference[0])
+// Hello, reference!
+console.log(`${reference}`)
 ```
 
 ```mermaid
@@ -113,12 +110,10 @@ sequenceDiagram
 ```ts
 import { Vector } from 'peekeasy'
 
-const { log } = console,
-	data = [['Hello, '], ['world!']],
-	vector = new Vector(...data)
+const vector = new Vector({ word: 'Hello,' }, { word: 'vector!' })
 
-// Hello, world!
-log(...vector[0])
+// Hello, vector!
+console.log(...vector.word)
 ```
 
 ```mermaid
@@ -209,8 +204,8 @@ https://domrally.github.io/peekeasy
   - [tests/](https://github.com/domrally/peekeasy/tree/main/src/tests)
     - [integration/](https://github.com/domrally/peekeasy/tree/main/src/tests/integration)
     - [unit/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit)
-      - [forward/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/forward)
       - [delegate/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/delegate)
+      - [forward/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/forward)
       - [reference/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/reference)
       - [vector/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/vector)
 
@@ -238,7 +233,7 @@ classDiagram
     Action *-- Forward
     WeakSet~Action~ -- Set~Action~
     WeakSet~Action~ <|.. Delegate
-    Delegate <-- Reference
+    PromiseLike <-- Reference
     Iterable *-- Vector
     class IteratorResult {
         done boolean

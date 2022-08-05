@@ -22,16 +22,13 @@ import { Action, Forward } from './exports'
  * ```
  *
  */
-export class Delegate<params extends any[] = []>
-	implements
-		WeakSet<Action<params>>,
-		AsyncIterable<params>,
-		PromiseLike<params>
+export class Delegate<T extends any[] = []>
+	implements WeakSet<Action<T>>, AsyncIterable<T>, PromiseLike<T>
 {
 	/**
 	 *
 	 */
-	private forwards!: Forward<params>[]
+	private forwards!: Forward<T>[]
 
 	/**
 	 *
@@ -40,8 +37,8 @@ export class Delegate<params extends any[] = []>
 	 *
 	 */
 	constructor(
-		protected forward: Forward<params> = new Forward(),
-		...forwards: Forward<params>[]
+		protected forward: Forward<T> = new Forward(),
+		...forwards: Forward<T>[]
 	) {
 		try {
 			//
@@ -57,7 +54,7 @@ export class Delegate<params extends any[] = []>
 		}
 	}
 
-	add(listener: Action<params>) {
+	add(listener: Action<T>) {
 		try {
 			this.forwards.forEach(d => d?.add?.(listener))
 		} catch (message) {
@@ -67,7 +64,7 @@ export class Delegate<params extends any[] = []>
 		return this
 	}
 
-	delete(listener: Action<params>) {
+	delete(listener: Action<T>) {
 		try {
 			this.forwards.forEach(d => d?.delete?.(listener))
 		} catch (message) {
@@ -77,7 +74,7 @@ export class Delegate<params extends any[] = []>
 		return true
 	}
 
-	has(listener: Action<params>) {
+	has(listener: Action<T>) {
 		try {
 			return this.forwards.some(d => d?.has?.(listener))
 		} catch (message) {
@@ -87,15 +84,15 @@ export class Delegate<params extends any[] = []>
 		}
 	}
 
-	async then<U = params, V = never>(
-		onfulfilled?: (args: params) => PromiseLike<U>,
+	async then<U = T, V = never>(
+		onfulfilled?: (args: T) => PromiseLike<U>,
 		onrejected?: (reason: unknown) => PromiseLike<V>
 	): Promise<any> {
 		try {
 			const iterator = this[Symbol.asyncIterator](),
 				{ value } = await iterator.next()
 
-			return onfulfilled?.(value as params)
+			return onfulfilled?.(value as T)
 		} catch (message) {
 			return onrejected?.(
 				`Problem with callback function awaiting then on Delegate:\n${message}`
@@ -106,8 +103,8 @@ export class Delegate<params extends any[] = []>
 	async *[Symbol.asyncIterator]() {
 		while (true) {
 			try {
-				yield new Promise<params>(resolve => {
-					const resolution = (...args: params) => {
+				yield new Promise<T>(resolve => {
+					const resolution = (...args: T) => {
 						resolve(args)
 
 						this.forwards.forEach(d => d?.delete?.(resolution))

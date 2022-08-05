@@ -8,12 +8,13 @@
 	"homepage": "https://domrally.github.io/peekeasy",
 	"description": "delegated proxy tools in typescript",
 	"scripts": {
-		"stop": "npx eslint --fix && npx prettier --write .",
-		"start": "npx typedoc",
-		"test": "npm run lint && npm run unit && npm run integration",
+		"examples": "npx ts-node src/tests/examples/examples.ts",
+		"integration": "npx ts-node src/tests/integration/integration.ts",
 		"lint": "npx eslint && npx prettier --check .",
-		"unit": "npx ts-node src/tests/unit/unit.ts",
-		"integration": "npx ts-node src/tests/integration/integration.ts"
+		"start": "npx typedoc",
+		"stop": "npx eslint --fix && npx prettier --write .",
+		"test": "npm run examples && npm run integration && npm run lint && npm run unit",
+		"unit": "npx ts-node src/tests/unit/unit.ts"
 	},
 	"files": [
 		"build/exports"

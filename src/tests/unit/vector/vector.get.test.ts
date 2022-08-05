@@ -2,9 +2,17 @@ import { Vector } from '../../../exports/exports'
 import { test } from '../../test.test'
 
 async function vectorGet() {
-	const f = [true],
-		vector = new Vector(f),
-		[is] = vector[0]
+	const vector = new Vector({ bool: true }, { bool: false }),
+		bools = vector.bool,
+		[is] = bools
+
+	const t = {
+			bool: true,
+		},
+		f = {
+			bool: false,
+		},
+		array = [t, f]
 
 	return is
 }
