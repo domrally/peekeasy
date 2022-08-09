@@ -28,26 +28,13 @@ export type Reference<T> = T
  * @param states permitted states of the state pattern
  *
  */
-export const Reference = function <T>(...states: T[]) {
-	let [state] = states as any
-
-	for (const value of states) {
-		try {
-			;(async () => {
-				await value
-				state = value
-			})()
-		} catch (message) {
-			error(
-				`Problem adding state listener "${value}" to Reference:\n${message}`
-			)
-		}
-	}
+export const Reference = function <T>(iterator: Iterator<T>) {
+	const state = () => iterator.next().value
 
 	return new Proxy(() => {}, {
 		apply(_, thisArg, args) {
 			try {
-				return state.apply(thisArg, args)
+				return state().apply(thisArg, args)
 			} catch (message) {
 				error(`Problem applying Reference to state function:\n${message}`)
 			}
@@ -56,7 +43,7 @@ export const Reference = function <T>(...states: T[]) {
 			try {
 				if ([Symbol.toStringTag, 'toString'].includes(key)) {
 					return () => {
-						let json = JSON.stringify(state)
+						let json = JSON.stringify(state())
 
 						if (json[0] === '"') {
 							json = json.slice(1, -1)
@@ -65,7 +52,7 @@ export const Reference = function <T>(...states: T[]) {
 						return json
 					}
 				} else {
-					return state[key]
+					return state()[key]
 				}
 			} catch (message) {
 				error(
@@ -76,11 +63,11 @@ export const Reference = function <T>(...states: T[]) {
 			}
 		},
 		getPrototypeOf() {
-			return Object.getPrototypeOf(state)
+			return Object.getPrototypeOf(state())
 		},
 		set(_, key, value) {
 			try {
-				state[key] = value
+				state()[key] = value
 
 				return true
 			} catch (message) {
@@ -94,4 +81,4 @@ export const Reference = function <T>(...states: T[]) {
 			}
 		},
 	})
-} as unknown as new <T>(...states: T[]) => Reference<T>
+} as unknown as new <T>(iterator: Iterator<T>) => Reference<T>

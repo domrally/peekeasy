@@ -1,12 +1,16 @@
-import type { Delegate } from '../../../exports/exports'
 import { Reference } from '../../../exports/exports'
 import { test } from '../../test.test'
 
-async function referenceApply() {
-	const f = (() => true) as unknown as Delegate & (() => true),
-		forward = new Reference(f)
+function* generate() {
+	while (true) {
+		yield () => true
+	}
+}
 
-	return forward()
+async function referenceApply() {
+	const reference = new Reference(generate())
+
+	return reference()
 }
 
 test(referenceApply)

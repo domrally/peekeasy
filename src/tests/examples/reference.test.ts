@@ -1,6 +1,12 @@
 import { Reference } from '../../exports/exports'
 
-const reference = new Reference('Hello, reference!')
+function* generate() {
+	while (true) {
+		yield 'Hello, reference!'
+	}
+}
+
+const reference = new Reference(generate())
 
 // Hello, reference!
 console.log(`${reference}`)

@@ -16,14 +16,24 @@ class FizzBuzzState extends Delegate {
 }
 
 async function integrationDelegateReferenceVector() {
-	// pass all legal states to the state pattern
-	const vector = new Vector(
+	let vector = new Vector(
 			new FizzBuzzState(''),
 			new FizzBuzzState('fizz', 3),
 			new FizzBuzzState('buzz', 5),
 			new FizzBuzzState('fizzbuzz', 15)
 		),
-		reference = new Reference(...vector)
+		[current] = vector,
+		generate = function* () {
+			while (true) {
+				yield current
+			}
+		}
+
+	for (const state of vector) {
+		state.add(() => (current = state))
+	}
+
+	const reference = new Reference(generate())
 
 	let row = '\t'
 

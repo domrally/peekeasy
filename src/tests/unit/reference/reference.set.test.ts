@@ -1,10 +1,15 @@
-import type { Delegate } from '../../../exports/exports'
 import { Reference } from '../../../exports/exports'
 import { test } from '../../test.test'
 
+const o = [false]
+function* generate() {
+	while (true) {
+		yield o
+	}
+}
+
 async function referenceSet() {
-	const delegate = [false] as unknown as Delegate & [boolean],
-		reference = new Reference(delegate)
+	const reference = new Reference(generate())
 
 	return (reference[0] = true)
 }

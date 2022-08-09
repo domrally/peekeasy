@@ -1,12 +1,17 @@
-import type { Delegate } from '../../../exports/exports'
 import { Reference } from '../../../exports/exports'
 import { test } from '../../test.test'
 
-async function referenceEquals() {
-	const delegate = {} as Delegate,
-		reference = new Reference(delegate)
+const o = {}
+function* generate() {
+	while (true) {
+		yield o
+	}
+}
 
-	return Object.getPrototypeOf(reference) === Object.getPrototypeOf(delegate)
+async function referenceEquals() {
+	const reference = new Reference(generate())
+
+	return Object.getPrototypeOf(reference) === Object.getPrototypeOf(o)
 }
 
 test(referenceEquals)

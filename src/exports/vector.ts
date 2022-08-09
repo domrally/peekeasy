@@ -42,8 +42,10 @@ export const Vector = function (...scalars: any[]) {
 
 		get(_, key) {
 			try {
-				if (symbols.includes(key as symbol)) {
+				if (iterators.includes(key as symbol)) {
 					return () => scalars?.[Symbol.iterator]()
+				} else if (toString.includes(key as symbol)) {
+					return () => JSON.stringify(scalars)
 				} else {
 					const keyed = scalars?.map(scalar => {
 						let value = scalar?.[key]
@@ -84,4 +86,6 @@ export const Vector = function (...scalars: any[]) {
 	})
 } as unknown as new <T>(...scalars: T[]) => Vector<T>
 
-const symbols = [Symbol.iterator, Symbol.toStringTag, Symbol.asyncIterator]
+const // symbols
+	iterators = [Symbol.iterator, Symbol.asyncIterator],
+	toString = [Symbol.toStringTag, 'toString']
