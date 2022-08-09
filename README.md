@@ -10,7 +10,7 @@ delegated proxy tools in typescript
 
 - [**Use**](#Use)
   - [install](#install)
-  - [exports](#exports)
+  - [examples](#examples)
     - [delegate](#delegate)
     - [forward](#forward)
     - [reference](#reference)
@@ -40,7 +40,7 @@ delegated proxy tools in typescript
 npm i peekeasy
 ```
 
-### exports
+### examples
 
 #### delegate
 
