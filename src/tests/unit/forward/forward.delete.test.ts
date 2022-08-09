@@ -2,10 +2,10 @@ import { Forward } from '../../../exports/exports'
 import { test } from '../../test.test'
 
 async function forwardDelete() {
-	let is
-
-	const forward = new Forward(false),
-		f = (si: boolean) => (is = si)
+	let //
+		is,
+		f = (si: boolean) => (is = si),
+		forward = new Forward(f)
 
 	forward.delete(f)
 	forward.add(f)

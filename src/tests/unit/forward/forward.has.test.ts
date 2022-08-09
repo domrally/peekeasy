@@ -2,9 +2,11 @@ import { Forward } from '../../../exports/exports'
 import { test } from '../../test.test'
 
 async function forwardHas() {
-	const forward = new Forward(true)
+	const //
+		f = () => {},
+		forward = new Forward(f)
 
-	return !forward.has(() => {})
+	return !forward.has(() => {}) && forward.has(f)
 }
 
 test(forwardHas)

@@ -2,12 +2,14 @@ import { Forward } from '../../../exports/exports'
 import { test } from '../../test.test'
 
 async function forwardAdd() {
-	let is = false
+	let //
+		is = false,
+		f = (si: boolean) => (is = si),
+		forward = new Forward<[boolean]>()
 
-	const forward = new Forward(true),
-		f = (si: boolean) => (is = si)
-
+	//
 	forward.add(f)
+	forward(true)
 
 	return is && forward.has(f)
 }
