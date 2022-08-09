@@ -2,15 +2,20 @@ import { Delegate, Forward, Reference, Vector } from '../../../exports/exports'
 import { test } from '../../test.test'
 
 async function integrationDelegateForwardReferenceVector() {
-	const forward = new Forward(),
+	const //
+		f = () => {},
+		forward = new Forward(f),
 		delegate = new Delegate(forward),
-		reference = new Reference(delegate),
-		vector = new Vector(delegate),
-		f = (si: boolean) => true
+		generate = function* () {
+			while (true) {
+				yield delegate
+			}
+		},
+		reference = new Reference(generate()),
+		vector = new Vector(reference),
+		[has] = vector.has(f)
 
-	forward()
-
-	return false
+	return has
 }
 
 test(integrationDelegateForwardReferenceVector)

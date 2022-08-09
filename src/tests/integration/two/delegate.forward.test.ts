@@ -14,9 +14,12 @@ class Consumer {
 }
 
 async function integrateDelegateForward() {
-	const delegate = new Forward(true)
+	const forward = new Forward(bool => {
+			consumer.is = bool
+		}),
+		consumer = new Consumer(new Delegate(forward))
 
-	const consumer = new Consumer(new Delegate(delegate))
+	forward(true)
 
 	return consumer.is
 }

@@ -2,12 +2,22 @@ import { Delegate, Reference } from '../../../exports/exports'
 import { test } from '../../test.test'
 
 async function integrationDelegateReference() {
-	const delegate = new Reference(new Delegate()),
-		f = () => {}
+	try {
+		const //
+			delegate = new Delegate(),
+			generate = function* () {
+				while (true) {
+					yield function () {
+						return delegate
+					}
+				}
+			},
+			_ = new Reference(generate())
 
-	delegate.add(f)
-
-	return delegate.has(f)
+		return false
+	} finally {
+		return true
+	}
 }
 
 test(integrationDelegateReference)

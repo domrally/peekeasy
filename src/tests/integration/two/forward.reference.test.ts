@@ -2,12 +2,17 @@ import { Forward, Reference } from '../../../exports/exports'
 import { test } from '../../test.test'
 
 async function integrationForwardReference() {
-	const forward = new Reference(new Forward()),
-		f = () => {}
+	const //
+		f = () => {},
+		forward = new Forward(f),
+		generate = function* () {
+			while (true) {
+				yield forward
+			}
+		},
+		reference = new Reference(generate())
 
-	forward.add(f)
-
-	return forward.has(f)
+	return reference.has(f)
 }
 
 test(integrationForwardReference)

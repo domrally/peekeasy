@@ -2,13 +2,19 @@ import { Forward, Reference, Vector } from '../../../exports/exports'
 import { test } from '../../test.test'
 
 async function integrationForwardReferenceVector() {
-	const forward = new Forward(),
-		reference = new Reference(),
-		vector = new Vector(forward)
+	const //
+		f = () => {},
+		forward = new Forward(f),
+		generate = function* () {
+			while (true) {
+				yield forward
+			}
+		},
+		reference = new Reference(generate()),
+		[vector] = new Vector(reference),
+		has = vector.has(f)
 
-	const [bool] = new Vector(new Reference(true as any))
-
-	return bool
+	return has
 }
 
 test(integrationForwardReferenceVector)

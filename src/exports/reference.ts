@@ -58,7 +58,7 @@ export const Reference = function <T>(iterator: Iterator<T>) {
 				error(
 					`Problem getting Reference to state property "${
 						key as string
-					}":\n${message}`
+					}":\n\t\t${message}`
 				)
 			}
 		},
