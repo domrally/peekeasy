@@ -2,12 +2,15 @@ import { Forward, Vector } from '../../../exports/exports'
 import { test } from '../../test.test'
 
 async function integrationForwardVector() {
-	const forward = new Vector(new Forward()),
-		f = () => {}
+	let //
+		is = false,
+		f = () => {
+			is = true
+		},
+		forward = new Forward(f),
+		vector = new Vector(forward)
 
-	forward.add(f)
-
-	const [is] = forward.has(f)
+	vector()
 
 	return is
 }

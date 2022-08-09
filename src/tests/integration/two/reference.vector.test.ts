@@ -2,9 +2,17 @@ import { Reference, Vector } from '../../../exports/exports'
 import { test } from '../../test.test'
 
 async function integrationDelegateReference() {
-	const [bool] = new Vector(new Reference(true as any))
+	const //
+		vector = new Vector(true),
+		generate = function* () {
+			while (true) {
+				yield vector
+			}
+		},
+		reference = new Reference(generate()),
+		[is] = reference
 
-	return bool
+	return is
 }
 
 test(integrationDelegateReference)
