@@ -54,9 +54,6 @@ delegate.then(async message => console.log(...message))
 
 // Hello, delegate!
 forward('Hello,', 'delegate!')
-
-// Hello, world!
-forward()
 ```
 
 ```mermaid
@@ -80,9 +77,9 @@ forward('Hello, forward!')
 
 ```mermaid
 sequenceDiagram
-    Forward->Set: [log].forEach(print => print('Hello, world!'))
+    Forward->Set: [log].forEach(print => print('Hello, forward!'))
     activate Set
-    Set->Forward: log('Hello, world!')
+    Set->Forward: log('Hello, forward!')
     deactivate Set
 ```
 
@@ -99,9 +96,9 @@ console.log(`${reference}`)
 
 ```mermaid
 sequenceDiagram
-    Reference->object: log(['Hello, world!'][0])
+    Reference->object: log(...['Hello, reference!'])
     activate object
-    object->Reference: log('Hello, world!')
+    object->Reference: log('Hello, reference!')
     deactivate object
 ```
 
@@ -110,17 +107,17 @@ sequenceDiagram
 ```ts
 import { Vector } from 'peekeasy'
 
-const vector = new Vector({ word: 'Hello,' }, { word: 'vector!' })
+const vector = new Vector({ text: 'Hello,' }, { text: 'vector!' })
 
 // Hello, vector!
-console.log(...vector.word)
+console.log(...vector.text)
 ```
 
 ```mermaid
 sequenceDiagram
-    Vector->Array: log(...[['Hello, '][0], ['world!'][0]])
+    Vector->Array: log({ text: 'Hello,' }.text, { text: 'vector!' }.text)
     activate Array
-    Array->Vector: log('Hello, ', 'world!')
+    Array->Vector: log('Hello, vector!')
     deactivate Array
 ```
 

@@ -1,6 +1,6 @@
 import { Vector } from '../../exports/exports'
 
-const vector = new Vector({ word: 'Hello,' }, { word: 'vector!' })
+const vector = new Vector({ text: 'Hello,' }, { text: 'vector!' })
 
 // Hello, vector!
-console.log(...vector.word)
+console.log(...vector.text)
