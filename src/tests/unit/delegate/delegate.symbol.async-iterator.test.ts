@@ -1,14 +1,26 @@
-import { Delegate } from '../../../exports/exports'
+import { Delegate, Forward } from '../../../exports/exports'
 import { test } from '../../test.test'
 
 async function delegateSymbolAsyncIterator() {
-	const delegate = new Delegate()
+	let //
+		is = false,
+		f = (_: boolean) => {},
+		forward = new Forward(f),
+		delegate = new Delegate(forward)
 
-	for await ([] of delegate) {
-		break
-	}
+	;(async () => {
+		for await ([is] of delegate) {
+			break
+		}
+	})()
 
-	return true
+	await new Promise(resolve => setTimeout(resolve, 0))
+
+	forward(true)
+
+	await new Promise(resolve => setTimeout(resolve, 0))
+
+	return is
 }
 
 test(delegateSymbolAsyncIterator)
