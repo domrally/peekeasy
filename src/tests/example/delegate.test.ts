@@ -1,9 +1,9 @@
 import { Action, Delegate } from '../../exports/exports'
 
-const forward = new Set<Action<[string, string]>>(),
-	delegate = new Delegate(forward)
+const set = new Set<Action<[string, string]>>(),
+	delegate = new Delegate(set)
 
 delegate.then(async message => console.log(...message))
 
 // Hello, delegate!
-forward.forEach(f => f('Hello,', 'delegate!'))
+set.forEach(f => f('Hello,', 'delegate!'))

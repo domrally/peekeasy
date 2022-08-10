@@ -44,22 +44,22 @@ npm i peekeasy
 #### delegate
 
 ```ts
-import { Delegate, Forward } from 'peekeasy'
+import { Action, Delegate } from 'peekeasy'
 
-const forward = new Forward<[string, string]>(),
-	delegate = new Delegate(forward)
+const set = new Set<Action<[string, string]>>(),
+	delegate = new Delegate(set)
 
-delegate.then(async message => console.log(...message))
+delegate.add(async message => console.log(...message))
 
 // Hello, delegate!
-forward('Hello,', 'delegate!')
+set.forEach(f => f('Hello,', 'delegate!'))
 ```
 
 ```mermaid
 sequenceDiagram
-    Forward->Set: [() => log('Hello, world!')].forEach(f => f())
+    Delegate->Set: Delegate.add(Function)
     activate Set
-    Set->Delegate: log('Hello, world!')
+    Set->Delegate: Set.add(Function)
     deactivate Set
 ```
 
@@ -68,7 +68,13 @@ sequenceDiagram
 ```ts
 import { Reference } from 'peekeasy'
 
-const reference = new Reference('Hello, reference!')
+function* generate() {
+	while (true) {
+		yield 'Hello, reference!'
+	}
+}
+
+const reference = new Reference(generate())
 
 // Hello, reference!
 console.log(`${reference}`)
@@ -76,10 +82,10 @@ console.log(`${reference}`)
 
 ```mermaid
 sequenceDiagram
-    Reference->object: log(...['Hello, reference!'])
-    activate object
-    object->Reference: log('Hello, reference!')
-    deactivate object
+    Reference->Iterator: {next: () => ({value})}.next().value
+    activate Iterator
+    Iterator->Reference: value
+    deactivate Iterator
 ```
 
 #### vector
@@ -87,7 +93,7 @@ sequenceDiagram
 ```ts
 import { Vector } from 'peekeasy'
 
-const vector = new Vector({ text: 'Hello,' }, { text: 'vector!' })
+const vector = new Vector([{ text: 'Hello,' }, { text: 'vector!' }])
 
 // Hello, vector!
 console.log(...vector.text)
@@ -95,9 +101,9 @@ console.log(...vector.text)
 
 ```mermaid
 sequenceDiagram
-    Vector->Array: log({ text: 'Hello,' }.text, { text: 'vector!' }.text)
+    Vector->Array: [{value}.value, {value}.value]
     activate Array
-    Array->Vector: log('Hello, vector!')
+    Array->Vector: [value, value]
     deactivate Array
 ```
 
