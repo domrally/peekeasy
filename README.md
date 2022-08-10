@@ -155,20 +155,23 @@ merge a [pull request](https://github.com/domrally/peekeasy/compare) into `main`
 
 - syntactic sugar in typescript for
   - [state pattern](https://en.wikipedia.org/wiki/State_pattern)
+  - [delegation pattern](https://en.wikipedia.org/wiki/Delegation_pattern)
+  - [reference data structure](<https://en.wikipedia.org/wiki/Reference_(computer_science)>)
 - implementations for built-in javascript types
   - [`Set`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set) and [`WeakSet`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet) interfaces
-  - `Iterable`, `Iterator`, `IterableIterator`, and `IteratorReturnResult`
-  - [`for await...of`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for-await...of) and [`Proxy`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) objects
+  - [`Iteration protocols`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols)
+  - [`Proxy`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) objects
 - bring concepts to typescript from
   - C# [`delegates`](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/delegates/) and [`events`](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/events/)
   - [array programming](https://en.wikipedia.org/wiki/Array_programming)
 
 ### non-goals
 
-- an event system
-- an app framework
-- a state machine framework
-- an implementation of an observer pattern
+- event system
+- app framework
+- observer pattern
+- finite state machine
+- integration with array programming languages
 
 ### documentation
 
