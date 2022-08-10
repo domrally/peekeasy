@@ -205,10 +205,10 @@ https://domrally.github.io/peekeasy
 ```mermaid
 classDiagram
     direction LR
-    PromiseLike <|.. Promise
-    PromiseLike *-- Delegate
-    Promise <.. Delegate
-    PromiseLike <.. AsyncIterator
+    PromiseLike~Action~ <|.. Promise~Action~
+    PromiseLike~Action~ *-- Delegate
+    Promise~Action~ <.. Delegate
+    PromiseLike~Action~ <.. AsyncIterator
     IteratorResult o-- AsyncIterator
     Iterator -- AsyncIterator
     AsyncIterator *-- AsyncIterable
@@ -219,7 +219,11 @@ classDiagram
     Action <.. Delegate
     WeakSet~Action~ -- Set~Action~
     WeakSet~Action~ <|.. Delegate
-    PromiseLike <-- Reference
+	 Action o-- Set~Action~
+	 Action o-- WeakSet~Action~
+	 Action *-- Promise~Action~
+	 Action *-- PromiseLike~Action~
+    Iterator <-- Reference
     Iterable *-- Vector
     class IteratorResult {
         done boolean
@@ -237,10 +241,10 @@ classDiagram
     class AsyncIterator {
         next() PromiseLike~IteratorResult~
     }
-    class PromiseLike {
+    class PromiseLike~Action~ {
         then() PromiseLike
     }
-    class Promise {
+    class Promise~Action~ {
         finally(onfinally () => void) Promise
     }
     class WeakSet {
