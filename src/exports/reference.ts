@@ -52,7 +52,14 @@ export const Reference = function <T>(iterator: Iterator<T>) {
 						return json
 					}
 				} else {
-					return state()[key]
+					const //
+						s = state(),
+						value = s[key]
+					if (typeof value === 'function') {
+						return value.bind(s)
+					} else {
+						return value
+					}
 				}
 			} catch (message) {
 				error(

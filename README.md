@@ -214,7 +214,6 @@ classDiagram
     IteratorResult o-- Iterator
     Iterator *-- Iterable
     Action <.. Delegate
-    Action *-- Forward
     WeakSet~Action~ -- Set~Action~
     WeakSet~Action~ <|.. Delegate
     PromiseLike <-- Reference

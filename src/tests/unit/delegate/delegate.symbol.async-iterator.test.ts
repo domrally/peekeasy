@@ -5,8 +5,8 @@ async function delegateSymbolAsyncIterator() {
 	let //
 		is = false,
 		f = (_: boolean) => {},
-		forward = new Set([f]),
-		delegate = new Delegate(forward)
+		set = new Set([f]),
+		delegate = new Delegate(set)
 
 	;(async () => {
 		for await ([is] of delegate) {
@@ -16,7 +16,7 @@ async function delegateSymbolAsyncIterator() {
 
 	await new Promise(resolve => setTimeout(resolve, 0))
 
-	forward.forEach(f => f(true))
+	set.forEach(f => f(true))
 
 	await new Promise(resolve => setTimeout(resolve, 0))
 

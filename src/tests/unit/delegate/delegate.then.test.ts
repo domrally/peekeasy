@@ -5,8 +5,8 @@ async function delegateThen() {
 	let //
 		is = false,
 		f = (_: boolean) => {},
-		forward = new Set([f]),
-		delegate = new Delegate(forward)
+		set = new Set([f]),
+		delegate = new Delegate(set)
 
 	;(async () => {
 		;[is] = await delegate
@@ -14,7 +14,7 @@ async function delegateThen() {
 
 	await new Promise(resolve => setTimeout(resolve, 0))
 
-	forward.forEach(f => f(true))
+	set.forEach(f => f(true))
 
 	await new Promise(resolve => setTimeout(resolve, 0))
 

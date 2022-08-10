@@ -9,16 +9,15 @@ import { Action } from './exports'
  * _example_
  *
  * ```ts
- * import { Delegate, Forward } from 'peekeasy'
+ * import { Action, Delegate } from 'peekeasy'
  *
- * const { log } = console,
- * 	forward = new Forward(),
- * 	delegate = new Delegate(forward)
+ * const set = new Set<Action<[string, string]>>(),
+ * 	delegate = new Delegate(set)
  *
- * delegate.then(() => log('Hello, world!'))
+ * delegate.then(async message => console.log(...message))
  *
- * // Hello, world!
- * forward()
+ * // Hello, delegate!
+ * set.forEach(f => f('Hello,', 'delegate!'))
  * ```
  *
  */
@@ -28,27 +27,19 @@ export class Delegate<T extends any[] = []>
 	/**
 	 *
 	 */
-	private forwards!: Set<Action<T>>[]
+	private sets!: Set<Action<T>>[]
 
 	/**
 	 *
-	 * @param forward default sender
-	 * @param forwards event senders
+	 * @param sets event senders
 	 *
 	 */
-	constructor(
-		protected forward = new Set<Action<T>>(),
-		...forwards: Set<Action<T>>[]
-	) {
+	constructor(...sets: Set<Action<T>>[]) {
 		try {
-			//
-			forwards ??= []
+			sets ??= [new Set()]
 
-			//
-			forwards.push(forward)
-
-			//
-			this.forwards = [...new Set(forwards)]
+			// deduplicate sets
+			this.sets = [...new Set(sets)]
 		} catch (message) {
 			error(`Problem constructing Delegate:\n${message}`)
 		}
@@ -56,7 +47,7 @@ export class Delegate<T extends any[] = []>
 
 	add(listener: Action<T>) {
 		try {
-			this.forwards.forEach(d => d?.add?.(listener))
+			this.sets.forEach(d => d?.add?.(listener))
 		} catch (message) {
 			error(`Problem adding listener to Delegate:\n${message}`)
 		}
@@ -66,7 +57,7 @@ export class Delegate<T extends any[] = []>
 
 	delete(listener: Action<T>) {
 		try {
-			this.forwards.forEach(d => d?.delete?.(listener))
+			this.sets.forEach(d => d?.delete?.(listener))
 		} catch (message) {
 			error(`Problem deleting listener from Delegate:\n${message}`)
 		}
@@ -76,7 +67,7 @@ export class Delegate<T extends any[] = []>
 
 	has(listener: Action<T>) {
 		try {
-			return this.forwards.some(d => d?.has?.(listener))
+			return this.sets.some(d => d?.has?.(listener))
 		} catch (message) {
 			error(`Problem checking if Delegate has listener:\n${message}`)
 
@@ -107,10 +98,10 @@ export class Delegate<T extends any[] = []>
 					const resolution = (...args: T) => {
 						resolve(args)
 
-						this.forwards.forEach(d => d?.delete?.(resolution))
+						this.sets.forEach(d => d?.delete?.(resolution))
 					}
 
-					this.forwards.forEach(d => d?.add?.(resolution))
+					this.sets.forEach(d => d?.add?.(resolution))
 				})
 			} catch (message) {
 				error(`Problem awaiting for Delegate:\n${message}`)
