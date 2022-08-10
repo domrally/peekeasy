@@ -12,7 +12,6 @@ delegated proxy tools in typescript
   - [install](#install)
   - [examples](#examples)
     - [delegate](#delegate)
-    - [forward](#forward)
     - [reference](#reference)
     - [vector](#vector)
 - [**Contribute**](#Contribute)
@@ -61,25 +60,6 @@ sequenceDiagram
     Forward->Set: [() => log('Hello, world!')].forEach(f => f())
     activate Set
     Set->Delegate: log('Hello, world!')
-    deactivate Set
-```
-
-#### forward
-
-```ts
-import { Forward } from 'peekeasy'
-
-const forward = new Forward<[string]>(console.log)
-
-// Hello, forward!
-forward('Hello, forward!')
-```
-
-```mermaid
-sequenceDiagram
-    Forward->Set: [log].forEach(print => print('Hello, forward!'))
-    activate Set
-    Set->Forward: log('Hello, forward!')
     deactivate Set
 ```
 
@@ -201,13 +181,11 @@ https://domrally.github.io/peekeasy
   - [tests/](https://github.com/domrally/peekeasy/tree/main/src/tests)
     - [example/](https://github.com/domrally/peekeasy/tree/main/src/tests/example)
     - [integration/](https://github.com/domrally/peekeasy/tree/main/src/tests/integration)
-      - [four/](https://github.com/domrally/peekeasy/tree/main/src/tests/integration/four)
       - [one/](https://github.com/domrally/peekeasy/tree/main/src/tests/integration/one)
       - [three/](https://github.com/domrally/peekeasy/tree/main/src/tests/integration/three)
       - [two/](https://github.com/domrally/peekeasy/tree/main/src/tests/integration/two)
     - [unit/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit)
       - [delegate/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/delegate)
-      - [forward/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/forward)
       - [reference/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/reference)
       - [vector/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/vector)
 
@@ -229,9 +207,7 @@ classDiagram
     AsyncIterable *-- Delegate
     IteratorResult o-- Iterator
     Iterator *-- Iterable
-    Forward *-- Delegate
     Action <.. Delegate
-    Set~Action~ *-- Forward
     Action *-- Forward
     WeakSet~Action~ -- Set~Action~
     WeakSet~Action~ <|.. Delegate
@@ -273,10 +249,6 @@ classDiagram
         apply(args: params) void
     }
 	 link Action "https://github.com/domrally/peekeasy/blob/main/src/action.ts" "action.ts"
-    class Forward {
-        apply() void
-    }
-    link Forward "https://github.com/domrally/peekeasy/blob/main/src/forward.ts" "forward.ts"
     class Delegate
     link Delegate "https://github.com/domrally/peekeasy/blob/main/src/delegate.ts" "delegate.ts"
     class Vector
