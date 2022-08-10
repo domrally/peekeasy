@@ -1,4 +1,5 @@
-import { Action, Forward } from './exports'
+import { error } from 'console'
+import { Action } from './exports'
 
 /**
  * ### Description
@@ -8,88 +9,113 @@ import { Action, Forward } from './exports'
  * _example_
  *
  * ```ts
- * import { Delegate, Forward } from 'peekeasy'
+ * import { Action, Delegate } from 'peekeasy'
  *
- * const { log } = console,
- * 	forward = new Forward(),
- * 	delegate = new Delegate(forward)
+ * const set = new Set<Action<[string, string]>>(),
+ * 	delegate = new Delegate(set)
  *
- * delegate.then(() => log('Hello, world!'))
+ * delegate.then(async message => console.log(...message))
  *
- * // Hello, world!
- * forward()
+ * // Hello, delegate!
+ * set.forEach(f => f('Hello,', 'delegate!'))
  * ```
  *
  */
-export class Delegate<params extends any[] = []>
-	implements
-		WeakSet<Action<params>>,
-		AsyncIterable<params>,
-		PromiseLike<params>
+export class Delegate<T extends any[] = []>
+	implements WeakSet<Action<T>>, AsyncIterable<T>, PromiseLike<T>
 {
 	/**
 	 *
-	 * @param forward default sender
-	 * @param forwards event senders
+	 */
+	private sets!: Set<Action<T>>[]
+
+	/**
+	 *
+	 * @param sets event senders
 	 *
 	 */
-	constructor(
-		protected forward: Forward<params> = new Forward(),
-		...forwards: Forward<params>[]
-	) {
-		forwards ??= []
-		forwards.push(forward)
-		this.#forwards = [...new Set(forwards)]
+	constructor(...sets: Set<Action<T>>[]) {
+		try {
+			sets ??= [new Set()]
+
+			// deduplicate sets
+			this.sets = [...new Set(sets)]
+		} catch (message) {
+			error(`Problem constructing Delegate:\n${message}`)
+		}
 	}
 
-	//
-	[Symbol.toStringTag] = this.toString()
-
-	add(value: Action<params>) {
-		this.#forwards.forEach(d => d?.add?.(value))
+	add(listener: Action<T>) {
+		try {
+			this.sets.forEach(d => d?.add?.(listener))
+		} catch (message) {
+			error(`Problem adding listener to Delegate:\n${message}`)
+		}
 
 		return this
 	}
 
-	delete(value: Action<params>) {
-		this.#forwards.forEach(d => d?.delete?.(value))
+	delete(listener: Action<T>) {
+		try {
+			this.sets.forEach(d => d?.delete?.(listener))
+		} catch (message) {
+			error(`Problem deleting listener from Delegate:\n${message}`)
+		}
 
 		return true
 	}
 
-	has(value: Action<params>) {
-		return this.#forwards.some(d => d?.has?.(value))
-	}
+	has(listener: Action<T>) {
+		try {
+			return this.sets.some(d => d?.has?.(listener))
+		} catch (message) {
+			error(`Problem checking if Delegate has listener:\n${message}`)
 
-	#forwards!: Forward<params>[]
-
-	//
-	async *[Symbol.asyncIterator]() {
-		while (true) {
-			yield new Promise<params>(resolve => {
-				const resolution = (...args: params) => {
-					resolve(args)
-
-					this.#forwards.forEach(d => d?.delete?.(resolution))
-				}
-
-				this.#forwards.forEach(d => d?.add?.(resolution))
-			})
+			return false
 		}
 	}
 
-	//
-	async then<U = params, V = never>(
-		onfulfilled: (args: params) => PromiseLike<U>,
-		onrejected: (reason: unknown) => PromiseLike<V>
-	) {
+	async then<U = T, V = never>(
+		onfulfilled?: (args: T) => PromiseLike<U>,
+		onrejected?: (reason: unknown) => PromiseLike<V>
+	): Promise<any> {
 		try {
 			const iterator = this[Symbol.asyncIterator](),
 				{ value } = await iterator.next()
 
-			return onfulfilled?.(value as params)
-		} catch (error) {
-			return onrejected?.(error)
+			return onfulfilled?.(value as T)
+		} catch (message) {
+			return onrejected?.(
+				`Problem with callback function awaiting then on Delegate:\n${message}`
+			)
+		}
+	}
+
+	async *[Symbol.asyncIterator]() {
+		while (true) {
+			try {
+				yield new Promise<T>(resolve => {
+					const resolution = (...args: T) => {
+						resolve(args)
+
+						this.sets.forEach(d => d?.delete?.(resolution))
+					}
+
+					this.sets.forEach(d => d?.add?.(resolution))
+				})
+			} catch (message) {
+				error(`Problem awaiting for Delegate:\n${message}`)
+			}
+		}
+	}
+
+	get [Symbol.toStringTag]() {
+		try {
+			return JSON.stringify(this)
+		} catch (message) {
+			error(`Problem converting Delegate to string:\n${message}`)
+
+			return Delegate.name
 		}
 	}
 }

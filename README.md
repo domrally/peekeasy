@@ -1,6 +1,6 @@
 # Peekeasy
 
-tools for observing proxies in typescript & web assembly
+delegated proxy tools in typescript
 
 [![](https://img.shields.io/npm/v/peekeasy?style=for-the-badge&labelColor=181717&logo=npm&label=)](https://www.npmjs.com/package/peekeasy)
 [![](https://img.shields.io/github/workflow/status/domrally/peekeasy/test?logo=github&labelColor=181717&style=for-the-badge&label=test)](https://github.com/domrally/peekeasy/actions/workflows/test.yml)
@@ -10,12 +10,10 @@ tools for observing proxies in typescript & web assembly
 
 - [**Use**](#Use)
   - [install](#install)
-  - [exports](#exports)
-    - [forward](#forward)
+  - [examples](#examples)
     - [delegate](#delegate)
     - [reference](#reference)
     - [vector](#vector)
-    - [wasm](#wasm)
 - [**Contribute**](#Contribute)
   - [clone repo](#clone-repo)
   - [open directory](#open-directory)
@@ -28,10 +26,10 @@ tools for observing proxies in typescript & web assembly
   - [goals](#goals)
   - [non-goals](#non-goals)
   - [documentation](#documentation)
-  - [structure](#structure)
   - [dependencies](#dependencies)
     - [internal](#internal)
     - [external](#external)
+  - [structure](#structure)
 
 ## Use
 
@@ -41,48 +39,27 @@ tools for observing proxies in typescript & web assembly
 npm i peekeasy
 ```
 
-### exports
-
-#### forward
-
-```ts
-import { Forward } from 'peekeasy'
-
-const { log } = console,
-	forward = new Forward('Hello, world!')
-
-// Hello, world!
-forward.add(log)
-```
-
-```mermaid
-sequenceDiagram
-    Forward->Set: [log].forEach(print => print('Hello, world!'))
-    activate Set
-    Set->Forward: log('Hello, world!')
-    deactivate Set
-```
+### examples
 
 #### delegate
 
 ```ts
-import { Delegate, Forward } from 'peekeasy'
+import { Action, Delegate } from 'peekeasy'
 
-const { log } = console,
-	forward = new Forward(),
-	delegate = new Delegate(forward)
+const set = new Set<Action<[string, string]>>(),
+	delegate = new Delegate(set)
 
-delegate.then(() => log('Hello, world!'))
+delegate.add(async message => console.log(...message))
 
-// Hello, world!
-forward()
+// Hello, delegate!
+set.forEach(f => f('Hello,', 'delegate!'))
 ```
 
 ```mermaid
 sequenceDiagram
-    Forward->Set: [() => log('Hello, world!')].forEach(f => f())
+    Delegate->Set: Delegate.add(Function)
     activate Set
-    Set->Delegate: log('Hello, world!')
+    Set->Delegate: Set.add(Function)
     deactivate Set
 ```
 
@@ -91,22 +68,24 @@ sequenceDiagram
 ```ts
 import { Reference } from 'peekeasy'
 
-const { log } = console,
-	object: [string] = [],
-	reference = new Reference(object)
+function* generate() {
+	while (true) {
+		yield 'Hello, reference!'
+	}
+}
 
-object[0] = 'Hello, world!'
+const reference = new Reference(generate())
 
-// Hello, world!
-log(reference[0])
+// Hello, reference!
+console.log(`${reference}`)
 ```
 
 ```mermaid
 sequenceDiagram
-    Reference->object: log(['Hello, world!'][0])
-    activate object
-    object->Reference: log('Hello, world!')
-    deactivate object
+    Reference->Iterator: {next: () => ({value})}.next().value
+    activate Iterator
+    Iterator->Reference: value
+    deactivate Iterator
 ```
 
 #### vector
@@ -114,40 +93,18 @@ sequenceDiagram
 ```ts
 import { Vector } from 'peekeasy'
 
-const { log } = console,
-	data = [['Hello, '], ['world!']],
-	vector = new Vector(...data)
+const vector = new Vector([{ text: 'Hello,' }, { text: 'vector!' }])
 
-// Hello, world!
-log(...vector[0])
+// Hello, vector!
+console.log(...vector.text)
 ```
 
 ```mermaid
 sequenceDiagram
-    Vector->Array: log(...[['Hello, '][0], ['world!'][0]])
+    Vector->Array: [{value}.value, {value}.value]
     activate Array
-    Array->Vector: log('Hello, ', 'world!')
+    Array->Vector: [value, value]
     deactivate Array
-```
-
-#### wasm
-
-```ts
-import { Wasm } from 'peekeasy'
-
-const { log } = console,
-   wasm = await new Wasm<{data: string}>('hw.wasm'),
-
-// Hello, world!
-log(wasm.data)
-```
-
-```mermaid
-sequenceDiagram
-    Wasm->WebAssembly: log({data: 'Hello, world!'}.data)
-    activate WebAssembly
-    WebAssembly->Wasm: log('Hello, world!')
-    deactivate WebAssembly
 ```
 
 ## Contribute
@@ -198,45 +155,27 @@ merge a [pull request](https://github.com/domrally/peekeasy/compare) into `main`
 
 - syntactic sugar in typescript for
   - [state pattern](https://en.wikipedia.org/wiki/State_pattern)
-  - [streaming web assembly](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/instantiateStreaming) [exported functions](https://developer.mozilla.org/en-US/docs/WebAssembly/Exported_functions)
+  - [delegation pattern](https://en.wikipedia.org/wiki/Delegation_pattern)
+  - [reference data structure](<https://en.wikipedia.org/wiki/Reference_(computer_science)>)
 - implementations for built-in javascript types
   - [`Set`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set) and [`WeakSet`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet) interfaces
-  - `Iterable`, `Iterator`, `IterableIterator`, and `IteratorReturnResult`
-  - [`for await...of`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for-await...of) and [`Proxy`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) objects
+  - [`Iteration protocols`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols)
+  - [`Proxy`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) objects
 - bring concepts to typescript from
   - C# [`delegates`](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/delegates/) and [`events`](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/events/)
   - [array programming](https://en.wikipedia.org/wiki/Array_programming)
 
 ### non-goals
 
-- an event system
-- an app framework
-- web-assembly build tools
-- a state machine framework
-- an implementation of an observer pattern
+- event system
+- app framework
+- observer pattern
+- finite state machine
+- integration with array programming languages
 
 ### documentation
 
 https://domrally.github.io/peekeasy
-
-### structure
-
-- [.github/](https://github.com/domrally/peekeasy/tree/main/.github)
-  - [workflows/](https://github.com/domrally/peekeasy/tree/main/.github/workflows)
-- [docs/](https://github.com/domrally/peekeasy/tree/main/docs)
-  - [assets/](https://github.com/domrally/peekeasy/tree/main/docs/assets)
-  - [classes/](https://github.com/domrally/peekeasy/tree/main/docs/classes)
-  - [modules/](https://github.com/domrally/peekeasy/tree/main/docs/modules)
-- [src/](https://github.com/domrally/peekeasy/tree/main/src)
-  - [exports/](https://github.com/domrally/peekeasy/tree/main/src/exports)
-  - [tests/](https://github.com/domrally/peekeasy/tree/main/src/tests)
-    - [integration/](https://github.com/domrally/peekeasy/tree/main/src/tests/integration)
-    - [unit/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit)
-      - [forward/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/forward)
-      - [delegate/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/delegate)
-      - [reference/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/reference)
-      - [vector/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/vector)
-      - [wasm/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/wasm)
 
 ### dependencies
 
@@ -245,11 +184,10 @@ https://domrally.github.io/peekeasy
 ```mermaid
 classDiagram
     direction LR
-    PromiseLike <|.. Promise
-    PromiseLike *-- Delegate
-    Promise *-- Wasm
-    Promise <.. Delegate
-    PromiseLike <.. AsyncIterator
+    PromiseLike~Action~ <|.. Promise~Action~
+    PromiseLike~Action~ *-- Delegate
+    Promise~Action~ <.. Delegate
+    PromiseLike~Action~ <.. AsyncIterator
     IteratorResult o-- AsyncIterator
     Iterator -- AsyncIterator
     AsyncIterator *-- AsyncIterable
@@ -257,14 +195,14 @@ classDiagram
     AsyncIterable *-- Delegate
     IteratorResult o-- Iterator
     Iterator *-- Iterable
-    Iterable <|.. Set~Action~
-    Forward *-- Delegate
     Action <.. Delegate
-    Set~Action~ *-- Forward
-    Action *-- Forward
     WeakSet~Action~ -- Set~Action~
     WeakSet~Action~ <|.. Delegate
-    Delegate <-- Reference
+	 Action o-- Set~Action~
+	 Action o-- WeakSet~Action~
+	 Action *-- Promise~Action~
+	 Action *-- PromiseLike~Action~
+    Iterator <-- Reference
     Iterable *-- Vector
     class IteratorResult {
         done boolean
@@ -282,16 +220,12 @@ classDiagram
     class AsyncIterator {
         next() PromiseLike~IteratorResult~
     }
-    class PromiseLike {
+    class PromiseLike~Action~ {
         then() PromiseLike
     }
-    class Promise {
+    class Promise~Action~ {
         finally(onfinally () => void) Promise
     }
-    class Wasm {
-        constructor(path string) Promise
-    }
-    link Wasm "https://github.com/domrally/peekeasy/blob/main/src/wasm.ts" "wasm.ts"
     class WeakSet {
         add() WeakSet
         delete() WeakSet
@@ -306,10 +240,6 @@ classDiagram
         apply(args: params) void
     }
 	 link Action "https://github.com/domrally/peekeasy/blob/main/src/action.ts" "action.ts"
-    class Forward {
-        apply() void
-    }
-    link Forward "https://github.com/domrally/peekeasy/blob/main/src/forward.ts" "forward.ts"
     class Delegate
     link Delegate "https://github.com/domrally/peekeasy/blob/main/src/delegate.ts" "delegate.ts"
     class Vector
@@ -326,3 +256,24 @@ classDiagram
 [![](https://img.shields.io/badge/-tsnode-3178C6?style=for-the-badge&labelColor=181717&logo=ts-node)](https://typestrong.org/ts-node)
 [![](https://img.shields.io/badge/-eslint-4B32C3?style=for-the-badge&labelColor=181717&logo=ESLint)](https://eslint.org)
 [![](https://img.shields.io/badge/-json-000000?style=for-the-badge&labelColor=181717&logo=json)](https://www.json.org/json-en.html)
+
+### structure
+
+- [.github/](https://github.com/domrally/peekeasy/tree/main/.github)
+  - [workflows/](https://github.com/domrally/peekeasy/tree/main/.github/workflows)
+- [docs/](https://github.com/domrally/peekeasy/tree/main/docs)
+  - [assets/](https://github.com/domrally/peekeasy/tree/main/docs/assets)
+  - [classes/](https://github.com/domrally/peekeasy/tree/main/docs/classes)
+  - [modules/](https://github.com/domrally/peekeasy/tree/main/docs/modules)
+- [src/](https://github.com/domrally/peekeasy/tree/main/src)
+  - [exports/](https://github.com/domrally/peekeasy/tree/main/src/exports)
+  - [tests/](https://github.com/domrally/peekeasy/tree/main/src/tests)
+    - [example/](https://github.com/domrally/peekeasy/tree/main/src/tests/example)
+    - [integration/](https://github.com/domrally/peekeasy/tree/main/src/tests/integration)
+      - [one/](https://github.com/domrally/peekeasy/tree/main/src/tests/integration/one)
+      - [three/](https://github.com/domrally/peekeasy/tree/main/src/tests/integration/three)
+      - [two/](https://github.com/domrally/peekeasy/tree/main/src/tests/integration/two)
+    - [unit/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit)
+      - [delegate/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/delegate)
+      - [reference/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/reference)
+      - [vector/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/vector)

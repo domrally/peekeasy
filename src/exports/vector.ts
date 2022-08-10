@@ -1,3 +1,5 @@
+import { error } from 'console'
+
 /**
  * ### Description
  *
@@ -8,12 +10,10 @@
  * ```ts
  * import { Vector } from 'peekeasy'
  *
- * const { log } = console,
- * 	data = [['Hello, '], ['world!']],
- * 	vector = new Vector(...data)
+ * const vector = new Vector([{ text: 'Hello,' }, { text: 'vector!' }])
  *
- * // Hello, world!
- * log(...vector[0])
+ * // Hello, vector!
+ * console.log(...vector.text)
  * ```
  *
  */
@@ -26,38 +26,66 @@ export type Vector<T> = T extends (...args: any) => any
  * @param scalars values of the vectorized element
  *
  */
-export const Vector = function (...scalars: any[]) {
+export const Vector = function (scalars: Iterable<any>) {
 	return new Proxy(() => {}, {
 		apply(_, thisArg, args) {
-			const applied = scalars?.map(scalar => scalar?.apply?.(thisArg, args))
+			try {
+				const applied = [...scalars]?.map(scalar =>
+					scalar?.apply?.(thisArg, args)
+				)
 
-			return new Vector(...applied)
+				return new Vector(applied)
+			} catch (message) {
+				error(`Problem applying Vectorized function:\n${message}`)
+			}
 		},
 
 		get(_, key) {
-			if (symbols.includes(key as symbol)) {
-				return () => scalars?.[Symbol.iterator]()
-			} else {
-				const keyed = scalars?.map(scalar => {
-					let value = scalar?.[key]
+			try {
+				if (iterators.includes(key as symbol)) {
+					return () => scalars?.[Symbol.iterator]()
+				} else if (toString.includes(key as symbol)) {
+					return () => JSON.stringify(scalars)
+				} else {
+					const keyed = [...scalars].map(scalar => {
+						let value = scalar?.[key]
 
-					if (typeof value === 'function') {
-						value = value.bind?.(scalar)
-					}
+						if (typeof value === 'function') {
+							value = value.bind?.(scalar)
+						}
 
-					return value
-				})
+						return value
+					})
 
-				return new Vector(...keyed)
+					return new Vector(keyed)
+				}
+			} catch (message) {
+				error(
+					`Problem getting property "${
+						key as string
+					}" on Vectorized object:\n${message}`
+				)
 			}
 		},
 
 		set(_, key, value) {
-			scalars?.forEach(scalar => (scalar[key] = value))
+			try {
+				;[...scalars]?.forEach(scalar => (scalar[key] = value))
 
-			return true
+				return true
+			} catch (message) {
+				error(
+					`Problem setting property "${
+						key as string
+					}" to "${value}" on Vectorized object:\n${message}`
+				)
+
+				return false
+			}
 		},
 	})
-} as unknown as new <T>(...scalars: T[]) => Vector<T>
+} as unknown as new <T>(iterable: Iterable<T>) => Vector<T>
 
-const symbols = [Symbol.iterator, Symbol.toStringTag, Symbol.asyncIterator]
+const // symbols
+	iterators = [Symbol.iterator, Symbol.asyncIterator],
+	toString = [Symbol.toStringTag, 'toString']

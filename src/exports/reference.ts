@@ -1,4 +1,4 @@
-import { Delegate } from './delegate'
+import { error } from 'console'
 
 /**
  * ### Description
@@ -10,42 +10,84 @@ import { Delegate } from './delegate'
  * ```ts
  * import { Reference } from 'peekeasy'
  *
- * const { log } = console,
- * 	object: [string] = [],
- * 	reference = new Reference(object)
+ * function* generate() {
+ * 	while (true) {
+ * 		yield 'Hello, reference!'
+ * 	}
+ * }
  *
- * object[0] = 'Hello, world!'
+ * const reference = new Reference(generate())
  *
- * // Hello, world!
- * log(reference[0])
+ * // Hello, reference!
+ * console.log(`${reference}`)
  * ```
  *
  */
-export type Reference<T extends Delegate> = T
+export type Reference<T> = T
 /**
  * #### constructor
  *
  * @param states permitted states of the state pattern
  *
  */
-export const Reference = function (...states: any[]) {
-	let [state] = states
-
-	for (const value of states) {
-		value.add?.(() => (state = value))
-	}
+export const Reference = function <T>(iterator: Iterator<T>) {
+	const state = () => iterator.next().value
 
 	return new Proxy(() => {}, {
 		apply(_, thisArg, args) {
-			return state.apply(thisArg, args)
+			try {
+				return state().apply(thisArg, args)
+			} catch (message) {
+				error(`Problem applying Reference to state function:\n${message}`)
+			}
 		},
 		get(_, key) {
-			return state[key]
+			try {
+				if ([Symbol.toStringTag, 'toString'].includes(key)) {
+					return () => {
+						let json = JSON.stringify(state())
+
+						if (json[0] === '"') {
+							json = json.slice(1, -1)
+						}
+
+						return json
+					}
+				} else {
+					const //
+						s = state(),
+						value = s[key]
+					if (typeof value === 'function') {
+						return value.bind(s)
+					} else {
+						return value
+					}
+				}
+			} catch (message) {
+				error(
+					`Problem getting Reference to state property "${
+						key as string
+					}":\n\t\t${message}`
+				)
+			}
+		},
+		getPrototypeOf() {
+			return Object.getPrototypeOf(state())
 		},
 		set(_, key, value) {
-			state[key] = value
+			try {
+				state()[key] = value
 
-			return true
+				return true
+			} catch (message) {
+				error(
+					`Problem setting state property "${
+						key as string
+					}" on Reference:\n${message}`
+				)
+
+				return false
+			}
 		},
 	})
-} as unknown as new <T extends Delegate>(...states: T[]) => Reference<T>
+} as unknown as new <T>(iterator: Iterator<T>) => Reference<T>

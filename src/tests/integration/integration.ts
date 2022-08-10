@@ -1,20 +1,5 @@
-import { warn } from 'console'
-
-warn(`
-
-🧪
-Delegate
-Event
-🧪`)
-import './dependency-injection.test'
-
-warn(`
-
-🧪
-Delegate
-Event
-IterableIterator
-IteratorResultValue
-Vector
-🧪`)
-import './fizz-buzz.test'
+import './three/delegate.reference.vector.test'
+import './two/delegate.reference.test'
+import './two/delegate.vector.test'
+import './two/fizz-buzz.test'
+import './two/reference.vector.test'
