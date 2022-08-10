@@ -1,13 +1,19 @@
-import { Delegate, Vector } from '../../../exports/exports'
+import { Action, Delegate, Vector } from '../../../exports/exports'
 import { test } from '../../test.test'
 
 async function integrationDelegateVector() {
-	const delegate = new Vector(new Delegate()),
-		f = () => {}
+	let //
+		is = false,
+		f = () => {
+			is = true
+		},
+		set = new Set<Action<[]>>(),
+		delegate = new Delegate(set),
+		vector = new Vector(set)
 
 	delegate.add(f)
 
-	const [is] = delegate.has(f)
+	vector()
 
 	return is
 }

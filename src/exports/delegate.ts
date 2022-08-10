@@ -1,5 +1,5 @@
 import { error } from 'console'
-import { Action, Forward } from './exports'
+import { Action } from './exports'
 
 /**
  * ### Description
@@ -28,7 +28,7 @@ export class Delegate<T extends any[] = []>
 	/**
 	 *
 	 */
-	private forwards!: Forward<T>[]
+	private forwards!: Set<Action<T>>[]
 
 	/**
 	 *
@@ -37,8 +37,8 @@ export class Delegate<T extends any[] = []>
 	 *
 	 */
 	constructor(
-		protected forward: Forward<T> = new Forward(),
-		...forwards: Forward<T>[]
+		protected forward = new Set<Action<T>>(),
+		...forwards: Set<Action<T>>[]
 	) {
 		try {
 			//

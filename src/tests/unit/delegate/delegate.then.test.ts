@@ -1,11 +1,11 @@
-import { Delegate, Forward } from '../../../exports/exports'
+import { Delegate } from '../../../exports/exports'
 import { test } from '../../test.test'
 
 async function delegateThen() {
 	let //
 		is = false,
 		f = (_: boolean) => {},
-		forward = new Forward(f),
+		forward = new Set([f]),
 		delegate = new Delegate(forward)
 
 	;(async () => {
@@ -14,7 +14,7 @@ async function delegateThen() {
 
 	await new Promise(resolve => setTimeout(resolve, 0))
 
-	forward(true)
+	forward.forEach(f => f(true))
 
 	await new Promise(resolve => setTimeout(resolve, 0))
 

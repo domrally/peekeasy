@@ -3,7 +3,7 @@ import { test } from '../../test.test'
 
 async function vectorSet() {
 	const f = [false],
-		vector = new Vector(f)
+		vector = new Vector([f])
 
 	vector[0] = true as any
 

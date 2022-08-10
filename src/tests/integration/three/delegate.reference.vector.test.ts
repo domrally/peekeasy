@@ -11,17 +11,17 @@ class FizzBuzzState extends Delegate {
 		if (!this.index) this.word = `${count}`
 
 		// activate state if the count is divisible by the index
-		if (!(this.index && count % this.index)) this.forward()
+		if (!(this.index && count % this.index)) this.forward.forEach(f => f())
 	}
 }
 
 async function integrationDelegateReferenceVector() {
-	let vector = new Vector(
+	let vector = new Vector([
 			new FizzBuzzState(''),
 			new FizzBuzzState('fizz', 3),
 			new FizzBuzzState('buzz', 5),
-			new FizzBuzzState('fizzbuzz', 15)
-		),
+			new FizzBuzzState('fizzbuzz', 15),
+		]),
 		[current] = vector,
 		generate = function* () {
 			while (true) {

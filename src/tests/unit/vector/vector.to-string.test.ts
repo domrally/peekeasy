@@ -2,7 +2,7 @@ import { Vector } from '../../../exports/exports'
 import { test } from '../../test.test'
 
 async function vectorToString() {
-	new Vector().toString()
+	new Vector([true]).toString()
 
 	return true
 }

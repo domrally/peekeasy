@@ -3,7 +3,7 @@ import { test } from '../../test.test'
 
 async function vectorApply() {
 	const f = () => true,
-		vector = new Vector(f),
+		vector = new Vector([f]),
 		[is] = vector()
 
 	return is

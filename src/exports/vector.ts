@@ -28,13 +28,15 @@ export type Vector<T> = T extends (...args: any) => any
  * @param scalars values of the vectorized element
  *
  */
-export const Vector = function (...scalars: any[]) {
+export const Vector = function (scalars: Iterable<any>) {
 	return new Proxy(() => {}, {
 		apply(_, thisArg, args) {
 			try {
-				const applied = scalars?.map(scalar => scalar?.apply?.(thisArg, args))
+				const applied = [...scalars]?.map(scalar =>
+					scalar?.apply?.(thisArg, args)
+				)
 
-				return new Vector(...applied)
+				return new Vector(applied)
 			} catch (message) {
 				error(`Problem applying Vectorized function:\n${message}`)
 			}
@@ -47,7 +49,7 @@ export const Vector = function (...scalars: any[]) {
 				} else if (toString.includes(key as symbol)) {
 					return () => JSON.stringify(scalars)
 				} else {
-					const keyed = scalars?.map(scalar => {
+					const keyed = [...scalars].map(scalar => {
 						let value = scalar?.[key]
 
 						if (typeof value === 'function') {
@@ -57,7 +59,7 @@ export const Vector = function (...scalars: any[]) {
 						return value
 					})
 
-					return new Vector(...keyed)
+					return new Vector(keyed)
 				}
 			} catch (message) {
 				error(
@@ -70,7 +72,7 @@ export const Vector = function (...scalars: any[]) {
 
 		set(_, key, value) {
 			try {
-				scalars?.forEach(scalar => (scalar[key] = value))
+				;[...scalars]?.forEach(scalar => (scalar[key] = value))
 
 				return true
 			} catch (message) {
@@ -84,7 +86,7 @@ export const Vector = function (...scalars: any[]) {
 			}
 		},
 	})
-} as unknown as new <T>(...scalars: T[]) => Vector<T>
+} as unknown as new <T>(iterable: Iterable<T>) => Vector<T>
 
 const // symbols
 	iterators = [Symbol.iterator, Symbol.asyncIterator],
