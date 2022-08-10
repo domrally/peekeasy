@@ -21,7 +21,7 @@
 </a>
 <p>Calls actions on a set of listeners</p>
 <p><em>example</em></p>
-<pre><code class="language-ts"><span class="hl-2">import</span><span class="hl-1"> { </span><span class="hl-0">Reference</span><span class="hl-1"> } </span><span class="hl-2">from</span><span class="hl-1"> </span><span class="hl-3">&#39;peekeasy&#39;</span><br/><br/><span class="hl-4">const</span><span class="hl-1"> { </span><span class="hl-5">log</span><span class="hl-1"> } = </span><span class="hl-0">console</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-5">object</span><span class="hl-1">: [</span><span class="hl-7">string</span><span class="hl-1">] = [],</span><br/><span class="hl-1">    </span><span class="hl-5">reference</span><span class="hl-1"> = </span><span class="hl-4">new</span><span class="hl-1"> </span><span class="hl-6">Reference</span><span class="hl-1">(</span><span class="hl-0">object</span><span class="hl-1">)</span><br/><br/><span class="hl-0">object</span><span class="hl-1">[</span><span class="hl-9">0</span><span class="hl-1">] = </span><span class="hl-3">&#39;Hello, world!&#39;</span><br/><br/><span class="hl-8">// Hello, world!</span><br/><span class="hl-6">log</span><span class="hl-1">(</span><span class="hl-0">reference</span><span class="hl-1">[</span><span class="hl-9">0</span><span class="hl-1">])</span>
+<pre><code class="language-ts"><span class="hl-2">import</span><span class="hl-1"> { </span><span class="hl-0">Reference</span><span class="hl-1"> } </span><span class="hl-2">from</span><span class="hl-1"> </span><span class="hl-3">&#39;peekeasy&#39;</span><br/><br/><span class="hl-4">function*</span><span class="hl-1"> </span><span class="hl-7">generate</span><span class="hl-1">() {</span><br/><span class="hl-1">    </span><span class="hl-2">while</span><span class="hl-1"> (</span><span class="hl-4">true</span><span class="hl-1">) {</span><br/><span class="hl-1">        </span><span class="hl-2">yield</span><span class="hl-1"> </span><span class="hl-3">&#39;Hello, reference!&#39;</span><br/><span class="hl-1">    }</span><br/><span class="hl-1">}</span><br/><br/><span class="hl-4">const</span><span class="hl-1"> </span><span class="hl-5">reference</span><span class="hl-1"> = </span><span class="hl-4">new</span><span class="hl-1"> </span><span class="hl-7">Reference</span><span class="hl-1">(</span><span class="hl-7">generate</span><span class="hl-1">())</span><br/><br/><span class="hl-8">// Hello, reference!</span><br/><span class="hl-0">console</span><span class="hl-1">.</span><span class="hl-7">log</span><span class="hl-1">(</span><span class="hl-3">`</span><span class="hl-4">${</span><span class="hl-0">reference</span><span class="hl-4">}</span><span class="hl-3">`</span><span class="hl-1">)</span>
 </code></pre>
 </div>
 <h4 class="tsd-type-parameters-title">Type Parameters</h4>
@@ -29,8 +29,8 @@
 <li>
 <h4>T</h4></li></ul><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/domrally/peekeasy/blob/df4bfd1/src/exports/reference.ts#L24">reference.ts:24</a></li>
-<li>Defined in <a href="https://github.com/domrally/peekeasy/blob/df4bfd1/src/exports/reference.ts#L31">reference.ts:31</a></li></ul></aside></div>
+<li>Defined in <a href="https://github.com/domrally/peekeasy/blob/3fdffa9/src/exports/reference.ts#L26">reference.ts:26</a></li>
+<li>Defined in <a href="https://github.com/domrally/peekeasy/blob/3fdffa9/src/exports/reference.ts#L33">reference.ts:33</a></li></ul></aside></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">
 <details class="tsd-index-accordion"><summary class="tsd-accordion-summary">
