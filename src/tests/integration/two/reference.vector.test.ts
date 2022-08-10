@@ -3,7 +3,7 @@ import { test } from '../../test.test'
 
 async function integrationDelegateReference() {
 	const //
-		vector = new Vector(true),
+		vector = new Vector([true]),
 		generate = function* () {
 			while (true) {
 				yield vector
