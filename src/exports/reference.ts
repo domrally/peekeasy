@@ -10,14 +10,16 @@ import { error } from 'console'
  * ```ts
  * import { Reference } from 'peekeasy'
  *
- * const { log } = console,
- * 	object: [string] = [],
- * 	reference = new Reference(object)
+ * function* generate() {
+ * 	while (true) {
+ * 		yield 'Hello, reference!'
+ * 	}
+ * }
  *
- * object[0] = 'Hello, world!'
+ * const reference = new Reference(generate())
  *
- * // Hello, world!
- * log(reference[0])
+ * // Hello, reference!
+ * console.log(`${reference}`)
  * ```
  *
  */

@@ -10,12 +10,10 @@ import { error } from 'console'
  * ```ts
  * import { Vector } from 'peekeasy'
  *
- * const { log } = console,
- * 	data = [['Hello, '], ['world!']],
- * 	vector = new Vector(...data)
+ * const vector = new Vector([{ text: 'Hello,' }, { text: 'vector!' }])
  *
- * // Hello, world!
- * log(...vector[0])
+ * // Hello, vector!
+ * console.log(...vector.text)
  * ```
  *
  */
