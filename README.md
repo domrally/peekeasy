@@ -26,10 +26,10 @@ delegated proxy tools in typescript
   - [goals](#goals)
   - [non-goals](#non-goals)
   - [documentation](#documentation)
-  - [structure](#structure)
   - [dependencies](#dependencies)
     - [internal](#internal)
     - [external](#external)
+  - [structure](#structure)
 
 ## Use
 
@@ -177,27 +177,6 @@ merge a [pull request](https://github.com/domrally/peekeasy/compare) into `main`
 
 https://domrally.github.io/peekeasy
 
-### structure
-
-- [.github/](https://github.com/domrally/peekeasy/tree/main/.github)
-  - [workflows/](https://github.com/domrally/peekeasy/tree/main/.github/workflows)
-- [docs/](https://github.com/domrally/peekeasy/tree/main/docs)
-  - [assets/](https://github.com/domrally/peekeasy/tree/main/docs/assets)
-  - [classes/](https://github.com/domrally/peekeasy/tree/main/docs/classes)
-  - [modules/](https://github.com/domrally/peekeasy/tree/main/docs/modules)
-- [src/](https://github.com/domrally/peekeasy/tree/main/src)
-  - [exports/](https://github.com/domrally/peekeasy/tree/main/src/exports)
-  - [tests/](https://github.com/domrally/peekeasy/tree/main/src/tests)
-    - [example/](https://github.com/domrally/peekeasy/tree/main/src/tests/example)
-    - [integration/](https://github.com/domrally/peekeasy/tree/main/src/tests/integration)
-      - [one/](https://github.com/domrally/peekeasy/tree/main/src/tests/integration/one)
-      - [three/](https://github.com/domrally/peekeasy/tree/main/src/tests/integration/three)
-      - [two/](https://github.com/domrally/peekeasy/tree/main/src/tests/integration/two)
-    - [unit/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit)
-      - [delegate/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/delegate)
-      - [reference/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/reference)
-      - [vector/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/vector)
-
 ### dependencies
 
 #### internal
@@ -277,3 +256,24 @@ classDiagram
 [![](https://img.shields.io/badge/-tsnode-3178C6?style=for-the-badge&labelColor=181717&logo=ts-node)](https://typestrong.org/ts-node)
 [![](https://img.shields.io/badge/-eslint-4B32C3?style=for-the-badge&labelColor=181717&logo=ESLint)](https://eslint.org)
 [![](https://img.shields.io/badge/-json-000000?style=for-the-badge&labelColor=181717&logo=json)](https://www.json.org/json-en.html)
+
+### structure
+
+- [.github/](https://github.com/domrally/peekeasy/tree/main/.github)
+  - [workflows/](https://github.com/domrally/peekeasy/tree/main/.github/workflows)
+- [docs/](https://github.com/domrally/peekeasy/tree/main/docs)
+  - [assets/](https://github.com/domrally/peekeasy/tree/main/docs/assets)
+  - [classes/](https://github.com/domrally/peekeasy/tree/main/docs/classes)
+  - [modules/](https://github.com/domrally/peekeasy/tree/main/docs/modules)
+- [src/](https://github.com/domrally/peekeasy/tree/main/src)
+  - [exports/](https://github.com/domrally/peekeasy/tree/main/src/exports)
+  - [tests/](https://github.com/domrally/peekeasy/tree/main/src/tests)
+    - [example/](https://github.com/domrally/peekeasy/tree/main/src/tests/example)
+    - [integration/](https://github.com/domrally/peekeasy/tree/main/src/tests/integration)
+      - [one/](https://github.com/domrally/peekeasy/tree/main/src/tests/integration/one)
+      - [three/](https://github.com/domrally/peekeasy/tree/main/src/tests/integration/three)
+      - [two/](https://github.com/domrally/peekeasy/tree/main/src/tests/integration/two)
+    - [unit/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit)
+      - [delegate/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/delegate)
+      - [reference/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/reference)
+      - [vector/](https://github.com/domrally/peekeasy/tree/main/src/tests/unit/vector)
