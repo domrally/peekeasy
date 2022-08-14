@@ -6,7 +6,7 @@
 	"main": "build/exports/exports.js",
 	"types": "build/exports/exports.d.ts",
 	"homepage": "https://domrally.github.io/peekeasy",
-	"description": "delegated proxy tools in typescript",
+	"description": "tools for behavior, delegation, and state in typescript",
 	"scripts": {
 		"example": "npx ts-node src/tests/example/example.ts",
 		"integration": "npx ts-node src/tests/integration/integration.ts",
@@ -36,6 +36,7 @@
 		"action",
 		"forward",
 		"pattern",
+		"behavior",
 		"delegate",
 		"iterator",
 		"observer",

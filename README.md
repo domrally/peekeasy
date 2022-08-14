@@ -1,6 +1,6 @@
 # Peekeasy
 
-delegated proxy tools in typescript
+tools for behavior, delegation, and state in typescript
 
 [![](https://img.shields.io/npm/v/peekeasy?style=for-the-badge&labelColor=181717&logo=npm&label=)](https://www.npmjs.com/package/peekeasy)
 [![](https://img.shields.io/github/workflow/status/domrally/peekeasy/test?logo=github&labelColor=181717&style=for-the-badge&label=test)](https://github.com/domrally/peekeasy/actions/workflows/test.yml)
@@ -184,6 +184,7 @@ https://domrally.github.io/peekeasy
 ```mermaid
 classDiagram
     direction LR
+
     PromiseLike~Action~ <|.. Promise~Action~
     PromiseLike~Action~ *-- Delegate
     Promise~Action~ <.. Delegate
@@ -204,46 +205,63 @@ classDiagram
 	 Action *-- PromiseLike~Action~
     Iterator <-- Reference
     Iterable *-- Vector
+
     class IteratorResult {
         done boolean
         value any
     }
+
     class AsyncIterable {
         Symbol.asyncIterator() AsyncIterator
     }
+
     class Iterable {
         Symbol.iterator() Iterator
     }
+
     class Iterator {
         next() IteratorResult
     }
+
     class AsyncIterator {
         next() PromiseLike~IteratorResult~
     }
+
     class PromiseLike~Action~ {
         then() PromiseLike
     }
+	 link PromiseLike "https://microsoft.github.io/PowerBI-JavaScript/interfaces/_node_modules_typedoc_node_modules_typescript_lib_lib_es5_d_.promiselike.html" "PromiseLike"
+
     class Promise~Action~ {
         finally(onfinally () => void) Promise
     }
+	 link Promise "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" "Promise"
+
     class WeakSet {
         add() WeakSet
         delete() WeakSet
         has() boolean
     }
+	 link WeakSet "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet" "WeakSet"
+
     class Set {
         size number
         clear() void
         forEach() void
     }
+    link Set "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set" "Set"
+
     class Action {
         apply(args: params) void
     }
 	 link Action "https://github.com/domrally/peekeasy/blob/main/src/action.ts" "action.ts"
+
     class Delegate
     link Delegate "https://github.com/domrally/peekeasy/blob/main/src/delegate.ts" "delegate.ts"
+
     class Vector
     link Vector "https://github.com/domrally/peekeasy/blob/main/src/vector.ts" "vector.ts"
+
 	 class Reference
 	 link Reference "https://github.com/domrally/peekeasy/blob/main/src/reference.ts" "reference.ts"
 ```
