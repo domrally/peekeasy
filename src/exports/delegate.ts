@@ -1,5 +1,4 @@
 import { error } from 'console'
-import { Action } from '../exports'
 
 /**
  * ### Description
@@ -119,3 +118,5 @@ export class Delegate<T extends any[] = []>
 		}
 	}
 }
+
+type Action<params extends any[] = []> = (...args: params) => void

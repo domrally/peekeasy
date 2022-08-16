@@ -1,5 +1,5 @@
+import './behavior.test'
 import './delegate.test'
-import './fallback.test'
+import '../../exports/comp/is-instance-flag.test'
 import './reference.test'
-import './sequence.test'
 import './vector.test'
