@@ -4,10 +4,7 @@ import { test } from '../../test.test'
 async function behaviorRoot() {
 	let is = false
 	const tree = new Behavior(
-		new Behavior(() => {
-			is = true
-			return Promise.resolve()
-		})
+		new Behavior(async () => is = true)
 	)
 
 	await tree()

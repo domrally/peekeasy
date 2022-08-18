@@ -1,15 +1,13 @@
 import { Behavior } from '../../exports/exports'
 
-const tree = new Behavior(
-	//
-	() => Promise.reject(),
-	//
-	new Behavior([
-		//
-		() => Promise.resolve(),
-		//
-		(s: string) => console.log(s),
-	])
-)
+let hello = ''
 
-tree('Hello, behavior!')
+const tree = new Behavior([
+	async () => (hello = 'Hello, behavior!'),
+	new Behavior(
+		() => Promise.reject(),
+		async () => console.log(hello)
+	),
+])
+
+tree()

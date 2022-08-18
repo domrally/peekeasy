@@ -1,4 +1,6 @@
-export type Behavior<T extends any[]> = (...args: T) => Promise<void>
+export type Behavior<T extends any[], U extends any = void> = (
+	...args: T
+) => Promise<U>
 
 export const Behavior = function (...tasks: any) {
 	const [first] = tasks,
@@ -18,6 +20,6 @@ export const Behavior = function (...tasks: any) {
 		return sequence ? Promise.resolve() : Promise.reject()
 	}
 } as unknown as new <T extends any[] = []>(
-	task: ((...t: T) => Promise<void>) | ((...t: T) => Promise<void>)[],
-	...tasks: ((...t: T) => Promise<void>)[]
+	task: Behavior<T, any> | Behavior<T, any>[],
+	...tasks: Behavior<T, any>[]
 ) => Behavior<T>
