@@ -1,12 +1,15 @@
-export type Behavior<I = never, O = void> = (input?: I) => Promise<O>
+export type Behavior<T extends any[]> = (...args: T) => Promise<void>
 
-export const Behavior = function (sequence: boolean, ...tasks: any) {
-	return async (i: string) => {
-		for (let child of tasks) {
+export const Behavior = function (...tasks: any) {
+	const [first] = tasks,
+		sequence = first instanceof Array
+
+	return async (...input: []) => {
+		for (let child of sequence ? first : tasks) {
 			try {
-				const resolved = await child(i)
+				await child(...input)
 
-				if (!sequence) return resolved
+				if (!sequence) return Promise.resolve()
 			} catch {
 				if (sequence) return Promise.reject()
 			}
@@ -14,7 +17,7 @@ export const Behavior = function (sequence: boolean, ...tasks: any) {
 
 		return sequence ? Promise.resolve() : Promise.reject()
 	}
-} as unknown as new <T extends ((a: any) => any)[] = (() => void)[]>(
-	sequence: boolean,
-	...tasks: T
-) => Behavior<Parameters<T[number]>[0], ReturnType<T[number]>>
+} as unknown as new <T extends any[] = []>(
+	task: ((...t: T) => Promise<void>) | ((...t: T) => Promise<void>)[],
+	...tasks: ((...t: T) => Promise<void>)[]
+) => Behavior<T>

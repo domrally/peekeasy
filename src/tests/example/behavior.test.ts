@@ -1,11 +1,15 @@
 import { Behavior } from '../../exports/exports'
 
 const tree = new Behavior(
-	false,
 	//
 	() => Promise.reject(),
 	//
-	() => Promise.resolve('Hello, behavior!')
+	new Behavior([
+		//
+		() => Promise.resolve(),
+		//
+		(s: string) => console.log(s),
+	])
 )
 
-tree().then(console.log)
+tree('Hello, behavior!')
