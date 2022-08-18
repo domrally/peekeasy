@@ -41,6 +41,20 @@ npm i peekeasy
 
 ### examples
 
+#### behavior
+
+```ts
+import { Behavior } from 'peekeasy'
+
+const behavior = new Behavior([
+	async data => (data.message = `Hello, ${data.message}!`),
+	async ({ message }) => console.log(message),
+])
+
+// Hello, behavior!
+behavior({ message: 'behavior' })
+```
+
 #### delegate
 
 ```ts
@@ -53,14 +67,6 @@ delegate.add(async message => console.log(...message))
 
 // Hello, delegate!
 set.forEach(f => f('Hello,', 'delegate!'))
-```
-
-```mermaid
-sequenceDiagram
-    Delegate->Set: Delegate.add(Function)
-    activate Set
-    Set->Delegate: Set.add(Function)
-    deactivate Set
 ```
 
 #### reference
@@ -80,14 +86,6 @@ const reference = new Reference(generate())
 console.log(`${reference}`)
 ```
 
-```mermaid
-sequenceDiagram
-    Reference->Iterator: {next: () => ({value})}.next().value
-    activate Iterator
-    Iterator->Reference: value
-    deactivate Iterator
-```
-
 #### vector
 
 ```ts
@@ -97,14 +95,6 @@ const vector = new Vector([{ text: 'Hello,' }, { text: 'vector!' }])
 
 // Hello, vector!
 console.log(...vector.text)
-```
-
-```mermaid
-sequenceDiagram
-    Vector->Array: [{value}.value, {value}.value]
-    activate Array
-    Array->Vector: [value, value]
-    deactivate Array
 ```
 
 ## Contribute

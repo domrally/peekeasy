@@ -6,7 +6,7 @@ async function behaviorFallback() {
 
 	const tree = new Behavior(
 		() => Promise.reject(),
-		async () => is = true
+		async () => (is = true)
 	)
 
 	await tree()

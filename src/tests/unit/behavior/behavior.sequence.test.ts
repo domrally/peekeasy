@@ -6,7 +6,7 @@ async function behaviorSequence() {
 
 	try {
 		const tree = new Behavior([
-			async () => is = true,
+			async () => (is = true),
 			async () => Promise.reject(),
 		])
 
