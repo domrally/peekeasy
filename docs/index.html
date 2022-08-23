@@ -14,7 +14,7 @@
 <a href="#peekeasy" id="peekeasy" style="color: inherit; text-decoration: none;">
   <h1>Peekeasy</h1>
 </a>
-<p>delegated proxy tools in typescript</p>
+<p>tools for behavior, delegation, and state in typescript</p>
 <p><a href="https://www.npmjs.com/package/peekeasy"><img src="https://img.shields.io/npm/v/peekeasy?style=for-the-badge&labelColor=181717&logo=npm&label=" alt=""></a>
 <a href="https://github.com/domrally/peekeasy/actions/workflows/test.yml"><img src="https://img.shields.io/github/workflow/status/domrally/peekeasy/test?logo=github&labelColor=181717&style=for-the-badge&label=test" alt=""></a>
 <a href="https://github.com/domrally/peekeasy/actions/workflows/publish.yml"><img src="https://img.shields.io/github/workflow/status/domrally/peekeasy/publish?logo=github&labelColor=181717&style=for-the-badge" alt=""></a></p>
@@ -71,40 +71,28 @@
   <h3>examples</h3>
 </a>
 
+<a href="#behavior" id="behavior" style="color: inherit; text-decoration: none;">
+  <h4>behavior</h4>
+</a>
+<pre><code class="language-ts"><span class="hl-2">import</span><span class="hl-1"> { </span><span class="hl-0">Behavior</span><span class="hl-1"> } </span><span class="hl-2">from</span><span class="hl-1"> </span><span class="hl-3">&#39;peekeasy&#39;</span><br/><br/><span class="hl-4">const</span><span class="hl-1"> </span><span class="hl-5">behavior</span><span class="hl-1"> = </span><span class="hl-4">new</span><span class="hl-1"> </span><span class="hl-6">Behavior</span><span class="hl-1">([</span><br/><span class="hl-1">    </span><span class="hl-4">async</span><span class="hl-1"> </span><span class="hl-0">data</span><span class="hl-1"> </span><span class="hl-4">=&gt;</span><span class="hl-1"> (</span><span class="hl-0">data</span><span class="hl-1">.</span><span class="hl-0">message</span><span class="hl-1"> = </span><span class="hl-3">`Hello, </span><span class="hl-4">${</span><span class="hl-0">data</span><span class="hl-7">.</span><span class="hl-0">message</span><span class="hl-4">}</span><span class="hl-3">!`</span><span class="hl-1">),</span><br/><span class="hl-1">    </span><span class="hl-4">async</span><span class="hl-1"> ({ </span><span class="hl-0">message</span><span class="hl-1"> }) </span><span class="hl-4">=&gt;</span><span class="hl-1"> </span><span class="hl-0">console</span><span class="hl-1">.</span><span class="hl-6">log</span><span class="hl-1">(</span><span class="hl-0">message</span><span class="hl-1">),</span><br/><span class="hl-1">])</span><br/><br/><span class="hl-8">// Hello, behavior!</span><br/><span class="hl-6">behavior</span><span class="hl-1">({ </span><span class="hl-0">message:</span><span class="hl-1"> </span><span class="hl-3">&#39;behavior&#39;</span><span class="hl-1"> })</span>
+</code></pre>
+
 <a href="#delegate" id="delegate" style="color: inherit; text-decoration: none;">
   <h4>delegate</h4>
 </a>
-<pre><code class="language-ts"><span class="hl-2">import</span><span class="hl-1"> { </span><span class="hl-0">Action</span><span class="hl-1">, </span><span class="hl-0">Delegate</span><span class="hl-1"> } </span><span class="hl-2">from</span><span class="hl-1"> </span><span class="hl-3">&#39;peekeasy&#39;</span><br/><br/><span class="hl-4">const</span><span class="hl-1"> </span><span class="hl-5">set</span><span class="hl-1"> = </span><span class="hl-4">new</span><span class="hl-1"> </span><span class="hl-6">Set</span><span class="hl-1">&lt;</span><span class="hl-6">Action</span><span class="hl-1">&lt;[</span><span class="hl-6">string</span><span class="hl-1">, </span><span class="hl-6">string</span><span class="hl-1">]&gt;&gt;(),</span><br/><span class="hl-1">    </span><span class="hl-5">delegate</span><span class="hl-1"> = </span><span class="hl-4">new</span><span class="hl-1"> </span><span class="hl-7">Delegate</span><span class="hl-1">(</span><span class="hl-0">set</span><span class="hl-1">)</span><br/><br/><span class="hl-0">delegate</span><span class="hl-1">.</span><span class="hl-7">add</span><span class="hl-1">(</span><span class="hl-4">async</span><span class="hl-1"> </span><span class="hl-0">message</span><span class="hl-1"> </span><span class="hl-4">=&gt;</span><span class="hl-1"> </span><span class="hl-0">console</span><span class="hl-1">.</span><span class="hl-7">log</span><span class="hl-1">(...</span><span class="hl-0">message</span><span class="hl-1">))</span><br/><br/><span class="hl-8">// Hello, delegate!</span><br/><span class="hl-0">set</span><span class="hl-1">.</span><span class="hl-7">forEach</span><span class="hl-1">(</span><span class="hl-0">f</span><span class="hl-1"> </span><span class="hl-4">=&gt;</span><span class="hl-1"> </span><span class="hl-7">f</span><span class="hl-1">(</span><span class="hl-3">&#39;Hello,&#39;</span><span class="hl-1">, </span><span class="hl-3">&#39;delegate!&#39;</span><span class="hl-1">))</span>
-</code></pre>
-<pre><code class="language-mermaid">sequenceDiagram
-    Delegate-&gt;Set: Delegate.add(Function)
-    activate Set
-    Set-&gt;Delegate: Set.add(Function)
-    deactivate Set
+<pre><code class="language-ts"><span class="hl-2">import</span><span class="hl-1"> { </span><span class="hl-0">Delegate</span><span class="hl-1"> } </span><span class="hl-2">from</span><span class="hl-1"> </span><span class="hl-3">&#39;peekeasy&#39;</span><br/><br/><span class="hl-4">const</span><span class="hl-1"> </span><span class="hl-5">set</span><span class="hl-1"> = </span><span class="hl-4">new</span><span class="hl-1"> </span><span class="hl-9">Set</span><span class="hl-1">&lt;(</span><span class="hl-0">t</span><span class="hl-1">: </span><span class="hl-9">string</span><span class="hl-1">, </span><span class="hl-0">u</span><span class="hl-1">: </span><span class="hl-9">string</span><span class="hl-1">) </span><span class="hl-4">=&gt;</span><span class="hl-1"> </span><span class="hl-9">void</span><span class="hl-1">&gt;(),</span><br/><span class="hl-1">    </span><span class="hl-5">delegate</span><span class="hl-1"> = </span><span class="hl-4">new</span><span class="hl-1"> </span><span class="hl-6">Delegate</span><span class="hl-1">(</span><span class="hl-0">set</span><span class="hl-1">)</span><br/><br/><span class="hl-0">delegate</span><span class="hl-1">.</span><span class="hl-6">add</span><span class="hl-1">(</span><span class="hl-4">async</span><span class="hl-1"> </span><span class="hl-0">message</span><span class="hl-1"> </span><span class="hl-4">=&gt;</span><span class="hl-1"> </span><span class="hl-0">console</span><span class="hl-1">.</span><span class="hl-6">log</span><span class="hl-1">(...</span><span class="hl-0">message</span><span class="hl-1">))</span><br/><br/><span class="hl-8">// Hello, delegate!</span><br/><span class="hl-0">set</span><span class="hl-1">.</span><span class="hl-6">forEach</span><span class="hl-1">(</span><span class="hl-0">f</span><span class="hl-1"> </span><span class="hl-4">=&gt;</span><span class="hl-1"> </span><span class="hl-6">f</span><span class="hl-1">(</span><span class="hl-3">&#39;Hello,&#39;</span><span class="hl-1">, </span><span class="hl-3">&#39;delegate!&#39;</span><span class="hl-1">))</span>
 </code></pre>
 
 <a href="#reference" id="reference" style="color: inherit; text-decoration: none;">
   <h4>reference</h4>
 </a>
-<pre><code class="language-ts"><span class="hl-2">import</span><span class="hl-1"> { </span><span class="hl-0">Reference</span><span class="hl-1"> } </span><span class="hl-2">from</span><span class="hl-1"> </span><span class="hl-3">&#39;peekeasy&#39;</span><br/><br/><span class="hl-4">function*</span><span class="hl-1"> </span><span class="hl-7">generate</span><span class="hl-1">() {</span><br/><span class="hl-1">    </span><span class="hl-2">while</span><span class="hl-1"> (</span><span class="hl-4">true</span><span class="hl-1">) {</span><br/><span class="hl-1">        </span><span class="hl-2">yield</span><span class="hl-1"> </span><span class="hl-3">&#39;Hello, reference!&#39;</span><br/><span class="hl-1">    }</span><br/><span class="hl-1">}</span><br/><br/><span class="hl-4">const</span><span class="hl-1"> </span><span class="hl-5">reference</span><span class="hl-1"> = </span><span class="hl-4">new</span><span class="hl-1"> </span><span class="hl-7">Reference</span><span class="hl-1">(</span><span class="hl-7">generate</span><span class="hl-1">())</span><br/><br/><span class="hl-8">// Hello, reference!</span><br/><span class="hl-0">console</span><span class="hl-1">.</span><span class="hl-7">log</span><span class="hl-1">(</span><span class="hl-3">`</span><span class="hl-4">${</span><span class="hl-0">reference</span><span class="hl-4">}</span><span class="hl-3">`</span><span class="hl-1">)</span>
-</code></pre>
-<pre><code class="language-mermaid">sequenceDiagram
-    Reference-&gt;Iterator: {next: () =&gt; ({value})}.next().value
-    activate Iterator
-    Iterator-&gt;Reference: value
-    deactivate Iterator
+<pre><code class="language-ts"><span class="hl-2">import</span><span class="hl-1"> { </span><span class="hl-0">Reference</span><span class="hl-1"> } </span><span class="hl-2">from</span><span class="hl-1"> </span><span class="hl-3">&#39;peekeasy&#39;</span><br/><br/><span class="hl-4">function*</span><span class="hl-1"> </span><span class="hl-6">generate</span><span class="hl-1">() {</span><br/><span class="hl-1">    </span><span class="hl-2">while</span><span class="hl-1"> (</span><span class="hl-4">true</span><span class="hl-1">) {</span><br/><span class="hl-1">        </span><span class="hl-2">yield</span><span class="hl-1"> </span><span class="hl-3">&#39;Hello, reference!&#39;</span><br/><span class="hl-1">    }</span><br/><span class="hl-1">}</span><br/><br/><span class="hl-4">const</span><span class="hl-1"> </span><span class="hl-5">reference</span><span class="hl-1"> = </span><span class="hl-4">new</span><span class="hl-1"> </span><span class="hl-6">Reference</span><span class="hl-1">(</span><span class="hl-6">generate</span><span class="hl-1">())</span><br/><br/><span class="hl-8">// Hello, reference!</span><br/><span class="hl-0">console</span><span class="hl-1">.</span><span class="hl-6">log</span><span class="hl-1">(</span><span class="hl-3">`</span><span class="hl-4">${</span><span class="hl-0">reference</span><span class="hl-4">}</span><span class="hl-3">`</span><span class="hl-1">)</span>
 </code></pre>
 
 <a href="#vector" id="vector" style="color: inherit; text-decoration: none;">
   <h4>vector</h4>
 </a>
-<pre><code class="language-ts"><span class="hl-2">import</span><span class="hl-1"> { </span><span class="hl-0">Vector</span><span class="hl-1"> } </span><span class="hl-2">from</span><span class="hl-1"> </span><span class="hl-3">&#39;peekeasy&#39;</span><br/><br/><span class="hl-4">const</span><span class="hl-1"> </span><span class="hl-5">vector</span><span class="hl-1"> = </span><span class="hl-4">new</span><span class="hl-1"> </span><span class="hl-7">Vector</span><span class="hl-1">([{ </span><span class="hl-0">text:</span><span class="hl-1"> </span><span class="hl-3">&#39;Hello,&#39;</span><span class="hl-1"> }, { </span><span class="hl-0">text:</span><span class="hl-1"> </span><span class="hl-3">&#39;vector!&#39;</span><span class="hl-1"> }])</span><br/><br/><span class="hl-8">// Hello, vector!</span><br/><span class="hl-0">console</span><span class="hl-1">.</span><span class="hl-7">log</span><span class="hl-1">(...</span><span class="hl-0">vector</span><span class="hl-1">.</span><span class="hl-0">text</span><span class="hl-1">)</span>
-</code></pre>
-<pre><code class="language-mermaid">sequenceDiagram
-    Vector-&gt;Array: [{value}.value, {value}.value]
-    activate Array
-    Array-&gt;Vector: [value, value]
-    deactivate Array
+<pre><code class="language-ts"><span class="hl-2">import</span><span class="hl-1"> { </span><span class="hl-0">Vector</span><span class="hl-1"> } </span><span class="hl-2">from</span><span class="hl-1"> </span><span class="hl-3">&#39;peekeasy&#39;</span><br/><br/><span class="hl-4">const</span><span class="hl-1"> </span><span class="hl-5">vector</span><span class="hl-1"> = </span><span class="hl-4">new</span><span class="hl-1"> </span><span class="hl-6">Vector</span><span class="hl-1">([{ </span><span class="hl-0">text:</span><span class="hl-1"> </span><span class="hl-3">&#39;Hello,&#39;</span><span class="hl-1"> }, { </span><span class="hl-0">text:</span><span class="hl-1"> </span><span class="hl-3">&#39;vector!&#39;</span><span class="hl-1"> }])</span><br/><br/><span class="hl-8">// Hello, vector!</span><br/><span class="hl-0">console</span><span class="hl-1">.</span><span class="hl-6">log</span><span class="hl-1">(...</span><span class="hl-0">vector</span><span class="hl-1">.</span><span class="hl-0">text</span><span class="hl-1">)</span>
 </code></pre>
 
 <a href="#contribute" id="contribute" style="color: inherit; text-decoration: none;">
@@ -204,10 +192,11 @@
 </a>
 <pre><code class="language-mermaid">classDiagram
     direction LR
-    PromiseLike~Action~ &lt;|.. Promise~Action~
-    PromiseLike~Action~ *-- Delegate
-    Promise~Action~ &lt;.. Delegate
-    PromiseLike~Action~ &lt;.. AsyncIterator
+
+    PromiseLike &lt;|.. Promise
+    PromiseLike *-- Delegate
+    Promise &lt;.. Delegate
+    PromiseLike &lt;.. AsyncIterator
     IteratorResult o-- AsyncIterator
     Iterator -- AsyncIterator
     AsyncIterator *-- AsyncIterable
@@ -215,55 +204,62 @@
     AsyncIterable *-- Delegate
     IteratorResult o-- Iterator
     Iterator *-- Iterable
-    Action &lt;.. Delegate
-    WeakSet~Action~ -- Set~Action~
-    WeakSet~Action~ &lt;|.. Delegate
-     Action o-- Set~Action~
-     Action o-- WeakSet~Action~
-     Action *-- Promise~Action~
-     Action *-- PromiseLike~Action~
+    WeakSet -- Set
+    WeakSet &lt;|.. Delegate
     Iterator &lt;-- Reference
     Iterable *-- Vector
+
     class IteratorResult {
         done boolean
         value any
     }
+
     class AsyncIterable {
         Symbol.asyncIterator() AsyncIterator
     }
+
     class Iterable {
         Symbol.iterator() Iterator
     }
+
     class Iterator {
         next() IteratorResult
     }
+
     class AsyncIterator {
         next() PromiseLike~IteratorResult~
     }
-    class PromiseLike~Action~ {
+
+    class PromiseLike {
         then() PromiseLike
     }
-    class Promise~Action~ {
+     link PromiseLike &quot;https://microsoft.github.io/PowerBI-JavaScript/interfaces/_node_modules_typedoc_node_modules_typescript_lib_lib_es5_d_.promiselike.html&quot; &quot;PromiseLike&quot;
+
+    class Promise {
         finally(onfinally () =&gt; void) Promise
     }
+     link Promise &quot;https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise&quot; &quot;Promise&quot;
+
     class WeakSet {
         add() WeakSet
         delete() WeakSet
         has() boolean
     }
+     link WeakSet &quot;https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet&quot; &quot;WeakSet&quot;
+
     class Set {
         size number
         clear() void
         forEach() void
     }
-    class Action {
-        apply(args: params) void
-    }
-     link Action &quot;https://github.com/domrally/peekeasy/blob/main/src/action.ts&quot; &quot;action.ts&quot;
+    link Set &quot;https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set&quot; &quot;Set&quot;
+
     class Delegate
     link Delegate &quot;https://github.com/domrally/peekeasy/blob/main/src/delegate.ts&quot; &quot;delegate.ts&quot;
+
     class Vector
     link Vector &quot;https://github.com/domrally/peekeasy/blob/main/src/vector.ts&quot; &quot;vector.ts&quot;
+
      class Reference
      link Reference &quot;https://github.com/domrally/peekeasy/blob/main/src/reference.ts&quot; &quot;reference.ts&quot;
 </code></pre>
@@ -335,7 +331,7 @@
 <ul>
 <li class="current selected"><a href="modules.html">peekeasy</a>
 <ul>
-<li class="tsd-kind-module"><a href="modules/action.html">action</a></li>
+<li class="tsd-kind-module"><a href="modules/behavior.html">behavior</a></li>
 <li class="tsd-kind-module"><a href="modules/delegate.html">delegate</a></li>
 <li class="tsd-kind-module"><a href="modules/reference.html">reference</a></li>
 <li class="tsd-kind-module"><a href="modules/vector.html">vector</a></li></ul></li></ul></div></details></nav></div></div>
