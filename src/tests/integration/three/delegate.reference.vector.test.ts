@@ -1,11 +1,11 @@
-import { Action, Delegate, Reference, Vector } from '../../../exports/exports'
+import { Delegate, Reference, Vector } from '../../../exports/exports'
 import { test } from '../../test.test'
 
 async function integrationDelegateReferenceVector() {
 	let //
 		is = false,
 		f = () => (is = true),
-		set = new Set<Action>(),
+		set = new Set(),
 		generate = function* () {
 			while (true) {
 				yield set
