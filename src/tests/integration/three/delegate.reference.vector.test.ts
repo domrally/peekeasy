@@ -5,7 +5,7 @@ async function integrationDelegateReferenceVector() {
 	let //
 		is = false,
 		f = () => (is = true),
-		set = new Set(),
+		set = new Set<() => void>(),
 		generate = function* () {
 			while (true) {
 				yield set

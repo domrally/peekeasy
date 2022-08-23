@@ -58,9 +58,9 @@ behavior({ message: 'behavior' })
 #### delegate
 
 ```ts
-import { Action, Delegate } from 'peekeasy'
+import { Delegate } from 'peekeasy'
 
-const set = new Set<Action<[string, string]>>(),
+const set = new Set<(t: string, u: string) => void>(),
 	delegate = new Delegate(set)
 
 delegate.add(async message => console.log(...message))
@@ -175,10 +175,10 @@ https://domrally.github.io/peekeasy
 classDiagram
     direction LR
 
-    PromiseLike~Action~ <|.. Promise~Action~
-    PromiseLike~Action~ *-- Delegate
-    Promise~Action~ <.. Delegate
-    PromiseLike~Action~ <.. AsyncIterator
+    PromiseLike <|.. Promise
+    PromiseLike *-- Delegate
+    Promise <.. Delegate
+    PromiseLike <.. AsyncIterator
     IteratorResult o-- AsyncIterator
     Iterator -- AsyncIterator
     AsyncIterator *-- AsyncIterable
@@ -186,13 +186,8 @@ classDiagram
     AsyncIterable *-- Delegate
     IteratorResult o-- Iterator
     Iterator *-- Iterable
-    Action <.. Delegate
-    WeakSet~Action~ -- Set~Action~
-    WeakSet~Action~ <|.. Delegate
-	 Action o-- Set~Action~
-	 Action o-- WeakSet~Action~
-	 Action *-- Promise~Action~
-	 Action *-- PromiseLike~Action~
+    WeakSet -- Set
+    WeakSet <|.. Delegate
     Iterator <-- Reference
     Iterable *-- Vector
 
@@ -217,12 +212,12 @@ classDiagram
         next() PromiseLike~IteratorResult~
     }
 
-    class PromiseLike~Action~ {
+    class PromiseLike {
         then() PromiseLike
     }
 	 link PromiseLike "https://microsoft.github.io/PowerBI-JavaScript/interfaces/_node_modules_typedoc_node_modules_typescript_lib_lib_es5_d_.promiselike.html" "PromiseLike"
 
-    class Promise~Action~ {
+    class Promise {
         finally(onfinally () => void) Promise
     }
 	 link Promise "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" "Promise"
@@ -240,11 +235,6 @@ classDiagram
         forEach() void
     }
     link Set "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set" "Set"
-
-    class Action {
-        apply(args: params) void
-    }
-	 link Action "https://github.com/domrally/peekeasy/blob/main/src/action.ts" "action.ts"
 
     class Delegate
     link Delegate "https://github.com/domrally/peekeasy/blob/main/src/delegate.ts" "delegate.ts"

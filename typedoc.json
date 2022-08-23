@@ -1,9 +1,8 @@
 {
 	"$schema": "https://typedoc.org/schema.json",
 	"entryPoints": [
-		"./src/exports/action.ts",
+		"./src/exports/behavior.ts",
 		"./src/exports/delegate.ts",
-		"./src/exports/forward.ts",
 		"./src/exports/reference.ts",
 		"./src/exports/vector.ts"
 	],
