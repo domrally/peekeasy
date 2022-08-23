@@ -3,8 +3,6 @@ import { error } from 'console'
 /**
  * ### Description
  *
- * Calls actions on a set of listeners
- *
  * _example_
  *
  * ```ts

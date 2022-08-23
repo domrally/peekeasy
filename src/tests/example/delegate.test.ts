@@ -1,6 +1,6 @@
-import { Action, Delegate } from '../../exports/exports'
+import { Delegate } from '../../exports/exports'
 
-const set = new Set<Action<[string, string]>>(),
+const set = new Set<(s: string, t: string) => void>(),
 	delegate = new Delegate(set)
 
 delegate.then(async message => console.log(...message))
